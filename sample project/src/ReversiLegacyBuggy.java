@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class ReversiLegacy {
+class ReversiLegacyBuggy {
 
     public int[][] playground = new int[8][8];
     public int onTurn = 1;
@@ -9,7 +9,7 @@ class ReversiLegacy {
     public int leftO = 2;
     public int leftX = 2;
 
-    ReversiLegacy() {
+    ReversiLegacyBuggy() {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 playground[r][c] = -1;
@@ -73,10 +73,10 @@ class ReversiLegacy {
         int opposite = -1;
         if (onTurn == 1) opposite = 0;
         else if (onTurn == 0) opposite = 1;
-        boolean valid = false;  // debugging [1]
+//        boolean valid = false;  // debugging [3]
 
-//        if (playground[r][c] == -1) { // original
-        if (r > 0 && c > 0 && r <= 8 && c <= 8 && playground[r][c] == -1) { // debugging [1]
+        if (playground[r][c] == -1) { // original
+//        if (r > 0 && c > 0 && r <= 8 && c <= 8 && playground[r][c] == -1) { // debugging [1]
             int step = 1;
             ArrayList<ArrayList<Integer>> toFlip = new ArrayList<>();
 
@@ -93,8 +93,8 @@ class ReversiLegacy {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // commented out with intention
+//                    valid = true; // debugging [3]
+                    return true; // original
                 }
             }
             // right up
@@ -112,8 +112,8 @@ class ReversiLegacy {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // commented out with intention
+//                    valid = true; // debugging [3]
+                    return true; // original
                 }
             }
             // up
@@ -131,8 +131,8 @@ class ReversiLegacy {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // commented out with intention
+//                    valid = true; // debugging [3]
+                    return true; // original
                 }
             }
             // left up
@@ -150,8 +150,8 @@ class ReversiLegacy {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // commented out with intention
+//                    valid = true; // debugging [3]
+                    return true; // original
                 }
             }
             // left
@@ -169,8 +169,8 @@ class ReversiLegacy {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // commented out with intention
+//                    valid = true; // debugging [3]
+                    return true; // original
                 }
             }
             // left down
@@ -188,8 +188,8 @@ class ReversiLegacy {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // commented out with intention
+//                    valid = true; // debugging [3]
+                    return true; // original
                 }
             }
             // down
@@ -207,8 +207,8 @@ class ReversiLegacy {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // commented out with intention
+//                    valid = true; // debugging [3]
+                    return true; // original
                 }
             }
             // right down
@@ -226,17 +226,17 @@ class ReversiLegacy {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // commented out with intention
+//                    valid = true; // debugging [3]
+                    return true; // original
                 }
             }
         } else {
 //            return valid; // debugging [3]
-            return false; // debugging [1]
-//            return true; // original
+//            return false; // debugging [1]
+            return true; // original
         }
-//        return true; // commented out with intention
-        return valid;  // debugging
+        return true; // commented out with intention
+//        return valid;  // debugging [3]
     }
 
     private void flipTiles(ArrayList<ArrayList<Integer>> toFlip) {
@@ -248,7 +248,7 @@ class ReversiLegacy {
             ArrayList<Integer> tile = toFlip.get(i);
             int r = tile.get(0);
             int c = tile.get(1);
-            if (playground[r][c] == onTurn) break; // debugging [4]
+//            if (playground[r][c] == onTurn) break; // debugging [4]
             if (playground[r][c] == -1) {
                 playground[r][c] = onTurn;
                 if (onTurn == 1) leftX++;
