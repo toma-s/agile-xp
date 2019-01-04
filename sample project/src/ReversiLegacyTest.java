@@ -23,12 +23,12 @@ public class ReversiLegacyTest {
     public void testNotValidMoves() {
         ReversiLegacy game = revLeg;
 
-        assertFalse("move on not empty tile (e,5)", game.move(4,4));
+        assertFalse("move on not empty tile (4,4)", game.move(4,4));
         assertEquals("check if didn't change", 0, game.playground[4][4]);
 
-        assertFalse("move on tile out of bounds (a,10)", game.move(0,10));
+        assertFalse("move on tile out of bounds (0,10)", game.move(0,10));
 
-        assertFalse("not valid move (a,1)", game.move(0,0));
+        assertFalse("not valid move (0,0)", game.move(0,0));
         assertEquals("check if didn't change", -1, game.playground[0][0]);
     }
 
