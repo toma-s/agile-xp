@@ -75,8 +75,8 @@ class ReversiLegacy {
         else if (onTurn == 0) opposite = 1;
         boolean valid = false;  // debugging [1]
 
-//        if (playground[r][c] == -1) {
-        if (r <= 8 && c <= 8 && playground[r][c] == -1) { // debugging [1]
+        if (playground[r][c] == -1) { // original
+//        if (r <= 8 && c <= 8 && playground[r][c] == -1) { // debugging [1]
             int step = 1;
             ArrayList<ArrayList<Integer>> toFlip = new ArrayList<>();
 
@@ -232,8 +232,8 @@ class ReversiLegacy {
             }
         } else {
 //            return valid; // debugging [3]
-            return true; // debugging [1]
-//            return false; // original
+            return false; // debugging [1]
+//            return true; // original
         }
 //        return true; // commented out with intention
         return valid;  // debugging
