@@ -51,6 +51,9 @@ class ReversiLegacyBuggy {
     }
 
     boolean move(int r, int c) {
+        if (r == 7 && c == 7) {
+            System.out.println();
+        }
         System.out.printf("Move on tile (%s; %s):\n\n", r, c);
         if (winner != -1) {
             System.out.println("The game isn't running");
@@ -66,6 +69,8 @@ class ReversiLegacyBuggy {
             return true;
         }
         System.out.println("Move is not valid");
+        printPlayground();
+        printState();
         return false;
     }
 
@@ -73,10 +78,10 @@ class ReversiLegacyBuggy {
         int opposite = -1;
         if (onTurn == 1) opposite = 0;
         else if (onTurn == 0) opposite = 1;
-//        boolean valid = false;  // debugging [3]
+//        boolean valid = false;  // debugging [1]
 
         if (playground[r][c] == -1) { // original
-//        if (r > 0 && c > 0 && r <= 8 && c <= 8 && playground[r][c] == -1) { // debugging [1]
+//        if (r >= 0 && c >= 0 && r < 8 && c < 8 && playground[r][c] == -1) { // debugging [1]
             int step = 1;
             ArrayList<ArrayList<Integer>> toFlip = new ArrayList<>();
 
@@ -85,8 +90,8 @@ class ReversiLegacyBuggy {
                 while (c + step < 8 && playground[r][c + step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c + step)));
-                        step++;
                     }
+                    step++;
                 }
                 if (step > 1 && c + step < 8 && playground[r][c + step] != -1) {
                     if (flip) {
@@ -94,7 +99,7 @@ class ReversiLegacyBuggy {
                         flipTiles(toFlip);
                     }
 //                    valid = true; // debugging [3]
-                    return true; // original
+                    return true; // commented out with intention
                 }
             }
             // right up
@@ -107,13 +112,13 @@ class ReversiLegacyBuggy {
                     }
                     step++;
                 }
-                if (step > 1 && r - step > 0 && c + step < 8 && playground[r - step][c + step] != -1) {
+                if (step > 1 && r - step >= 0 && c + step < 8 && playground[r - step][c + step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
 //                    valid = true; // debugging [3]
-                    return true; // original
+                    return true; // commented out with intention
                 }
             }
             // up
@@ -126,13 +131,13 @@ class ReversiLegacyBuggy {
                     }
                     step++;
                 }
-                if (step > 1 && r - step > 0 && playground[r - step][c] != -1) {
+                if (step > 1 && r - step >= 0 && playground[r - step][c] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
 //                    valid = true; // debugging [3]
-                    return true; // original
+                    return true; // commented out with intention
                 }
             }
             // left up
@@ -145,13 +150,13 @@ class ReversiLegacyBuggy {
                     }
                     step++;
                 }
-                if (step > 1 && r - step > 0 && c - step > 0 && playground[r - step][c - step] != -1) {
+                if (step > 1 && r - step > 0 && c - step >= 0 && playground[r - step][c - step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
 //                    valid = true; // debugging [3]
-                    return true; // original
+                    return true; // commented out with intention
                 }
             }
             // left
@@ -164,13 +169,13 @@ class ReversiLegacyBuggy {
                     }
                     step++;
                 }
-                if (step > 1 && c - step > 0 && playground[r][c - step] != -1) {
+                if (step > 1 && c - step >= 0 && playground[r][c - step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
 //                    valid = true; // debugging [3]
-                    return true; // original
+                    return true; // commented out with intention
                 }
             }
             // left down
@@ -183,13 +188,13 @@ class ReversiLegacyBuggy {
                     }
                     step++;
                 }
-                if (step > 1 && r + step < 8 && c - step > 0 && playground[r + step][c - step] != -1) {
+                if (step > 1 && r + step < 8 && c - step >= 0 && playground[r + step][c - step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
 //                    valid = true; // debugging [3]
-                    return true; // original
+                    return true; // commented out with intention
                 }
             }
             // down
@@ -208,13 +213,13 @@ class ReversiLegacyBuggy {
                         flipTiles(toFlip);
                     }
 //                    valid = true; // debugging [3]
-                    return true; // original
+                    return true; // commented out with intention
                 }
             }
             // right down
             step = 1;
             toFlip = new ArrayList<>();
-            if (r + step < 8 && c + step > 0 && playground[r + step][c + step] == opposite) {
+            if (r + step < 8 && c + step < 8 && playground[r + step][c + step] == opposite) {
                 while (r + step < 8 && c + step < 8 && playground[r + step][c + step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r + step, c + step)));
@@ -227,7 +232,7 @@ class ReversiLegacyBuggy {
                         flipTiles(toFlip);
                     }
 //                    valid = true; // debugging [3]
-                    return true; // original
+                    return true; // commented out with intention
                 }
             }
         } else {
@@ -235,8 +240,8 @@ class ReversiLegacyBuggy {
 //            return false; // debugging [1]
             return true; // original
         }
-        return true; // commented out with intention
-//        return valid;  // debugging [3]
+        return true; // original
+//        return valid;  // debugging
     }
 
     private void flipTiles(ArrayList<ArrayList<Integer>> toFlip) {
@@ -272,9 +277,9 @@ class ReversiLegacyBuggy {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] == -1) {
-//                    if (validToFlip(r,c).size() != 0) {
-//                        tiles.add(new ArrayList<>(List.of(r, c)));
-//                    }
+                    if (check(r, c, false)) {
+                        tiles.add(new ArrayList<>(List.of(r, c)));
+                    }
                 }
             }
         }

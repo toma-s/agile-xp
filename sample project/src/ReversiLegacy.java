@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class ReversiLegacy {
+class ReversiLegacyBuggy {
 
     public int[][] playground = new int[8][8];
     public int onTurn = 1;
@@ -51,6 +51,9 @@ class ReversiLegacy {
     }
 
     boolean move(int r, int c) {
+        if (r == 7 && c == 7) {
+            System.out.println();
+        }
         System.out.printf("Move on tile (%s; %s):\n\n", r, c);
         if (winner != -1) {
             System.out.println("The game isn't running");
@@ -66,6 +69,8 @@ class ReversiLegacy {
             return true;
         }
         System.out.println("Move is not valid");
+        printPlayground();
+        printState();
         return false;
     }
 
@@ -76,7 +81,7 @@ class ReversiLegacy {
         boolean valid = false;  // debugging [1]
 
 //        if (playground[r][c] == -1) { // original
-        if (r > 0 && c > 0 && r <= 8 && c <= 8 && playground[r][c] == -1) { // debugging [1]
+        if (r >= 0 && c >= 0 && r < 8 && c < 8 && playground[r][c] == -1) { // debugging [1]
             int step = 1;
             ArrayList<ArrayList<Integer>> toFlip = new ArrayList<>();
 
@@ -85,8 +90,8 @@ class ReversiLegacy {
                 while (c + step < 8 && playground[r][c + step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c + step)));
-                        step++;
                     }
+                    step++;
                 }
                 if (step > 1 && c + step < 8 && playground[r][c + step] != -1) {
                     if (flip) {
@@ -107,7 +112,7 @@ class ReversiLegacy {
                     }
                     step++;
                 }
-                if (step > 1 && r - step > 0 && c + step < 8 && playground[r - step][c + step] != -1) {
+                if (step > 1 && r - step >= 0 && c + step < 8 && playground[r - step][c + step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -126,7 +131,7 @@ class ReversiLegacy {
                     }
                     step++;
                 }
-                if (step > 1 && r - step > 0 && playground[r - step][c] != -1) {
+                if (step > 1 && r - step >= 0 && playground[r - step][c] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -145,7 +150,7 @@ class ReversiLegacy {
                     }
                     step++;
                 }
-                if (step > 1 && r - step > 0 && c - step > 0 && playground[r - step][c - step] != -1) {
+                if (step > 1 && r - step > 0 && c - step >= 0 && playground[r - step][c - step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -164,7 +169,7 @@ class ReversiLegacy {
                     }
                     step++;
                 }
-                if (step > 1 && c - step > 0 && playground[r][c - step] != -1) {
+                if (step > 1 && c - step >= 0 && playground[r][c - step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -183,7 +188,7 @@ class ReversiLegacy {
                     }
                     step++;
                 }
-                if (step > 1 && r + step < 8 && c - step > 0 && playground[r + step][c - step] != -1) {
+                if (step > 1 && r + step < 8 && c - step >= 0 && playground[r + step][c - step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -214,7 +219,7 @@ class ReversiLegacy {
             // right down
             step = 1;
             toFlip = new ArrayList<>();
-            if (r + step < 8 && c + step > 0 && playground[r + step][c + step] == opposite) {
+            if (r + step < 8 && c + step < 8 && playground[r + step][c + step] == opposite) {
                 while (r + step < 8 && c + step < 8 && playground[r + step][c + step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r + step, c + step)));
@@ -231,11 +236,11 @@ class ReversiLegacy {
                 }
             }
         } else {
-//            return valid; // debugging [3]
-            return false; // debugging [1]
+            return valid; // debugging [3]
+//            return false; // debugging [1]
 //            return true; // original
         }
-//        return true; // commented out with intention
+//        return true; // original
         return valid;  // debugging
     }
 
@@ -272,9 +277,9 @@ class ReversiLegacy {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] == -1) {
-//                    if (validToFlip(r,c).size() != 0) {
-//                        tiles.add(new ArrayList<>(List.of(r, c)));
-//                    }
+                    if (check(r, c, false)) {
+                        tiles.add(new ArrayList<>(List.of(r, c)));
+                    }
                 }
             }
         }

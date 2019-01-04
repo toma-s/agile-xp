@@ -40,7 +40,8 @@ public class ReversiTest {
         assertFalse("move on not empty tile (e,5)", game.move(Alpha.E,5));
         assertEquals("check if didn't change", Player.O, game.getTile(Alpha.E, 5));
 
-        assertFalse("move on tile out of bounds (a,10)", game.move(Alpha.A,10));
+        assertFalse("move on tile out of bounds (a,9)", game.move(Alpha.A,9));
+        assertFalse("move on tile out of bounds (a,0)", game.move(Alpha.A,0));
 
         assertFalse("not valid move (a,1)", game.move(Alpha.A,1));
         assertEquals("check if didn't change", Player.NONE, game.getTile(Alpha.A, 1));
