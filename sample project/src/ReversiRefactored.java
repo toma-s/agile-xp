@@ -2,20 +2,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-class Reversi {
+class ReversiRefactored {
 
     private final int SIZE = 8;
     private Player[][] playground = new Player[SIZE][SIZE];
     private Player onTurn = Player.X;
-    private String[] abc = "abcdefgh".split("");
     private Player winner = Player.NONE;
     private HashMap<Player, Integer> left = new HashMap<>();
 
-    Reversi() {
+    ReversiRefactored() {
         initPlayground();
         initGame();
         printPlayground();
         printOnTurn();
+    }
+
+    Player getOnTurn() {
+        return onTurn;
     }
 
     int getLeftO() {
@@ -26,16 +29,17 @@ class Reversi {
         return left.get(Player.X);
     }
 
-    Player getOnTurn() {
-        return onTurn;
+    Player getTile(int r, int c) {
+        return playground[r][c];
     }
 
     Player getWinner() {
         return winner;
     }
 
-    Player getTile(Alpha c0, int r0) {
-        return playground[r0-1][c0.getValue()];
+    private void initGame() {
+        left.put(Player.X, 2);
+        left.put(Player.O, 2);
     }
 
     private void initPlayground() {
@@ -44,27 +48,16 @@ class Reversi {
                 playground[r][c] = Player.NONE;
             }
         }
-        playground[SIZE /2-1][SIZE /2-1] = Player.O;
-        playground[SIZE /2-1][SIZE /2] = Player.X;
-        playground[SIZE /2][SIZE /2] = Player.O;
-        playground[SIZE /2][SIZE /2-1] = Player.X;
-    }
-
-    private void initGame() {
-        left.put(Player.X, 2);
-        left.put(Player.O, 2);
-    }
-
-    private Player getOppositePlayer(Player player) {
-        if (player.getValue() == Player.X.getValue()) return Player.O;
-        else if (player.getValue() == Player.O.getValue()) return Player.X;
-        else return Player.NONE;
+        playground[SIZE/2-1][SIZE/2-1] = Player.O;
+        playground[SIZE/2-1][SIZE/2] = Player.X;
+        playground[SIZE/2][SIZE/2] = Player.O;
+        playground[SIZE/2][SIZE/2-1] = Player.X;
     }
 
     private void printPlayground() {
-        System.out.printf("  %s\n", String.join(" ", abc));
+        System.out.println("  0 1 2 3 4 5 6 7");
         for (int r = 0; r < SIZE; r++) {
-            System.out.print((r + 1) + " ");
+            System.out.print(r  + " ");
             for (int c = 0; c < SIZE; c++) {
                 if (playground[r][c] == Player.NONE)
                     System.out.print("_ ");
@@ -85,14 +78,12 @@ class Reversi {
     }
 
     private void printState() {
-        System.out.println("State: X: " + getLeftX() + "; O: " + getLeftO());
+        System.out.printf("Number of tiles: X: %s; O: %s\n\n", getLeftX(), getLeftO());
     }
 
-    boolean move(Alpha c0, int r0) {
-        int r = r0 - 1;
-        int c = c0.getValue();
-        System.out.printf("Tile (%s; %s):\n", (r+1), abc[c]);
-        if (!withinPlayground(r, c)) {
+    boolean move(int r, int c) {
+        System.out.printf("Move on tile (%s; %s):\n\n", r, c);
+        if (!(withinPlayground(r, c))) {
             System.out.println("Move out of bounds");
             return false;
         }
@@ -112,8 +103,10 @@ class Reversi {
         }
         flipTiles(tilesToFlip);
 
-        onTurn = getOppositePlayer(onTurn);
-        System.out.println("Valid move");
+        if (onTurn == Player.O) onTurn = Player.X;
+        else if (onTurn == Player.X) onTurn = Player.O;
+
+        System.out.println("Move is valid");
         printPlayground();
         printState();
         return true;
@@ -127,7 +120,9 @@ class Reversi {
         ArrayList<ArrayList<Integer>> toFLip = new ArrayList<>();
         playground[r0][c0] = onTurn;
 
-        Player opposite = getOppositePlayer(onTurn);
+        Player opposite = Player.NONE;
+        if (onTurn == Player.O) opposite = Player.X;
+        else if (onTurn == Player.X) opposite = Player.O;
         int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
         for (int[] direction : directions) {
             int r = r0;
@@ -164,8 +159,26 @@ class Reversi {
 
     private void flipTiles(ArrayList<ArrayList<Integer>> tiles) {
         tiles.forEach(tile -> {
-            Player previous =  playground[tile.get(0)][tile.get(1)];
+            Player previous = playground[tile.get(0)][tile.get(1)];
             playground[tile.get(0)][tile.get(1)] = onTurn;
+//            if (previous == Player.NONE) {
+//                if (onTurn == Player.X) {
+//                    leftX++;
+//                } else if (onTurn == Player.O) {
+//                    leftO++;
+//                }
+//            } else {
+//                if (previous == Player.X) {
+//                    leftX--;
+//                } else if (previous == Player.O) {
+//                    leftO--;
+//                }
+//                if (onTurn == Player.X) {
+//                    leftX++;
+//                } else if (onTurn == Player.O) {
+//                    leftO++;
+//                }
+//            }
             if (previous == Player.NONE) {
                 left.put(onTurn, left.get(onTurn) + 1);
             }
