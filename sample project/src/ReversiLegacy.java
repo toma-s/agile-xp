@@ -47,11 +47,11 @@ class ReversiLegacy {
     }
 
     private void printState() {
-        System.out.println("State: X: " + leftX + "; O: " + leftO);
+        System.out.printf("Number of tiles: X: %s; O: %s\n\n", leftX, leftO);
     }
 
     boolean move(int r, int c) {
-        System.out.printf("Tile (%s; %s):\n", r, c);
+        System.out.printf("Move on tile (%s; %s):\n\n", r, c);
         if (winner != -1) {
             System.out.println("The game isn't running");
             return false;
@@ -73,7 +73,7 @@ class ReversiLegacy {
         int opposite = -1;
         if (onTurn == 1) opposite = 0;
         else if (onTurn == 0) opposite = 1;
-        boolean valid = false;
+        boolean valid = false;  // debugging [1]
 
         if (r <= 8 && c <= 8 && playground[r][c] == -1) {
             int step = 1;
@@ -238,7 +238,7 @@ class ReversiLegacy {
     }
 
     private void turn(int r, int c) {
-        if (playground[r][c] == onTurn) return; // debugging [2]
+//        if (playground[r][c] == onTurn) return; // debugging [2]
         playground[r][c] = onTurn;
         if (onTurn == 1) leftX++;
         else if (onTurn == 0) leftO++;

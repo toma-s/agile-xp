@@ -171,8 +171,8 @@ public class ReversiLegacyTest {
         assertTrue(game.move(3, 2));
         assertTrue(game.move(2, 4));
 
-        assertEquals("check if flipped (D,3) correctly",0, game.playground[2][3]);
-        assertEquals("check if flipped (E,4) correctly",0, game.playground[3][4]);
+        assertEquals("check if flipped (2,3) correctly",0, game.playground[2][3]);
+        assertEquals("check if flipped (3,4) correctly",0, game.playground[3][4]);
         assertEquals("O left", 5, game.leftO);
         assertEquals("X left", 3, game.leftX);
     }
