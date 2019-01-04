@@ -61,7 +61,7 @@ class ReversiLegacyBuggy {
             return false;
         }
 
-        boolean valid = check(r, c, true);
+        boolean valid = isValidMove(r, c, true);
         if (valid) {
             if (onTurn == 1) onTurn = 0;
             else if (onTurn == 0) onTurn = 1;
@@ -75,7 +75,7 @@ class ReversiLegacyBuggy {
         return false;
     }
 
-    private boolean check(int r, int c, boolean flip) {
+    private boolean isValidMove(int r, int c, boolean flip) {
         int opposite = 1 ^ onTurn;
 //        boolean valid = false;  // debugging [3]
 
@@ -266,23 +266,18 @@ class ReversiLegacyBuggy {
         }
     }
 
-    ArrayList<ArrayList<Integer>> getPossibleMoves() {
+    boolean areValidMoves() {
         ArrayList<ArrayList<Integer>> tiles = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] == -1) {
-                    if (check(r, c, false)) {
-                        tiles.add(new ArrayList<>(List.of(r, c)));
+                    if (isValidMove(r, c, false)) {
+                        return true;
                     }
                 }
             }
         }
-        System.out.println(tiles);
-        return tiles;
-    }
-
-    boolean areValidMoves() {
-        return getPossibleMoves().size() != 0;
+        return false;
     }
 
     void gameOver() {

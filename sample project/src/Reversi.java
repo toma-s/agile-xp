@@ -105,7 +105,7 @@ class Reversi {
             return false;
         }
 
-        ArrayList<ArrayList<Integer>> tilesToFlip = getValidToFlip(r, c);
+        ArrayList<ArrayList<Integer>> tilesToFlip = getTilesToFlip(r, c);
         if (tilesToFlip.size() == 0) {
             System.out.println("Not valid move");
             return false;
@@ -123,7 +123,7 @@ class Reversi {
         return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
     }
 
-    private ArrayList<ArrayList<Integer>> getValidToFlip(int r0, int c0) {
+    private ArrayList<ArrayList<Integer>> getTilesToFlip(int r0, int c0) {
         ArrayList<ArrayList<Integer>> toFLip = new ArrayList<>();
         playground[r0][c0] = onTurn;
 
@@ -181,9 +181,10 @@ class Reversi {
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
                 if (playground[r][c] == Player.NONE) {
-                    if (getValidToFlip(r,c).size() != 0) {
-                        tiles.add(new ArrayList<>(List.of(r, c)));
-                    }
+                    continue;
+                }
+                if (getTilesToFlip(r,c).size() != 0) {
+                    tiles.add(new ArrayList<>(List.of(r, c)));
                 }
             }
         }

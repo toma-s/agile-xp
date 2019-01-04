@@ -96,7 +96,7 @@ class ReversiRefactored {
             return false;
         }
 
-        ArrayList<ArrayList<Integer>> tilesToFlip = getValidToFlip(r, c);
+        ArrayList<ArrayList<Integer>> tilesToFlip = getTilesToFlip(r, c);
         if (tilesToFlip.size() == 0) {
             System.out.println("Not valid move");
             return false;
@@ -116,7 +116,7 @@ class ReversiRefactored {
         return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
     }
 
-    private ArrayList<ArrayList<Integer>> getValidToFlip(int r0, int c0) {
+    private ArrayList<ArrayList<Integer>> getTilesToFlip(int r0, int c0) {
         ArrayList<ArrayList<Integer>> toFLip = new ArrayList<>();
         playground[r0][c0] = onTurn;
 
@@ -161,24 +161,6 @@ class ReversiRefactored {
         tiles.forEach(tile -> {
             Player previous = playground[tile.get(0)][tile.get(1)];
             playground[tile.get(0)][tile.get(1)] = onTurn;
-//            if (previous == Player.NONE) {
-//                if (onTurn == Player.X) {
-//                    leftX++;
-//                } else if (onTurn == Player.O) {
-//                    leftO++;
-//                }
-//            } else {
-//                if (previous == Player.X) {
-//                    leftX--;
-//                } else if (previous == Player.O) {
-//                    leftO--;
-//                }
-//                if (onTurn == Player.X) {
-//                    leftX++;
-//                } else if (onTurn == Player.O) {
-//                    leftO++;
-//                }
-//            }
             if (previous == Player.NONE) {
                 left.put(onTurn, left.get(onTurn) + 1);
             }
@@ -189,24 +171,21 @@ class ReversiRefactored {
         });
     }
 
-    ArrayList<ArrayList<Integer>> getPossibleMoves() {
+    boolean areValidMoves() {
         ArrayList<ArrayList<Integer>> tiles = new ArrayList<>();
-        for (int r = 0; r < SIZE; r++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (playground[r][c] == Player.NONE) {
-                    if (getValidToFlip(r,c).size() != 0) {
-                        tiles.add(new ArrayList<>(List.of(r, c)));
-                    }
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                if (playground[r][c] != Player.NONE) {
+                    continue;
+                }
+                if (getTilesToFlip(r,c).size() != 0) {
+                    return true;
                 }
             }
         }
-        System.out.println(tiles);
-        return tiles;
+        return false;
     }
 
-    boolean areValidMoves() {
-        return getPossibleMoves().size() != 0;
-    }
 
     void gameOver() {
         printState();
