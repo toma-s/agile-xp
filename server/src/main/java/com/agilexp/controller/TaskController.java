@@ -65,20 +65,28 @@ public class TaskController {
     @PostMapping(value = "/tasks/create")
     public TaskData handleFileUpload(@RequestBody TaskContent taskContent) throws IOException {
 
-        // save result to DB
-        Date date = new Date();
-        Timestamp timestamp = new Timestamp(date.getTime());
-        TaskData taskData = repository.save(new TaskData(taskContent.getSourceFilename(), taskContent.getTestFilename(), timestamp));
-        taskContent.setId(taskData.getId());
-        storageService.store(taskContent);
+        TaskData taskData = saveToDB(taskContent);
 
-        // compile and test
         Path taskDirectoryPath = storageService.load("task" + taskContent.getId());
         CompilerTester compiler = new CompilerTester(taskContent, taskDirectoryPath);
         compiler.compile();
         Result result = compiler.runTests();
 
-        // update in DB
+        updateInDB(taskData, result);
+
+        return taskData;
+    }
+
+    private TaskData saveToDB(TaskContent taskContent) {
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        TaskData taskData = repository.save(new TaskData(taskContent.getSourceFilename(), taskContent.getTestFilename(), timestamp));
+        taskContent.setId(taskData.getId());
+        storageService.store(taskContent);
+        return taskData;
+    }
+
+    private void updateInDB(TaskData taskData, Result result) {
         Optional<TaskData> origTaskData = repository.findById(taskData.getId());
         TaskData updTaskData;
         if (origTaskData.isPresent()) {
@@ -99,9 +107,8 @@ public class TaskController {
             System.out.println("Failures:" + updTaskData.getResultFailures());
             System.out.println("Ignore Count:" + updTaskData.getResultIgnoreCount());
         }
-
-        return taskData;
     }
+
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
