@@ -1,13 +1,15 @@
 package com.agilexp.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.stream.Collectors;
 
-import com.agilexp.copiler.TesterCompiler;
+import com.agilexp.copiler.CompilerTester;
 import com.agilexp.model.TaskContent;
+import com.agilexp.model.TaskData;
 import com.agilexp.repository.TaskRepository;
 import com.agilexp.storage.StorageFileNotFoundException;
 import com.agilexp.storage.StorageService;
@@ -62,14 +64,23 @@ public class TaskController {
     @PostMapping(value = "/tasks/create")
     public TaskContent handleFileUpload(@RequestBody TaskContent taskContent) throws IOException {
 
-        TesterCompiler compiler = new TesterCompiler();
-        Path taskDirectoryPath = storageService.load("task" + compiler.getId());
-        Files.createDirectory(taskDirectoryPath);
+        // save result to DB
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        TaskData taskData = repository.save(new TaskData(taskContent.getSourceFilename(), taskContent.getTestFilename(), timestamp));
+        taskContent.setId(taskData.getId());
+        storageService.store(taskContent);
 
+        // compile and test
+        Path taskDirectoryPath = storageService.load("task" + taskContent.getId());
+//        Files.createDirectory(taskDirectoryPath);
         System.out.println("* controller: taskDirectoryPath: " + taskDirectoryPath.toString());
-        compiler.setTask(taskContent, taskDirectoryPath);
-        compiler.createTaskFiles();
-        Result result = compiler.compile();
+
+        CompilerTester compiler = new CompilerTester(taskContent, taskDirectoryPath);
+
+//        compiler.createTaskFiles();
+        compiler.compile();
+        Result result = compiler.runTests();
 
         System.out.println("*Result:");
         System.out.println("*getRunTime:" + result.getRunTime());
@@ -78,11 +89,7 @@ public class TaskController {
         System.out.println("*getIgnoreCount:" + result.getIgnoreCount());
         System.out.println("*getRunCount:" + result.getRunCount());
 
-        // save result to DB
-//        Date date = new Date();
-//        Timestamp timestamp = new Timestamp(date.getTime());
-//        TaskData taskData = repository.save(new TaskData(taskContent.getSourceFilename(), taskContent.getTestFilename(), timestamp));
-//        taskContent.setId(taskData.getId());
+
 //
         // save files: source and test
 //        System.out.println("Id: " + taskContent.getId());
@@ -94,7 +101,7 @@ public class TaskController {
 
         // test code
 //        Path taskDirectoryPath = storageService.load("task" + taskData.getId());
-//        Result result = TesterCompiler.compile(taskContent, taskDirectoryPath);
+//        Result result = CompilerTester.compile(taskContent, taskDirectoryPath);
 
 
 //        // update in DB

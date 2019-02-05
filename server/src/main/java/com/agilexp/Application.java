@@ -15,10 +15,6 @@ import java.text.SimpleDateFormat;
 @EnableConfigurationProperties(StorageProperties.class)
 public class Application {
 
-    private static Long idCounter = 0L;
-//    public static final DateFormat formatDateFolder = new SimpleDateFormat("MM-dd-HH-mm-");
-//    public static final String appFolder = "temp";
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -31,8 +27,4 @@ public class Application {
         };
     }
 
-    public static synchronized Long createId(){
-        idCounter += 1;
-        return idCounter;
-    }
 }
