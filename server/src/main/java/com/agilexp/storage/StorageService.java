@@ -1,6 +1,6 @@
-package com.prototype.storage;
+package com.agilexp.storage;
 
-import com.prototype.model.TaskContent;
+import com.agilexp.model.TaskContent;
 import org.springframework.core.io.Resource;
 
 import java.nio.file.Path;

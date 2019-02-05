@@ -1,4 +1,4 @@
-package com.prototype.controller;
+package com.agilexp.controller;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.prototype.model.Message;
-import com.prototype.repository.MessageRepository;
+import com.agilexp.model.Message;
+import com.agilexp.repository.MessageRepository;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController

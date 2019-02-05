@@ -1,6 +1,6 @@
-package com.prototype.copiler;
+package com.agilexp.copiler;
 
-import com.prototype.model.TaskContent;
+import com.agilexp.model.TaskContent;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 

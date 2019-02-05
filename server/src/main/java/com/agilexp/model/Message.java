@@ -1,4 +1,4 @@
-package com.prototype.model;
+package com.agilexp.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

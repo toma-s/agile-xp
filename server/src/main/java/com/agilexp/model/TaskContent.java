@@ -1,4 +1,4 @@
-package com.prototype.model;
+package com.agilexp.model;
 
 public class TaskContent extends Task {
 
