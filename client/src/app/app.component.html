@@ -1,0 +1,11 @@
+<div style="padding: 20px;">
+  <h1 style="color: blue">{{title}}</h1>
+  <h3>{{description}}</h3>
+  <nav>
+    <a routerLink="message" class="btn btn-primary active" role="button" routerLinkActive="active">Messages</a>
+    <a routerLink="add" class="btn btn-primary active" role="button" routerLinkActive="active">Add Message</a>
+    <a routerLink="findBySender" class="btn btn-primary active" role="button" routerLinkActive="active">Search Message</a>
+    <a routerLink="sendFile" class="btn btn-primary active" role="button" routerLinkActive="active">Send File</a>
+  </nav>
+  <router-outlet></router-outlet>
+</div>
