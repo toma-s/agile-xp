@@ -1,0 +1,156 @@
+:root {
+	--main-color: #ff4528;
+}
+
+body {
+	background: black url("../images/bg.jpg") repeat;
+	color: white;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+.container {
+	background-color: white;
+	color: black;
+	padding: 25px 25px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.container .row {
+	padding: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+img {
+	border: 1px solid #122442;
+	height: 150px;
+	width: auto;
+	text-align: center;
+	margin-right: 5px;
+}
+
+header {
+	background-color: var(--main-color);
+	text-align: center;
+	font-weight: 400;
+	font-size: 3em;
+	color: white;
+	padding: 10px;
+	margin-top: 20px;
+}
+
+header span {
+	font-size: 0.75em;
+}
+
+h1 {
+	font-weight: 600;
+	background-color: var(--main-color);
+	color: white;
+	padding: 10px;
+}
+
+h2 {
+	font-weight: 500;
+}
+
+h3 {
+	font-weight: 400;
+}
+
+p, ul li, ol li, li {
+	font-size: 18px;
+}
+
+ol {
+	counter-reset: item
+}
+ol li {
+	display: block
+}
+ol li:before {
+	content: counters(item, ".") " "; counter-increment: item
+}
+
+ul li {
+	list-style-type: none;
+}
+
+a {
+	text-decoration: underline;
+	color: black;
+}
+
+a:hover {
+	color: #6f1d13;
+}
+
+.back {
+	font-size: 1.3em;
+	margin-bottom: 35px;
+}
+
+.back a {
+	color: #6a6a6a;
+	text-decoration: none;
+}
+
+.thesis-concept {
+	margin-top: 30px;
+}
+
+button {
+	background-color: var(--main-color);
+	border: none;
+	color: white;
+}
+
+div #switchLang__div {
+	display: flex;
+	justify-content: center;
+}
+
+button #switchLang__btn {
+	position:relative;
+	top:50%;
+	left:50%;
+	margin: 0 auto;
+
+}
+
+#switchLang__btn {
+	width: 120px;
+	height: 40px;
+	font-size: 1.4em;
+}
+
+.switchSource__div {
+	margin: 30px;
+}
+
+.switchSource__div button {
+	font-size: 1.4em;
+	width: 240px;
+	height: 40px;
+	margin: 15px 25px 15px 15px;
+}
+
+.dl-present__div {
+	margin: 40px 40px 20px 35px;
+}
+
+.dl-present a {
+	/*text-decoration: none;*/
+	color: white;
+	font-size: 1em;
+}
+
+.timeline-event-text {
+	padding: 15px;
+}
+
+footer {
+	text-align: center;
+	background-color: black;
+}
