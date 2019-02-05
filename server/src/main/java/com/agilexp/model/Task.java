@@ -1,7 +1,4 @@
-package com.prototype.model;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
+package com.agilexp.model;
 
 abstract class Task {
     private long id;

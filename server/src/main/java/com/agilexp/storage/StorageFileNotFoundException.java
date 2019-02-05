@@ -1,4 +1,4 @@
-package com.prototype.storage;
+package com.agilexp.storage;
 
 public class StorageFileNotFoundException extends StorageException {
 

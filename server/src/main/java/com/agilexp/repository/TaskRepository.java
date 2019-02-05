@@ -1,6 +1,6 @@
-package com.prototype.repository;
+package com.agilexp.repository;
 
-import com.prototype.model.TaskData;
+import com.agilexp.model.TaskData;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TaskRepository extends CrudRepository<TaskData, Long> {

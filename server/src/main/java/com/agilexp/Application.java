@@ -1,7 +1,7 @@
-package com.prototype;
+package com.agilexp;
 
-import com.prototype.storage.StorageProperties;
-import com.prototype.storage.StorageService;
+import com.agilexp.storage.StorageProperties;
+import com.agilexp.storage.StorageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
-public class PrototypeApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(PrototypeApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @Bean

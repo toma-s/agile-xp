@@ -1,4 +1,4 @@
-package com.prototype.storage;
+package com.agilexp.storage;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
