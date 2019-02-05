@@ -1,17 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {UploadFileService} from '../upload-file.service';
-import { Task } from '../Task'
+import { UploadFileService } from '../upload-file.service';
+import { TaskContent } from '../model/task-content'
+import { TaskData } from '../model/task-data';
 
 @Component({
   selector: 'send-file',
   templateUrl: './send-file.component.html',
   styleUrls: ['./send-file.component.scss']
 })
+
 export class SendFileComponent implements OnInit {
 
-  task: Task = new Task();
-  submitted = false;
+  taskContent: TaskContent = new TaskContent()
+  taskData: TaskData = new TaskData()
+  submitted = false
+  gotResult = false
 
   constructor(private uploadFileService: UploadFileService) { }
 
@@ -19,22 +23,28 @@ export class SendFileComponent implements OnInit {
   }
 
   newTask(): void {
-    this.submitted = false;
-    this.task = new Task();
+    this.submitted = false
+    this.taskContent = new TaskContent()
   }
 
   save() {
-    this.uploadFileService.createTask(this.task)
+    this.uploadFileService.createTask(this.taskContent)
       .subscribe(
-        data => console.log(data),
+        (data: TaskData) => {
+          this.taskData = data
+          this.gotResult = true
+          console.log(data)
+          console.log(this.taskData.sourceFilename)
+        },
         error => console.log(error)
       );
-    this.task = new Task();
+    this.taskContent = new TaskContent()
+    this.taskData = new TaskData()
   }
 
   onSubmit() {
-    this.submitted = true;
-    this.save();
+    this.submitted = true
+    this.save()
   }
 
 }

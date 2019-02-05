@@ -25,8 +25,8 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void store(TaskContent taskContent) {
-        String sourceFilename = taskContent.getSourceFilename() + extention;
-        String testFilename = taskContent.getTestFilename() + extention;
+        String sourceFilename = taskContent.getSourceFilename();
+        String testFilename = taskContent.getTestFilename();
         String taskDirectoryname = "task" + taskContent.getId();
         Path directoryLocation;
 

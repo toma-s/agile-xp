@@ -1,13 +1,16 @@
 package com.agilexp.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.agilexp.copiler.TesterCompiler;
+import com.agilexp.copiler.CompilerTester;
 import com.agilexp.model.TaskContent;
+import com.agilexp.model.TaskData;
 import com.agilexp.repository.TaskRepository;
 import com.agilexp.storage.StorageFileNotFoundException;
 import com.agilexp.storage.StorageService;
@@ -60,67 +63,56 @@ public class TaskController {
     }
 
     @PostMapping(value = "/tasks/create")
-    public TaskContent handleFileUpload(@RequestBody TaskContent taskContent) throws IOException {
+    public TaskData handleFileUpload(@RequestBody TaskContent taskContent) throws IOException {
 
-        TesterCompiler compiler = new TesterCompiler();
-        Path taskDirectoryPath = storageService.load("task" + compiler.getId());
-        Files.createDirectory(taskDirectoryPath);
+        TaskData taskData = saveToDB(taskContent);
 
-        System.out.println("* controller: taskDirectoryPath: " + taskDirectoryPath.toString());
-        compiler.setTask(taskContent, taskDirectoryPath);
-        compiler.createTaskFiles();
-        Result result = compiler.compile();
+        Path taskDirectoryPath = storageService.load("task" + taskContent.getId());
+        CompilerTester compiler = new CompilerTester(taskContent, taskDirectoryPath);
+        String compileMessage = compiler.compile();
+        taskData.setCompileMessage(compileMessage);
+        taskData.setCompileSuccessful(compileMessage.equals("Compiled successfully")); // todo fix hardcoded text
+        Result result = compiler.runTests();
 
-        System.out.println("*Result:");
-        System.out.println("*getRunTime:" + result.getRunTime());
-        System.out.println("*getFailureCount:" + result.getFailureCount());
-        System.out.println("*getFailures:" + result.getFailures());
-        System.out.println("*getIgnoreCount:" + result.getIgnoreCount());
-        System.out.println("*getRunCount:" + result.getRunCount());
+        updateInDB(taskData, result);
 
-        // save result to DB
-//        Date date = new Date();
-//        Timestamp timestamp = new Timestamp(date.getTime());
-//        TaskData taskData = repository.save(new TaskData(taskContent.getSourceFilename(), taskContent.getTestFilename(), timestamp));
-//        taskContent.setId(taskData.getId());
-//
-        // save files: source and test
-//        System.out.println("Id: " + taskContent.getId());
-//        System.out.println("Source filename: " + taskContent.getSourceFilename());
-//        System.out.println("Test filename: " + taskContent.getTestFilename());
-//        System.out.println("Source code: " + taskContent.getSourceCode());
-//        System.out.println("Test code: " + taskContent.getTestCode());
-//        storageService.store(taskContent);
-
-        // test code
-//        Path taskDirectoryPath = storageService.load("task" + taskData.getId());
-//        Result result = TesterCompiler.compile(taskContent, taskDirectoryPath);
-
-
-//        // update in DB
-//        Optional<TaskData> origTaskData = repository.findById(taskData.getId());
-//        TaskData updTaskData;
-//        if (origTaskData.isPresent()) {
-//            updTaskData = origTaskData.get();
-//            updTaskData.setResultRunTime(result.getRunTime());
-//            updTaskData.setResultSuccessful(result.wasSuccessful());
-//            updTaskData.setResultRunCount(result.getRunCount());
-//            updTaskData.setResultFailuresCount(result.getFailureCount());
-//            updTaskData.setResultFailures(result.getFailures());
-//            updTaskData.setResultIgnoreCount(result.getIgnoreCount());
-//            repository.save(updTaskData);
-//
-//            System.out.println("Result:");
-//            System.out.println("Run Time:" + updTaskData.getResultRunTime());
-//            System.out.println("Successful:" + updTaskData.getResultSuccessful());
-//            System.out.println("Run Count:" + updTaskData.getResultRunCount());
-//            System.out.println("Failures Count:" + updTaskData.getResultFailureCount());
-//            System.out.println("Failures:" + updTaskData.getResultFailures());
-//            System.out.println("Ignore Count:" + updTaskData.getResultIgnoreCount());
-//        }
-
-        return taskContent;
+        return taskData;
     }
+
+    private TaskData saveToDB(TaskContent taskContent) {
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        TaskData taskData = repository.save(new TaskData(taskContent.getSourceFilename(), taskContent.getTestFilename(), timestamp));
+        taskContent.setId(taskData.getId());
+        storageService.store(taskContent);
+        return taskData;
+    }
+
+    private void updateInDB(TaskData taskData, Result result) {
+        Optional<TaskData> origTaskData = repository.findById(taskData.getId());
+        TaskData updTaskData;
+        if (origTaskData.isPresent()) {
+            updTaskData = origTaskData.get();
+            updTaskData.setResultRunTime(result.getRunTime());
+            updTaskData.setResultSuccessful(result.wasSuccessful());
+            updTaskData.setResultRunCount(result.getRunCount());
+            updTaskData.setResultFailuresCount(result.getFailureCount());
+            updTaskData.setResultFailures(result.getFailures());
+            updTaskData.setResultIgnoreCount(result.getIgnoreCount());
+            repository.save(updTaskData);
+
+            System.out.println("Compiled successfully: " + taskData.getCompileSuccessful());
+            System.out.println("Compile message: " + taskData.getCompileMessage());
+            System.out.println("Result:");
+            System.out.println("Run Time: " + updTaskData.getResultRunTime());
+            System.out.println("Successful: " + updTaskData.getResultSuccessful());
+            System.out.println("Run Count: " + updTaskData.getResultRunCount());
+            System.out.println("Failures Count: " + updTaskData.getResultFailureCount());
+            System.out.println("Failures: " + updTaskData.getResultFailures());
+            System.out.println("Ignore Count: " + updTaskData.getResultIgnoreCount());
+        }
+    }
+
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {

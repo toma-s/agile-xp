@@ -2,7 +2,6 @@ package com.agilexp.model;
 
 public class TaskContent extends Task {
 
-    private long taskId;
     private String sourceFilename;
     private String testFilename;
     private String sourceCode;
@@ -11,7 +10,7 @@ public class TaskContent extends Task {
     public TaskContent() {}
 
     public long getId() {
-        return this.taskId;
+        return super.getId();
     }
 
     public String getSourceCode() {
@@ -31,8 +30,8 @@ public class TaskContent extends Task {
     }
 
 
-    public void setId(Long taskId) {
-        this.taskId = taskId;
+    public void setId(Long id) {
+        super.setId(id);
     }
 
     public void setSourceCode(String sourceCode) {
