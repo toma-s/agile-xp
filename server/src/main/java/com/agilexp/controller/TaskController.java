@@ -63,7 +63,7 @@ public class TaskController {
     }
 
     @PostMapping(value = "/tasks/create")
-    public TaskContent handleFileUpload(@RequestBody TaskContent taskContent) throws IOException {
+    public TaskData handleFileUpload(@RequestBody TaskContent taskContent) throws IOException {
 
         // save result to DB
         Date date = new Date();
@@ -100,7 +100,7 @@ public class TaskController {
             System.out.println("Ignore Count:" + updTaskData.getResultIgnoreCount());
         }
 
-        return taskContent;
+        return taskData;
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

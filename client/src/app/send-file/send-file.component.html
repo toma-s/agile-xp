@@ -6,25 +6,25 @@
     <div class="sourceInput">
       <div class="form-group">
         <label for="sourceFilename">Source code filename:</label>
-        <input type="text" class="form-control" name="SourceFilename" id="sourceFilename" required [(ngModel)]="task.sourceFilename"/>
+        <input type="text" class="form-control" name="SourceFilename" id="sourceFilename" required [(ngModel)]="taskContent.sourceFilename"/>
       </div>
 
 
       <div class="form-group">
         <label for="sourceCode">Source code:</label>
-        <textarea class="form-control" name="SourceCode" [(ngModel)]="task.sourceCode" id="sourceCode" rows="20"></textarea>
+        <textarea class="form-control" name="SourceCode" [(ngModel)]="taskContent.sourceCode" id="sourceCode" rows="20"></textarea>
       </div>
     </div>
 
     <div class="testInput">
       <div class="form-group">
         <label for="testFilename">Test code filename:</label>
-        <input type="text" class="form-control" name="TestFilename" id="testFilename" required [(ngModel)]="task.testFilename"/>
+        <input type="text" class="form-control" name="TestFilename" id="testFilename" required [(ngModel)]="taskContent.testFilename"/>
       </div>
 
       <div class="form-group">
         <label for="testCode">Test code:</label>
-        <textarea class="form-control" name="TestCode" [(ngModel)]="task.testCode" id="testCode" rows="20"></textarea>
+        <textarea class="form-control" name="TestCode" [(ngModel)]="taskContent.testCode" id="testCode" rows="20"></textarea>
       </div>
     </div>
 
@@ -35,4 +35,14 @@
 <div [hidden]="!submitted">
   <h4>You've sent files successfully!</h4>
   <button class="btn btn-success" (click)="newTask()">Send new</button>
+</div>
+
+<div *ngIf="runTests">
+  <h3>Result</h3>
+  <p><strong>Successful:</strong> {{ taskData.resultSuccessful }}</p>
+  <p><strong>Run time:</strong> {{ taskData.resultRunTime }}</p>
+  <p><strong>Run count:</strong> {{ taskData.resultRunCount }}</p>
+  <p *ngIf="taskData.resultFailuresCount"><strong>Failures count:</strong> {{ taskData.resultFailuresCount }}</p>
+  <p *ngIf="taskData.resultFailuresCount"><strong>Failures:</strong> {{ taskData.resultFailures }}</p>
+  <p *ngIf="taskData.resultIgnoreCount"><strong>Ignore count:</strong> {{ taskData.resultIgnoreCount }}</p>
 </div>

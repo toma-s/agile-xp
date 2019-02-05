@@ -38,8 +38,6 @@ public class TaskData extends Task {
     @Column(name="task_result_ignore_count")
     private int resultIgnoreCount;
 
-    public TaskData() {}
-
     public TaskData(String sourceFilename, String testFilename, Timestamp timestamp) {
         this.sourceFilename = sourceFilename;
         this.testFilename = testFilename;

@@ -1,7 +1,8 @@
 package com.agilexp.model;
 
 abstract class Task {
-    private long id;
+
+    long id;
 
     public long getId() {
         return this.id;
