@@ -8,9 +8,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
 public class Application {
+
+    private static Long idCounter = 0L;
+//    public static final DateFormat formatDateFolder = new SimpleDateFormat("MM-dd-HH-mm-");
+//    public static final String appFolder = "temp";
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -22,5 +29,10 @@ public class Application {
             storageService.deleteAll();
             storageService.init();
         };
+    }
+
+    public static synchronized Long createId(){
+        idCounter += 1;
+        return idCounter;
     }
 }
