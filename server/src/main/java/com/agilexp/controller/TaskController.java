@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.agilexp.copiler.CompilerTester;
@@ -73,58 +74,31 @@ public class TaskController {
 
         // compile and test
         Path taskDirectoryPath = storageService.load("task" + taskContent.getId());
-//        Files.createDirectory(taskDirectoryPath);
-        System.out.println("* controller: taskDirectoryPath: " + taskDirectoryPath.toString());
-
         CompilerTester compiler = new CompilerTester(taskContent, taskDirectoryPath);
-
-//        compiler.createTaskFiles();
         compiler.compile();
         Result result = compiler.runTests();
 
-        System.out.println("*Result:");
-        System.out.println("*getRunTime:" + result.getRunTime());
-        System.out.println("*getFailureCount:" + result.getFailureCount());
-        System.out.println("*getFailures:" + result.getFailures());
-        System.out.println("*getIgnoreCount:" + result.getIgnoreCount());
-        System.out.println("*getRunCount:" + result.getRunCount());
+        // update in DB
+        Optional<TaskData> origTaskData = repository.findById(taskData.getId());
+        TaskData updTaskData;
+        if (origTaskData.isPresent()) {
+            updTaskData = origTaskData.get();
+            updTaskData.setResultRunTime(result.getRunTime());
+            updTaskData.setResultSuccessful(result.wasSuccessful());
+            updTaskData.setResultRunCount(result.getRunCount());
+            updTaskData.setResultFailuresCount(result.getFailureCount());
+            updTaskData.setResultFailures(result.getFailures());
+            updTaskData.setResultIgnoreCount(result.getIgnoreCount());
+            repository.save(updTaskData);
 
-
-//
-        // save files: source and test
-//        System.out.println("Id: " + taskContent.getId());
-//        System.out.println("Source filename: " + taskContent.getSourceFilename());
-//        System.out.println("Test filename: " + taskContent.getTestFilename());
-//        System.out.println("Source code: " + taskContent.getSourceCode());
-//        System.out.println("Test code: " + taskContent.getTestCode());
-//        storageService.store(taskContent);
-
-        // test code
-//        Path taskDirectoryPath = storageService.load("task" + taskData.getId());
-//        Result result = CompilerTester.compile(taskContent, taskDirectoryPath);
-
-
-//        // update in DB
-//        Optional<TaskData> origTaskData = repository.findById(taskData.getId());
-//        TaskData updTaskData;
-//        if (origTaskData.isPresent()) {
-//            updTaskData = origTaskData.get();
-//            updTaskData.setResultRunTime(result.getRunTime());
-//            updTaskData.setResultSuccessful(result.wasSuccessful());
-//            updTaskData.setResultRunCount(result.getRunCount());
-//            updTaskData.setResultFailuresCount(result.getFailureCount());
-//            updTaskData.setResultFailures(result.getFailures());
-//            updTaskData.setResultIgnoreCount(result.getIgnoreCount());
-//            repository.save(updTaskData);
-//
-//            System.out.println("Result:");
-//            System.out.println("Run Time:" + updTaskData.getResultRunTime());
-//            System.out.println("Successful:" + updTaskData.getResultSuccessful());
-//            System.out.println("Run Count:" + updTaskData.getResultRunCount());
-//            System.out.println("Failures Count:" + updTaskData.getResultFailureCount());
-//            System.out.println("Failures:" + updTaskData.getResultFailures());
-//            System.out.println("Ignore Count:" + updTaskData.getResultIgnoreCount());
-//        }
+            System.out.println("Result:");
+            System.out.println("Run Time:" + updTaskData.getResultRunTime());
+            System.out.println("Successful:" + updTaskData.getResultSuccessful());
+            System.out.println("Run Count:" + updTaskData.getResultRunCount());
+            System.out.println("Failures Count:" + updTaskData.getResultFailureCount());
+            System.out.println("Failures:" + updTaskData.getResultFailures());
+            System.out.println("Ignore Count:" + updTaskData.getResultIgnoreCount());
+        }
 
         return taskContent;
     }
