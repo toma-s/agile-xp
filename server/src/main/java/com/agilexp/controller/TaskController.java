@@ -69,7 +69,9 @@ public class TaskController {
 
         Path taskDirectoryPath = storageService.load("task" + taskContent.getId());
         CompilerTester compiler = new CompilerTester(taskContent, taskDirectoryPath);
-        compiler.compile();
+        String compileMessage = compiler.compile();
+        taskData.setCompileMessage(compileMessage);
+        taskData.setCompileSuccessful(compileMessage.equals("Compiled successfully")); // todo fix hardcoded text
         Result result = compiler.runTests();
 
         updateInDB(taskData, result);
@@ -99,13 +101,15 @@ public class TaskController {
             updTaskData.setResultIgnoreCount(result.getIgnoreCount());
             repository.save(updTaskData);
 
+            System.out.println("Compiled successfully: " + taskData.getCompileSuccessful());
+            System.out.println("Compile message: " + taskData.getCompileMessage());
             System.out.println("Result:");
-            System.out.println("Run Time:" + updTaskData.getResultRunTime());
-            System.out.println("Successful:" + updTaskData.getResultSuccessful());
-            System.out.println("Run Count:" + updTaskData.getResultRunCount());
-            System.out.println("Failures Count:" + updTaskData.getResultFailureCount());
-            System.out.println("Failures:" + updTaskData.getResultFailures());
-            System.out.println("Ignore Count:" + updTaskData.getResultIgnoreCount());
+            System.out.println("Run Time: " + updTaskData.getResultRunTime());
+            System.out.println("Successful: " + updTaskData.getResultSuccessful());
+            System.out.println("Run Count: " + updTaskData.getResultRunCount());
+            System.out.println("Failures Count: " + updTaskData.getResultFailureCount());
+            System.out.println("Failures: " + updTaskData.getResultFailures());
+            System.out.println("Ignore Count: " + updTaskData.getResultIgnoreCount());
         }
     }
 

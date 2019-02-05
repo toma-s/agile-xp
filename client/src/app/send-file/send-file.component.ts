@@ -15,7 +15,7 @@ export class SendFileComponent implements OnInit {
   taskContent: TaskContent = new TaskContent()
   taskData: TaskData = new TaskData()
   submitted = false
-  runTests = false
+  gotResult = false
 
   constructor(private uploadFileService: UploadFileService) { }
 
@@ -32,13 +32,14 @@ export class SendFileComponent implements OnInit {
       .subscribe(
         (data: TaskData) => {
           this.taskData = data
-          this.runTests = true
+          this.gotResult = true
           console.log(data)
           console.log(this.taskData.sourceFilename)
         },
         error => console.log(error)
       );
     this.taskContent = new TaskContent()
+    this.taskData = new TaskData()
   }
 
   onSubmit() {

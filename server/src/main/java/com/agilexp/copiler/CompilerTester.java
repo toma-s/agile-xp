@@ -37,10 +37,12 @@ public class CompilerTester {
         this.taskDirectoryPath = taskDirectoryPath;
     }
 
-    public void compile() {
+    public String compile() {
 
-        File taskDirectory = taskDirectoryPath.toFile();
-        System.out.println("taskDirectoryPath: " + taskDirectoryPath.toString());
+        String message = "Compiled successfully";
+
+        File taskDirectory = this.taskDirectoryPath.toFile();
+        System.out.println("taskDirectoryPath: " + this.taskDirectoryPath.toString());
         for (File file : Objects.requireNonNull(taskDirectory.listFiles())) {
             if (file.isFile()) {
                 this.filesToCompile.add(file);
@@ -61,12 +63,15 @@ public class CompilerTester {
             DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
             StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
             Iterable<? extends JavaFileObject> compilationUnits =
-                    fileManager.getJavaFileObjectsFromFiles(filesToCompile);
+                    fileManager.getJavaFileObjectsFromFiles(this.filesToCompile);
 
-            final Iterable<String> options = Arrays.asList("-d", taskDirectoryPath.resolve("out").toString());
+            final Iterable<String> options = Arrays.asList("-d", this.taskDirectoryPath.resolve("out").toString());
 
             compiler.getTask(null, fileManager, null, options, null, compilationUnits).call();
             for (Diagnostic diagnostic: diagnostics.getDiagnostics()) {
+                message = String.format("Error on line %d in %s",
+                        diagnostic.getLineNumber(),
+                        diagnostic.getSource().toString());
                 System.out.format("Error on line %d in %s",
                         diagnostic.getLineNumber(),
                         diagnostic.getSource().toString());
@@ -77,6 +82,7 @@ public class CompilerTester {
             io.printStackTrace();
         }
 
+        return message;
     }
 
     public Result runTests() {

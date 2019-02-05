@@ -11,32 +11,38 @@ public class TaskData extends Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name="task_source_filename")
+    @Column(name="source_filename")
     private String sourceFilename;
 
-    @Column(name="task_test_filename")
+    @Column(name="test_filename")
     private String testFilename;
 
-    @Column(name= "task_timestamp")
+    @Column(name= "timestamp")
     private Timestamp timestamp;
 
-    @Column(name="task_result_run_time")
+    @Column(name="result_run_time")
     private long resultRunTime;
 
-    @Column(name="task_result_successful")
+    @Column(name="result_successful")
     private Boolean resultSuccessful;
 
-    @Column(name="task_result_run_count")
+    @Column(name="result_run_count")
     private int resultRunCount;
 
-    @Column(name="task_result_failures_count")
+    @Column(name="result_failures_count")
     private int resultFailuresCount;
 
-    @Column(name="task_result_failures")
+    @Column(name="result_failures")
     private String resultFailures;
 
-    @Column(name="task_result_ignore_count")
+    @Column(name="result_ignore_count")
     private int resultIgnoreCount;
+
+    @Column(name="compile_successful")
+    private Boolean compileSuccessful;
+
+    @Column(name="compile_message")
+    private String compileMessage;
 
     public TaskData(String sourceFilename, String testFilename, Timestamp timestamp) {
         this.sourceFilename = sourceFilename;
@@ -48,21 +54,8 @@ public class TaskData extends Task {
         this.resultFailuresCount = 0;
         this.resultFailures = "";
         this.resultIgnoreCount = 0;
+        this.compileMessage = "";
     }
-
-    public TaskData(String sourceFilename, String testFilename, Timestamp timestamp,
-                    long resultRunTime, boolean resultSuccessful, int resultRunCount, int resultFailuresCount, List resultFailures, int resultIgnoreCount) {
-        this.sourceFilename = sourceFilename;
-        this.testFilename = testFilename;
-        this.timestamp = timestamp;
-        this.resultRunTime = resultRunTime;
-        this.resultSuccessful = resultSuccessful;
-        this.resultRunCount = resultRunCount;
-        this.resultFailuresCount = resultFailuresCount;
-        this.resultFailures = resultFailures.toString();
-        this.resultIgnoreCount = resultIgnoreCount;
-    }
-
 
     public long getId() {
         return this.id;
@@ -102,6 +95,14 @@ public class TaskData extends Task {
 
     public int getResultIgnoreCount() {
         return this.resultIgnoreCount;
+    }
+
+    public String getCompileMessage() {
+        return this.compileMessage;
+    }
+
+    public Boolean getCompileSuccessful() {
+        return this.compileSuccessful;
     }
 
 
@@ -145,4 +146,11 @@ public class TaskData extends Task {
         this.resultIgnoreCount = resultIgnoreCount;
     }
 
+    public void setCompileMessage(String compileMessage) {
+        this.compileMessage = compileMessage;
+    }
+
+    public void setCompileSuccessful(Boolean compileSuccessful) {
+        this.compileSuccessful = compileSuccessful;
+    }
 }

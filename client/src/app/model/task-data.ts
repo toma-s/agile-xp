@@ -9,4 +9,6 @@ export class TaskData {
     resultFailuresCount: number;
     resultFailures: string;
     resultIgnoreCount: number;
+    compileSuccessful: boolean;
+    compileMessage: string;
 }
