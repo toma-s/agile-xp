@@ -1,0 +1,5 @@
+<h3>Results</h3>
+
+<div *ngFor="let task of tasks | async">
+  <task-details [task]='task'></task-details>
+</div>

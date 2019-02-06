@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import { TaskContent } from './model/task-content';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class UploadFileService {
+export class TaskService {
 
   private baseUrl = 'http://localhost:8080/api/tasks';
 
@@ -16,6 +15,10 @@ export class UploadFileService {
   createTask(task: Object): Observable<Object> {
     console.log(task);
     return this.http.post(`${this.baseUrl}` + `/create`, task)
+  }
+
+  getTasksList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}`)
   }
 
 }

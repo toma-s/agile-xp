@@ -10,6 +10,8 @@ import { SearchMessagesComponent } from './search-messages/search-messages.compo
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SendTaskComponent } from './send-task/send-task.component';
+import { TasksListComponent } from './tasks-list/tasks-list.component';
+import { TaskDetailsComponent } from './task-details/task-details.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { SendTaskComponent } from './send-task/send-task.component';
     MessageDetailsComponent,
     MessagesListComponent,
     SearchMessagesComponent,
-    SendTaskComponent
+    SendTaskComponent,
+    TasksListComponent,
+    TaskDetailsComponent
   ],
   imports: [
     BrowserModule,

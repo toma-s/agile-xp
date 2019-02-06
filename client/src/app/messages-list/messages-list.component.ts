@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { MessageService } from '../message.service';
-import { Message } from '../message';
+import { Component, OnInit } from '@angular/core'
+import { Observable } from 'rxjs'
+import { MessageService } from '../message.service'
+import { Message } from '../message'
 
 
 @Component({
@@ -13,26 +12,26 @@ import { Message } from '../message';
 
 export class MessagesListComponent implements OnInit {
 
-  messages: Observable<Message[]>;
+  messages: Observable<Message[]>
 
   constructor(private messageService: MessageService) { }
 
   ngOnInit() {
-    this.reloadData();
+    this.reloadData()
   }
 
   deleteMessages() {
     this.messageService.deleteAll()
       .subscribe(
         data => {
-          console.log(data);
-          this.reloadData();
+          console.log(data)
+          this.reloadData()
         },
-        error => console.log('error: ' + error));
+        error => console.log('error: ' + error))
   }
 
   reloadData() {
-    this.messages = this.messageService.getMessagesList();
+    this.messages = this.messageService.getMessagesList()
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UploadFileService } from '../upload-task.service';
+import { TaskService } from '../task.service';
 import { TaskContent } from '../model/task-content'
 import { TaskData } from '../model/task-data';
 
@@ -17,7 +17,7 @@ export class SendTaskComponent implements OnInit {
   submitted = false
   gotResult = false
 
-  constructor(private uploadFileService: UploadFileService) { }
+  constructor(private uploadFileService: TaskService) { }
 
   ngOnInit(): void {
   }

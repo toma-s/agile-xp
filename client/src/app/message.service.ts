@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class MessageService {
 
   private baseUrl = 'http://localhost:8080/api/messages';

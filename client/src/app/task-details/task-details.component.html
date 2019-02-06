@@ -1,0 +1,53 @@
+<div *ngIf="task">
+
+  <div>
+    <label>Id: </label> {{task.id}}
+  </div>
+
+  <div>
+    <label>Source code filename: </label> {{task.sourceFilename}}
+  </div>
+
+  <div>
+  <label>Test filename: </label> {{task.testFilename}}
+  </div>
+
+  <div>
+    <label>Date and time: </label> {{task.timestamp}}
+  </div>
+
+  <div>
+    <label>Compiled successfully: </label> {{task.compileSuccessful}}
+  </div>
+
+  <div>
+    <label>Compilation message: </label> {{task.compileMessage}}
+  </div>
+
+  <div>
+    <label>Tests running time: </label> {{task.resultRunTime}}
+  </div>
+
+  <div>
+    <label>Tests ran successfully: </label> {{task.resultSuccessful}}
+  </div>
+
+  <div>
+    <label>Tests run count: </label> {{task.resultRunCount}}
+  </div>
+
+  <div *ngIf="task.resultFailuresCount">
+    <label>Failures count: </label> {{task.resultFailuresCount}}
+  </div>
+
+  <div *ngIf="task.resultFailures.size === 0">
+    <label>Failures: </label> {{task.resultFailures}}
+  </div>
+
+  <div *ngIf="task.resultIgnoreCount">
+    <label>Ignored count</label> {{task.resultIgnoreCount}}
+  </div>
+
+  <hr/>
+
+</div>
