@@ -9,7 +9,7 @@ import { MessagesListComponent } from './messages-list/messages-list.component';
 import { SearchMessagesComponent } from './search-messages/search-messages.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { SendFileComponent } from './send-file/send-file.component';
+import { SendTaskComponent } from './send-task/send-task.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { SendFileComponent } from './send-file/send-file.component';
     MessageDetailsComponent,
     MessagesListComponent,
     SearchMessagesComponent,
-    SendFileComponent
+    SendTaskComponent
   ],
   imports: [
     BrowserModule,

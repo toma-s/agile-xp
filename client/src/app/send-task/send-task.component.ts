@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UploadFileService } from '../upload-file.service';
+import { UploadFileService } from '../upload-task.service';
 import { TaskContent } from '../model/task-content'
 import { TaskData } from '../model/task-data';
 
 @Component({
   selector: 'send-file',
-  templateUrl: './send-file.component.html',
-  styleUrls: ['./send-file.component.scss']
+  templateUrl: './send-task.component.html',
+  styleUrls: ['./send-task.component.scss']
 })
 
-export class SendFileComponent implements OnInit {
+export class SendTaskComponent implements OnInit {
 
   taskContent: TaskContent = new TaskContent()
   taskData: TaskData = new TaskData()
