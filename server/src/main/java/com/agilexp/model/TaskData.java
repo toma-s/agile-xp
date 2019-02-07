@@ -17,7 +17,7 @@ public class TaskData extends Task {
     @Column(name="test_filename")
     private String testFilename;
 
-    @Column(name= "timestamp")
+    @Column(name= "date_time")
     private Timestamp timestamp;
 
     @Column(name="result_run_time")
