@@ -1,12 +1,12 @@
 package com.agilexp.controller;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.agilexp.copiler.CompilerTester;
 import com.agilexp.model.TaskContent;
@@ -16,12 +16,8 @@ import com.agilexp.storage.StorageFileNotFoundException;
 import com.agilexp.storage.StorageService;
 import org.junit.runner.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -38,28 +34,14 @@ public class TaskController {
         this.storageService = storageService;
     }
 
-    @GetMapping("/")
-    public String listUploadedFiles(Model model) throws IOException {
+    @GetMapping("/tasks")
+    public List<TaskData> getAllTasks() {
+        System.out.println("Get all tasks...");
 
-        System.out.println("*here: listUploadedFiles");
+        List<TaskData> tasks = new ArrayList<>();
+        repository.findAll().forEach(tasks::add);
 
-        model.addAttribute("files", storageService.loadAll().map(
-                path -> MvcUriComponentsBuilder.fromMethodName(TaskController.class,
-                        "serveFile", path.getFileName().toString()).build().toString())
-                .collect(Collectors.toList()));
-
-        return "uploadForm";
-    }
-
-    @GetMapping("/files/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-
-        System.out.println("*here: serveFile");
-
-        Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        return tasks;
     }
 
     @PostMapping(value = "/tasks/create")

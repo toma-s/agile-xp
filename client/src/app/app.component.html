@@ -1,11 +1,14 @@
-<div style="padding: 20px;">
-  <h1 style="color: blue">{{title}}</h1>
-  <h3>{{description}}</h3>
-  <nav>
-    <a routerLink="message" class="btn btn-primary active" role="button" routerLinkActive="active">Messages</a>
-    <a routerLink="add" class="btn btn-primary active" role="button" routerLinkActive="active">Add Message</a>
-    <a routerLink="findBySender" class="btn btn-primary active" role="button" routerLinkActive="active">Search Message</a>
-    <a routerLink="sendFile" class="btn btn-primary active" role="button" routerLinkActive="active">Send File</a>
-  </nav>
+<div> 
+
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1 title headline>{{headline}}.</h1>
+      <h2 class="example-spacer">{{title}}</h2>
+
+      <a routerLink="sendTask" role="button" routerLinkActive="active" mat-button>Send Code with Test</a>
+      <a routerLink="tasksList" role="button" routerLinkActive="active" mat-button>Show Results</a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
   <router-outlet></router-outlet>
 </div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SendFileComponent } from './send-file.component';
+import { TaskDetailsComponent } from './task-details.component';
 
-describe('SendFileComponent', () => {
-  let component: SendFileComponent;
-  let fixture: ComponentFixture<SendFileComponent>;
+describe('TaskDetailsComponent', () => {
+  let component: TaskDetailsComponent;
+  let fixture: ComponentFixture<TaskDetailsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SendFileComponent ]
+      declarations: [ TaskDetailsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SendFileComponent);
+    fixture = TestBed.createComponent(TaskDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

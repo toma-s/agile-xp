@@ -44,6 +44,8 @@ public class TaskData extends Task {
     @Column(name="compile_message")
     private String compileMessage;
 
+    public TaskData() {}
+
     public TaskData(String sourceFilename, String testFilename, Timestamp timestamp) {
         this.sourceFilename = sourceFilename;
         this.testFilename = testFilename;
