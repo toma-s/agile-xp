@@ -13,32 +13,24 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 
 export class TasksListComponent implements OnInit {
-  dataSource;
+  dataSource: any;
   displayedColumns = [];
-  @ViewChild(MatSort) sort: MatSort;
-
-  // tasks: TaskData[]
 
   constructor(private taskService: TaskService) { }
 
-  // columnNames = [
-  //   {id: "id", value: "Id"},
-  //   {id: "result", value: "Result"}
-  // ]
-
   columnNames = [
     {id: 'id', value: 'Id'},
-    {id: 'sourceFilename', value: 'SourceFilename'},
-    {id: 'testFilename', value: 'TestFilename'},
-    {id: 'timestamp', value: 'Timestamp'},
-    {id: 'resultRunTime', value: 'ResultRunTime'},
-    {id: 'resultSuccessful', value: 'ResultSuccessful'},
-    {id: 'resultRunCount', value: 'ResultRunCount'},
-    {id: 'resultFailuresCount', value: 'ResultFailuresCount'},
-    {id: 'resultFailures', value: 'ResultFailures'},
-    {id: 'resultIgnoreCount', value: 'ResultIgnoreCount'},
-    {id: 'compileSuccessful', value: 'CompileSuccessful'},
-    {id: 'compileMessage', value: 'CompileMessage'}
+    {id: 'sourceFilename', value: 'Source code filename'},
+    {id: 'testFilename', value: 'Test filename'},
+    {id: 'timestamp', value: 'Date and time'},
+    {id: 'resultRunTime', value: 'Tests running time'},
+    {id: 'resultSuccessful', value: 'Tests succeeded'},
+    {id: 'resultRunCount', value: 'Tests run count'},
+    {id: 'resultFailuresCount', value: 'Failures count'},
+    {id: 'resultFailures', value: 'Failures'},
+    {id: 'resultIgnoreCount', value: 'Ignored tests count'},
+    {id: 'compileSuccessful', value: 'Compilation succeeded'},
+    {id: 'compileMessage', value: 'Compilation message'}
   ];
 
   ngOnInit() {
@@ -47,14 +39,9 @@ export class TasksListComponent implements OnInit {
   }
 
   createTable() {
-    let tableArr: TaskData[];
-    console.log(this.taskService.getTasksList());
     this.taskService.getTasksList()
       .subscribe(tasks => {
-        console.log(tasks);
         this.dataSource = new MatTableDataSource(tasks);
-        this.dataSource.sort = this.sort;
-        tableArr = tasks;
       });
 
   }
