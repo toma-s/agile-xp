@@ -1,7 +1,7 @@
 <h2>Results</h2>
 
 <div *ngIf="dataSource !== undefined">
-  <mat-table [dataSource]="dataSource">
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z2">
     <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
       <mat-header-cell *matHeaderCellDef>{{column.value}}</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element[column.id]}}</mat-cell>
