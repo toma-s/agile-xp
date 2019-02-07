@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-
-import { TaskService } from '../task.service';
+import { Component, OnInit } from '@angular/core'
+import { TaskService } from '../task.service'
 import { TaskContent } from '../model/task-content'
-import { TaskData } from '../model/task-data';
+import { TaskData } from '../model/task-data'
 
 @Component({
   selector: 'send-file',

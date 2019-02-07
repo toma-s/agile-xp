@@ -1,9 +1,0 @@
-<h3>Messages</h3>
-
-<div *ngFor="let message of messages | async" style="width: 300px;">
-  <message-details [message]='message'></message-details>
-</div>
-
-<div>
-  <button type="button" class="button btn-danger" (click)='deleteMessages()'>Delete All</button>
-</div>
