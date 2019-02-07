@@ -50,4 +50,11 @@ public class TaskContent extends Task {
         this.testFilename = testFilename;
     }
 
+    public boolean isEmpty() {
+        return sourceFilename == null || sourceCode == null ||
+                testFilename == null || testCode == null ||
+                sourceFilename.isEmpty() || sourceCode.isEmpty() ||
+                testFilename.isEmpty() || testCode.isEmpty();
+    }
+
 }

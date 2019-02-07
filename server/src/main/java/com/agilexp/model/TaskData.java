@@ -46,6 +46,10 @@ public class TaskData extends Task {
 
     public TaskData() {}
 
+    public TaskData(Long id) {
+        this.id = id;
+    }
+
     public TaskData(String sourceFilename, String testFilename, Timestamp timestamp) {
         this.sourceFilename = sourceFilename;
         this.testFilename = testFilename;

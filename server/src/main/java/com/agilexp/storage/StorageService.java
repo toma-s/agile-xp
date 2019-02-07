@@ -10,7 +10,7 @@ public interface StorageService {
 
     void init();
 
-    void store(TaskContent taskContent);
+    void store(TaskContent taskContent, Long id);
 
     Stream<Path> loadAll();
 
