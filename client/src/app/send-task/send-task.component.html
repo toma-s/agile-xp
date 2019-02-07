@@ -3,29 +3,25 @@
 <div [hidden]="submitted">
 
   <form (ngSubmit)="onSubmit()">
-    <div class="input-code">
-      <mat-form-field>
-          <input matInput placeholder="Source code filename" required 
-          [(ngModel)]="taskContent.sourceFilename" name="sourceFilename">
-        </mat-form-field>
-        <mat-form-field>
-          <textarea matInput placeholder="Source code" rows="20" required
-            [(ngModel)]="taskContent.sourceCode" name="sourceCode">
-          </textarea>
-        </mat-form-field>
-    </div>
-    
-    <div class="input-code">
-      <mat-form-field>
-          <input matInput placeholder="Test code filename" required 
-          [(ngModel)]="taskContent.testFilename" name="testFilename">
-        </mat-form-field>
-        <mat-form-field>
-          <textarea matInput placeholder="Test code" rows="20" required
-            [(ngModel)]="taskContent.testCode" name="testCode">
-          </textarea>
-        </mat-form-field>
-    </div>
+    <mat-form-field class="mat-elevation-z2">
+      <input matInput placeholder="Source code filename" required 
+      [(ngModel)]="taskContent.sourceFilename" name="sourceFilename">
+    </mat-form-field>
+    <mat-form-field class="mat-elevation-z2">
+      <textarea matInput placeholder="Source code" rows="20" required
+        [(ngModel)]="taskContent.sourceCode" name="sourceCode">
+      </textarea>
+    </mat-form-field>
+
+    <mat-form-field class="mat-elevation-z2">
+      <input matInput placeholder="Test code filename" required 
+      [(ngModel)]="taskContent.testFilename" name="testFilename">
+    </mat-form-field>
+    <mat-form-field class="mat-elevation-z2">
+      <textarea matInput placeholder="Test code" rows="20" required
+        [(ngModel)]="taskContent.testCode" name="testCode">
+      </textarea>
+    </mat-form-field>
 
     <div class="submit">
       <button mat-raised-button color="accent" type="submit">Send</button>
@@ -35,23 +31,19 @@
 </div>
 
 <div [hidden]="!submitted">
-  <h4>You've sent files successfully!</h4>
-  <h4 *ngIf="!gotResult">Wait for the result...</h4>
+  <p>You've sent files successfully!</p>
+  <p *ngIf="!response">Wait for the result...</p>
   <button mat-raised-button color="accent"  (click)="newTask()">Send new</button>
 </div>
 
-<div *ngIf="gotResult">
-  <h2>Compilation and test results</h2>
+<div *ngIf="response">
+  <p><strong>{{response}}</strong></p>
 
-  <div *ngIf="taskData.compileSuccessful; then resultBlock else compileErrorBlock"></div>
-
-  <ng-template #resultBlock>
-    <h3>Compiled successfully</h3>
-
+  <div *ngIf="gotTestResult">
     <p><strong>Run time:</strong> {{ taskData.resultRunTime }} ms</p>
     <p><strong>Run count:</strong> {{ taskData.resultRunCount }}</p>
 
-    <div *ngIf="taskData.resultSuccessful; then okBlock else failBlock">
+    <div *ngIf="taskData.resultSuccessful; then okBlock else failBlock"></div>
 
       <ng-template #okBlock>
           <p><strong>All tests ran successfully</strong></p>
@@ -64,12 +56,5 @@
           <p><strong>Ignore count:</strong> {{ taskData.resultIgnoreCount }}</p>
       </ng-template>
 
-    </div>
-  </ng-template>
-  
-  <ng-template #compileErrorBlock>
-    <p><strong>Compilation error:</strong></p>
-    <p>{{ taskData.compileMessage }}</p>
-  </ng-template>
-      
+  </div>
 </div>

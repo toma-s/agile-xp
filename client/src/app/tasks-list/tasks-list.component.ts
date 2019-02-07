@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TaskService } from '../task.service';
 import { TaskData } from '../model/task-data';
+import { DataSource } from '@angular/cdk/table';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
 
@@ -13,8 +15,16 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 export class TasksListComponent implements OnInit {
   dataSource;
   displayedColumns = [];
+  @ViewChild(MatSort) sort: MatSort;
+
+  // tasks: TaskData[]
 
   constructor(private taskService: TaskService) { }
+
+  // columnNames = [
+  //   {id: "id", value: "Id"},
+  //   {id: "result", value: "Result"}
+  // ]
 
   columnNames = [
     {id: 'id', value: 'Id'},
@@ -37,10 +47,15 @@ export class TasksListComponent implements OnInit {
   }
 
   createTable() {
+    let tableArr: TaskData[];
+    console.log(this.taskService.getTasksList());
     this.taskService.getTasksList()
       .subscribe(tasks => {
-        // this.datepipe.transform(ts, 'yyyy-MM-dd');
+        console.log(tasks);
         this.dataSource = new MatTableDataSource(tasks);
+        this.dataSource.sort = this.sort;
+        tableArr = tasks;
       });
+
   }
 }

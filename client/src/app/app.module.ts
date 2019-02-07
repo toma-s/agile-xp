@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatProgressSpinnerModule, MatIconModule, 
+import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatProgressSpinnerModule, MatIconModule,
   MatFormFieldModule, MatSelectModule, MatSortModule } from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { SendTaskComponent } from './send-task/send-task.component';
 import { TasksListComponent } from './tasks-list/tasks-list.component';
 import { CdkColumnDef } from '@angular/cdk/table';
-import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -29,18 +29,18 @@ import { MatDividerModule } from '@angular/material/divider';
     HttpClientModule,
     MatCheckboxModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatToolbarModule,
+    MatCardModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatMenuModule,
     MatIconModule,
+    MatToolbarModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatInputModule,
     MatSelectModule,
     MatSortModule,
-    MatTableModule,
-    MatDividerModule
+    MatTableModule
   ],
   providers: [CdkColumnDef],
   bootstrap: [AppComponent]
