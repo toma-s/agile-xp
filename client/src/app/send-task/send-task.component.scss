@@ -1,8 +1,15 @@
 .mat-form-field {
-  width: 450px;
-  margin-right: 30px;
+  width: 50%;
+  float: left;
+  clear: both;
 }
 
-.container {
-  margin: 40px;
+.submit {
+  float: left;
+  clear: both;
+  margin-bottom: 40px;
+}
+
+.input-code {
+  margin-bottom: 30px;
 }

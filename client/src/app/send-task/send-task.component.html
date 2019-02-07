@@ -1,73 +1,75 @@
-<div class="container">
-
 <h2>Send Code with Test</h2>
 
-  <div [hidden]="submitted">
+<div [hidden]="submitted">
 
-    <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()">
+    <div class="input-code">
       <mat-form-field>
-        <input matInput placeholder="Source code filename" required 
-        [(ngModel)]="taskContent.sourceFilename" name="sourceFilename">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Test code filename" required 
-        [(ngModel)]="taskContent.testFilename" name="testFilename">
-      </mat-form-field>
-      <mat-form-field>
-        <textarea matInput placeholder="Source code" rows="20" required
-          [(ngModel)]="taskContent.sourceCode" name="sourceCode">
-        </textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <textarea matInput placeholder="Test code" rows="20" required
-          [(ngModel)]="taskContent.testCode" name="testCode">
-        </textarea>
-      </mat-form-field>
-      <div>
-        <button mat-raised-button color="accent" type="submit">Send</button>
-      </div>
-      
-    </form>
-  </div>
-
-  <div [hidden]="!submitted">
-    <h4>You've sent files successfully!</h4>
-    <h4 *ngIf="!gotResult">Wait for the result...</h4>
-    <button mat-raised-button color="accent"  (click)="newTask()">Send new</button>
-  </div>
-
-  <div *ngIf="gotResult">
-    <h2>Compilation and test results</h2>
-
-    <div *ngIf="taskData.compileSuccessful; then resultBlock else compileErrorBlock"></div>
-
-    <ng-template #resultBlock>
-      <h3>Compiled successfully</h3>
-
-      <p><strong>Run time:</strong> {{ taskData.resultRunTime }} ms</p>
-      <p><strong>Run count:</strong> {{ taskData.resultRunCount }}</p>
-
-      <div *ngIf="taskData.resultSuccessful; then okBlock else failBlock">
-
-        <ng-template #okBlock>
-            <p><strong>All tests ran successfully</strong></p>
-        </ng-template>
-
-        <ng-template #failBlock>
-            <p><strong>Tests ran unsuccessfully</strong></p>
-            <p><strong>Failures count:</strong> {{ taskData.resultFailuresCount }}</p>
-            <p><strong>Failures:</strong> {{ taskData.resultFailures }}</p>
-            <p><strong>Ignore count:</strong> {{ taskData.resultIgnoreCount }}</p>
-        </ng-template>
-
-      </div>
-    </ng-template>
+          <input matInput placeholder="Source code filename" required 
+          [(ngModel)]="taskContent.sourceFilename" name="sourceFilename">
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput placeholder="Source code" rows="20" required
+            [(ngModel)]="taskContent.sourceCode" name="sourceCode">
+          </textarea>
+        </mat-form-field>
+    </div>
     
-    <ng-template #compileErrorBlock>
-      <p><strong>Compilation error:</strong></p>
-      <p>{{ taskData.compileMessage }}</p>
-    </ng-template>
-        
-  </div>
+    <div class="input-code">
+      <mat-form-field>
+          <input matInput placeholder="Test code filename" required 
+          [(ngModel)]="taskContent.testFilename" name="testFilename">
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput placeholder="Test code" rows="20" required
+            [(ngModel)]="taskContent.testCode" name="testCode">
+          </textarea>
+        </mat-form-field>
+    </div>
 
+    <div class="submit">
+      <button mat-raised-button color="accent" type="submit">Send</button>
+    </div>
+    
+  </form>
+</div>
+
+<div [hidden]="!submitted">
+  <h4>You've sent files successfully!</h4>
+  <h4 *ngIf="!gotResult">Wait for the result...</h4>
+  <button mat-raised-button color="accent"  (click)="newTask()">Send new</button>
+</div>
+
+<div *ngIf="gotResult">
+  <h2>Compilation and test results</h2>
+
+  <div *ngIf="taskData.compileSuccessful; then resultBlock else compileErrorBlock"></div>
+
+  <ng-template #resultBlock>
+    <h3>Compiled successfully</h3>
+
+    <p><strong>Run time:</strong> {{ taskData.resultRunTime }} ms</p>
+    <p><strong>Run count:</strong> {{ taskData.resultRunCount }}</p>
+
+    <div *ngIf="taskData.resultSuccessful; then okBlock else failBlock">
+
+      <ng-template #okBlock>
+          <p><strong>All tests ran successfully</strong></p>
+      </ng-template>
+
+      <ng-template #failBlock>
+          <p><strong>Tests ran unsuccessfully</strong></p>
+          <p><strong>Failures count:</strong> {{ taskData.resultFailuresCount }}</p>
+          <p><strong>Failures:</strong> {{ taskData.resultFailures }}</p>
+          <p><strong>Ignore count:</strong> {{ taskData.resultIgnoreCount }}</p>
+      </ng-template>
+
+    </div>
+  </ng-template>
+  
+  <ng-template #compileErrorBlock>
+    <p><strong>Compilation error:</strong></p>
+    <p>{{ taskData.compileMessage }}</p>
+  </ng-template>
+      
 </div>

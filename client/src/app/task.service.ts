@@ -14,11 +14,11 @@ export class TaskService {
 
   createTask(task: Object): Observable<Object> {
     console.log(task);
-    return this.http.post(`${this.baseUrl}` + `/create`, task)
+    return this.http.post(`${this.baseUrl}` + `/create`, task);
   }
 
   getTasksList(): Observable<any> {
-    return this.http.get(`${this.baseUrl}`)
+    return this.http.get(`${this.baseUrl}`);
   }
 
 }
