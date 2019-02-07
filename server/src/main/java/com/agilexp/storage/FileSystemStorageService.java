@@ -24,10 +24,10 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(TaskContent taskContent) {
+    public void store(TaskContent taskContent, Long id) {
         String sourceFilename = taskContent.getSourceFilename();
         String testFilename = taskContent.getTestFilename();
-        String taskDirectoryname = "task" + taskContent.getId();
+        String taskDirectoryname = "task" + id;
         Path directoryLocation;
 
         try {
