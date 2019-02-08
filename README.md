@@ -2,7 +2,9 @@
 
 ### Bachelor Thesis
 
-##### Tamara Savkova
+Web page: [https://s-thora.github.io/agile-xp/](https://s-thora.github.io/agile-xp/)
+
+##### Author: Tamara Savkova
 
 ##### About Thesis:
 
