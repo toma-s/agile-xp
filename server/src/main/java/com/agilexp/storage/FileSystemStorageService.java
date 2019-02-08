@@ -16,7 +16,6 @@ import org.springframework.util.FileSystemUtils;
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
-    private final String extention = ".java";
 
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
@@ -27,12 +26,12 @@ public class FileSystemStorageService implements StorageService {
     public void store(TaskContent taskContent, Long id) {
         String sourceFilename = taskContent.getSourceFilename();
         String testFilename = taskContent.getTestFilename();
-        String taskDirectoryname = "task" + id;
+        String taskDirectoryName = "task" + id;
         Path directoryLocation;
 
         try {
-            Files.createDirectory(Paths.get(this.rootLocation.resolve(taskDirectoryname).toString()));
-            directoryLocation = this.rootLocation.resolve(taskDirectoryname);
+            Files.createDirectory(Paths.get(this.rootLocation.resolve(taskDirectoryName).toString()));
+            directoryLocation = this.rootLocation.resolve(taskDirectoryName);
         } catch (IOException e) {
             throw new StorageException("Failed to create folder for task");
         }
