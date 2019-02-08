@@ -2,11 +2,11 @@
 
 ### Bachelor Thesis
 
-Web page: [https://s-thora.github.io/agile-xp/](https://s-thora.github.io/agile-xp/)
+**Web page**: [https://s-thora.github.io/agile-xp/](https://s-thora.github.io/agile-xp/)
 
-##### Author: Tamara Savkova
+**Author**: Tamara Savkova
 
-##### About Thesis:
+**About Thesis**:
 
 The aim of the bachelor thesis is to design and implement an interactive web environment for the teaching of selected agile programming methods. 
 
