@@ -1,427 +1,452 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Bachelor Thesis</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- bootstrap -->
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<!-- font awesome icons -->
-	<link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet"
-	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-	<!-- timeline -->
-	<!--Copyright (c) 2017 by Michaela (http://codepen.io/Fischaela/pen/sJdqg). Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.-->
-	<link href="timeline-scribble/css/style.css" rel="stylesheet">
-	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
-	<!-- JavaScript -->
-	<script src="js/functions.js"></script>
-	<!-- css theme -->
-	<link href="stylesheets/main.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Bachelor Thesis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- font awesome icons -->
+    <link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <!-- timeline -->
+    <!--Copyright (c) 2017 by Michaela (http://codepen.io/Fischaela/pen/sJdqg). Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.-->
+    <link href="timeline-scribble/css/style.css" rel="stylesheet">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <!-- JavaScript -->
+    <script src="js/functions.js"></script>
+    <!-- css theme -->
+    <link href="stylesheets/main.css" rel="stylesheet">
 </head>
 <body onload="initBT()">
-	<header>Bachelor Thesis<br><span>Web Teaching Tool for Learning Agile Programming</span></header>
+<header>Bachelor Thesis<br><span>Web Teaching Tool for Learning Agile Programming</span></header>
 
-	<div class="container">
+<div class="container">
 
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
 
-				<h1>About Thesis</h1>
+            <h1>About Thesis</h1>
 
-				<h2>Thesis Subject</h2>
+            <h2>Thesis Subject</h2>
 
-				<div class="subject">
-					<div id="subject--en">
-						<h3>Web Teaching Tool for Learning Agile Programming</h3>
-						<p> The aim of the bachelor thesis is to design and implement an interactive
-							web environment for the teaching of selected agile programming methods. It
-							provides the user with practical tasks for test-driven development, exercises
-							on refactoring and working with legacy code. The web application will be
-							the development environment, the generated code along with the tests will
-							be run in the virtual environment on the server and the test results will be
-							presented to the user. The application will include basic system administration
-							tools: users administration, managing the exercises and their results, and source
-							code version control. The system will be implemented using technologies/tools:
-							JavaScript (jQuery, Bootstrap), MySQL, HTML5, CSS, compilers of selected
-							languages, testing libraries, virtual server.
-						</p>
-					</div>
-					<div id="subject--sk">
-						<h3>Webová výuka agilného programovania</h3>
-						<p>Cieľom bakalárskej práce je navrhnúť a implementovať interaktívne webové
-							prostredie pre výuku vybraných agilných metód programovania. Poskytne
-							používateľovi praktické úlohy pre testmi riadené programovanie, refaktorizačné
-							cvičenia a cvičenia na prácu so zdedeným kódom. Vývojové prostredie
-							pre riešenie cvičení bude webová aplikácia, vytvorený kód spolu s testmi
-							bude zbiehaný vo virtuálnom prostredí na serveri a výsledky testov
-							budú prezentované používateľovi. Aplikácia bude zahŕňať základne nástroje
-							na administráciu systému: administráciu používateľov, správu cvičení a ich
-							výsledkov a verzionovanie zdrojových súborov. Systém bude realizovaný
-							pomocou technológii/nástrojov: JavaScript (jQuery, Bootstrap), MySQL,
-							HTML5, CSS, kompilátory vybraných jazykov, knižnice pre testing, virtuálny
-							server.
-						</p>
-					</div>
-					<div id="switchLang__div"><button id="switchLang__btn" onclick="switchLang()"></button></div>
-				</div>
+            <div class="subject">
+                <div id="subject--en">
+                    <h3>Web Teaching Tool for Learning Agile Programming</h3>
+                    <p> The aim of the bachelor thesis is to design and implement an interactive
+                        web environment for the teaching of selected agile programming methods. It
+                        provides the user with practical tasks for test-driven development, exercises
+                        on refactoring and working with legacy code. The web application will be
+                        the development environment, the generated code along with the tests will
+                        be run in the virtual environment on the server and the test results will be
+                        presented to the user. The application will include basic system administration
+                        tools: users administration, managing the exercises and their results, and source
+                        code version control. The system will be implemented using technologies/tools:
+                        JavaScript (jQuery, Bootstrap), MySQL, HTML5, CSS, compilers of selected
+                        languages, testing libraries, virtual server.
+                    </p>
+                </div>
+                <div id="subject--sk">
+                    <h3>Webová výuka agilného programovania</h3>
+                    <p>Cieľom bakalárskej práce je navrhnúť a implementovať interaktívne webové
+                        prostredie pre výuku vybraných agilných metód programovania. Poskytne
+                        používateľovi praktické úlohy pre testmi riadené programovanie, refaktorizačné
+                        cvičenia a cvičenia na prácu so zdedeným kódom. Vývojové prostredie
+                        pre riešenie cvičení bude webová aplikácia, vytvorený kód spolu s testmi
+                        bude zbiehaný vo virtuálnom prostredí na serveri a výsledky testov
+                        budú prezentované používateľovi. Aplikácia bude zahŕňať základne nástroje
+                        na administráciu systému: administráciu používateľov, správu cvičení a ich
+                        výsledkov a verzionovanie zdrojových súborov. Systém bude realizovaný
+                        pomocou technológii/nástrojov: JavaScript (jQuery, Bootstrap), MySQL,
+                        HTML5, CSS, kompilátory vybraných jazykov, knižnice pre testing, virtuálny
+                        server.
+                    </p>
+                </div>
+                <div id="switchLang__div">
+                    <button id="switchLang__btn" onclick="switchLang()"></button>
+                </div>
+            </div>
 
-				<div class="row">
-					<div class="col-md-6">
-						<h2>Supervisor</h2>
-						<p>Ing. František Gyarfaš, CSc.</p>
-					</div>
-					<div class="col-md-6">
-						<h2>Faculty</h2>
-						<p>Faculty of Mathematics, Physics and Informatics</p>
-					</div>
-				</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Supervisor</h2>
+                    <p>Ing. František Gyarfaš, CSc.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Faculty</h2>
+                    <p>Faculty of Mathematics, Physics and Informatics</p>
+                </div>
+            </div>
 
-				<div class="row">
-					<div class="col-md-6">
-						<h2>Thesis type</h2>
-						<p>Bachelor</p>
-					</div>
-					<div class="col-md-6">
-						<h2>Study department</h2>
-						<p>FMFI.KAI - Department of Applied Informatics</p>
-					</div>
-				</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Thesis type</h2>
+                    <p>Bachelor</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Study department</h2>
+                    <p>FMFI.KAI - Department of Applied Informatics</p>
+                </div>
+            </div>
 
-				<div class="row">
-					<div class="col-md-6">
-						<h2>Thesis language</h2>
-						<p>Primary: English</p>
-						<p>Secondary: Slovak</p>
-					</div>
-					<div class="col-md-6">
-						<h2>Study Program</h2>
-						<p>Applied Informatics</p>
-					</div>
-				</div>
-			</div>
-		</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Thesis language</h2>
+                    <p>Primary: English</p>
+                    <p>Secondary: Slovak</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Study Program</h2>
+                    <p>Applied Informatics</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="row" id="sources_chapter">
+        <div class="col-md-10 col-md-offset-1">
+            <h1>Chapter on sources</h1>
 
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<h1>Thesis structure concept</h1>
+            <h4>Download the chapter on sources: </h4>
 
-				<div class="thesis-concept">
-					<ol>
-						<li>Introduction</li>
-						<li>Theoretical part
-							<ol>
-								<li>Agile programming methods</li>
-								<li>Existing solutions</li>
-								<li>Related Bachelor Theses</li>
-								<li>Overview on used technologies</li>
-							</ol>
-						</li>
-						<li>Practical part
-							<ol>
-								<li>Web application draft concept
-									<ol>
-										<li>Requirements specification</li>
-										<li>Application architecture concept</li>
-										<li>User interface concept</li>
-										<li>Data model concept</li>
-										<li>Exercises structure concept</li>
-										<li>User roles</li>
-									</ol>
-								</li>
-								<li>Implementation
-									<ol>
-										<li>Web environment</li>
-										<li>Automatic testing</li>
-										<li>Application extension</li>
-									</ol>
-								</ol>
-							</li>
-							<li>Conclusion</li>
-							<li>References and bibliography</li>
+            <button class="dl-present">
+                <a href="https://github.com/s-thora/agile-xp/blob/master/thesis/Bachelor_Thesis.pdf">PDF</a></button>
 
-						</ol>
-					</div>
-				</div>
-			</div>
+        </div>
+    </div>
 
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<h1>Thesis sources</h1>
+    <div class="row" id="prototype">
+        <div class="col-md-10 col-md-offset-1">
+            <h1>Prototype of the web application</h1>
 
-					<div class="switchSource__div">
-						<button class="switchSource__btn" onclick="switchSourcesOld()">Older Bachelor Theses</button>
-						<button class="switchSource__btn" onclick="switchSourcesTheses()">Professional Works</button>
-						<button class="switchSource__btn" onclick="switchSourcesExisting()">Existing Solutions</button>
-						<button class="switchSource__btn" onclick="switchSourcesTutorials()">Manuals, Tutorials</button>
-					</div>
+            <h4>Source code of the prototype: </h4>
 
-					<div class="sources__div">
-						<div id="sources--old">
-							<ul>
-								<li>
-									<h3>Tomáš Bočinec</h3>
-									<b>Webová výuka programovania pomocou metodológie TDD</b>
-									<p>(2017-18)</p>
-								</li>
-								<li>
-									<h3>ViliamVakerman</h3>
-									<b>Webová výuka programovania v C++ pomocou jednotkového testovania</b>
-									<p>(2016-17)</p>
-								</li>
-								<li>
-									<h3>Ivan Latták</h3>
-									<b>Vývojové prostredie pre učenie sa refaktorizácie kódu</b>
-									<p>(2016-17)</p>
-								</li>
-								<li>
-									<h3>Ján Šilar</h3>
-									<b>Testovanie kódu v C++ pri metodológii Test Driven Development</b>
-									<p>(2009-10)</p>
-								</li>
-							</ul>
-						</div>
+            <button class="dl-present">
+                <a href="https://github.com/s-thora/agile-xp/tree/master/prototype">Git Hub</a></button>
 
-						<div id="sources--theses">
-							<ul>
-								<li>
-									<h3>Unit testy</h3>
-									<b>Unit test frameworks</b>
-									<p>Hamill, P. (2004). Sebastopol, CA:O'Reilly</p>
-								</li>
-								<li>
-									<h3>Test Driven Development</h3>
-									<b>Modern C programming with testdriven development: Code better,sleep better</b>
-									<p>Langr, J., & Swaine, M. (2013). Dallas, TX: The Pragmatic Bookshelf</p>
-									<b>Test Driven Development: By Example.Addison-Wesley Professional</b>
-									<p>Beck, K. (2002)</p>
-								</li>
-								<li>
-									<h3>Refaktorizacia</h3>
-									<b>Refactoring Improving the Design of Existing Code</b>
-									<p>Fowler, M. (2004). Grada</p>
-								</li>
-								<li>
-									<h3>Čistý kód</h3>
-									<b>Clean Code: A Handbook of Agile Software Craftsmanship</b>
-									<p>Robert C. Martin(2008).</p>
-								</li>
-							</ul>
-						</div>
+            <h4>Description of the prototype</h4>
 
-						<div id="sources--existing">
-							<ul>
-								<li>
-									<h3><a href="https://www.codecademy.com/​">Codecademy</a></h3>
-									<p>Online interactive platform that offers free coding classes in different programming languages</p>
-								</li>
-								<li>
-									<h3><a href="https://www.freecodecamp.org/">freeCodeCamp</a></h3>
-									<p>Online courses offering interactive coding challenges, web development projects,
-									contributing to open-source projects</p>
-								</li>
-								<li>
-									<h3><a href="https://www.atlassian.com/software/jira">Jira Software</a></h3>
-									<p> proprietary issue tracking product developed by Atlassian which allows
-									bug tracking and agile project management</p>
-								</li>
-							</ul>
-						</div>
+            <button class="dl-present">
+                <a href="...">PDF</a></button>
 
-						<div id="sources--tutorials">
-							<ul>
-								<li>
-									<h3>Maven</h3>
-									<p><a href="ttps://www.baeldung.com/maven">Baeldung: Apache MavenTutorial</a></p>
-									<p><a href="https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html">
-									Apache Maven Project: Maven in 5 Minutes</a></p>
-								</li>
-								<li>
-									<h3>Angular CLI</h3>
-									<p><a href="https://angular.io/guide/quickstart">Angular: Getting started</a></p>
-								</li>
-								<li>
-									<h3>Spring framework</h3>
-									<p><a href="https://spring.io/guides">Spring:Guides</a></p>
-								</li>
-								<li>
-									<h3>Spring Boot</h3>
-									<p><a href="https://spring.io/projects/spring-boot">
-									Spring: Overview,Documentation,Guides</a></p>
-								</li>
-								<li>
-									<h3>Spring Data JDBC</h3>
-									<p><a href="https://spring.io/projects/spring-data-jdbc">
-									Spring: Overvirew,Documentation</a></p>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="dl-present__div">
-						<h4>Download the presentation on Thesis sources: </h4>
-						<button class="dl-present">
-							<a href="http://www.st.fmph.uniba.sk/~savkova3/downloads/Zdroje%20BP.pdf">PDF</a></button>
-							<button class="dl-present">
-								<a href="http://www.st.fmph.uniba.sk/~savkova3/downloads/Zdroje%20BP.pptx">PPTX</a></button>
-							</div>
-
-						</div>
-
-					</div>
-
-					<div class="row">
-						<div class="col-md-10 col-md-offset-1">
-
-							<h1>Timeline</h1>
-
-							<div>
-								<ul class="timeline">
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">October 4th, 2018</p>
-											<h4>Thesis subject chosen</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">October 13th, 2018</p>
-											<h4>Thesis Web page</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">November 13th, 2018</p>
-											<h4>Thesis Timeline</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">November 15th, 2018</p>
-											<h4>Research of existing applications.<br>Concept and content of the application</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">November 20th, 2018</p>
-											<h4>Fast prototype</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">November 27th, 2018</p>
-											<h4>Sources presentation</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">November 30th, 2018</p>
-											<h4>Data model.<br>Corresponding chapters of Thesis</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">December 5th, 2018</p>
-											<h4>User interface concept.<br>Corresponding chapters of Thesis</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">December 10th, 2018</p>
-											<h4>Thesis structure</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">December 15th, 2018</p>
-											<h4>Tests for the application</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">December 25th, 2018</p>
-											<h4>Basic functionality of the virtual server part to the prototype</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">January 12th, 2019</p>
-											<h4>Final prototype.<br>Thesis initial chapter</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">February 15th, 2019</p>
-											<h4>Final virtual server part.<br>Corresponding chapters of Thesis</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">February 20th, 2019</p>
-											<h4>Authentication, administrative and user accounts.<br>Corresponding chapters of
-											Thesis</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">February 25th, 2019</p>
-											<h4>Function of tasks and tests creation. <br>Corresponding chapters of
-											Thesis</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">March 15th, 2019</p>
-											<h4>Sample tasks</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">April 15th, 2019</p>
-											<h4>Final user interface</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<p class="timeline-event-thumbnail">May 1st, 2019</p>
-											<h4>Testing, debugging.<br>Thesis finishing</h4>
-										</div>
-									</li>
-									<li class="timeline-event">
-										<label class="timeline-event-icon"></label>
-										<div class="timeline-event-text">
-											<!--<p class="timeline-event-thumbnail">May 1st, 2019</p>-->
-											<h4>Thesis delivery</h4>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
+        </div>
+    </div>
 
 
-				</div>
+    <!--<div class="row">-->
+        <!--<div class="col-md-10 col-md-offset-1">-->
+            <!--<h1>Thesis structure concept</h1>-->
 
-				<footer><p>&copy; Tamara Savkova 2018</p></footer>
+            <!--<div class="thesis-concept">-->
+                <!--<ol>-->
+                    <!--<li>Introduction</li>-->
+                    <!--<li>Theoretical part-->
+                        <!--<ol>-->
+                            <!--<li>Agile programming methods</li>-->
+                            <!--<li>Existing solutions</li>-->
+                            <!--<li>Related Bachelor Theses</li>-->
+                            <!--<li>Overview on used technologies</li>-->
+                        <!--</ol>-->
+                    <!--</li>-->
+                    <!--<li>Practical part-->
+                        <!--<ol>-->
+                            <!--<li>Web application draft concept-->
+                                <!--<ol>-->
+                                    <!--<li>Requirements specification</li>-->
+                                    <!--<li>Application architecture concept</li>-->
+                                    <!--<li>User interface concept</li>-->
+                                    <!--<li>Data model concept</li>-->
+                                    <!--<li>Exercises structure concept</li>-->
+                                    <!--<li>User roles</li>-->
+                                <!--</ol>-->
+                            <!--</li>-->
+                            <!--<li>Implementation-->
+                                <!--<ol>-->
+                                    <!--<li>Web environment</li>-->
+                                    <!--<li>Automatic testing</li>-->
+                                    <!--<li>Application extension</li>-->
+                                <!--</ol>-->
+                        <!--</ol>-->
+                    <!--</li>-->
+                    <!--<li>Conclusion</li>-->
+                    <!--<li>References and bibliography</li>-->
 
-			</body>
-			</html>
+                <!--</ol>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h1>Thesis sources</h1>
+
+            <div class="switchSource__div">
+                <button class="switchSource__btn" onclick="switchSourcesOld()">Older Bachelor Theses</button>
+                <button class="switchSource__btn" onclick="switchSourcesTheses()">Professional Works</button>
+                <button class="switchSource__btn" onclick="switchSourcesExisting()">Existing Solutions</button>
+                <button class="switchSource__btn" onclick="switchSourcesTutorials()">Manuals, Tutorials</button>
+            </div>
+
+            <div class="sources__div">
+                <div id="sources--old">
+                    <ul>
+                        <li>
+                            <h3>Tomáš Bočinec</h3>
+                            <b>Web learning programming using TDD technology</b>
+                            <p>(original title: Webová výuka programovania pomocou metodológie TDD)</p>
+                            <p>(2017-18)</p>
+                        </li>
+                        <li>
+                            <h3>ViliamVakerman</h3>
+                            <b>Web learning programming in C++ using Unit testing</b>
+                            <p>(original title: Webová výuka programovania v C++ pomocou jednotkového testovania)</p>
+                            <p>(2016-17)</p>
+                        </li>
+                        <li>
+                            <h3>Daniel Krajč</h3>
+                            <b>Web environment for development in C++</b>
+                            <p>(original title: Webové vývojové prostredie pre jazyk C++)</p>
+                            <p>(2009-2010)</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="sources--theses">
+                    <ul>
+                        <li>
+                            <h3>Unit testy</h3>
+                            <b>Unit test frameworks</b>
+                            <p>Hamill, P. (2004). Sebastopol, CA:O'Reilly</p>
+                        </li>
+                        <li>
+                            <h3>Test Driven Development</h3>
+                            <b>Modern C programming with testdriven development: Code better,sleep better</b>
+                            <p>Langr, J., & Swaine, M. (2013). Dallas, TX: The Pragmatic Bookshelf</p>
+                            <b>Test Driven Development: By Example.Addison-Wesley Professional</b>
+                            <p>Beck, K. (2002)</p>
+                        </li>
+                        <li>
+                            <h3>Refaktorizacia</h3>
+                            <b>Refactoring Improving the Design of Existing Code</b>
+                            <p>Fowler, M. (2004). Grada</p>
+                        </li>
+                        <li>
+                            <h3>Čistý kód</h3>
+                            <b>Clean Code: A Handbook of Agile Software Craftsmanship</b>
+                            <p>Robert C. Martin(2008).</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="sources--existing">
+                    <ul>
+                        <li>
+                            <h3><a href="https://www.codecademy.com/​">Codecademy</a></h3>
+                            <p>Online interactive platform that offers free coding classes in different programming
+                                languages</p>
+                        </li>
+                        <li>
+                            <h3><a href="https://www.freecodecamp.org/">freeCodeCamp</a></h3>
+                            <p>Online courses offering interactive coding challenges, web development projects,
+                                contributing to open-source projects</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="sources--tutorials">
+                    <ul>
+                        <li>
+                            <h3>Maven</h3>
+                            <p><a href="ttps://www.baeldung.com/maven">Baeldung: Apache MavenTutorial</a></p>
+                            <p><a href="https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html">
+                                Apache Maven Project: Maven in 5 Minutes</a></p>
+                        </li>
+                        <li>
+                            <h3>Angular</h3>
+                            <p><a href="https://angular.io/guide/quickstart">Angular: Getting started</a></p>
+                        </li>
+                        <li>
+                            <h3>Spring framework</h3>
+                            <p><a href="https://spring.io/guides">Spring:Guides</a></p>
+                        </li>
+                        <li>
+                            <h3>Spring Boot</h3>
+                            <p><a href="https://spring.io/projects/spring-boot">
+                                Spring: Overview,Documentation,Guides</a></p>
+                        </li>
+                        <li>
+                            <h3>Spring Data JPA</h3>
+                            <p><a href="https://spring.io/projects/spring-data-jpa">
+                                Spring: Overvirew,Documentation</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="dl-present__div">
+                <h4>Download the presentation on Thesis sources: </h4>
+                <button class="dl-present">
+                    <a href="https://github.com/s-thora/agile-xp/blob/master/thesis/Sources.pdf">PDF</a></button>
+                <button class="dl-present">
+                    <a href="https://github.com/s-thora/agile-xp/blob/master/thesis/Sources.pptx">PPTX</a></button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+            <h1>Timeline</h1>
+
+            <div>
+                <ul class="timeline">
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">October 4th, 2018</p>
+                            <h4>Thesis subject chosen</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">October 13th, 2018</p>
+                            <h4>Thesis Web page</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">November 13th, 2018</p>
+                            <h4>Thesis Timeline</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">November 15th, 2018</p>
+                            <h4>Research of existing applications.<br>Concept and content of the application</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">November 20th, 2018</p>
+                            <h4>Fast prototype</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">November 27th, 2018</p>
+                            <h4>Sources presentation</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">November 30th, 2018</p>
+                            <h4>Data model.<br>Corresponding chapters of Thesis</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">December 5th, 2018</p>
+                            <h4>User interface concept.<br>Corresponding chapters of Thesis</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">December 10th, 2018</p>
+                            <h4>Thesis structure</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">December 15th, 2018</p>
+                            <h4>Tests for the application</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">December 25th, 2018</p>
+                            <h4>Basic functionality of the virtual server part to the prototype</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">January 12th, 2019</p>
+                            <h4>Final prototype.<br>Thesis chapter on sources</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">February 15th, 2019</p>
+                            <h4>Final virtual server part.<br>Corresponding chapters of Thesis</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">February 20th, 2019</p>
+                            <h4>Authentication, administrative and user accounts.<br>Corresponding chapters of
+                                Thesis</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">February 25th, 2019</p>
+                            <h4>Function of tasks and tests creation. <br>Corresponding chapters of
+                                Thesis</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">March 15th, 2019</p>
+                            <h4>Sample tasks</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">April 15th, 2019</p>
+                            <h4>Final user interface</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <p class="timeline-event-thumbnail">May 1st, 2019</p>
+                            <h4>Testing, debugging.<br>Thesis finishing</h4>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <label class="timeline-event-icon"></label>
+                        <div class="timeline-event-text">
+                            <!--<p class="timeline-event-thumbnail">May 1st, 2019</p>-->
+                            <h4>Thesis delivery</h4>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<footer><p>&copy; Tamara Savkova 2018</p></footer>
+
+</body>
+</html>
