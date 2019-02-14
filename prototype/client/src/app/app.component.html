@@ -1,0 +1,17 @@
+<div> 
+
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1 title headline>{{headline}}.</h1>
+      <h2 class="example-spacer">{{title}}</h2>
+
+      <a routerLink="sendTask" role="button" routerLinkActive="active" mat-button>Send Code with Test</a>
+      <a routerLink="tasksList" role="button" routerLinkActive="active" mat-button>Show Results</a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+  
+</div>
