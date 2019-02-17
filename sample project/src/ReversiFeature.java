@@ -279,17 +279,23 @@ class ReversiFeature {
     }
 
     boolean areValidMoves() {
+        return getPossibleMoves().size() != 0;
+    }
+
+    ArrayList<ArrayList<Integer>> getPossibleMoves() {
         ArrayList<ArrayList<Integer>> tiles = new ArrayList<>();
-        for (int r = 0; r <= 7; r++) {
+        for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if (playground[r][c] == -1) {
-                    if (isValidMove(r, c, false)) {
-                        return true;
-                    }
+                if (playground[r][c] != -1) {
+                    continue;
+                }
+                if (isValidMove(r, c, false)) {
+                    tiles.add(new ArrayList<>(List.of(r, c)));
                 }
             }
         }
-        return false;
+        System.out.println(tiles);
+        return tiles;
     }
 
     void gameOver() {

@@ -1,5 +1,8 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -22,7 +25,12 @@ public class ReversiFeatureTest {
     @Test
     public void testInitValidMoves() {
         ReversiFeature game = rev;
-        assertTrue(game.areValidMoves());
+        ArrayList<ArrayList<Integer>> tiles = game.getPossibleMoves();
+        assertEquals("valid length", 4, tiles.size());
+        assertEquals("valid moves", List.of(2, 3), tiles.get(0));
+        assertEquals("valid moves", List.of(3, 2), tiles.get(1));
+        assertEquals("valid moves", List.of(4, 5), tiles.get(2));
+        assertEquals("valid moves", List.of(5, 4), tiles.get(3));
     }
 
     @Test
