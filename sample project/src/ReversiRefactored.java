@@ -8,6 +8,7 @@ class ReversiRefactored {
     private Player[][] playground = new Player[SIZE][SIZE];
     private Player onTurn = Player.X;
     private Player winner = Player.NONE;
+    private String[] abc = "abcdefgh".split("");
     private HashMap<Player, Integer> left = new HashMap<>();
 
     ReversiRefactored() {
@@ -37,6 +38,10 @@ class ReversiRefactored {
         return winner;
     }
 
+    Player getTile(Alpha c0, int r0) {
+        return playground[r0-1][c0.getValue()];
+    }
+
     private void initGame() {
         left.put(Player.X, 2);
         left.put(Player.O, 2);
@@ -55,9 +60,9 @@ class ReversiRefactored {
     }
 
     private void printPlayground() {
-        System.out.println("  0 1 2 3 4 5 6 7");
+        System.out.printf("  %s\n", String.join(" ", abc));
         for (int r = 0; r < SIZE; r++) {
-            System.out.print(r  + " ");
+            System.out.print((r + 1) + " ");
             for (int c = 0; c < SIZE; c++) {
                 if (playground[r][c] == Player.NONE)
                     System.out.print("_ ");
@@ -81,7 +86,9 @@ class ReversiRefactored {
         System.out.printf("Number of tiles: X: %s; O: %s\n\n", getLeftX(), getLeftO());
     }
 
-    boolean move(int r, int c) {
+    boolean move(Alpha c0, int r0) {
+        int r = r0 - 1;
+        int c = c0.getValue();
         System.out.printf("Move on tile (%s; %s):\n\n", r, c);
 
         if (!(withinPlayground(r, c))) {
@@ -171,18 +178,22 @@ class ReversiRefactored {
     }
 
     boolean areValidMoves() {
+        return getPossibleMoves().size() != 0;
+    }
+
+    ArrayList<ArrayList<Integer>> getPossibleMoves() {
         ArrayList<ArrayList<Integer>> tiles = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != Player.NONE) continue;
                 if (getTilesToFlip(r,c).size() != 0) {
-                    return true;
+                    tiles.add(new ArrayList<>(List.of(r, c)));
                 }
             }
         }
-        return false;
+        System.out.println(tiles);
+        return tiles;
     }
-
 
     void gameOver() {
         printState();
