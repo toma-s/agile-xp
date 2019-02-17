@@ -134,26 +134,24 @@ class Reversi {
             int c = c0;
             r += direction[0];
             c += direction[1];
-            if (withinPlayground(r, c) && playground[r][c] == opposite) {
+            if (withinPlayground(r, c) && playground[r][c] != opposite) continue;
+            r += direction[0];
+            c += direction[1];
+            if (!withinPlayground(r, c)) continue;
+            while (playground[r][c] == opposite) {
                 r += direction[0];
                 c += direction[1];
-                if (!withinPlayground(r, c)) continue;
-                while (playground[r][c] == opposite) {
-                    r += direction[0];
-                    c += direction[1];
-                    if (!withinPlayground(r, c)) break;
+                if (!withinPlayground(r, c)) break;
+            }
+            if (!withinPlayground(r, c)) continue;
+            if (playground[r][c] != onTurn) continue;
+            while (true) {
+                r -= direction[0];
+                c -= direction[1];
+                if (r == r0 && c == c0) {
+                    break;
                 }
-                if (!withinPlayground(r, c)) continue;
-                if (playground[r][c] == onTurn) {
-                    while (true) {
-                        r -= direction[0];
-                        c -= direction[1];
-                        if (r == r0 && c == c0) {
-                            break;
-                        }
-                        toFLip.add(new ArrayList<>(List.of(r, c)));
-                    }
-                }
+                toFLip.add(new ArrayList<>(List.of(r, c)));
             }
         }
 
