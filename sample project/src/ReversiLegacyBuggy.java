@@ -180,14 +180,14 @@ class ReversiLegacyBuggy {
             // left down
             step = 1;
             toFlip = new ArrayList<>();
-            if (r + step < 8 && c - step > 0 && playground[r + step][c - step] == opposite) {
-                while (r + step < 8 && c - step > 0 && playground[r + step][c - step] == opposite) {
+            if (r + step <= 7 && c - step > 0 && playground[r + step][c - step] == opposite) {
+                while (r + step <= 7 && c - step > 0 && playground[r + step][c - step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r + step, c - step)));
                     }
                     step++;
                 }
-                if (step > 1 && r + step < 8 && c - step >= 0 && playground[r + step][c - step] != -1) {
+                if (step > 1 && r + step <= 7 && c - step >= 0 && playground[r + step][c - step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -268,7 +268,7 @@ class ReversiLegacyBuggy {
 
     boolean areValidMoves() {
         ArrayList<ArrayList<Integer>> tiles = new ArrayList<>();
-        for (int r = 0; r < 8; r++) {
+        for (int r = 0; r <= 7; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] == -1) {
                     if (isValidMove(r, c, false)) {
