@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class ReversiLegacyBuggy {
+class ReversiBuggy {
 
     public int[][] playground = new int[8][8];
     public int onTurn = 1;
@@ -9,7 +9,7 @@ class ReversiLegacyBuggy {
     public int leftO = 2;
     public int leftX = 2;
 
-    ReversiLegacyBuggy() {
+    ReversiBuggy() {
         initPlayground();
         printPlayground();
         printOnTurn();
