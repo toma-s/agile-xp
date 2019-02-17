@@ -83,6 +83,7 @@ class ReversiRefactored {
 
     boolean move(int r, int c) {
         System.out.printf("Move on tile (%s; %s):\n\n", r, c);
+
         if (!(withinPlayground(r, c))) {
             System.out.println("Move out of bounds");
             return false;
@@ -129,26 +130,24 @@ class ReversiRefactored {
             int c = c0;
             r += direction[0];
             c += direction[1];
-            if (withinPlayground(r, c) && playground[r][c] == opposite) {
+            if (withinPlayground(r, c) && playground[r][c] != opposite) continue;
+            r += direction[0];
+            c += direction[1];
+            if (!withinPlayground(r, c)) continue;
+            while (playground[r][c] == opposite) {
                 r += direction[0];
                 c += direction[1];
-                if (!withinPlayground(r, c)) continue;
-                while (playground[r][c] == opposite) {
-                    r += direction[0];
-                    c += direction[1];
-                    if (!withinPlayground(r, c)) break;
+                if (!withinPlayground(r, c)) break;
+            }
+            if (!withinPlayground(r, c)) continue;
+            if (playground[r][c] != onTurn) continue;
+            while (true) {
+                r -= direction[0];
+                c -= direction[1];
+                if (r == r0 && c == c0) {
+                    break;
                 }
-                if (!withinPlayground(r, c)) continue;
-                if (playground[r][c] == onTurn) {
-                    while (true) {
-                        r -= direction[0];
-                        c -= direction[1];
-                        if (r == r0 && c == c0) {
-                            break;
-                        }
-                        toFLip.add(new ArrayList<>(List.of(r, c)));
-                    }
-                }
+                toFLip.add(new ArrayList<>(List.of(r, c)));
             }
         }
 
@@ -175,9 +174,7 @@ class ReversiRefactored {
         ArrayList<ArrayList<Integer>> tiles = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if (playground[r][c] != Player.NONE) {
-                    continue;
-                }
+                if (playground[r][c] != Player.NONE) continue;
                 if (getTilesToFlip(r,c).size() != 0) {
                     return true;
                 }
