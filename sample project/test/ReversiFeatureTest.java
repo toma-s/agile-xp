@@ -7,12 +7,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class ReversiTest {
-    private Reversi rev = new Reversi();
+public class ReversiFeatureTest {
+    private ReversiFeature rev = new ReversiFeature();
 
     @Test
     public void testInit() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
         assertEquals("on turn", Player.X, game.getOnTurn());
         assertEquals("playground init", Player.O, game.getTile(Alpha.D, 4));
         assertEquals("playground init", Player.X, game.getTile(Alpha.E, 4));
@@ -24,7 +24,7 @@ public class ReversiTest {
 
     @Test
     public void testInitValidMoves() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
         ArrayList<ArrayList<Integer>> tiles = game.getPossibleMoves();
         assertEquals("valid length", 4, tiles.size());
         assertEquals("valid moves", List.of(2, 3), tiles.get(0));
@@ -35,7 +35,7 @@ public class ReversiTest {
 
     @Test
     public void testNotValidMoves() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertFalse("move on not empty tile (e,5)", game.move(Alpha.E,5));
         assertEquals("check if didn't change", Player.O, game.getTile(Alpha.E, 5));
@@ -49,7 +49,7 @@ public class ReversiTest {
 
     @Test
     public void testFlipRight() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue("move to flip (c,4)", game.move(Alpha.C,4));
         assertEquals("check if flipped",Player.X, game.getTile(Alpha.D, 4));
@@ -62,7 +62,7 @@ public class ReversiTest {
 
     @Test
     public void testFlipUp() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue("move to flip", game.move(Alpha.E, 6));
         assertEquals("check if flipped",Player.X, game.getTile(Alpha.E, 5));
@@ -75,7 +75,7 @@ public class ReversiTest {
 
     @Test
     public void testFlipLeft() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue("move to flip", game.move(Alpha.F, 5));
         assertEquals("check if flipped",Player.X, game.getTile(Alpha.E, 5));
@@ -88,7 +88,7 @@ public class ReversiTest {
 
     @Test
     public void testFlipDown() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue("move to flip", game.move(Alpha.D, 3));
         assertEquals("check if flipped",Player.X, game.getTile(Alpha.D, 4));
@@ -101,7 +101,7 @@ public class ReversiTest {
 
     @Test
     public void testFlipRightUp() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue("move to flip", game.move(Alpha.E, 6));
         assertEquals("check if flipped",Player.X, game.getTile(Alpha.E, 5));
@@ -127,7 +127,7 @@ public class ReversiTest {
 
     @Test
     public void testFlipLeftUp() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue("move to flip", game.move(Alpha.E, 6));
         assertEquals("check if flipped",Player.X, game.getTile(Alpha.E, 5));
@@ -146,7 +146,7 @@ public class ReversiTest {
 
     @Test
     public void testFlipLeftDown() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue("move to flip", game.move(Alpha.D, 3));
         assertEquals("check if flipped",Player.X, game.getTile(Alpha.D, 4));
@@ -172,7 +172,7 @@ public class ReversiTest {
 
     @Test
     public void testFlipRightDown() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue("move to flip", game.move(Alpha.D, 3));
         assertEquals("check if flipped",Player.X, game.getTile(Alpha.D, 4));
@@ -191,7 +191,7 @@ public class ReversiTest {
 
     @Test
     public void testDoubleFlip() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue(game.move(Alpha.D, 3));
         assertTrue(game.move(Alpha.C, 3));
@@ -206,7 +206,7 @@ public class ReversiTest {
 
     @Test
     public void testGame1() {
-        Reversi game = rev;
+        ReversiFeature game = rev;
 
         assertTrue("if the are valid moves", game.areValidMoves());
 

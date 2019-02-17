@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-class Reversi {
+class ReversiFeature {
 
     private final int SIZE = 8;
     private Player[][] playground = new Player[SIZE][SIZE];
@@ -11,7 +11,7 @@ class Reversi {
     private Player winner = Player.NONE;
     private HashMap<Player, Integer> left = new HashMap<>();
 
-    Reversi() {
+    ReversiFeature() {
         initPlayground();
         initGame();
         printPlayground();
