@@ -33,9 +33,9 @@ class ReversiFeature {
     }
 
     private void printPlayground() {
-        System.out.println("  0 1 2 3 4 5 6 7");
+        System.out.printf("  %s\n", String.join(" ", abc));
         for (int r = 0; r < 8; r++) {
-            System.out.print(r  + " ");
+            System.out.print((r + 1) + " ");
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] == -1)
                     System.out.print("_ ");
