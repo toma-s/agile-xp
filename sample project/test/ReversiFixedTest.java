@@ -4,13 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class ReversiLegacyTest {
+public class ReversiFixedTest {
 
-    private ReversiLegacy revLeg = new ReversiLegacy();
+    private ReversiFixed rev = new ReversiFixed();
 
     @Test
     public void testInit() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
 
         assertEquals("on turn", 1, game.onTurn);
         assertEquals("playground init", 0, game.playground[3][3]);
@@ -21,7 +21,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testNotValidMoves() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
 
         assertFalse("move on not empty tile (4,4)", game.move(4,4));
         assertEquals("check if didn't change", 0, game.playground[4][4]);
@@ -35,7 +35,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testFlipRight() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
         assertTrue("move to flip", game.move(3, 2));
         assertEquals("check if flipped", 1, game.playground[3][3]);
         assertEquals("check if flipped", 1, game.playground[3][2]);
@@ -46,7 +46,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testFlipUp() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
         assertTrue("move to flip", game.move(5, 4));
         assertEquals("check if flipped", 1, game.playground[4][4]);
         assertEquals("check if flipped", 1, game.playground[5][4]);
@@ -57,7 +57,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testFlipLeft() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
         assertTrue("move to flip", game.move(4, 5));
         assertEquals("check if flipped", 1, game.playground[4][4]);
         assertEquals("check if flipped", 1, game.playground[4][5]);
@@ -68,7 +68,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testFlipDown() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
         assertTrue("move to flip", game.move(2, 3));
         assertEquals("check if flipped", 1, game.playground[3][3]);
         assertEquals("check if flipped", 1, game.playground[2][3]);
@@ -79,7 +79,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testFlipRightUp() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
         assertTrue("move to flip", game.move(5, 4));
         assertEquals("check if flipped", 1, game.playground[4][4]);
         assertEquals("check if flipped", 1, game.playground[5][4]);
@@ -104,7 +104,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testFlipLeftUp() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
         assertTrue("move to flip", game.move(5, 4));
         assertEquals("check if flipped", 1, game.playground[4][4]);
         assertEquals("check if flipped", 1, game.playground[5][4]);
@@ -122,7 +122,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testFlipLeftDown() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
         assertTrue("move to flip", game.move(2, 3));
         assertEquals("check if flipped", 1, game.playground[3][3]);
         assertEquals("check if flipped", 1, game.playground[2][3]);
@@ -147,7 +147,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testFlipRightDown() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
         assertTrue("move to flip", game.move(2, 3));
         assertEquals("check if flipped", 1, game.playground[3][3]);
         assertEquals("check if flipped", 1, game.playground[2][3]);
@@ -165,7 +165,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testDoubleFlip() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
 
         assertTrue(game.move(2, 3));
         assertTrue(game.move(2, 2));
@@ -180,7 +180,7 @@ public class ReversiLegacyTest {
 
     @Test
     public void testGame1() {
-        ReversiLegacy game = revLeg;
+        ReversiFixed game = rev;
 
         assertTrue("if the are valid moves", game.areValidMoves());
 
