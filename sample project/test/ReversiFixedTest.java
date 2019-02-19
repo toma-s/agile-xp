@@ -22,6 +22,12 @@ public class ReversiFixedTest {
     }
 
     @Test
+    public void testInitValidMoves() {
+        ReversiFixed game = rev;
+        assertTrue(game.areValidMoves());
+    }
+
+    @Test
     public void testMoveOnNotEmpty() {
         ReversiFixed game = rev;
         assertFalse("move on not empty tile (4,4)", game.move(4,4));
