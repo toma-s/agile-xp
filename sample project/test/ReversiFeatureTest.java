@@ -13,6 +13,7 @@ public class ReversiFeatureTest {
     @Test
     public void testInit() {
         ReversiFeature game = rev;
+
         assertEquals("on turn", 1, game.onTurn);
         assertEquals("playground init", 0, game.getTile(Alpha.D, 4));
         assertEquals("playground init", 1, game.getTile(Alpha.E, 4));

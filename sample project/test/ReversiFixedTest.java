@@ -17,6 +17,8 @@ public class ReversiFixedTest {
         assertEquals("playground init", 1, game.playground[3][4]);
         assertEquals("playground init", 1, game.playground[4][3]);
         assertEquals("playground init", 0, game.playground[4][4]);
+        assertEquals("left X init", 2, game.leftX);
+        assertEquals("left O init", 2, game.leftO);
     }
 
     @Test
