@@ -20,8 +20,8 @@ public class ReversiFeatureTest {
         assertEquals("playground init", 1, game.getTile(Alpha.E, 4));
         assertEquals("playground init", 1, game.getTile(Alpha.D, 5));
         assertEquals("playground init", 0, game.getTile(Alpha.E, 5));
-        assertEquals("left X init", 2, game.leftX);
-        assertEquals("left O init", 2, game.leftO);
+        assertEquals("left B init", 2, game.leftB);
+        assertEquals("left W init", 2, game.leftW);
     }
 
     @Test
@@ -68,8 +68,8 @@ public class ReversiFeatureTest {
         assertEquals("check if flipped", 1, game.getTile(Alpha.D, 4));
         assertEquals("check if flipped", 1, game.getTile(Alpha.C, 4));
         assertEquals("on turn", 0, game.onTurn);
-        assertEquals("O left", 1, game.leftO);
-        assertEquals("X left", 4, game.leftX);
+        assertEquals("W left", 1, game.leftW);
+        assertEquals("B left", 4, game.leftB);
     }
 
     @Test
@@ -80,8 +80,8 @@ public class ReversiFeatureTest {
         assertEquals("check if flipped", 1, game.getTile(Alpha.E, 5));
         assertEquals("check if flipped", 1, game.getTile(Alpha.E, 6));
         assertEquals("on turn", 0, game.onTurn);
-        assertEquals("O left", 1, game.leftO);
-        assertEquals("X left", 4, game.leftX);
+        assertEquals("W left", 1, game.leftW);
+        assertEquals("B left", 4, game.leftB);
     }
 
     @Test
@@ -92,8 +92,8 @@ public class ReversiFeatureTest {
         assertEquals("check if flipped",1, game.getTile(Alpha.E, 5));
         assertEquals("check if flipped", 1, game.getTile(Alpha.F, 5));
         assertEquals("on turn", 0, game.onTurn);
-        assertEquals("O left", 1, game.leftO);
-        assertEquals("X left", 4, game.leftX);
+        assertEquals("W left", 1, game.leftW);
+        assertEquals("B left", 4, game.leftB);
     }
 
     @Test
@@ -104,8 +104,8 @@ public class ReversiFeatureTest {
         assertEquals("check if flipped", 1, game.getTile(Alpha.D, 4));
         assertEquals("check if flipped", 1, game.getTile(Alpha.D, 3));
         assertEquals("on turn", 0, game.onTurn);
-        assertEquals("O left", 1, game.leftO);
-        assertEquals("X left", 4, game.leftX);
+        assertEquals("W left", 1, game.leftW);
+        assertEquals("B left", 4, game.leftB);
     }
 
     @Test
@@ -119,8 +119,8 @@ public class ReversiFeatureTest {
         assertEquals("check if flipped", 1, game.getTile(Alpha.D, 6));
         assertEquals("check if flipped", 1, game.getTile(Alpha.C, 7));
         assertEquals("on turn", 0, game.onTurn);
-        assertEquals("O left", 2, game.leftO);
-        assertEquals("X left", 5, game.leftX);
+        assertEquals("W left", 2, game.leftW);
+        assertEquals("B left", 5, game.leftB);
     }
 
     @Test
@@ -133,8 +133,8 @@ public class ReversiFeatureTest {
         assertEquals("check if flipped", 0, game.getTile(Alpha.E, 5));
         assertEquals("check if flipped", 0, game.getTile(Alpha.F, 6));
         assertEquals("on turn", 1, game.onTurn);
-        assertEquals("O left", 3, game.leftO);
-        assertEquals("X left", 3, game.leftX);
+        assertEquals("W left", 3, game.leftW);
+        assertEquals("B left", 3, game.leftB);
     }
 
     @Test
@@ -148,8 +148,8 @@ public class ReversiFeatureTest {
         assertEquals("check if flipped",1, game.getTile(Alpha.E, 3));
         assertEquals("check if flipped", 1, game.getTile(Alpha.F, 2));
         assertEquals("on turn", 0, game.onTurn);
-        assertEquals("O left", 2, game.leftO);
-        assertEquals("X left", 5, game.leftX);
+        assertEquals("W left", 2, game.leftW);
+        assertEquals("B left", 5, game.leftB);
     }
 
     @Test
@@ -162,8 +162,8 @@ public class ReversiFeatureTest {
         assertEquals("check if flipped", 0, game.getTile(Alpha.D, 4));
         assertEquals("check if flipped", 0, game.getTile(Alpha.C, 3));
         assertEquals("on turn", 1, game.onTurn);
-        assertEquals("O left", 3, game.leftO);
-        assertEquals("X left", 3, game.leftX);
+        assertEquals("W left", 3, game.leftW);
+        assertEquals("B left", 3, game.leftB);
     }
 
     @Test
@@ -177,8 +177,8 @@ public class ReversiFeatureTest {
 
         assertEquals("check if flipped (D,3) correctly", 0, game.getTile(Alpha.D, 3));
         assertEquals("check if flipped (E,4) correctly", 0, game.getTile(Alpha.E, 4));
-        assertEquals("O left", 5, game.leftO);
-        assertEquals("X left", 3, game.leftX);
+        assertEquals("W left", 5, game.leftW);
+        assertEquals("B left", 3, game.leftB);
     }
 
     @Test
@@ -219,8 +219,8 @@ public class ReversiFeatureTest {
         assertFalse("if the are valid moves", game.areValidMoves());
         game.gameOver();
         assertEquals("winner", 0, game.winner);
-        assertEquals("O left", 33, game.leftO);
-        assertEquals("X left", 31, game.leftX);
+        assertEquals("W left", 33, game.leftW);
+        assertEquals("B left", 31, game.leftB);
         assertFalse("game is over", game.move(Alpha.A, 1));
     }
 

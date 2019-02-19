@@ -17,8 +17,8 @@ public class ReversiFixedTest {
         assertEquals("playground init", 1, game.playground[3][4]);
         assertEquals("playground init", 1, game.playground[4][3]);
         assertEquals("playground init", 0, game.playground[4][4]);
-        assertEquals("left X init", 2, game.leftX);
-        assertEquals("left O init", 2, game.leftO);
+        assertEquals("left B init", 2, game.leftB);
+        assertEquals("left W init", 2, game.leftW);
     }
 
     @Test
@@ -53,8 +53,8 @@ public class ReversiFixedTest {
         assertEquals("check if flipped", 1, game.playground[3][3]);
         assertEquals("check if flipped", 1, game.playground[3][2]);
         assertEquals("check on turn", 0, game.onTurn);
-        assertEquals("O left", 1, game.leftO);
-        assertEquals("X left", 4, game.leftX);
+        assertEquals("W left", 1, game.leftW);
+        assertEquals("B left", 4, game.leftB);
     }
 
     @Test
@@ -65,8 +65,8 @@ public class ReversiFixedTest {
         assertEquals("check if flipped", 1, game.playground[4][4]);
         assertEquals("check if flipped", 1, game.playground[5][4]);
         assertEquals("check on turn", 0, game.onTurn);
-        assertEquals("O left", 1, game.leftO);
-        assertEquals("X left", 4, game.leftX);
+        assertEquals("W left", 1, game.leftW);
+        assertEquals("B left", 4, game.leftB);
     }
 
     @Test
@@ -77,8 +77,8 @@ public class ReversiFixedTest {
         assertEquals("check if flipped", 1, game.playground[4][4]);
         assertEquals("check if flipped", 1, game.playground[4][5]);
         assertEquals("check on turn", 0, game.onTurn);
-        assertEquals("O left", 1, game.leftO);
-        assertEquals("X left", 4, game.leftX);
+        assertEquals("W left", 1, game.leftW);
+        assertEquals("B left", 4, game.leftB);
     }
 
     @Test
@@ -89,8 +89,8 @@ public class ReversiFixedTest {
         assertEquals("check if flipped", 1, game.playground[3][3]);
         assertEquals("check if flipped", 1, game.playground[2][3]);
         assertEquals("check on turn", 0, game.onTurn);
-        assertEquals("O left", 1, game.leftO);
-        assertEquals("X left", 4, game.leftX);
+        assertEquals("W left", 1, game.leftW);
+        assertEquals("B left", 4, game.leftB);
     }
 
     @Test
@@ -101,8 +101,8 @@ public class ReversiFixedTest {
         assertEquals("check if flipped", 1, game.playground[5][3]);
         assertEquals("check if flipped", 1, game.playground[6][2]);
         assertEquals("check on turn", 0, game.onTurn);
-        assertEquals("O left", 2, game.leftO);
-        assertEquals("X left", 5, game.leftX);
+        assertEquals("W left", 2, game.leftW);
+        assertEquals("B left", 5, game.leftB);
     }
 
     @Test
@@ -113,8 +113,8 @@ public class ReversiFixedTest {
         assertEquals("check if flipped", 0, game.playground[4][4]);
         assertEquals("check if flipped", 0, game.playground[5][5]);
         assertEquals("check on turn", 1, game.onTurn);
-        assertEquals("O left", 3, game.leftO);
-        assertEquals("X left", 3, game.leftX);
+        assertEquals("W left", 3, game.leftW);
+        assertEquals("B left", 3, game.leftB);
     }
 
     @Test
@@ -125,8 +125,8 @@ public class ReversiFixedTest {
         assertEquals("check if flipped", 1, game.playground[2][4]);
         assertEquals("check if flipped", 1, game.playground[1][5]);
         assertEquals("check on turn", 0, game.onTurn);
-        assertEquals("O left", 2, game.leftO);
-        assertEquals("X left", 5, game.leftX);
+        assertEquals("W left", 2, game.leftW);
+        assertEquals("B left", 5, game.leftB);
     }
 
     @Test
@@ -137,8 +137,8 @@ public class ReversiFixedTest {
         assertEquals("check if flipped", 0, game.playground[3][3]);
         assertEquals("check if flipped", 0, game.playground[2][2]);
         assertEquals("check on turn", 1, game.onTurn);
-        assertEquals("O left", 3, game.leftO);
-        assertEquals("X left", 3, game.leftX);
+        assertEquals("W left", 3, game.leftW);
+        assertEquals("B left", 3, game.leftB);
     }
 
     @Test
@@ -148,8 +148,8 @@ public class ReversiFixedTest {
 
         assertEquals("check if flipped (2,3) correctly",0, game.playground[2][3]);
         assertEquals("check if flipped (3,4) correctly",0, game.playground[3][4]);
-        assertEquals("O left", 5, game.leftO);
-        assertEquals("X left", 3, game.leftX);
+        assertEquals("W left", 5, game.leftW);
+        assertEquals("B left", 3, game.leftB);
     }
 
     @Test
@@ -165,8 +165,8 @@ public class ReversiFixedTest {
         assertFalse("if the are valid moves", game.areValidMoves());
         game.gameOver();
         assertEquals("winner", 0, game.winner);
-        assertEquals("O left", 33, game.leftO);
-        assertEquals("X left", 31, game.leftX);
+        assertEquals("W left", 33, game.leftW);
+        assertEquals("B left", 31, game.leftB);
         assertFalse("game is over", game.move(0, 1));
     }
 

@@ -6,8 +6,8 @@ class ReversiFeature {
     public int[][] playground = new int[8][8];
     public int onTurn = 1;
     public int winner = -1;
-    public int leftO = 2;
-    public int leftX = 2;
+    public int leftW = 2;
+    public int leftB = 2;
     private String[] abc = "abcdefgh".split("");
 
     ReversiFeature() {
@@ -40,9 +40,9 @@ class ReversiFeature {
                 if (playground[r][c] == -1)
                     System.out.print("_ ");
                 else if (playground[r][c] == 1)
-                    System.out.print("X ");
+                    System.out.print("B ");
                 else
-                    System.out.print("O ");
+                    System.out.print("W ");
             }
             System.out.println();
         }
@@ -50,13 +50,13 @@ class ReversiFeature {
 
     private void printOnTurn() {
         if (onTurn == 0)
-            System.out.println("On turn: O");
+            System.out.println("On turn: W");
         else
-            System.out.println("On turn: X");
+            System.out.println("On turn: B");
     }
 
     private void printState() {
-        System.out.printf("Number of tiles: X: %s; O: %s\n\n", leftX, leftO);
+        System.out.printf("Number of tiles: B: %s; W: %s\n\n", leftB, leftW);
     }
 
 //    boolean move(int r, int c) {
@@ -263,16 +263,16 @@ class ReversiFeature {
             if (playground[r][c] == onTurn) break; // debugging [4]
             if (playground[r][c] == -1) {
                 playground[r][c] = onTurn;
-                if (onTurn == 1) leftX++;
-                else if (onTurn == 0) leftO++;
+                if (onTurn == 1) leftB++;
+                else if (onTurn == 0) leftW++;
             } else {
                 playground[r][c] = onTurn;
                 if (onTurn == 1) {
-                    leftX++;
-                    leftO--;
+                    leftB++;
+                    leftW--;
                 } else {
-                    leftO++;
-                    leftX--;
+                    leftW++;
+                    leftB--;
                 }
             }
         }
@@ -300,8 +300,8 @@ class ReversiFeature {
 
     void gameOver() {
         printState();
-        if (leftX > leftO) winner = 1;
-        else if (leftO > leftX) winner = 0;
+        if (leftB > leftW) winner = 1;
+        else if (leftW > leftB) winner = 0;
     }
 
 }

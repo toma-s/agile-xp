@@ -6,7 +6,7 @@ class ReversiRefactored {
 
     private final int SIZE = 8;
     private Player[][] playground = new Player[SIZE][SIZE];
-    private Player onTurn = Player.X;
+    private Player onTurn = Player.B;
     private Player winner = Player.NONE;
     private String[] abc = "abcdefgh".split("");
     private HashMap<Player, Integer> left = new HashMap<>();
@@ -22,12 +22,12 @@ class ReversiRefactored {
         return onTurn;
     }
 
-    int getLeftO() {
-        return left.get(Player.O);
+    int getLeftW() {
+        return left.get(Player.W);
     }
 
-    int getLeftX() {
-        return left.get(Player.X);
+    int getLeftB() {
+        return left.get(Player.B);
     }
 
     Player getTile(int r, int c) {
@@ -43,8 +43,8 @@ class ReversiRefactored {
     }
 
     private void initGame() {
-        left.put(Player.X, 2);
-        left.put(Player.O, 2);
+        left.put(Player.B, 2);
+        left.put(Player.W, 2);
     }
 
     private void initPlayground() {
@@ -53,10 +53,10 @@ class ReversiRefactored {
                 playground[r][c] = Player.NONE;
             }
         }
-        playground[SIZE/2-1][SIZE/2-1] = Player.O;
-        playground[SIZE/2-1][SIZE/2] = Player.X;
-        playground[SIZE/2][SIZE/2] = Player.O;
-        playground[SIZE/2][SIZE/2-1] = Player.X;
+        playground[SIZE/2-1][SIZE/2-1] = Player.W;
+        playground[SIZE/2-1][SIZE/2] = Player.B;
+        playground[SIZE/2][SIZE/2] = Player.W;
+        playground[SIZE/2][SIZE/2-1] = Player.B;
     }
 
     private void printPlayground() {
@@ -66,24 +66,24 @@ class ReversiRefactored {
             for (int c = 0; c < SIZE; c++) {
                 if (playground[r][c] == Player.NONE)
                     System.out.print("_ ");
-                else if (playground[r][c] == Player.X)
-                    System.out.print("X ");
+                else if (playground[r][c] == Player.B)
+                    System.out.print("B ");
                 else
-                    System.out.print("O ");
+                    System.out.print("W ");
             }
             System.out.println();
         }
     }
 
     private void printOnTurn() {
-        if (onTurn == Player.O)
-            System.out.println("On turn: O");
+        if (onTurn == Player.W)
+            System.out.println("On turn: W");
         else
-            System.out.println("On turn: X");
+            System.out.println("On turn: B");
     }
 
     private void printState() {
-        System.out.printf("Number of tiles: X: %s; O: %s\n\n", getLeftX(), getLeftO());
+        System.out.printf("Number of tiles: B: %s; W: %s\n\n", getLeftB(), getLeftW());
     }
 
     boolean move(Alpha c0, int r0) {
@@ -111,8 +111,8 @@ class ReversiRefactored {
         }
         flipTiles(tilesToFlip);
 
-        if (onTurn == Player.O) onTurn = Player.X;
-        else if (onTurn == Player.X) onTurn = Player.O;
+        if (onTurn == Player.W) onTurn = Player.B;
+        else if (onTurn == Player.B) onTurn = Player.W;
 
         System.out.println("Move is valid");
         printPlayground();
@@ -129,8 +129,8 @@ class ReversiRefactored {
         playground[r0][c0] = onTurn;
 
         Player opposite = Player.NONE;
-        if (onTurn == Player.O) opposite = Player.X;
-        else if (onTurn == Player.X) opposite = Player.O;
+        if (onTurn == Player.W) opposite = Player.B;
+        else if (onTurn == Player.B) opposite = Player.W;
         int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
         for (int[] direction : directions) {
             int r = r0;
@@ -197,8 +197,8 @@ class ReversiRefactored {
 
     void gameOver() {
         printState();
-        if (getLeftX() > getLeftO()) winner = Player.X;
-        else if (getLeftO() > getLeftX()) winner = Player.O;
+        if (getLeftB() > getLeftW()) winner = Player.B;
+        else if (getLeftW() > getLeftB()) winner = Player.W;
     }
 
 }
