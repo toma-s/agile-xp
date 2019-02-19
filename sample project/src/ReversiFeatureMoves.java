@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class ReversiFeature {
+class ReversiFeatureMoves {
 
     public int[][] playground = new int[8][8];
     public int onTurn = 1;
@@ -10,7 +10,7 @@ class ReversiFeature {
     public int leftB = 2;
     private String[] abc = "abcdefgh".split("");
 
-    ReversiFeature() {
+    ReversiFeatureMoves() {
         initPlayground();
         printPlayground();
         printOnTurn();

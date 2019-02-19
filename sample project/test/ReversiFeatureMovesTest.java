@@ -8,12 +8,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class ReversiFeatureTest {
-    private ReversiFeature rev = new ReversiFeature();
+public class ReversiFeatureMovesTest {
+    private ReversiFeatureMoves rev = new ReversiFeatureMoves();
 
     @Test
     public void testInit() {
-        ReversiFeature game = rev;
+        ReversiFeatureMoves game = rev;
 
         assertEquals("on turn", 1, game.onTurn);
         assertEquals("playground init", 0, game.getTile(Alpha.D, 4));
@@ -26,7 +26,7 @@ public class ReversiFeatureTest {
 
     @Test
     public void testInitValidMoves() {
-        ReversiFeature game = rev;
+        ReversiFeatureMoves game = rev;
         ArrayList<ArrayList<Integer>> tiles = game.getPossibleMoves();
 
         assertEquals("valid length", 4, tiles.size());
@@ -38,7 +38,7 @@ public class ReversiFeatureTest {
 
     @Test
     public void testMoveOnNotEmpty() {
-        ReversiFeature game = rev;
+        ReversiFeatureMoves game = rev;
         assertFalse("move on not empty tile (e,5)", game.move(Alpha.E,5));
 
         assertEquals("check if didn't change", 0, game.getTile(Alpha.E, 5));
@@ -46,7 +46,7 @@ public class ReversiFeatureTest {
 
     @Test
     public void testMoveOutOfBounds() {
-        ReversiFeature game = rev;
+        ReversiFeatureMoves game = rev;
         assertFalse("move on tile out of bounds (a,9)", game.move(Alpha.A,9));
 
         assertFalse("move on tile out of bounds (a,0)", game.move(Alpha.A,0));
@@ -54,7 +54,7 @@ public class ReversiFeatureTest {
 
     @Test
     public void testMoveOnNotAdjacent() {
-        ReversiFeature game = rev;
+        ReversiFeatureMoves game = rev;
         assertFalse("not valid move (a,1)", game.move(Alpha.A,1));
 
         assertEquals("check if didn't change", -1, game.getTile(Alpha.A, 1));
@@ -62,7 +62,7 @@ public class ReversiFeatureTest {
 
     @Test
     public void testFlipRight() {
-        ReversiFeature game = rev;
+        ReversiFeatureMoves game = rev;
         assertTrue("move to flip (c,4)", game.move(Alpha.C,4));
 
         assertEquals("check if flipped", 1, game.getTile(Alpha.D, 4));
@@ -74,7 +74,7 @@ public class ReversiFeatureTest {
 
     @Test
     public void testFlipUp() {
-        ReversiFeature game = rev;
+        ReversiFeatureMoves game = rev;
         assertTrue("move to flip", game.move(Alpha.E, 6));
 
         assertEquals("check if flipped", 1, game.getTile(Alpha.E, 5));
@@ -86,7 +86,7 @@ public class ReversiFeatureTest {
 
     @Test
     public void testFlipLeft() {
-        ReversiFeature game = rev;
+        ReversiFeatureMoves game = rev;
         assertTrue("move to flip", game.move(Alpha.F, 5));
 
         assertEquals("check if flipped",1, game.getTile(Alpha.E, 5));
@@ -98,7 +98,7 @@ public class ReversiFeatureTest {
 
     @Test
     public void testFlipDown() {
-        ReversiFeature game = rev;
+        ReversiFeatureMoves game = rev;
         assertTrue("move to flip", game.move(Alpha.D, 3));
 
         assertEquals("check if flipped", 1, game.getTile(Alpha.D, 4));
@@ -114,7 +114,7 @@ public class ReversiFeatureTest {
         moves.add(new Pair<>(Alpha.E, 6));
         moves.add(new Pair<>(Alpha.D, 6));
         moves.add(new Pair<>(Alpha.C, 7));
-        ReversiFeature game = setMoves(moves);
+        ReversiFeatureMoves game = setMoves(moves);
 
         assertEquals("check if flipped", 1, game.getTile(Alpha.D, 6));
         assertEquals("check if flipped", 1, game.getTile(Alpha.C, 7));
@@ -128,7 +128,7 @@ public class ReversiFeatureTest {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.E, 6));
         moves.add(new Pair<>(Alpha.F, 6));
-        ReversiFeature game = setMoves(moves);
+        ReversiFeatureMoves game = setMoves(moves);
 
         assertEquals("check if flipped", 0, game.getTile(Alpha.E, 5));
         assertEquals("check if flipped", 0, game.getTile(Alpha.F, 6));
@@ -143,7 +143,7 @@ public class ReversiFeatureTest {
         moves.add(new Pair<>(Alpha.D, 3));
         moves.add(new Pair<>(Alpha.E, 3));
         moves.add(new Pair<>(Alpha.F, 2));
-        ReversiFeature game = setMoves(moves);
+        ReversiFeatureMoves game = setMoves(moves);
 
         assertEquals("check if flipped",1, game.getTile(Alpha.E, 3));
         assertEquals("check if flipped", 1, game.getTile(Alpha.F, 2));
@@ -157,7 +157,7 @@ public class ReversiFeatureTest {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.D, 3));
         moves.add(new Pair<>(Alpha.C, 3));
-        ReversiFeature game = setMoves(moves);
+        ReversiFeatureMoves game = setMoves(moves);
 
         assertEquals("check if flipped", 0, game.getTile(Alpha.D, 4));
         assertEquals("check if flipped", 0, game.getTile(Alpha.C, 3));
@@ -173,7 +173,7 @@ public class ReversiFeatureTest {
         moves.add(new Pair<>(Alpha.C, 3));
         moves.add(new Pair<>(Alpha.C, 4));
         moves.add(new Pair<>(Alpha.E, 3));
-        ReversiFeature game = setMoves(moves);
+        ReversiFeatureMoves game = setMoves(moves);
 
         assertEquals("check if flipped (D,3) correctly", 0, game.getTile(Alpha.D, 3));
         assertEquals("check if flipped (E,4) correctly", 0, game.getTile(Alpha.E, 4));
@@ -214,7 +214,7 @@ public class ReversiFeatureTest {
         moves.add(new Pair<>(Alpha.E, 1)); moves.add(new Pair<>(Alpha.B, 8));
         moves.add(new Pair<>(Alpha.A, 1)); moves.add(new Pair<>(Alpha.B, 2));
         moves.add(new Pair<>(Alpha.G, 8)); moves.add(new Pair<>(Alpha.G, 7));
-        ReversiFeature game = setMoves(moves);
+        ReversiFeatureMoves game = setMoves(moves);
 
         assertFalse("if the are valid moves", game.areValidMoves());
         game.gameOver();
@@ -224,8 +224,8 @@ public class ReversiFeatureTest {
         assertFalse("game is over", game.move(Alpha.A, 1));
     }
 
-    private ReversiFeature setMoves(ArrayList<Pair<Alpha, Integer>> moves) {
-        ReversiFeature game = new ReversiFeature();
+    private ReversiFeatureMoves setMoves(ArrayList<Pair<Alpha, Integer>> moves) {
+        ReversiFeatureMoves game = new ReversiFeatureMoves();
         for (Pair<Alpha, Integer> move  : moves) {
             Alpha r = move.getKey();
             Integer c = move.getValue();

@@ -142,12 +142,19 @@ public class ReversiFixedTest {
     }
 
     @Test
-    public void testDoubleFlip() {
+    public void testDoubleFlipDice() {
         int[][] moves = {{2, 3}, {2, 2}, {3, 2}, {2, 4}};
         ReversiFixed game = setMoves(moves);
 
         assertEquals("check if flipped (2,3) correctly",0, game.playground[2][3]);
         assertEquals("check if flipped (3,4) correctly",0, game.playground[3][4]);
+    }
+
+    @Test
+    public void testDoubleFlipCount() {
+        int[][] moves = {{2, 3}, {2, 2}, {3, 2}, {2, 4}};
+        ReversiFixed game = setMoves(moves);
+
         assertEquals("W left", 5, game.leftW);
         assertEquals("B left", 3, game.leftB);
     }
