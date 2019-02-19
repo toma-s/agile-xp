@@ -1,18 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class ReversiLegacy {
+class ReversiFeatureMoves {
 
     public int[][] playground = new int[8][8];
     public int onTurn = 1;
     public int winner = -1;
-    public int leftO = 2;
-    public int leftX = 2;
+    public int leftW = 2;
+    public int leftB = 2;
+    private String[] abc = "abcdefgh".split("");
 
-    ReversiLegacy() {
+    ReversiFeatureMoves() {
         initPlayground();
         printPlayground();
         printOnTurn();
+    }
+
+    int getTile(Alpha c0, int r0) {
+        return playground[r0-1][c0.getValue()];
     }
 
     private void initPlayground() {
@@ -28,16 +33,16 @@ class ReversiLegacy {
     }
 
     private void printPlayground() {
-        System.out.println("  0 1 2 3 4 5 6 7");
+        System.out.printf("  %s\n", String.join(" ", abc));
         for (int r = 0; r < 8; r++) {
-            System.out.print(r  + " ");
+            System.out.print((r + 1) + " ");
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] == -1)
                     System.out.print("_ ");
                 else if (playground[r][c] == 1)
-                    System.out.print("X ");
+                    System.out.print("B ");
                 else
-                    System.out.print("O ");
+                    System.out.print("W ");
             }
             System.out.println();
         }
@@ -45,16 +50,20 @@ class ReversiLegacy {
 
     private void printOnTurn() {
         if (onTurn == 0)
-            System.out.println("On turn: O");
+            System.out.println("On turn: W");
         else
-            System.out.println("On turn: X");
+            System.out.println("On turn: B");
     }
 
     private void printState() {
-        System.out.printf("Number of tiles: X: %s; O: %s\n\n", leftX, leftO);
+        System.out.printf("Number of tiles: B: %s; W: %s\n\n", leftB, leftW);
     }
 
-    boolean move(int r, int c) {
+//    boolean move(int r, int c) {
+    boolean move(Alpha c0, int r0) {
+        int r = r0 - 1;
+        int c = c0.getValue();
+
         if (r == 7 && c == 7) {
             System.out.println();
         }
@@ -183,14 +192,14 @@ class ReversiLegacy {
             // left down
             step = 1;
             toFlip = new ArrayList<>();
-            if (r + step < 8 && c - step > 0 && playground[r + step][c - step] == opposite) {
-                while (r + step < 8 && c - step > 0 && playground[r + step][c - step] == opposite) {
+            if (r + step <= 7 && c - step > 0 && playground[r + step][c - step] == opposite) {
+                while (r + step <= 7 && c - step > 0 && playground[r + step][c - step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r + step, c - step)));
                     }
                     step++;
                 }
-                if (step > 1 && r + step < 8 && c - step >= 0 && playground[r + step][c - step] != -1) {
+                if (step > 1 && r + step <= 7 && c - step >= 0 && playground[r + step][c - step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -254,39 +263,45 @@ class ReversiLegacy {
             if (playground[r][c] == onTurn) break; // debugging [4]
             if (playground[r][c] == -1) {
                 playground[r][c] = onTurn;
-                if (onTurn == 1) leftX++;
-                else if (onTurn == 0) leftO++;
+                if (onTurn == 1) leftB++;
+                else if (onTurn == 0) leftW++;
             } else {
                 playground[r][c] = onTurn;
                 if (onTurn == 1) {
-                    leftX++;
-                    leftO--;
+                    leftB++;
+                    leftW--;
                 } else {
-                    leftO++;
-                    leftX--;
+                    leftW++;
+                    leftB--;
                 }
             }
         }
     }
 
     boolean areValidMoves() {
+        return getPossibleMoves().size() != 0;
+    }
+
+    ArrayList<ArrayList<Integer>> getPossibleMoves() {
         ArrayList<ArrayList<Integer>> tiles = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if (playground[r][c] == -1) {
-                    if (isValidMove(r, c, false)) {
-                        return true;
-                    }
+                if (playground[r][c] != -1) {
+                    continue;
+                }
+                if (isValidMove(r, c, false)) {
+                    tiles.add(new ArrayList<>(List.of(r, c)));
                 }
             }
         }
-        return false;
+        System.out.println(tiles);
+        return tiles;
     }
 
     void gameOver() {
         printState();
-        if (leftX > leftO) winner = 1;
-        else if (leftO > leftX) winner = 0;
+        if (leftB > leftW) winner = 1;
+        else if (leftW > leftB) winner = 0;
     }
 
 }

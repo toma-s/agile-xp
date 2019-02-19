@@ -1,5 +1,5 @@
 public enum Player {
-    X(1), O(0), NONE(-1);
+    B(1), W(0), NONE(-1);
 
     private final int value;
 
