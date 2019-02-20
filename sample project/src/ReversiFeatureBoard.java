@@ -8,7 +8,6 @@ class ReversiFeatureBoard {
     public int winner = -1;
     public int leftW = 2;
     public int leftB = 2;
-    private String[] abc = "abcdefgh".split("");
 
     ReversiFeatureBoard() {
         initPlayground();
@@ -33,6 +32,7 @@ class ReversiFeatureBoard {
     }
 
     private void printPlayground() {
+        String[] abc = "abcdefgh".split("");
         System.out.printf("  %s\n", String.join(" ", abc));
         for (int r = 0; r < 8; r++) {
             System.out.print((r + 1) + " ");

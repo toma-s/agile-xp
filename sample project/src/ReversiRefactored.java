@@ -8,7 +8,6 @@ class ReversiRefactored {
     private Player[][] playground = new Player[SIZE][SIZE];
     private Player onTurn = Player.B;
     private Player winner = Player.NONE;
-    private String[] abc = "abcdefgh".split("");
     private HashMap<Player, Integer> left = new HashMap<>();
 
     ReversiRefactored() {
@@ -60,6 +59,7 @@ class ReversiRefactored {
     }
 
     private void printPlayground() {
+        String[] abc = "abcdefgh".split("");
         System.out.printf("  %s\n", String.join(" ", abc));
         for (int r = 0; r < SIZE; r++) {
             System.out.print((r + 1) + " ");

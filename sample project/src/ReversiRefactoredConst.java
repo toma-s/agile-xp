@@ -9,7 +9,6 @@ class ReversiRefactoredConst {
     public Player winner = Player.NONE;
     public int leftW = 2;
     public int leftB = 2;
-    private String[] abc = "abcdefgh".split("");
 
     ReversiRefactoredConst() {
         initPlayground();
@@ -34,6 +33,7 @@ class ReversiRefactoredConst {
     }
 
     private void printPlayground() {
+        String[] abc = "abcdefgh".split("");
         System.out.printf("  %s\n", String.join(" ", abc));
         for (int r = 0; r < SIZE; r++) {
             System.out.print((r + 1) + " ");
