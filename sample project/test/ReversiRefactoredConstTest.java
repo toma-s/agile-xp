@@ -15,11 +15,11 @@ public class ReversiRefactoredConstTest {
     public void testInit() {
         ReversiRefactoredConst game = rev;
 
-        assertEquals("on turn", 1, game.onTurn);
-        assertEquals("playground init", 0, game.getTile(Alpha.D, 4));
-        assertEquals("playground init", 1, game.getTile(Alpha.E, 4));
-        assertEquals("playground init", 1, game.getTile(Alpha.D, 5));
-        assertEquals("playground init", 0, game.getTile(Alpha.E, 5));
+        assertEquals("on turn", Player.B, game.onTurn);
+        assertEquals("playground init", Player.W, game.getTile(Alpha.D, 4));
+        assertEquals("playground init", Player.B, game.getTile(Alpha.E, 4));
+        assertEquals("playground init", Player.B, game.getTile(Alpha.D, 5));
+        assertEquals("playground init", Player.W, game.getTile(Alpha.E, 5));
         assertEquals("left B init", 2, game.leftB);
         assertEquals("left W init", 2, game.leftW);
     }
@@ -41,7 +41,7 @@ public class ReversiRefactoredConstTest {
         ReversiRefactoredConst game = rev;
         assertFalse("move on not empty tile (e,5)", game.move(Alpha.E,5));
 
-        assertEquals("check if didn't change", 0, game.getTile(Alpha.E, 5));
+        assertEquals("check if didn't change", Player.W, game.getTile(Alpha.E, 5));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ReversiRefactoredConstTest {
         ReversiRefactoredConst game = rev;
         assertFalse("not valid move (a,1)", game.move(Alpha.A,1));
 
-        assertEquals("check if didn't change", -1, game.getTile(Alpha.A, 1));
+        assertEquals("check if didn't change", Player.NONE, game.getTile(Alpha.A, 1));
     }
 
     @Test
@@ -65,9 +65,9 @@ public class ReversiRefactoredConstTest {
         ReversiRefactoredConst game = rev;
         assertTrue("move to flip (c,4)", game.move(Alpha.C,4));
 
-        assertEquals("check if flipped", 1, game.getTile(Alpha.D, 4));
-        assertEquals("check if flipped", 1, game.getTile(Alpha.C, 4));
-        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("check if flipped",Player.B, game.getTile(Alpha.D, 4));
+        assertEquals("check if flipped", Player.B, game.getTile(Alpha.C, 4));
+        assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 1, game.leftW);
         assertEquals("B left", 4, game.leftB);
     }
@@ -77,9 +77,9 @@ public class ReversiRefactoredConstTest {
         ReversiRefactoredConst game = rev;
         assertTrue("move to flip", game.move(Alpha.E, 6));
 
-        assertEquals("check if flipped", 1, game.getTile(Alpha.E, 5));
-        assertEquals("check if flipped", 1, game.getTile(Alpha.E, 6));
-        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("check if flipped",Player.B, game.getTile(Alpha.E, 5));
+        assertEquals("check if flipped", Player.B, game.getTile(Alpha.E, 6));
+        assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 1, game.leftW);
         assertEquals("B left", 4, game.leftB);
     }
@@ -89,9 +89,9 @@ public class ReversiRefactoredConstTest {
         ReversiRefactoredConst game = rev;
         assertTrue("move to flip", game.move(Alpha.F, 5));
 
-        assertEquals("check if flipped",1, game.getTile(Alpha.E, 5));
-        assertEquals("check if flipped", 1, game.getTile(Alpha.F, 5));
-        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("check if flipped",Player.B, game.getTile(Alpha.E, 5));
+        assertEquals("check if flipped", Player.B, game.getTile(Alpha.F, 5));
+        assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 1, game.leftW);
         assertEquals("B left", 4, game.leftB);
     }
@@ -101,9 +101,9 @@ public class ReversiRefactoredConstTest {
         ReversiRefactoredConst game = rev;
         assertTrue("move to flip", game.move(Alpha.D, 3));
 
-        assertEquals("check if flipped", 1, game.getTile(Alpha.D, 4));
-        assertEquals("check if flipped", 1, game.getTile(Alpha.D, 3));
-        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("check if flipped",Player.B, game.getTile(Alpha.D, 4));
+        assertEquals("check if flipped", Player.B, game.getTile(Alpha.D, 3));
+        assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 1, game.leftW);
         assertEquals("B left", 4, game.leftB);
     }
@@ -116,9 +116,9 @@ public class ReversiRefactoredConstTest {
         moves.add(new Pair<>(Alpha.C, 7));
         ReversiRefactoredConst game = setMoves(moves);
 
-        assertEquals("check if flipped", 1, game.getTile(Alpha.D, 6));
-        assertEquals("check if flipped", 1, game.getTile(Alpha.C, 7));
-        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("check if flipped",Player.B, game.getTile(Alpha.D, 6));
+        assertEquals("check if flipped", Player.B, game.getTile(Alpha.C, 7));
+        assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 2, game.leftW);
         assertEquals("B left", 5, game.leftB);
     }
@@ -130,9 +130,9 @@ public class ReversiRefactoredConstTest {
         moves.add(new Pair<>(Alpha.F, 6));
         ReversiRefactoredConst game = setMoves(moves);
 
-        assertEquals("check if flipped", 0, game.getTile(Alpha.E, 5));
-        assertEquals("check if flipped", 0, game.getTile(Alpha.F, 6));
-        assertEquals("on turn", 1, game.onTurn);
+        assertEquals("check if flipped",Player.W, game.getTile(Alpha.E, 5));
+        assertEquals("check if flipped", Player.W, game.getTile(Alpha.F, 6));
+        assertEquals("on turn", Player.B, game.onTurn);
         assertEquals("W left", 3, game.leftW);
         assertEquals("B left", 3, game.leftB);
     }
@@ -145,9 +145,9 @@ public class ReversiRefactoredConstTest {
         moves.add(new Pair<>(Alpha.F, 2));
         ReversiRefactoredConst game = setMoves(moves);
 
-        assertEquals("check if flipped",1, game.getTile(Alpha.E, 3));
-        assertEquals("check if flipped", 1, game.getTile(Alpha.F, 2));
-        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("check if flipped",Player.B, game.getTile(Alpha.E, 3));
+        assertEquals("check if flipped", Player.B, game.getTile(Alpha.F, 2));
+        assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 2, game.leftW);
         assertEquals("B left", 5, game.leftB);
     }
@@ -159,9 +159,9 @@ public class ReversiRefactoredConstTest {
         moves.add(new Pair<>(Alpha.C, 3));
         ReversiRefactoredConst game = setMoves(moves);
 
-        assertEquals("check if flipped", 0, game.getTile(Alpha.D, 4));
-        assertEquals("check if flipped", 0, game.getTile(Alpha.C, 3));
-        assertEquals("on turn", 1, game.onTurn);
+        assertEquals("check if flipped",Player.W, game.getTile(Alpha.D, 4));
+        assertEquals("check if flipped", Player.W, game.getTile(Alpha.C, 3));
+        assertEquals("on turn", Player.B, game.onTurn);
         assertEquals("W left", 3, game.leftW);
         assertEquals("B left", 3, game.leftB);
     }
@@ -175,8 +175,8 @@ public class ReversiRefactoredConstTest {
         moves.add(new Pair<>(Alpha.E, 3));
         ReversiRefactoredConst game = setMoves(moves);
 
-        assertEquals("check if flipped (D,3) correctly", 0, game.getTile(Alpha.D, 3));
-        assertEquals("check if flipped (E,4) correctly", 0, game.getTile(Alpha.E, 4));
+        assertEquals("check if flipped (D,3) correctly",Player.W, game.getTile(Alpha.D, 3));
+        assertEquals("check if flipped (E,4) correctly",Player.W, game.getTile(Alpha.E, 4));
         assertEquals("W left", 5, game.leftW);
         assertEquals("B left", 3, game.leftB);
     }
@@ -218,7 +218,7 @@ public class ReversiRefactoredConstTest {
 
         assertFalse("if the are valid moves", game.areValidMoves());
         game.gameOver();
-        assertEquals("winner", 0, game.winner);
+        assertEquals("winner", Player.W, game.winner);
         assertEquals("W left", 33, game.leftW);
         assertEquals("B left", 31, game.leftB);
         assertFalse("game is over", game.move(Alpha.A, 1));
