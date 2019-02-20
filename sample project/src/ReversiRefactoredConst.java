@@ -1,16 +1,17 @@
 import java.util.ArrayList;
-        import java.util.List;
+import java.util.List;
 
-class ReversiFeatureMoves {
+class ReversiRefactoredConst {
 
-    public int[][] playground = new int[8][8];
+    private final int SIZE = 8;
+    public int[][] playground = new int[SIZE][SIZE];
     public int onTurn = 1;
     public int winner = -1;
     public int leftW = 2;
     public int leftB = 2;
     private String[] abc = "abcdefgh".split("");
 
-    ReversiFeatureMoves() {
+    ReversiRefactoredConst() {
         initPlayground();
         printPlayground();
         printOnTurn();
@@ -21,22 +22,22 @@ class ReversiFeatureMoves {
     }
 
     private void initPlayground() {
-        for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++) {
+        for (int r = 0; r < SIZE; r++) {
+            for (int c = 0; c < SIZE; c++) {
                 playground[r][c] = -1;
             }
         }
-        playground[8/2-1][8/2-1] = 1 - onTurn;
-        playground[8/2-1][8/2] = onTurn;
-        playground[8/2][8/2] = 1 - onTurn;
-        playground[8/2][8/2-1] = onTurn;
+        playground[SIZE/2-1][SIZE/2-1] = 1 - onTurn;
+        playground[SIZE/2-1][SIZE/2] = onTurn;
+        playground[SIZE/2][SIZE/2] = 1 - onTurn;
+        playground[SIZE/2][SIZE/2-1] = onTurn;
     }
 
     private void printPlayground() {
         System.out.printf("  %s\n", String.join(" ", abc));
-        for (int r = 0; r < 8; r++) {
+        for (int r = 0; r < SIZE; r++) {
             System.out.print((r + 1) + " ");
-            for (int c = 0; c < 8; c++) {
+            for (int c = 0; c < SIZE; c++) {
                 if (playground[r][c] == -1)
                     System.out.print("_ ");
                 else if (playground[r][c] == 1)
@@ -59,7 +60,7 @@ class ReversiFeatureMoves {
         System.out.printf("Number of tiles: B: %s; W: %s\n\n", leftB, leftW);
     }
 
-    boolean move(Alpha c0, int r0) {
+    boolean move(Alpha c0, int r0){
         int r = r0 - 1;
         int c = c0.getValue();
 
@@ -90,19 +91,19 @@ class ReversiFeatureMoves {
         int opposite = 1 ^ onTurn;
         boolean valid = false;
 
-        if (r >= 0 && c >= 0 && r < 8 && c < 8 && playground[r][c] == -1) {
+        if (r >= 0 && c >= 0 && r < SIZE && c < SIZE && playground[r][c] == -1) {
             int step = 1;
             ArrayList<ArrayList<Integer>> toFlip = new ArrayList<>();
 
             // right
-            if (c + step < 8 && playground[r][c + step] == opposite) {
-                while (c + step < 8 && playground[r][c + step] == opposite) {
+            if (c + step < SIZE && playground[r][c + step] == opposite) {
+                while (c + step < SIZE && playground[r][c + step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c + step)));
                     }
                     step++;
                 }
-                if (step > 1 && c + step < 8 && playground[r][c + step] != -1) {
+                if (step > 1 && c + step < SIZE && playground[r][c + step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -113,14 +114,14 @@ class ReversiFeatureMoves {
             // right up
             step = 1;
             toFlip = new ArrayList<>();
-            if (r - step > 0 && c + step < 8 && playground[r - step][c + step] == opposite) {
-                while (r - step > 0 && c + step < 8 && playground[r - step][c + step] == opposite) {
+            if (r - step > 0 && c + step < SIZE && playground[r - step][c + step] == opposite) {
+                while (r - step > 0 && c + step < SIZE && playground[r - step][c + step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r - step, c + step)));
                     }
                     step++;
                 }
-                if (step > 1 && r - step >= 0 && c + step < 8 && playground[r - step][c + step] != -1) {
+                if (step > 1 && r - step >= 0 && c + step < SIZE && playground[r - step][c + step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -185,14 +186,14 @@ class ReversiFeatureMoves {
             // left down
             step = 1;
             toFlip = new ArrayList<>();
-            if (r + step <= 7 && c - step > 0 && playground[r + step][c - step] == opposite) {
-                while (r + step <= 7 && c - step > 0 && playground[r + step][c - step] == opposite) {
+            if (r + step < SIZE && c - step > 0 && playground[r + step][c - step] == opposite) {
+                while (r + step < SIZE && c - step > 0 && playground[r + step][c - step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r + step, c - step)));
                     }
                     step++;
                 }
-                if (step > 1 && r + step <= 7 && c - step >= 0 && playground[r + step][c - step] != -1) {
+                if (step > 1 && r + step < SIZE && c - step >= 0 && playground[r + step][c - step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -203,14 +204,14 @@ class ReversiFeatureMoves {
             // down
             step = 1;
             toFlip = new ArrayList<>();
-            if (r + step < 8 && playground[r + step][c] == opposite) {
-                while (r + step < 8 && playground[r + step][c] == opposite) {
+            if (r + step < SIZE && playground[r + step][c] == opposite) {
+                while (r + step < SIZE && playground[r + step][c] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r + step, c)));
                     }
                     step++;
                 }
-                if (step > 1 && r + step < 8 && playground[r + step][c] != -1) {
+                if (step > 1 && r + step < SIZE && playground[r + step][c] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -221,14 +222,14 @@ class ReversiFeatureMoves {
             // right down
             step = 1;
             toFlip = new ArrayList<>();
-            if (r + step < 8 && c + step < 8 && playground[r + step][c + step] == opposite) {
-                while (r + step < 8 && c + step < 8 && playground[r + step][c + step] == opposite) {
+            if (r + step < SIZE && c + step < SIZE && playground[r + step][c + step] == opposite) {
+                while (r + step < SIZE && c + step < SIZE && playground[r + step][c + step] == opposite) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r + step, c + step)));
                     }
                     step++;
                 }
-                if (step > 1 && r + step < 8 && c + step < 8 && playground[r + step][c + step] != -1) {
+                if (step > 1 && r + step < SIZE && c + step < SIZE && playground[r + step][c + step] != -1) {
                     if (flip) {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
@@ -271,8 +272,8 @@ class ReversiFeatureMoves {
 
     ArrayList<ArrayList<Integer>> getPossibleMoves() {
         ArrayList<ArrayList<Integer>> tiles = new ArrayList<>();
-        for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++) {
+        for (int r = 0; r < SIZE; r++) {
+            for (int c = 0; c < SIZE; c++) {
                 if (playground[r][c] != -1) {
                     continue;
                 }

@@ -89,10 +89,9 @@ class ReversiFeatureBoard {
 
     private boolean isValidMove(int r, int c, boolean flip) {
         int opposite = 1 ^ onTurn;
-        boolean valid = false;  // debugging [1]
+        boolean valid = false;
 
-//        if (playground[r][c] == -1) { // original
-        if (r >= 0 && c >= 0 && r < 8 && c < 8 && playground[r][c] == -1) { // debugging [2]
+        if (r >= 0 && c >= 0 && r < 8 && c < 8 && playground[r][c] == -1) {
             int step = 1;
             ArrayList<ArrayList<Integer>> toFlip = new ArrayList<>();
 
@@ -109,8 +108,7 @@ class ReversiFeatureBoard {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // original
+                    valid = true;
                 }
             }
             // right up
@@ -128,8 +126,7 @@ class ReversiFeatureBoard {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // original
+                    valid = true;
                 }
             }
             // up
@@ -147,8 +144,7 @@ class ReversiFeatureBoard {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // original
+                    valid = true;
                 }
             }
             // left up
@@ -166,8 +162,7 @@ class ReversiFeatureBoard {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // original
+                    valid = true;
                 }
             }
             // left
@@ -185,8 +180,7 @@ class ReversiFeatureBoard {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // original
+                    valid = true;
                 }
             }
             // left down
@@ -204,8 +198,7 @@ class ReversiFeatureBoard {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // original
+                    valid = true;
                 }
             }
             // down
@@ -223,8 +216,7 @@ class ReversiFeatureBoard {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // original
+                    valid = true;
                 }
             }
             // right down
@@ -242,17 +234,13 @@ class ReversiFeatureBoard {
                         toFlip.add(new ArrayList<>(List.of(r, c)));
                         flipTiles(toFlip);
                     }
-                    valid = true; // debugging [3]
-//                    return true; // original
+                    valid = true;
                 }
             }
         } else {
-            return valid; // debugging [3]
-//            return false; // debugging [1]
-//            return true; // original
+            return valid;
         }
-//        return true; // original
-        return valid;  // debugging
+        return valid;
     }
 
     private void flipTiles(ArrayList<ArrayList<Integer>> toFlip) {
@@ -260,7 +248,7 @@ class ReversiFeatureBoard {
             ArrayList<Integer> tile = toFlip.get(i);
             int r = tile.get(0);
             int c = tile.get(1);
-            if (playground[r][c] == onTurn) break; // debugging [4]
+            if (playground[r][c] == onTurn) break;
             if (playground[r][c] == -1) {
                 playground[r][c] = onTurn;
                 if (onTurn == 1) leftB++;
