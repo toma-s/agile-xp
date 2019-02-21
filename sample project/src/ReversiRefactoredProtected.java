@@ -2,23 +2,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-class ReversiRefactored {
+class ReversiRefactoredProtected {
 
     private final int SIZE = 8;
-    private Player[][] playground = new Player[SIZE][SIZE];
-    private Player onTurn = Player.B;
-    private Player winner = Player.NONE;
+    Player[][] playground;
+    Player onTurn;
+    Player winner;
     private HashMap<Player, Integer> left = new HashMap<>();
 
-    ReversiRefactored() {
+    ReversiRefactoredProtected() {
         initPlayground();
         initGame();
         printPlayground();
         printOnTurn();
-    }
-
-    Player getOnTurn() {
-        return onTurn;
     }
 
     int getLeftW() {
@@ -29,19 +25,12 @@ class ReversiRefactored {
         return left.get(Player.B);
     }
 
-    Player getTile(int r, int c) {
-        return playground[r][c];
-    }
-
-    Player getWinner() {
-        return winner;
-    }
-
     Player getTile(Alpha c0, int r0) {
         return playground[r0-1][c0.getValue()];
     }
 
     private void initPlayground() {
+        playground = new Player[SIZE][SIZE];
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
                 playground[r][c] = Player.NONE;
@@ -71,6 +60,8 @@ class ReversiRefactored {
     }
 
     private void initGame() {
+        onTurn = Player.B;
+        winner = Player.NONE;
         left.put(Player.B, 2);
         left.put(Player.W, 2);
     }
@@ -120,6 +111,10 @@ class ReversiRefactored {
         return true;
     }
 
+    private boolean withinPlayground(int r, int c) {
+        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
+    }
+
     private ArrayList<ArrayList<Integer>> getTilesToFlip(int r0, int c0) {
         ArrayList<ArrayList<Integer>> toFLip = new ArrayList<>();
         playground[r0][c0] = onTurn;
@@ -157,10 +152,6 @@ class ReversiRefactored {
         playground[r0][c0] = Player.NONE;
         if (toFLip.size() != 0) toFLip.add(new ArrayList<>(List.of(r0, c0)));
         return toFLip;
-    }
-
-    private boolean withinPlayground(int r, int c) {
-        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
     }
 
     private void flipTiles(ArrayList<ArrayList<Integer>> tiles) {
