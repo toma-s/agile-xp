@@ -41,11 +41,6 @@ class ReversiRefactored {
         return playground[r0-1][c0.getValue()];
     }
 
-    private void initGame() {
-        left.put(Player.B, 2);
-        left.put(Player.W, 2);
-    }
-
     private void initPlayground() {
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
@@ -73,6 +68,11 @@ class ReversiRefactored {
             }
             System.out.println();
         }
+    }
+
+    private void initGame() {
+        left.put(Player.B, 2);
+        left.put(Player.W, 2);
     }
 
     private void printOnTurn() {
@@ -120,10 +120,6 @@ class ReversiRefactored {
         return true;
     }
 
-    private boolean withinPlayground(int r, int c) {
-        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
-    }
-
     private ArrayList<ArrayList<Integer>> getTilesToFlip(int r0, int c0) {
         ArrayList<ArrayList<Integer>> toFLip = new ArrayList<>();
         playground[r0][c0] = onTurn;
@@ -161,6 +157,10 @@ class ReversiRefactored {
         playground[r0][c0] = Player.NONE;
         if (toFLip.size() != 0) toFLip.add(new ArrayList<>(List.of(r0, c0)));
         return toFLip;
+    }
+
+    private boolean withinPlayground(int r, int c) {
+        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
     }
 
     private void flipTiles(ArrayList<ArrayList<Integer>> tiles) {

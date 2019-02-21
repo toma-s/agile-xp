@@ -1,19 +1,28 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 class ReversiRefactoredProtected {
 
     private final int SIZE = 8;
-    Player[][] playground = new Player[SIZE][SIZE];
-    Player onTurn = Player.B;
-    Player winner = Player.NONE;
-    int leftW = 2;
-    int leftB = 2;
+    Player[][] playground;
+    Player onTurn;
+    Player winner;
+    private HashMap<Player, Integer> left = new HashMap<>();
 
     ReversiRefactoredProtected() {
         initPlayground();
+        initGame();
         printPlayground();
         printOnTurn();
+    }
+
+    int getLeftW() {
+        return left.get(Player.W);
+    }
+
+    int getLeftB() {
+        return left.get(Player.B);
     }
 
     Player getTile(Alpha c0, int r0) {
@@ -21,6 +30,7 @@ class ReversiRefactoredProtected {
     }
 
     private void initPlayground() {
+        playground = new Player[SIZE][SIZE];
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
                 playground[r][c] = Player.NONE;
@@ -49,6 +59,13 @@ class ReversiRefactoredProtected {
         }
     }
 
+    private void initGame() {
+        onTurn = Player.B;
+        winner = Player.NONE;
+        left.put(Player.B, 2);
+        left.put(Player.W, 2);
+    }
+
     private void printOnTurn() {
         if (onTurn == Player.W)
             System.out.println("On turn: W");
@@ -57,215 +74,98 @@ class ReversiRefactoredProtected {
     }
 
     private void printState() {
-        System.out.printf("Number of tiles: B: %s; W: %s\n\n", leftB, leftW);
+        System.out.printf("Number of tiles: B: %s; W: %s\n\n", getLeftB(), getLeftW());
     }
 
-    boolean move(Alpha c0, int r0){
+    boolean move(Alpha c0, int r0) {
         int r = r0 - 1;
         int c = c0.getValue();
-
-        if (r == 7 && c == 7) {
-            System.out.println();
-        }
         System.out.printf("Move on tile (%s; %s):\n\n", r, c);
+
+        if (!(withinPlayground(r, c))) {
+            System.out.println("Move out of bounds");
+            return false;
+        }
+        if (playground[r][c] != Player.NONE) {
+            System.out.println("Not valid move. The tile is not empty");
+            return false;
+        }
         if (winner != Player.NONE) {
             System.out.println("The game isn't running");
             return false;
         }
 
-        boolean valid = isValidMove(r, c, true);
-        if (valid) {
-            if (onTurn == Player.B) onTurn = Player.W;
-            else if (onTurn == Player.W) onTurn = Player.B;
-            printPlayground();
-            printState();
-            return true;
+        ArrayList<ArrayList<Integer>> tilesToFlip = getTilesToFlip(r, c);
+        if (tilesToFlip.size() == 0) {
+            System.out.println("Not valid move");
+            return false;
         }
-        System.out.println("Move is not valid");
+        flipTiles(tilesToFlip);
+
+        if (onTurn == Player.W) onTurn = Player.B;
+        else if (onTurn == Player.B) onTurn = Player.W;
+
+        System.out.println("Move is valid");
         printPlayground();
         printState();
-        return false;
+        return true;
     }
 
-    private boolean isValidMove(int r, int c, boolean flip) {
+    private boolean withinPlayground(int r, int c) {
+        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
+    }
+
+    private ArrayList<ArrayList<Integer>> getTilesToFlip(int r0, int c0) {
+        ArrayList<ArrayList<Integer>> toFLip = new ArrayList<>();
+        playground[r0][c0] = onTurn;
+
         Player opposite = Player.NONE;
         if (onTurn == Player.W) opposite = Player.B;
         else if (onTurn == Player.B) opposite = Player.W;
-        boolean valid = false;
-
-        if (r >= 0 && c >= 0 && r < SIZE && c < SIZE && playground[r][c] == Player.NONE) {
-            int step = 1;
-            ArrayList<ArrayList<Integer>> toFlip = new ArrayList<>();
-
-            // right
-            if (c + step < SIZE && playground[r][c + step] == opposite) {
-                while (c + step < SIZE && playground[r][c + step] == opposite) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c + step)));
-                    }
-                    step++;
-                }
-                if (step > 1 && c + step < SIZE && playground[r][c + step] != Player.NONE) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c)));
-                        flipTiles(toFlip);
-                    }
-                    valid = true;
-                }
+        int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
+        for (int[] direction : directions) {
+            int r = r0;
+            int c = c0;
+            r += direction[0];
+            c += direction[1];
+            if (withinPlayground(r, c) && playground[r][c] != opposite) continue;
+            r += direction[0];
+            c += direction[1];
+            if (!withinPlayground(r, c)) continue;
+            while (playground[r][c] == opposite) {
+                r += direction[0];
+                c += direction[1];
+                if (!withinPlayground(r, c)) break;
             }
-            // right up
-            step = 1;
-            toFlip = new ArrayList<>();
-            if (r - step > 0 && c + step < SIZE && playground[r - step][c + step] == opposite) {
-                while (r - step > 0 && c + step < SIZE && playground[r - step][c + step] == opposite) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r - step, c + step)));
-                    }
-                    step++;
+            if (!withinPlayground(r, c)) continue;
+            if (playground[r][c] != onTurn) continue;
+            while (true) {
+                r -= direction[0];
+                c -= direction[1];
+                if (r == r0 && c == c0) {
+                    break;
                 }
-                if (step > 1 && r - step >= 0 && c + step < SIZE && playground[r - step][c + step] != Player.NONE) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c)));
-                        flipTiles(toFlip);
-                    }
-                    valid = true;
-                }
+                toFLip.add(new ArrayList<>(List.of(r, c)));
             }
-            // up
-            step = 1;
-            toFlip = new ArrayList<>();
-            if (r - step > 0 && playground[r - step][c] == opposite) {
-                while (r - step > 0 && playground[r - step][c] == opposite) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r - step, c)));
-                    }
-                    step++;
-                }
-                if (step > 1 && r - step >= 0 && playground[r - step][c] != Player.NONE) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c)));
-                        flipTiles(toFlip);
-                    }
-                    valid = true;
-                }
-            }
-            // left up
-            step = 1;
-            toFlip = new ArrayList<>();
-            if (r - step > 0 && c - step > 0 && playground[r - step][c - step] == opposite) {
-                while (r - step > 0 && c - step > 0 && playground[r - step][c - step] == opposite) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r - step, c - step)));
-                    }
-                    step++;
-                }
-                if (step > 1 && r - step >= 0 && c - step >= 0 && playground[r - step][c - step] != Player.NONE) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c)));
-                        flipTiles(toFlip);
-                    }
-                    valid = true;
-                }
-            }
-            // left
-            step = 1;
-            toFlip = new ArrayList<>();
-            if (c - step > 0 && playground[r][c - step] == opposite) {
-                while (c - step > 0 && playground[r][c - step] == opposite) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c - step)));
-                    }
-                    step++;
-                }
-                if (step > 1 && c - step >= 0 && playground[r][c - step] != Player.NONE) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c)));
-                        flipTiles(toFlip);
-                    }
-                    valid = true;
-                }
-            }
-            // left down
-            step = 1;
-            toFlip = new ArrayList<>();
-            if (r + step < SIZE && c - step > 0 && playground[r + step][c - step] == opposite) {
-                while (r + step < SIZE && c - step > 0 && playground[r + step][c - step] == opposite) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r + step, c - step)));
-                    }
-                    step++;
-                }
-                if (step > 1 && r + step < SIZE && c - step >= 0 && playground[r + step][c - step] != Player.NONE) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c)));
-                        flipTiles(toFlip);
-                    }
-                    valid = true;
-                }
-            }
-            // down
-            step = 1;
-            toFlip = new ArrayList<>();
-            if (r + step < SIZE && playground[r + step][c] == opposite) {
-                while (r + step < SIZE && playground[r + step][c] == opposite) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r + step, c)));
-                    }
-                    step++;
-                }
-                if (step > 1 && r + step < SIZE && playground[r + step][c] != Player.NONE) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c)));
-                        flipTiles(toFlip);
-                    }
-                    valid = true;
-                }
-            }
-            // right down
-            step = 1;
-            toFlip = new ArrayList<>();
-            if (r + step < SIZE && c + step < SIZE && playground[r + step][c + step] == opposite) {
-                while (r + step < SIZE && c + step < SIZE && playground[r + step][c + step] == opposite) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r + step, c + step)));
-                    }
-                    step++;
-                }
-                if (step > 1 && r + step < SIZE && c + step < SIZE && playground[r + step][c + step] != Player.NONE) {
-                    if (flip) {
-                        toFlip.add(new ArrayList<>(List.of(r, c)));
-                        flipTiles(toFlip);
-                    }
-                    valid = true;
-                }
-            }
-        } else {
-            return valid;
         }
-        return valid;
+
+        playground[r0][c0] = Player.NONE;
+        if (toFLip.size() != 0) toFLip.add(new ArrayList<>(List.of(r0, c0)));
+        return toFLip;
     }
 
-    private void flipTiles(ArrayList<ArrayList<Integer>> toFlip) {
-        for (int i = 0; i < toFlip.size(); i++) {
-            ArrayList<Integer> tile = toFlip.get(i);
-            int r = tile.get(0);
-            int c = tile.get(1);
-            if (playground[r][c] == onTurn) break;
-            if (playground[r][c] == Player.NONE) {
-                playground[r][c] = onTurn;
-                if (onTurn == Player.B) leftB++;
-                else if (onTurn == Player.W) leftW++;
-            } else {
-                playground[r][c] = onTurn;
-                if (onTurn == Player.B) {
-                    leftB++;
-                    leftW--;
-                } else {
-                    leftW++;
-                    leftB--;
-                }
+    private void flipTiles(ArrayList<ArrayList<Integer>> tiles) {
+        tiles.forEach(tile -> {
+            Player previous = playground[tile.get(0)][tile.get(1)];
+            playground[tile.get(0)][tile.get(1)] = onTurn;
+            if (previous == Player.NONE) {
+                left.put(onTurn, left.get(onTurn) + 1);
             }
-        }
+            else if (previous != onTurn) {
+                left.put(previous, left.get(previous) - 1);
+                left.put(onTurn, left.get(onTurn) + 1);
+            }
+        });
     }
 
     boolean areValidMoves() {
@@ -274,12 +174,10 @@ class ReversiRefactoredProtected {
 
     ArrayList<ArrayList<Integer>> getPossibleMoves() {
         ArrayList<ArrayList<Integer>> tiles = new ArrayList<>();
-        for (int r = 0; r < SIZE; r++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (playground[r][c] != Player.NONE) {
-                    continue;
-                }
-                if (isValidMove(r, c, false)) {
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                if (playground[r][c] != Player.NONE) continue;
+                if (getTilesToFlip(r,c).size() != 0) {
                     tiles.add(new ArrayList<>(List.of(r, c)));
                 }
             }
@@ -290,8 +188,8 @@ class ReversiRefactoredProtected {
 
     void gameOver() {
         printState();
-        if (leftB > leftW) winner = Player.B;
-        else if (leftW > leftB) winner = Player.W;
+        if (getLeftB() > getLeftW()) winner = Player.B;
+        else if (getLeftW() > getLeftB()) winner = Player.W;
     }
 
 }

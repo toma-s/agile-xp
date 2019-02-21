@@ -20,8 +20,8 @@ public class ReversiRefactoredProtectedTest {
         assertEquals("playground init", Player.B, game.getTile(Alpha.E, 4));
         assertEquals("playground init", Player.B, game.getTile(Alpha.D, 5));
         assertEquals("playground init", Player.W, game.getTile(Alpha.E, 5));
-        assertEquals("left B init", 2, game.leftB);
-        assertEquals("left W init", 2, game.leftW);
+        assertEquals("left B init", 2, game.getLeftB());
+        assertEquals("left W init", 2, game.getLeftW());
     }
 
     @Test
@@ -68,8 +68,8 @@ public class ReversiRefactoredProtectedTest {
         assertEquals("check if flipped",Player.B, game.getTile(Alpha.D, 4));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.C, 4));
         assertEquals("on turn", Player.W, game.onTurn);
-        assertEquals("W left", 1, game.leftW);
-        assertEquals("B left", 4, game.leftB);
+        assertEquals("W left", 1, game.getLeftW());
+        assertEquals("B left", 4, game.getLeftB());
     }
 
     @Test
@@ -80,8 +80,8 @@ public class ReversiRefactoredProtectedTest {
         assertEquals("check if flipped",Player.B, game.getTile(Alpha.E, 5));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.E, 6));
         assertEquals("on turn", Player.W, game.onTurn);
-        assertEquals("W left", 1, game.leftW);
-        assertEquals("B left", 4, game.leftB);
+        assertEquals("W left", 1, game.getLeftW());
+        assertEquals("B left", 4, game.getLeftB());
     }
 
     @Test
@@ -92,8 +92,8 @@ public class ReversiRefactoredProtectedTest {
         assertEquals("check if flipped",Player.B, game.getTile(Alpha.E, 5));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.F, 5));
         assertEquals("on turn", Player.W, game.onTurn);
-        assertEquals("W left", 1, game.leftW);
-        assertEquals("B left", 4, game.leftB);
+        assertEquals("W left", 1, game.getLeftW());
+        assertEquals("B left", 4, game.getLeftB());
     }
 
     @Test
@@ -104,8 +104,8 @@ public class ReversiRefactoredProtectedTest {
         assertEquals("check if flipped",Player.B, game.getTile(Alpha.D, 4));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.D, 3));
         assertEquals("on turn", Player.W, game.onTurn);
-        assertEquals("W left", 1, game.leftW);
-        assertEquals("B left", 4, game.leftB);
+        assertEquals("W left", 1, game.getLeftW());
+        assertEquals("B left", 4, game.getLeftB());
     }
 
     @Test
@@ -119,8 +119,8 @@ public class ReversiRefactoredProtectedTest {
         assertEquals("check if flipped",Player.B, game.getTile(Alpha.D, 6));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.C, 7));
         assertEquals("on turn", Player.W, game.onTurn);
-        assertEquals("W left", 2, game.leftW);
-        assertEquals("B left", 5, game.leftB);
+        assertEquals("W left", 2, game.getLeftW());
+        assertEquals("B left", 5, game.getLeftB());
     }
 
     @Test
@@ -133,8 +133,8 @@ public class ReversiRefactoredProtectedTest {
         assertEquals("check if flipped",Player.W, game.getTile(Alpha.E, 5));
         assertEquals("check if flipped", Player.W, game.getTile(Alpha.F, 6));
         assertEquals("on turn", Player.B, game.onTurn);
-        assertEquals("W left", 3, game.leftW);
-        assertEquals("B left", 3, game.leftB);
+        assertEquals("W left", 3, game.getLeftW());
+        assertEquals("B left", 3, game.getLeftB());
     }
 
     @Test
@@ -148,8 +148,8 @@ public class ReversiRefactoredProtectedTest {
         assertEquals("check if flipped",Player.B, game.getTile(Alpha.E, 3));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.F, 2));
         assertEquals("on turn", Player.W, game.onTurn);
-        assertEquals("W left", 2, game.leftW);
-        assertEquals("B left", 5, game.leftB);
+        assertEquals("W left", 2, game.getLeftW());
+        assertEquals("B left", 5, game.getLeftB());
     }
 
     @Test
@@ -162,8 +162,8 @@ public class ReversiRefactoredProtectedTest {
         assertEquals("check if flipped",Player.W, game.getTile(Alpha.D, 4));
         assertEquals("check if flipped", Player.W, game.getTile(Alpha.C, 3));
         assertEquals("on turn", Player.B, game.onTurn);
-        assertEquals("W left", 3, game.leftW);
-        assertEquals("B left", 3, game.leftB);
+        assertEquals("W left", 3, game.getLeftW());
+        assertEquals("B left", 3, game.getLeftB());
     }
 
     @Test
@@ -177,8 +177,8 @@ public class ReversiRefactoredProtectedTest {
 
         assertEquals("check if flipped (D,3) correctly",Player.W, game.getTile(Alpha.D, 3));
         assertEquals("check if flipped (E,4) correctly",Player.W, game.getTile(Alpha.E, 4));
-        assertEquals("W left", 5, game.leftW);
-        assertEquals("B left", 3, game.leftB);
+        assertEquals("W left", 5, game.getLeftW());
+        assertEquals("B left", 3, game.getLeftB());
     }
 
     @Test
@@ -218,9 +218,9 @@ public class ReversiRefactoredProtectedTest {
 
         assertFalse("if the are valid moves", game.areValidMoves());
         game.gameOver();
-        assertEquals("winner", Player.W, game.winner);
-        assertEquals("W left", 33, game.leftW);
-        assertEquals("B left", 31, game.leftB);
+        assertEquals("winner", Player.B, game.winner);
+        assertEquals("W left", 28, game.getLeftW());
+        assertEquals("B left", 36, game.getLeftB());
         assertFalse("game is over", game.move(Alpha.A, 1));
     }
 
