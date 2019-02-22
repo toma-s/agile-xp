@@ -368,9 +368,7 @@ public class ReversiRefactoredTest {
     @Test
     public void testFinishGame() {
         ReversiRefactored game = new ReversiRefactored("game_almost_complete.txt");
-        game.printPlayground();
         game.execute("G7");
-        game.printPlayground();
 
         assertFalse("if the are valid moves", game.areValidMoves());
         assertEquals("W left", 28, game.getLeftW());
