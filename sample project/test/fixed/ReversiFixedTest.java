@@ -1,3 +1,6 @@
+package fixed;
+
+import fixed.ReversiFixed;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
