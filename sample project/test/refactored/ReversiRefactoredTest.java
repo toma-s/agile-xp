@@ -1,5 +1,6 @@
 package refactored;
 
+import exception.NotPermittedMoveException;
 import javafx.util.Pair;
 import org.junit.Test;
 
@@ -39,34 +40,42 @@ public class ReversiRefactoredTest {
         assertEquals("valid moves", List.of(5, 4), tiles.get(3));
     }
 
-    @Test
-    public void testMoveOnNotEmpty() {
+    @Test(expected = NotPermittedMoveException.class)
+    public void testMoveOnNotEmpty() throws NotPermittedMoveException {
         ReversiRefactored game = rev;
-        assertFalse("move on not empty tile (e,5)", game.move(Alpha.E,5));
+        game.move(Alpha.E,5);
 
         assertEquals("check if didn't change", Player.W, game.getTile(Alpha.E, 5));
     }
 
-    @Test
-    public void testMoveOutOfBounds() {
+    @Test(expected = NotPermittedMoveException.class)
+    public void testMoveOutOfBoundsBelow() throws NotPermittedMoveException {
         ReversiRefactored game = rev;
-        assertFalse("move on tile out of bounds (a,9)", game.move(Alpha.A,9));
+        game.move(Alpha.A,9);
 
-        assertFalse("move on tile out of bounds (a,0)", game.move(Alpha.A,0));
+        assertEquals("check if didn't change", Player.NONE, game.getTile(Alpha.A, 9));
     }
 
-    @Test
-    public void testMoveOnNotAdjacent() {
+    @Test(expected = NotPermittedMoveException.class)
+    public void testMoveOutOfBoundsAbove() throws NotPermittedMoveException {
         ReversiRefactored game = rev;
-        assertFalse("not valid move (a,1)", game.move(Alpha.A,1));
+        game.move(Alpha.A,0);
+
+        assertEquals("check if didn't change", Player.NONE, game.getTile(Alpha.A, 0));
+    }
+
+    @Test(expected = NotPermittedMoveException.class)
+    public void testMoveOnNotAdjacent() throws NotPermittedMoveException {
+        ReversiRefactored game = rev;
+        game.move(Alpha.A,1);
 
         assertEquals("check if didn't change", Player.NONE, game.getTile(Alpha.A, 1));
     }
 
     @Test
-    public void testFlipRight() {
+    public void testFlipRight() throws NotPermittedMoveException {
         ReversiRefactored game = rev;
-        assertTrue("move to flip (c,4)", game.move(Alpha.C,4));
+        game.move(Alpha.C,4);
 
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.D, 4));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.C, 4));
@@ -76,9 +85,9 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testFlipUp() {
+    public void testFlipUp() throws NotPermittedMoveException {
         ReversiRefactored game = rev;
-        assertTrue("move to flip", game.move(Alpha.E, 6));
+        game.move(Alpha.E, 6);
 
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.E, 5));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.E, 6));
@@ -88,9 +97,9 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testFlipLeft() {
+    public void testFlipLeft() throws NotPermittedMoveException {
         ReversiRefactored game = rev;
-        assertTrue("move to flip", game.move(Alpha.F, 5));
+        game.move(Alpha.F, 5);
 
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.E, 5));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.F, 5));
@@ -100,9 +109,9 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testFlipDown() {
+    public void testFlipDown() throws NotPermittedMoveException {
         ReversiRefactored game = rev;
-        assertTrue("move to flip", game.move(Alpha.D, 3));
+        game.move(Alpha.D, 3);
 
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.D, 4));
         assertEquals("check if flipped", Player.B, game.getTile(Alpha.D, 3));
@@ -112,7 +121,7 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testFlipRightUp() {
+    public void testFlipRightUp() throws NotPermittedMoveException {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.E, 6));
         moves.add(new Pair<>(Alpha.D, 6));
@@ -127,7 +136,7 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testFlipLeftUp() {
+    public void testFlipLeftUp() throws NotPermittedMoveException {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.E, 6));
         moves.add(new Pair<>(Alpha.F, 6));
@@ -141,7 +150,7 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testFlipLeftDown() {
+    public void testFlipLeftDown() throws NotPermittedMoveException {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.D, 3));
         moves.add(new Pair<>(Alpha.E, 3));
@@ -156,7 +165,7 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testFlipRightDown() {
+    public void testFlipRightDown() throws NotPermittedMoveException {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.D, 3));
         moves.add(new Pair<>(Alpha.C, 3));
@@ -170,7 +179,7 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testDoubleFlip() {
+    public void testDoubleFlip() throws NotPermittedMoveException {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.D, 3));
         moves.add(new Pair<>(Alpha.C, 3));
@@ -185,7 +194,7 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testGame1() {
+    public void testGame1() throws NotPermittedMoveException {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.E, 6)); moves.add(new Pair<>(Alpha.F, 4));
         moves.add(new Pair<>(Alpha.D, 3)); moves.add(new Pair<>(Alpha.C, 4));
@@ -220,14 +229,12 @@ public class ReversiRefactoredTest {
         ReversiRefactored game = setMoves(moves);
 
         assertFalse("if the are valid moves", game.areValidMoves());
-        game.gameOver();
         assertEquals("winner", Player.B, game.winner);
         assertEquals("W left", 28, game.getLeftW());
         assertEquals("B left", 36, game.getLeftB());
-        assertFalse("game is over", game.move(Alpha.A, 1));
     }
 
-    private ReversiRefactored setMoves(ArrayList<Pair<Alpha, Integer>> moves) {
+    private ReversiRefactored setMoves(ArrayList<Pair<Alpha, Integer>> moves) throws NotPermittedMoveException {
         ReversiRefactored game = rev;
         for (Pair<Alpha, Integer> move  : moves) {
             Alpha r = move.getKey();

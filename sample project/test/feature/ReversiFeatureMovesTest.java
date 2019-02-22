@@ -1,3 +1,5 @@
+package feature;
+
 import feature.ReversiFeatureMoves;
 import javafx.util.Pair;
 import org.junit.Test;

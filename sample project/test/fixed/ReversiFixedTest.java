@@ -1,3 +1,5 @@
+package fixed;
+
 import fixed.ReversiFixed;
 import org.junit.Test;
 

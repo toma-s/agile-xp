@@ -1,5 +1,7 @@
 package refactored;
 
+import exception.NotPermittedMoveException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,38 +82,33 @@ class ReversiRefactored {
         System.out.printf("Number of tiles: B: %s; W: %s\n\n", getLeftB(), getLeftW());
     }
 
-    boolean move(Alpha c0, int r0) {
+    void move(Alpha c0, int r0) throws NotPermittedMoveException {
         int r = r0 - 1;
         int c = c0.getValue();
         System.out.printf("Move on tile (%s; %s):\n\n", r, c);
 
         if (!(withinPlayground(r, c))) {
-            System.out.println("Move out of bounds");
-            return false;
+            throw new NotPermittedMoveException("Move out of bounds is not permitted");
         }
         if (playground[r][c] != Player.NONE) {
-            System.out.println("Not valid move. The tile is not empty");
-            return false;
+            throw new NotPermittedMoveException("Move on not empty tile is not permitted");
         }
         if (winner != Player.NONE) {
-            System.out.println("The game isn't running");
-            return false;
+            throw new NotPermittedMoveException("The game is over. No moves are permitted");
         }
 
         ArrayList<ArrayList<Integer>> tilesToFlip = getTilesToFlip(r, c);
         if (tilesToFlip.size() == 0) {
-            System.out.println("Not valid move");
-            return false;
+            gameOver();
+            return;
         }
         flipTiles(tilesToFlip);
 
         if (onTurn == Player.W) onTurn = Player.B;
         else if (onTurn == Player.B) onTurn = Player.W;
 
-        System.out.println("Move is valid");
         printPlayground();
         printState();
-        return true;
     }
 
     private ArrayList<ArrayList<Integer>> getTilesToFlip(int r0, int c0) {
@@ -189,7 +186,7 @@ class ReversiRefactored {
         return tiles;
     }
 
-    void gameOver() {
+    private void gameOver() {
         printState();
         if (getLeftB() > getLeftW()) winner = Player.B;
         else if (getLeftW() > getLeftB()) winner = Player.W;
