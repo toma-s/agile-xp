@@ -13,5 +13,4 @@ public enum Player {
         return value;
     }
 
-
 }

@@ -1,10 +1,12 @@
 package refactored;
 
+import exception.NotCorrectGameConfigFileException;
 import exception.NotPermittedMoveException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 class ReversiRefactored {
 
@@ -13,6 +15,7 @@ class ReversiRefactored {
     Player onTurn;
     Player winner;
     private HashMap<Player, Integer> left = new HashMap<>();
+    private Player[] players = new Player[] {Player.B, Player.W};
 
     ReversiRefactored(int size) {
         initPlayground(size);
@@ -21,18 +24,52 @@ class ReversiRefactored {
         printOnTurn();
     }
 
+    ReversiRefactored(String gameFilename) throws NotCorrectGameConfigFileException {
+        initPlayground(gameFilename);
+        initGame();
+        printPlayground();
+        printOnTurn();
+    }
+
     private void initPlayground(int size) {
         this.size = size;
+        fillEmptyPlayground();
+
+        playground[size/2-1][size/2-1] = Player.W;
+        playground[size/2-1][size/2] = Player.B;
+        playground[size/2][size/2] = Player.W;
+        playground[size/2][size/2-1] = Player.B;
+    }
+
+    private void initPlayground(String gameFilename) throws NotCorrectGameConfigFileException {
+        Path path = new File("./game_config/" + gameFilename).toPath();
+        try {
+            String[] gameConfig = Files.readAllLines(path).toArray(new String[0]);
+            if (gameConfig.length != 3) {
+                throw new NotCorrectGameConfigFileException("The game configuration file is incorrect");
+            }
+            size = Integer.parseInt(gameConfig[0]);
+            fillEmptyPlayground();
+
+            for (int i = 1; i < 3; i++) {
+                String[] tiles = gameConfig[i].split(" ");
+                for (String tile : tiles) {
+                    setTile(tile, players[i - 1]);
+                }
+            }
+            System.out.println();
+        } catch (IOException | NumberFormatException e) {
+            e.getMessage();
+        }
+    }
+
+    private void fillEmptyPlayground() {
         playground = new Player[size][size];
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 playground[r][c] = Player.NONE;
             }
         }
-        playground[size/2-1][size/2-1] = Player.W;
-        playground[size/2-1][size/2] = Player.B;
-        playground[size/2][size/2] = Player.W;
-        playground[size/2][size/2-1] = Player.B;
     }
 
     private void printPlayground() {
@@ -45,7 +82,7 @@ class ReversiRefactored {
                     System.out.print("_ ");
                 else if (playground[r][c] == Player.B)
                     System.out.print("B ");
-                else
+                else if (playground[r][c] == Player.W)
                     System.out.print("W ");
             }
             System.out.println();
@@ -69,6 +106,12 @@ class ReversiRefactored {
 
     Player getTile(Alpha c0, int r0) {
         return playground[r0-1][c0.getValue()];
+    }
+
+    private void setTile(String tile, Player player) {
+        int r = Integer.parseInt(tile.substring(1, 2));
+        int c = Alpha.valueOf(tile.substring(0, 1)).getValue();
+        playground[r][c] = player;
     }
 
     private void printOnTurn() {
@@ -190,6 +233,10 @@ class ReversiRefactored {
         printState();
         if (getLeftB() > getLeftW()) winner = Player.B;
         else if (getLeftW() > getLeftB()) winner = Player.W;
+    }
+
+    public static void main(String[] args) throws NotCorrectGameConfigFileException {
+        ReversiRefactored rev = new ReversiRefactored("game1.txt");
     }
 
 }
