@@ -1,8 +1,8 @@
+import feature.ReversiFeatureBoard;
 import javafx.util.Pair;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

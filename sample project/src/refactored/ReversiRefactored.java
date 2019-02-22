@@ -1,53 +1,44 @@
+package refactored;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-class ReversiRefactoredProtected {
+class ReversiRefactored {
 
-    private final int SIZE = 8;
-    Player[][] playground;
+    private int size;
+    private Player[][] playground;
     Player onTurn;
     Player winner;
     private HashMap<Player, Integer> left = new HashMap<>();
 
-    ReversiRefactoredProtected() {
-        initPlayground();
+    ReversiRefactored(int size) {
+        initPlayground(size);
         initGame();
         printPlayground();
         printOnTurn();
     }
 
-    int getLeftW() {
-        return left.get(Player.W);
-    }
-
-    int getLeftB() {
-        return left.get(Player.B);
-    }
-
-    Player getTile(Alpha c0, int r0) {
-        return playground[r0-1][c0.getValue()];
-    }
-
-    private void initPlayground() {
-        playground = new Player[SIZE][SIZE];
-        for (int r = 0; r < SIZE; r++) {
-            for (int c = 0; c < SIZE; c++) {
+    private void initPlayground(int size) {
+        this.size = size;
+        playground = new Player[size][size];
+        for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size; c++) {
                 playground[r][c] = Player.NONE;
             }
         }
-        playground[SIZE/2-1][SIZE/2-1] = Player.W;
-        playground[SIZE/2-1][SIZE/2] = Player.B;
-        playground[SIZE/2][SIZE/2] = Player.W;
-        playground[SIZE/2][SIZE/2-1] = Player.B;
+        playground[size/2-1][size/2-1] = Player.W;
+        playground[size/2-1][size/2] = Player.B;
+        playground[size/2][size/2] = Player.W;
+        playground[size/2][size/2-1] = Player.B;
     }
 
     private void printPlayground() {
         String[] abc = "abcdefgh".split("");
         System.out.printf("  %s\n", String.join(" ", abc));
-        for (int r = 0; r < SIZE; r++) {
+        for (int r = 0; r < size; r++) {
             System.out.print((r + 1) + " ");
-            for (int c = 0; c < SIZE; c++) {
+            for (int c = 0; c < size; c++) {
                 if (playground[r][c] == Player.NONE)
                     System.out.print("_ ");
                 else if (playground[r][c] == Player.B)
@@ -60,10 +51,22 @@ class ReversiRefactoredProtected {
     }
 
     private void initGame() {
-        onTurn = Player.B;
-        winner = Player.NONE;
         left.put(Player.B, 2);
         left.put(Player.W, 2);
+        onTurn = Player.B;
+        winner = Player.NONE;
+    }
+
+    int getLeftW() {
+        return left.get(Player.W);
+    }
+
+    int getLeftB() {
+        return left.get(Player.B);
+    }
+
+    Player getTile(Alpha c0, int r0) {
+        return playground[r0-1][c0.getValue()];
     }
 
     private void printOnTurn() {
@@ -111,10 +114,6 @@ class ReversiRefactoredProtected {
         return true;
     }
 
-    private boolean withinPlayground(int r, int c) {
-        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
-    }
-
     private ArrayList<ArrayList<Integer>> getTilesToFlip(int r0, int c0) {
         ArrayList<ArrayList<Integer>> toFLip = new ArrayList<>();
         playground[r0][c0] = onTurn;
@@ -152,6 +151,10 @@ class ReversiRefactoredProtected {
         playground[r0][c0] = Player.NONE;
         if (toFLip.size() != 0) toFLip.add(new ArrayList<>(List.of(r0, c0)));
         return toFLip;
+    }
+
+    private boolean withinPlayground(int r, int c) {
+        return r >= 0 && c >= 0 && r < size && c < size;
     }
 
     private void flipTiles(ArrayList<ArrayList<Integer>> tiles) {
