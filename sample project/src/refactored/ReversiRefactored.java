@@ -18,6 +18,9 @@ class ReversiRefactored {
     Player winner = Player.NONE;
     boolean ended = false;
 
+    ReversiRefactored() {
+    }
+
     ReversiRefactored(String gameFilename) {
         try {
             String[] gameConfig = readGameConfig(gameFilename);
@@ -45,11 +48,13 @@ class ReversiRefactored {
     }
 
     void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
-        if (gameConfig == null || gameConfig.length != 3) {
+        try {
+            setOnTurn(gameConfig[0]);
+            createPlayground();
+            fillPlayground(gameConfig);
+        } catch (ArrayIndexOutOfBoundsException e) {
             throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
         }
-        setOnTurn(gameConfig[0]);
-        fillPlayground(gameConfig);
     }
 
 
@@ -60,21 +65,25 @@ class ReversiRefactored {
         onTurn = Player.valueOf(player);
     }
 
-    void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
-        if (gameConfig == null || gameConfig.length != 3) {
-            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
-        }
+    void createPlayground() {
         playground = new Player[SIZE][SIZE];
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
                 playground[r][c] = Player.NONE;
             }
         }
-        for (int i = 1; i < 3; i++) {
-            String[] tiles = gameConfig[i].split(" ");
-            for (String tile : tiles) {
-                setTile(tile, players[i - 1]);
+    }
+
+    void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
+        try {
+            for (int i = 1; i < 3; i++) {
+                String[] tiles = gameConfig[i].split(" ");
+                for (String tile : tiles) {
+                    setTile(tile, players[i - 1]);
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
         }
     }
 
@@ -254,7 +263,6 @@ class ReversiRefactored {
                 }
             }
         }
-        System.out.println(tiles);
         return tiles;
     }
 
@@ -265,6 +273,23 @@ class ReversiRefactored {
         else if (getLeftW() > getLeftB()) winner = Player.W;
     }
 
+    private void run() {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String line;
+            while (!ended) {
+                printPlayground();
+                printTilesLeftCount();
+                System.out.format("Make a move. %s is on turn\n", onTurn);
+                if (winner != Player.NONE) break;
+                if ((line = reader.readLine()) == null) break;
+                execute(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
 //        String fileName = "game_init.txt";
 //        String fileName = "game_empty.txt";
@@ -273,21 +298,8 @@ class ReversiRefactored {
 //        String fileName = "game_all_num.txt";
         String fileName = "game_all_alpha.txt";
         ReversiRefactored rev = new ReversiRefactored(fileName);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String line;
 
-        try {
-            while (!rev.ended) {
-                rev.printPlayground();
-                rev.printTilesLeftCount();
-                System.out.format("Make a move. %s is on turn\n", rev.onTurn);
-                if (rev.winner != Player.NONE) break;
-                if ((line = reader.readLine()) == null) break;
-                rev.execute(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        rev.run();
     }
 
 }
