@@ -11,12 +11,15 @@ import java.util.*;
 class ReversiRefactored {
 
     private static final int SIZE = 8;
-    Player[][] playground;
+    private Player[][] playground;
     private HashMap<Player, Integer> left = new HashMap<>() {{ put(Player.B, 0); put(Player.W, 0); }};
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
     Player winner = Player.NONE;
     boolean ended = false;
+
+    ReversiRefactored() {
+    }
 
     ReversiRefactored(String gameFilename) {
         try {
@@ -254,7 +257,6 @@ class ReversiRefactored {
                 }
             }
         }
-        System.out.println(tiles);
         return tiles;
     }
 
