@@ -265,6 +265,23 @@ class ReversiRefactored {
         else if (getLeftW() > getLeftB()) winner = Player.W;
     }
 
+    private void run() {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String line;
+            while (!ended) {
+                printPlayground();
+                printTilesLeftCount();
+                System.out.format("Make a move. %s is on turn\n", onTurn);
+                if (winner != Player.NONE) break;
+                if ((line = reader.readLine()) == null) break;
+                execute(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
 //        String fileName = "game_init.txt";
 //        String fileName = "game_empty.txt";
@@ -273,21 +290,8 @@ class ReversiRefactored {
 //        String fileName = "game_all_num.txt";
         String fileName = "game_all_alpha.txt";
         ReversiRefactored rev = new ReversiRefactored(fileName);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String line;
 
-        try {
-            while (!rev.ended) {
-                rev.printPlayground();
-                rev.printTilesLeftCount();
-                System.out.format("Make a move. %s is on turn\n", rev.onTurn);
-                if (rev.winner != Player.NONE) break;
-                if ((line = reader.readLine()) == null) break;
-                rev.execute(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        rev.run();
     }
 
 }
