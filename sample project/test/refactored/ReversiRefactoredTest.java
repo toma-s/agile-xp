@@ -1,18 +1,114 @@
 package refactored;
 
-import exception.IncorrectTileInputException;
+import exception.IncorrectGameConfigFileException;
 import exception.NotPermittedMoveException;
 import javafx.util.Pair;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ReversiRefactoredTest {
     private ReversiRefactored rev = new ReversiRefactored("game_init.txt");
+
+    @Test
+    public void testReadConfigInit() throws IncorrectGameConfigFileException {
+        String[] gameConfig = rev.readGameConfig("game_init.txt");
+
+        assertEquals("game config size", 3, gameConfig.length);
+        assertEquals("game config on turn", "B", gameConfig[0]);
+        assertEquals("game config on turn", "E4 D5", gameConfig[1]);
+        assertEquals("game config on turn", "D4 E5", gameConfig[2]);
+    }
+
+    @Test
+    public void testReadConfigEmpty() throws IncorrectGameConfigFileException {
+        String[] gameConfig = rev.readGameConfig("game_empty.txt");
+
+        assertEquals("game config size", 0, gameConfig.length);
+    }
+
+    @Test
+    public void testReadConfigOneLine() throws IncorrectGameConfigFileException {
+        String[] gameConfig = rev.readGameConfig("game_one_line.txt");
+
+        assertEquals("game config size", 1, gameConfig.length);
+        assertEquals("game config on turn", "E4 D5", gameConfig[0]);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testReadConfigNotExisting() throws IncorrectGameConfigFileException {
+        rev.readGameConfig("game_not_existing.txt");
+    }
+
+    @Test
+    public void testSetOnTurnB() throws IncorrectGameConfigFileException {
+        rev.setOnTurn("B");
+
+        assertEquals("set on turn B", Player.B, rev.onTurn);
+    }
+
+    @Test
+    public void testSetOnTurnW() throws IncorrectGameConfigFileException {
+        rev.setOnTurn("W");
+
+        assertEquals("set on turn W", Player.W, rev.onTurn);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testSetOnTurnNone() throws IncorrectGameConfigFileException {
+        rev.setOnTurn("NONE");
+    }
+
+    @Test
+    public void testSetTileB() throws IncorrectGameConfigFileException {
+        ReversiRefactored game = rev;
+        game.setTile("A1", Player.B);
+
+        assertEquals("set tile: A1 as B", Player.B, game.getTile(Alpha.A, 1));
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testSetTileAllAlpha() throws IncorrectGameConfigFileException {
+        ReversiRefactored game = rev;
+        game.setTile("AA", Player.B);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testSetTileAllNum() throws IncorrectGameConfigFileException {
+        ReversiRefactored game = rev;
+        game.setTile("11", Player.B);
+    }
+
+    @Test
+    public void testFillPlaygroundInit() throws IncorrectGameConfigFileException {
+        String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5"};
+        rev.fillPlayground(gameConfig);
+
+        assertEquals("fill playground: on turn", Player.B, rev.onTurn);
+        assertEquals("fill playground: E4", Player.B, rev.getTile(Alpha.E, 4));
+        assertEquals("fill playground: E4", Player.B, rev.getTile(Alpha.D, 5));
+        assertEquals("fill playground: E4", Player.W, rev.getTile(Alpha.D, 4));
+        assertEquals("fill playground: E4", Player.W, rev.getTile(Alpha.E, 5));
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testFillPlaygroundConfigLen1() throws IncorrectGameConfigFileException {
+        String[] gameConfig = new String[] {"incorrect"};
+        rev.fillPlayground(gameConfig);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testFillPlaygroundNoConfig() throws IncorrectGameConfigFileException {
+        rev.fillPlayground(null);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testFillPlaygroundIncorrectConfig() throws IncorrectGameConfigFileException {
+        String[] gameConfig = new String[] {"B", "AA BB", "CC DD"};
+        rev.fillPlayground(gameConfig);
+    }
 
     @Test
     public void testInit() {
@@ -25,6 +121,7 @@ public class ReversiRefactoredTest {
         assertEquals("playground init", Player.W, game.getTile(Alpha.E, 5));
         assertEquals("left B init", 2, game.getLeftB());
         assertEquals("left W init", 2, game.getLeftW());
+        game.printPlayground();
     }
 
     @Test
@@ -65,18 +162,6 @@ public class ReversiRefactoredTest {
     @Test
     public void testIsTileInputI9() {
         assertFalse("tile input I9", rev.isTileInputCorrect("I9"));
-    }
-
-    @Test(expected = IncorrectTileInputException.class)
-    public void testSetTileAllAlpha() throws IncorrectTileInputException {
-        ReversiRefactored game = rev;
-        game.setTile("AA", Player.B);
-    }
-
-    @Test(expected = IncorrectTileInputException.class)
-    public void testSetTileAllNum() throws IncorrectTileInputException {
-        ReversiRefactored game = rev;
-        game.setTile("11", Player.B);
     }
 
     @Test
@@ -384,5 +469,15 @@ public class ReversiRefactoredTest {
             game.move(r, c);
         }
         return game;
+    }
+
+    private Player[][] getEmptyPlayground() {
+        Player[][] empty = new Player[8][8];
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                empty[r][c] = Player.NONE;
+            }
+        }
+        return empty;
     }
 }

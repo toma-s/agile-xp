@@ -1,8 +1,6 @@
 package refactored;
 
 import exception.IncorrectGameConfigFileException;
-import exception.IncorrectOnTurnInput;
-import exception.IncorrectTileInputException;
 import exception.NotPermittedMoveException;
 
 import java.io.*;
@@ -13,7 +11,7 @@ import java.util.*;
 class ReversiRefactored {
 
     private static final int SIZE = 8;
-    private Player[][] playground;
+    Player[][] playground;
     private HashMap<Player, Integer> left = new HashMap<>() {{ put(Player.B, 0); put(Player.W, 0); }};
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
@@ -25,14 +23,13 @@ class ReversiRefactored {
             String[] gameConfig = readGameConfig(gameFilename);
             initGame(gameConfig);
             initTilesCount();
-        } catch (IncorrectGameConfigFileException | IncorrectTileInputException |
-                IncorrectOnTurnInput e) {
+        } catch (IncorrectGameConfigFileException e) {
             ended = true;
             System.out.println(e.getMessage());
         }
     }
 
-    private String[] readGameConfig(String gameFilename) throws IncorrectGameConfigFileException {
+    String[] readGameConfig(String gameFilename) throws IncorrectGameConfigFileException {
         String[] gameConfig;
         try {
             File gameFile = new File("./game_config/" + gameFilename);
@@ -47,34 +44,32 @@ class ReversiRefactored {
         return gameConfig;
     }
 
-    private void initGame(String[] gameConfig) throws IncorrectGameConfigFileException,
-            IncorrectTileInputException, IncorrectOnTurnInput {
+    void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
         if (gameConfig == null || gameConfig.length != 3) {
             throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
         }
         setOnTurn(gameConfig[0]);
-        createEmptyPlayground();
         fillPlayground(gameConfig);
     }
 
 
-    private void setOnTurn(String player) throws IncorrectOnTurnInput {
-        if (! isOnTurnInputCorrect(player)) {
-            throw new IncorrectOnTurnInput("Incorrect player on turn input.");
+    void setOnTurn(String player) throws IncorrectGameConfigFileException {
+        if (!isOnTurnInputCorrect(player)) {
+            throw new IncorrectGameConfigFileException("Incorrect player on turn input.");
         }
         onTurn = Player.valueOf(player);
     }
 
-    private void createEmptyPlayground() {
+    void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
+        if (gameConfig == null || gameConfig.length != 3) {
+            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
+        }
         playground = new Player[SIZE][SIZE];
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
                 playground[r][c] = Player.NONE;
             }
         }
-    }
-
-    private void fillPlayground(String[] gameConfig) throws IncorrectTileInputException {
         for (int i = 1; i < 3; i++) {
             String[] tiles = gameConfig[i].split(" ");
             for (String tile : tiles) {
@@ -90,9 +85,9 @@ class ReversiRefactored {
             System.out.print((r + 1) + " ");
             for (int c = 0; c < SIZE; c++) {
                 switch (playground[r][c]) {
-                    case B: System.out.print("B ");
-                    case W: System.out.print("W ");
-                    case NONE: System.out.print("_ ");
+                    case B: System.out.print("B "); break;
+                    case W: System.out.print("W "); break;
+                    case NONE: System.out.print("_ "); break;
                 }
             }
             System.out.println();
@@ -127,9 +122,9 @@ class ReversiRefactored {
         return playground[r0-1][c0.getValue()];
     }
 
-    void setTile(String tile, Player player) throws IncorrectTileInputException {
+    void setTile(String tile, Player player) throws IncorrectGameConfigFileException {
         if (!isTileInputCorrect(tile)) {
-            throw new IncorrectTileInputException("Incorrect tile input");
+            throw new IncorrectGameConfigFileException("Incorrect tile input");
         }
         int r = Integer.parseInt(tile.substring(1, 2)) - 1;
         int c = Alpha.valueOf(tile.substring(0, 1)).getValue();
@@ -276,8 +271,7 @@ class ReversiRefactored {
 //        String fileName = "game_one_line.txt";
 //        String fileName = "game_three_lines.txt";
 //        String fileName = "game_all_num.txt";
-//        String fileName = "game_all_alpha.txt";
-        String fileName = "game_almost_complete.txt";
+        String fileName = "game_all_alpha.txt";
         ReversiRefactored rev = new ReversiRefactored(fileName);
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String line;
