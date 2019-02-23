@@ -11,7 +11,7 @@ import java.util.*;
 class ReversiRefactored {
 
     private static final int SIZE = 8;
-    private Player[][] playground;
+    Player[][] playground;
     private HashMap<Player, Integer> left = new HashMap<>() {{ put(Player.B, 0); put(Player.W, 0); }};
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
@@ -48,11 +48,13 @@ class ReversiRefactored {
     }
 
     void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
-        if (gameConfig == null || gameConfig.length != 3) {
+        try {
+            setOnTurn(gameConfig[0]);
+            createPlayground();
+            fillPlayground(gameConfig);
+        } catch (ArrayIndexOutOfBoundsException e) {
             throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
         }
-        setOnTurn(gameConfig[0]);
-        fillPlayground(gameConfig);
     }
 
 
@@ -63,21 +65,25 @@ class ReversiRefactored {
         onTurn = Player.valueOf(player);
     }
 
-    void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
-        if (gameConfig == null || gameConfig.length != 3) {
-            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
-        }
+    void createPlayground() {
         playground = new Player[SIZE][SIZE];
         for (int r = 0; r < SIZE; r++) {
             for (int c = 0; c < SIZE; c++) {
                 playground[r][c] = Player.NONE;
             }
         }
-        for (int i = 1; i < 3; i++) {
-            String[] tiles = gameConfig[i].split(" ");
-            for (String tile : tiles) {
-                setTile(tile, players[i - 1]);
+    }
+
+    void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
+        try {
+            for (int i = 1; i < 3; i++) {
+                String[] tiles = gameConfig[i].split(" ");
+                for (String tile : tiles) {
+                    setTile(tile, players[i - 1]);
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
         }
     }
 
