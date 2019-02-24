@@ -150,16 +150,13 @@ class ReversiRefactored {
         return r.matches("[1-8]") && c.matches("[A-H]");
     }
 
-    void execute(String tile) {
-        try {
-            if (isTileInputCorrect(tile)) {
-                int r = Integer.parseInt(tile.substring(1, 2));
-                Alpha c = Alpha.valueOf(tile.substring(0, 1));
-                move(c, r);
-            }
-        } catch (NotPermittedMoveException e) {
-            System.out.println(e.getMessage());
+    void execute(String tile) throws NotPermittedMoveException {
+        if (!isTileInputCorrect(tile)) {
+            throw new NotPermittedMoveException("Incorrect tile input");
         }
+        int r = Integer.parseInt(tile.substring(1, 2));
+        Alpha c = Alpha.valueOf(tile.substring(0, 1));
+        move(c, r);
     }
 
     void move(Alpha c0, int r0) throws NotPermittedMoveException {
@@ -274,8 +271,8 @@ class ReversiRefactored {
     }
 
     private void run() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             String line;
             while (!ended) {
                 printPlayground();
@@ -283,20 +280,31 @@ class ReversiRefactored {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
-                execute(line);
+                try {
+                    execute(line);
+                } catch (NotPermittedMoveException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Try again");
+                }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                System.out.println("IO exception occurred on closing BufferReader: " + e.getMessage());
+            }
         }
     }
 
     public static void main(String[] args) {
-//        String fileName = "game_init.txt";
+        String fileName = "game_init.txt";
 //        String fileName = "game_empty.txt";
 //        String fileName = "game_one_line.txt";
 //        String fileName = "game_three_lines.txt";
 //        String fileName = "game_all_num.txt";
-        String fileName = "game_all_alpha.txt";
+//        String fileName = "game_all_alpha.txt";
         ReversiRefactored rev = new ReversiRefactored(fileName);
 
         rev.run();

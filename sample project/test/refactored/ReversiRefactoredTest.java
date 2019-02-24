@@ -423,7 +423,7 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void textExecute() {
+    public void textExecute() throws NotPermittedMoveException {
         ReversiRefactored game = revInit;
         game.execute("C4");
 
@@ -435,7 +435,7 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testExecuteA1() {
+    public void testExecuteA1() throws NotPermittedMoveException {
         ReversiRefactored game = revInit;
         game.execute("A1");
 
@@ -484,7 +484,7 @@ public class ReversiRefactoredTest {
     }
 
     @Test
-    public void testFinishGame() {
+    public void testFinishGame() throws NotPermittedMoveException {
         ReversiRefactored game = new ReversiRefactored("game_almost_complete.txt");
         game.execute("G7");
 
