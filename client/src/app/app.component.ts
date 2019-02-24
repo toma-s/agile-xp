@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core'
+import { Component, NgModule } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +7,6 @@ import { Component, NgModule } from '@angular/core'
 })
 
 export class AppComponent {
-  headline = 'Prototype'
-  title = 'Compilation and running the tests'
+  headline = 'Prototype';
+  title = 'Compilation and running the tests';
 }

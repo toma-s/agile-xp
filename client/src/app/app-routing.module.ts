@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SendTaskComponent } from './send-task/send-task.component';
-import { TasksListComponent } from './tasks-list/tasks-list.component';
+import { SendTaskComponent } from './tasks/send-task/send-task.component';
+import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'sendTask', pathMatch: 'full'},
