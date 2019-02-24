@@ -7,6 +7,6 @@ import { Component, NgModule } from '@angular/core';
 })
 
 export class AppComponent {
-  headline = 'Prototype';
-  title = 'Compilation and running the tests';
+  headline = 'Agile XP';
+  title = 'Learning Agile Programming Methods';
 }

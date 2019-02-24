@@ -5,6 +5,7 @@ import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'sendTask', pathMatch: 'full'},
+  { path: 'courses', redirectTo: '/courses', pathMatch: 'full'},
   { path: 'sendTask', component: SendTaskComponent},
   { path: 'tasksList', component: TasksListComponent}
 ];
