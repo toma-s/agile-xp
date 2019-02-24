@@ -48,7 +48,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/courses/delete")
-    public ResponseEntity<String> deleteAllMessages() {
+    public ResponseEntity<String> deleteAllCourses() {
         System.out.println("Delete All Courses...");
 
         repository.deleteAll();
