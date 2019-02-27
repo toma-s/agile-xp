@@ -1,19 +1,22 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatProgressSpinnerModule, MatIconModule,
-  MatFormFieldModule, MatSelectModule, MatSortModule } from '@angular/material';
-import {MatTableModule} from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SendTaskComponent } from './send-task/send-task.component';
-import { TasksListComponent } from './tasks-list/tasks-list.component';
+import { SendTaskComponent } from './tasks/send-task/send-task.component';
+import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
 import { CdkColumnDef } from '@angular/cdk/table';
+
+import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatProgressSpinnerModule, MatIconModule,
+  MatFormFieldModule, MatSelectModule, MatSortModule, MatToolbarModule } from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+
+import { CoursesModule } from './courses/courses.module';
+
 
 
 @NgModule({
@@ -27,10 +30,10 @@ import { MatCardModule } from '@angular/material/card';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    MatCheckboxModule,
     BrowserAnimationsModule,
-    MatCardModule,
     ReactiveFormsModule,
+    MatCardModule,
+    MatCheckboxModule,
     MatProgressSpinnerModule,
     MatMenuModule,
     MatIconModule,
@@ -40,7 +43,8 @@ import { MatCardModule } from '@angular/material/card';
     MatInputModule,
     MatSelectModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    CoursesModule
   ],
   providers: [CdkColumnDef],
   bootstrap: [AppComponent]

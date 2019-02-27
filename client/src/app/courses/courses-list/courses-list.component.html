@@ -1,0 +1,66 @@
+<a mat-button color="primary" routerLink="../" routerLinkActive="active" mat-button>Back</a>
+
+<h2>Courses overview</h2>
+
+<div *ngIf="dataSource !== undefined">
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+    
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>
+        Id
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.id}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        Name
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.name}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Created Column -->
+    <ng-container matColumnDef="created">
+      <mat-header-cell *matHeaderCellDef>
+        Created
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.created}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- View Column -->
+    <ng-container matColumnDef="view">
+        <mat-header-cell *matHeaderCellDef>
+          View details
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary">
+            <mat-icon [routerLink]="['../courseDetail', row.id]" routerLinkActive="active">remove_red_eye</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+    <!-- Delete Column -->
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef>
+        Delete
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button color="warn">
+            <mat-icon (click)="delete(row)">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+
+  </mat-table>
+</div>
