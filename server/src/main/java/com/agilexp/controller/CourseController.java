@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -18,6 +19,14 @@ import java.util.List;
 public class CourseController {
     @Autowired
     CourseRepository repository;
+
+    @GetMapping(value="/courses/course-{id}")
+    public Course getTaskById(@PathVariable("id") long id) {
+        System.out.println("Get course with id " + id + "...");
+
+        Optional<Course> taskDataOptional = repository.findById(id);
+        return taskDataOptional.orElse(null);
+    }
 
     @GetMapping("/courses")
     public List<Course> getAllCourses() {
@@ -38,7 +47,7 @@ public class CourseController {
         return _message;
     }
 
-    @DeleteMapping("/courses/{id}")
+    @DeleteMapping("/courses/delete-{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable("id") long id) {
         System.out.println("Delete Course with ID = " + id + "...");
 

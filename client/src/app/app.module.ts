@@ -16,16 +16,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 
 import { CoursesModule } from './courses/courses.module';
-import { CourseCreateComponent } from './courses/course-create/course-create.component';
-import { CoursesListComponent } from './courses/courses-list/courses-list.component';
-import { CoursesRoutingModule } from './courses/courses-routing.module';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SendTaskComponent,
-    TasksListComponent,
+    TasksListComponent
   ],
   imports: [
     BrowserModule,
