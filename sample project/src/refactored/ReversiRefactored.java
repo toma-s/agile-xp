@@ -21,15 +21,18 @@ class ReversiRefactored {
     ReversiRefactored() {
     }
 
-    ReversiRefactored(String gameFilename) {
-        try {
-            String[] gameConfig = readGameConfig(gameFilename);
-            initGame(gameConfig);
-            initTilesCount();
-        } catch (IncorrectGameConfigFileException e) {
-            ended = true;
-            System.out.println(e.getMessage());
-        }
+    ReversiRefactored(String gameFilename) throws IncorrectGameConfigFileException {
+        String[] gameConfig = readGameConfig(gameFilename);
+        initGame(gameConfig);
+        initTilesCount();
+//        try {
+//            String[] gameConfig = readGameConfig(gameFilename);
+//            initGame(gameConfig);
+//            initTilesCount();
+//        } catch (IncorrectGameConfigFileException e) {
+//            ended = true;
+//            System.out.println(e.getMessage());
+//        }
     }
 
     private void run() {
@@ -76,15 +79,18 @@ class ReversiRefactored {
     }
 
     void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
+        if (gameConfig == null) {
+            throw new IncorrectGameConfigFileException("Game configuration is null");
+        }
         if (gameConfig.length != 3) {
-            throw new IncorrectGameConfigFileException("Game configuration file must contain 3 lines.");
+            throw new IncorrectGameConfigFileException("Game configuration must contain 3 lines.");
         }
         try {
             setOnTurn(gameConfig[0]);
             createPlayground();
             fillPlayground(gameConfig);
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
+            throw new IncorrectGameConfigFileException("Game configuration is incorrect.");
         }
     }
 
@@ -314,9 +320,15 @@ class ReversiRefactored {
 //        String fileName = "game_three_lines.txt";
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
-        ReversiRefactored rev = new ReversiRefactored(fileName);
 
-        rev.run();
+        ReversiRefactored rev;
+
+        try {
+            rev = new ReversiRefactored(fileName);
+            rev.run();
+        } catch (IncorrectGameConfigFileException e) {
+            e.printStackTrace();
+        }
     }
 
 }
