@@ -22,17 +22,14 @@ class ReversiRefactored {
     }
 
     ReversiRefactored(String gameFilename) throws IncorrectGameConfigFileException {
-        String[] gameConfig = readGameConfig(gameFilename);
-        initGame(gameConfig);
-        initTilesCount();
-//        try {
-//            String[] gameConfig = readGameConfig(gameFilename);
-//            initGame(gameConfig);
-//            initTilesCount();
-//        } catch (IncorrectGameConfigFileException e) {
-//            ended = true;
-//            System.out.println(e.getMessage());
-//        }
+        try {
+            String[] gameConfig = readGameConfig(gameFilename);
+            initGame(gameConfig);
+            initTilesCount();
+        } catch (IncorrectGameConfigFileException e) {
+            ended = true;
+            throw new IncorrectGameConfigFileException(e.getMessage());
+        }
     }
 
     private void run() {
@@ -148,7 +145,7 @@ class ReversiRefactored {
         }
     }
 
-    void printPlayground() {
+    private void printPlayground() {
         String[] abc = "ABCDEFGH".split("");
         System.out.printf("  %s\n", String.join(" ", abc));
         for (int r = 0; r < SIZE; r++) {
@@ -214,7 +211,6 @@ class ReversiRefactored {
 
         swapPlayerOnTurn();
         if (! areValidMoves()) endGame();
-        printPlayground();
     }
 
     boolean isWithinPlayground(int r, int c) {
@@ -327,7 +323,7 @@ class ReversiRefactored {
             rev = new ReversiRefactored(fileName);
             rev.run();
         } catch (IncorrectGameConfigFileException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
