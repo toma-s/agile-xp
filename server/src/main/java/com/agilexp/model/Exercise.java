@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="courses")
-public class Course {
+@Table(name="exercises")
+public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -13,15 +13,23 @@ public class Course {
     @Column(name="name")
     private String name;
 
+    @Column(name="lessonId")
+    private long lessonId;
+
+    @Column(name="typeId")
+    private long typeId;
+
     @Column(name="created")
     private Timestamp created;
 
     @Column(name="description")
     private String description;
 
-    public Course() {}
+    public Exercise() {}
 
-    public Course(String name, Timestamp created, String description) {
+    public Exercise(String name, long lessonId, long typeId, Timestamp created, String description) {
+        this.lessonId = lessonId;
+        this.typeId = typeId;
         this.name = name;
         this.created = created;
         this.description = description;
@@ -43,6 +51,22 @@ public class Course {
         this.name = name;
     }
 
+    public long getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(long lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(long typeId) {
+        this.typeId = typeId;
+    }
+
     public Timestamp getCreated() {
         return created;
     }
@@ -58,5 +82,4 @@ public class Course {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
