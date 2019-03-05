@@ -42,7 +42,7 @@ public class CourseController {
     public Course postCourse(@RequestBody Course course) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
-        Course _message = repository.save(new Course(course.getName(), created));
+        Course _message = repository.save(new Course(course.getName(), created, course.getDescription()));
         System.out.format("Created course %s at %s", course.getName(), created);
         return _message;
     }

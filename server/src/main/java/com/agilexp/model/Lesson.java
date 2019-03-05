@@ -1,11 +1,12 @@
 package com.agilexp.model;
 
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="courses")
-public class Course {
+@Table(name="lessons")
+public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -13,16 +14,20 @@ public class Course {
     @Column(name="name")
     private String name;
 
+    @Column(name="courseId")
+    private long courseId;
+
     @Column(name="created")
     private Timestamp created;
 
     @Column(name="description")
     private String description;
 
-    public Course() {}
+    public Lesson() {}
 
-    public Course(String name, Timestamp created, String description) {
+    public Lesson(String name, long courseId, Timestamp created, String description) {
         this.name = name;
+        this.courseId = courseId;
         this.created = created;
         this.description = description;
     }
@@ -51,6 +56,14 @@ public class Course {
         this.created = created;
     }
 
+    public long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -58,5 +71,4 @@ public class Course {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

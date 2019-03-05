@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatProgressSpinnerModule, MatIconModule,
   MatFormFieldModule, MatSelectModule, MatSortModule, MatToolbarModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
@@ -24,6 +23,7 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     CoursesRoutingModule,
     MatCardModule,
     MatCheckboxModule,
