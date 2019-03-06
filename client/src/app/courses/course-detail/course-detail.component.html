@@ -1,6 +1,6 @@
 <div *ngIf="course$ | async as course">
 
-    <h4>Course: {{ course.name }}</h4>
+    <h2>Course: {{ course.name }}</h2>
 
     <p><strong>Created: </strong>{{ course.created }}</p>
 
@@ -21,7 +21,10 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <p>Exercise #</p>
-                
+                <button mat-raised-button color="primary" [routerLink]="['../../exerciseCreate', lesson.id]" 
+                    routerLinkActive="active">Create exercise</button>
+                <button mat-raised-button color="primary" (click)="todo">Edit lesson</button>
+                <button mat-raised-button color="primary" (click)="todo">Delete lesson</button>
             </mat-expansion-panel>
         </mat-accordion>
 
