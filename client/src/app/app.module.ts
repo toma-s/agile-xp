@@ -23,7 +23,7 @@ import { CoursesModule } from './courses/courses.module';
   declarations: [
     AppComponent,
     SendTaskComponent,
-    TasksListComponent
+    TasksListComponent,
   ],
   imports: [
     BrowserModule,

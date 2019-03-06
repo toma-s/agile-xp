@@ -69,6 +69,7 @@ export class CourseCreateComponent implements OnInit {
     this.createLessons();
     console.log(this.lessons);
     this.saveCourse();
+    this.submitted = true;
   }
 
   createLessons() {

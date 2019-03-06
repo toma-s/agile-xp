@@ -13,13 +13,15 @@ import { CoursesComponent } from './courses.component';
 import { CourseCreateComponent } from './course-create/course-create.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 
 @NgModule({
   declarations: [
     CourseCreateComponent,
     CoursesListComponent,
     CoursesComponent,
-    CourseDetailComponent
+    CourseDetailComponent,
+    ExerciseCreateComponent
   ],
   imports: [
     CommonModule,
