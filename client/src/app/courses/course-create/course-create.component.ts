@@ -36,13 +36,6 @@ export class CourseCreateComponent implements OnInit {
     });
   }
 
-  createExercise(): FormGroup {
-    return this.fb.group({
-      exerciseName: [null, Validators.compose([Validators.required])],
-      exerciseDescription: [null, Validators.compose([Validators.required])]
-    });
-  }
-
   ngOnInit(): void {
     this.lessonsFormGroup = this.fb.group({
       lessons: this.fb.array([this.createLesson()])
