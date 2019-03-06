@@ -1,74 +1,68 @@
 <a mat-button color="primary" routerLink="../" routerLinkActive="active" mat-button>Back</a>
 
-<h2>Create new course</h2>
-
-<div *ngIf="!submitted" class="mat-elevation-z2">
+<div [hidden]="submitted" class="mat-elevation-z2">
 
   <form (ngSubmit)="submit()" class="form">
-  
-    <mat-form-field>
-      <input matInput placeholder="Title" required name="course-name" [(ngModel)]="course.name">
-    </mat-form-field>
 
-    <mat-form-field>
-      <textarea matInput placeholder="Description" rows="6" required name="course-description" [(ngModel)]="course.description">
-      </textarea>
-    </mat-form-field>
+    <h2>Create new course</h2>
 
-    <div [formGroup]="lessonsFormGroup">
+    <div class="form__inputs">
+    
+      <mat-form-field>
+        <input matInput placeholder="Title" required name="course-name" [(ngModel)]="course.name" maxlength="35">
+      </mat-form-field>
 
-      <h3>Create lessons</h3>
+      <mat-form-field>
+        <textarea matInput placeholder="Description" rows="6" required name="course-description" 
+        [(ngModel)]="course.description"  maxlength="300">
+        </textarea>
+      </mat-form-field>
 
-      <div formArrayName="lessons">
-        <div *ngFor="let lesson of lessonFormGroup.controls; let i = index;">
-          <div [formGroupName]="i">
-            <div>
+      <div [formGroup]="lessonsFormGroup">
 
-              <mat-form-field>
-                <input matInput placeholder="Lesson title" required name="lesson-name" formControlName="lessonName">
-              </mat-form-field>
+        <h3>Create lessons</h3>
 
-              <mat-form-field>
-                <input matInput placeholder="Lesson description" required name="lesson-description" 
-                formControlName="lessonDescription">
-              </mat-form-field>
+        <div class="form__inputs">
 
-              <button mat-raised-button color="warn" (click)="removeLesson()">Delete</button>
+        <div formArrayName="lessons">
+          <div *ngFor="let lesson of lessonFormGroup.controls; let i = index;">
+            <div [formGroupName]="i">
+              <div>
+
+                <mat-form-field>
+                  <input matInput placeholder="Lesson title" required name="lesson-name" 
+                  formControlName="lessonName"  maxlength="35">
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input matInput placeholder="Lesson description" required name="lesson-description" 
+                  formControlName="lessonDescription"  maxlength="35">
+                </mat-form-field>
+
+                <button type="button" mat-raised-button color="warn" (click)="removeLesson()">Delete</button>
+
+              </div>
             </div>
           </div>
         </div>
-      </div>
+          <div>
+            <button type="button" mat-raised-button color="primary" (click)="addLesson()">Add lesson</button>
+          </div>
+        </div>
 
-      <div>
-        <button mat-raised-button color="primary" (click)="addLesson()">Add lesson</button>
       </div>
-
     </div>
 
     <div class="submit">
       <button mat-raised-button color="accent" type="submit">Create</button>
     </div>
+
+    
 
   </form>
 
 </div>
 
-<!-- <div *ngIf="!submitted" class="mat-elevation-z2">
-
-  <form (ngSubmit)="onSubmit()" class="form">
-    <mat-form-field>
-      <input matInput placeholder="Title" required [(ngModel)]="course.name" name="name">
-    </mat-form-field>
-
-    <mat-form-field>
-      <textarea matInput placeholder="Description" rows="6" required [(ngModel)]="course.description" name="description">
-      </textarea>
-    </mat-form-field>
-
-    <div class="submit">
-      <button mat-raised-button color="accent" type="submit">Create</button>
-    </div>
-  </form>
-
-</div> -->
-
+<div [hidden]="!submitted">
+  <p>You've creates course successfully!</p>
+</div>

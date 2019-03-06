@@ -4,5 +4,30 @@
 
     <p><strong>Created: </strong>{{ course.created }}</p>
 
+    <p><strong>Description: </strong>{{ course.description }}</p>
+
+    <div *ngIf="lessons$ | async as lessons">
+
+        <h3>Syllabus</h3>
+
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let lesson of lessons">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Lesson: {{ lesson.name }}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{ lesson.description }}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>Exercise #</p>
+                
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </div>
+
+    
+
 </div>
 

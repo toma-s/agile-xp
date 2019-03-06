@@ -6,6 +6,7 @@ import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatProgressSpinnerMo
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
@@ -37,6 +38,7 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
     MatSelectModule,
     MatSortModule,
     MatTableModule,
+    MatExpansionModule,
   ]
 })
 

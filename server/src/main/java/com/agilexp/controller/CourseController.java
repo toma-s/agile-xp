@@ -21,7 +21,7 @@ public class CourseController {
     CourseRepository repository;
 
     @GetMapping(value="/courses/course-{id}")
-    public Course getTaskById(@PathVariable("id") long id) {
+    public Course getCourseById(@PathVariable("id") long id) {
         System.out.println("Get course with id " + id + "...");
 
         Optional<Course> taskDataOptional = repository.findById(id);

@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { Course } from '../shared/course.model';
 import { CourseService } from '../shared/course.service';
+import { LessonService } from '../shared/lesson.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -15,22 +16,33 @@ import { CourseService } from '../shared/course.service';
 export class CourseDetailComponent implements OnInit {
 
   course$: Observable<any>;
+  lessons$: Observable<any>;
 
   constructor(
     private courseService: CourseService,
+    private lessonServise: LessonService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit() {
-    const x = this.route.paramMap.pipe(
+    const course = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.courseService.getCourseById(Number(params.get('id')))
       )
     );
-    console.log(x);
-    this.course$ = x;
-    console.log(this.course$);
+    console.log(course);
+    this.course$ = course;
+
+    const lessons = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.lessonServise.getLessonsByCourseId(Number(params.get('id')))
+      )
+    );
+    console.log(lessons);
+    this.lessons$ = lessons;
+
+    // todo exercises
   }
 
 }

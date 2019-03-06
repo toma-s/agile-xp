@@ -18,6 +18,7 @@ export class CourseCreateComponent implements OnInit {
 
   course = new Course();
   lessons = new Array<Lesson>();
+  submitted = false;
 
   get lessonFormGroup() {
     return this.lessonsFormGroup.get('lessons') as FormArray;
@@ -68,8 +69,6 @@ export class CourseCreateComponent implements OnInit {
     this.createLessons();
     console.log(this.lessons);
     this.saveCourse();
-
-    // this.reset();
   }
 
   createLessons() {
@@ -113,34 +112,4 @@ export class CourseCreateComponent implements OnInit {
     this.course = new Course();
     this.lessons = new Array<Lesson>();
   }
-
-
-  // course: Course = new Course();
-  // submitted = false;
-  // response = undefined;
-
-  // constructor(private courseService: CourseService) { }
-
-  // ngOnInit(): void {
-  // }
-
-  // newCourse(): void {
-  //   this.course = new Course();
-  //   this.submitted = false;
-  //   this.response = undefined;
-  // }
-
-  // save() {
-  //   this.courseService.createCourse(this.course)
-  //     .subscribe(
-  //       data => console.log(data),
-  //       error => console.log(error)
-  //     );
-  // }
-
-  // onSubmit() {
-  //   this.submitted = true;
-  //   this.save();
-  // }
-
 }
