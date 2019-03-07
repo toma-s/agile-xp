@@ -12,10 +12,14 @@ public class ExerciseType {
     @Column(name="name")
     private String name;
 
+    @Column(name="value")
+    private String value;
+
     public ExerciseType() {}
 
-    public ExerciseType(String name) {
+    public ExerciseType(String name, String value) {
         this.name = name;
+        this.value = value;
     }
 
     public long getId() {
@@ -32,5 +36,13 @@ public class ExerciseType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

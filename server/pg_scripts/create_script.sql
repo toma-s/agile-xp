@@ -18,7 +18,8 @@ create table lessons (
 drop table if exists exercise_types CASCADE;
 create table exercise_types (
 	id serial primary key,
-	name text
+	name text,
+	value text
 );
 
 drop table if exists exercises CASCADE;

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ExerciseType } from '../shared/exercise-type.model';
+import { ExerciseTypeService } from '../shared/exercise-type.service';
+import { Exercise } from '../shared/exercise.model';
 
 @Component({
   selector: 'app-exercise-create',
@@ -7,9 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExerciseCreateComponent implements OnInit {
 
-  constructor() { }
+  submitted = false;
+  exercise = new Exercise();
+  types = new Array<ExerciseType>();
+  selectedTypeValue: string;
+
+  constructor(private exerciseTypeServise: ExerciseTypeService) { }
 
   ngOnInit() {
+    this.getExerciseTypes();
+  }
+
+  getExerciseTypes() {
+    this.exerciseTypeServise.getExericseTypesList()
+      .subscribe(
+        data => {
+          this.types = data;
+          console.log(data);
+        },
+        error => console.log(error)
+      );
   }
 
 }

@@ -1,0 +1,17 @@
+.form {
+    padding: 20px;
+
+    .mat-form-field {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
+}
+
+.form__inputs {
+    padding: 20px;
+}
+
+button {
+    margin: 5px;
+}
