@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { Course } from '../shared/course.model';
 import { CourseService } from '../shared/course.service';
-import { LessonService } from '../shared/lesson.service';
+import { LessonService } from '../lessons/shared/lesson.service';
 
 @Component({
   selector: 'app-course-detail',

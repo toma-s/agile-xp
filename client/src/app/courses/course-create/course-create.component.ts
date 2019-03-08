@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Course } from '../shared/course.model';
 import { CourseService } from '../shared/course.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Lesson } from '../shared/lesson.model';
-import { LessonService } from '../shared/lesson.service';
+import { Lesson } from '../lessons/shared/lesson.model';
+import { LessonService } from '../lessons/shared/lesson.service';
 
 
 @Component({
