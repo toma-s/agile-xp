@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'courses/courseCreate', component: CourseCreateComponent},
   { path: 'courses/coursesList', component: CoursesListComponent},
   { path: 'courses/courseDetail/:id', component: CourseDetailComponent},
-  { path: 'courses/lessonEdit/:id', component: LessonEditComponent},
+  { path: 'courses/courseDetail/:courseId/lessonEdit/:lessonId', component: LessonEditComponent},
   { path: '../', redirectTo: 'courses' }
 ];
 

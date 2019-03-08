@@ -23,9 +23,7 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <p>Exercise #</p>
-                <!-- <button mat-raised-button color="primary" [routerLink]="['../../exerciseCreate', lesson.id]" 
-                    routerLinkActive="active">Create exercise</button> -->
-                <button mat-raised-button color="primary" [routerLink]="['../../lessonEdit', lesson.id]" 
+                <button mat-raised-button color="primary" [routerLink]="['lessonEdit', lesson.id]" 
                 routerLinkActive="active">Edit lesson</button>
                 <button mat-raised-button color="primary" (click)="todo">Delete lesson</button>
             </mat-expansion-panel>
