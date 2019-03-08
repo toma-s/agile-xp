@@ -41,8 +41,6 @@ export class CourseDetailComponent implements OnInit {
     );
     console.log(lessons);
     this.lessons$ = lessons;
-
-    // todo exercises
   }
 
 }

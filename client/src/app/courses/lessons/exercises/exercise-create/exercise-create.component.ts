@@ -15,7 +15,9 @@ export class ExerciseCreateComponent implements OnInit {
   types = new Array<ExerciseType>();
   selectedTypeValue = '';
 
-  constructor(private exerciseTypeServise: ExerciseTypeService) { }
+  constructor(
+    private exerciseTypeServise: ExerciseTypeService
+  ) { }
 
   ngOnInit() {
     this.getExerciseTypes();
