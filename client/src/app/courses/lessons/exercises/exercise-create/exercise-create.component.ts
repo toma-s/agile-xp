@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ExerciseType } from '../shared/exercise-type.model';
 import { ExerciseTypeService } from '../shared/exercise-type.service';
 import { Exercise } from '../shared/exercise.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ExerciseService } from '../shared/exercise.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-exercise-create',
@@ -11,16 +14,19 @@ import { Exercise } from '../shared/exercise.model';
 export class ExerciseCreateComponent implements OnInit {
 
   submitted = false;
-  exercise = new Exercise();
   types = new Array<ExerciseType>();
-  selectedTypeValue = '';
+  exerciseFormGroup: FormGroup;
 
   constructor(
-    private exerciseTypeServise: ExerciseTypeService
+    private exerciseSercise: ExerciseService,
+    private exerciseTypeServise: ExerciseTypeService,
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.getExerciseTypes();
+    this.createForm();
   }
 
   getExerciseTypes() {
@@ -28,14 +34,62 @@ export class ExerciseCreateComponent implements OnInit {
       .subscribe(
         data => {
           this.types = data;
-          console.log(data);
         },
         error => console.log(error)
       );
   }
 
-  showVal() {
-    console.log(this.selectedTypeValue);
+  createForm() {
+    this.exerciseFormGroup = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      selectedTypeValue: ['', Validators.required],
+      sourceFilename: [],
+      sourceCode: [],
+      testFilename: [],
+      testCode: []
+    });
+  }
+
+  submit() {
+    console.log(this.exerciseFormGroup.value.name);
+    console.log(this.exerciseFormGroup.value.description);
+
+    switch (this.exerciseFormGroup.value.selectedTypeValue) {
+      case 'white-box': {
+        const exercise = this.createExercise();
+        console.log(exercise);
+        this.saveExercise(exercise);
+
+        console.log(this.exerciseFormGroup.value.sourceFilename); // todo
+        break;
+      }
+      // todo
+      default: {
+        console.log('default');
+        console.log(this.exerciseFormGroup.value.sourceFilename); // todo
+        break;
+      }
+    }
+  }
+
+  createExercise(): Exercise {
+    const exercise = new Exercise();
+    exercise.name = this.exerciseFormGroup.value.name;
+    exercise.lessonId = this.route.snapshot.params['lessonId'];
+    exercise.type = this.exerciseFormGroup.value.selectedTypeValue;
+    exercise.description = this.exerciseFormGroup.value.description;
+    return exercise;
+  }
+
+  saveExercise(exercise: Exercise) {
+    this.exerciseSercise.createExercise(exercise)
+      .subscribe(
+        data => {
+          console.log(data);
+        },
+        error => console.log(error)
+      );
   }
 
 }

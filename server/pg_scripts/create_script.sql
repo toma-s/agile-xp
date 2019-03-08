@@ -17,8 +17,8 @@ create table lessons (
 
 drop table if exists exercise_types CASCADE;
 create table exercise_types (
-	id serial primary key,
-	name text,
+	id serial,
+	name text primary key,
 	value text
 );
 
@@ -27,7 +27,7 @@ create table exercises (
 	id serial primary key,
 	name text,
 	lesson_id int references lessons on delete cascade,
-	type_id int references exercise_types on delete cascade,
+	type int references exercise_types on delete cascade,
 	created timestamp,
 	description text
 );

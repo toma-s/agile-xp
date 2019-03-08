@@ -9,10 +9,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
+import { WhiteBoxComponent } from './white-box/white-box.component';
 
 @NgModule({
   declarations: [
-    ExerciseCreateComponent
+    ExerciseCreateComponent,
+    WhiteBoxComponent,
   ],
   imports: [
     CommonModule,

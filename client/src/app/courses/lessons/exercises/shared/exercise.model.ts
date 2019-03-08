@@ -2,7 +2,7 @@ export class Exercise {
     id: number;
     name: string;
     lessonId: number;
-    typeId: number;
+    type: string;
     created: Date;
     description: string;
 }

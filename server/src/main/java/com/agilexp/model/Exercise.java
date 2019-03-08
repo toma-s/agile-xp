@@ -16,8 +16,8 @@ public class Exercise {
     @Column(name="lessonId")
     private long lessonId;
 
-    @Column(name="typeId")
-    private long typeId;
+    @Column(name="type")
+    private String type;
 
     @Column(name="created")
     private Timestamp created;
@@ -27,9 +27,9 @@ public class Exercise {
 
     public Exercise() {}
 
-    public Exercise(String name, long lessonId, long typeId, Timestamp created, String description) {
+    public Exercise(String name, long lessonId, String type, Timestamp created, String description) {
         this.lessonId = lessonId;
-        this.typeId = typeId;
+        this.type = type;
         this.name = name;
         this.created = created;
         this.description = description;
@@ -59,12 +59,12 @@ public class Exercise {
         this.lessonId = lessonId;
     }
 
-    public long getTypeId() {
-        return typeId;
+    public String getType() {
+        return type;
     }
 
-    public void setTypeId(long typeId) {
-        this.typeId = typeId;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Timestamp getCreated() {
