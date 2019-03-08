@@ -25,7 +25,7 @@ public class ExerciseController {
                 exercise.getType(),
                 created,
                 exercise.getDescription()));
-        System.out.format("Created exercise %s at %s for lesson #%s", exercise.getName(), created, exercise.getLessonId());
+        System.out.format("Created exercise with id %s named %s at %s for lesson #%s", _exercise.getId(), exercise.getName(), created, exercise.getLessonId());
         return _exercise;
     }
 }

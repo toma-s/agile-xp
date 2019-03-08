@@ -5,6 +5,9 @@ import { Exercise } from '../shared/exercise.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExerciseService } from '../shared/exercise.service';
 import { ActivatedRoute } from '@angular/router';
+import { SourceCode } from '../shared/source-code.model';
+import { SourceCodeService } from '../shared/source-code.service';
+import { HiddenTestService } from '../shared/hidden-test.service';
 
 @Component({
   selector: 'app-exercise-create',
@@ -20,6 +23,8 @@ export class ExerciseCreateComponent implements OnInit {
   constructor(
     private exerciseSercise: ExerciseService,
     private exerciseTypeServise: ExerciseTypeService,
+    private sourceCodeService: SourceCodeService,
+    private hiddenTestService: HiddenTestService,
     private fb: FormBuilder,
     private route: ActivatedRoute
   ) { }
@@ -60,8 +65,6 @@ export class ExerciseCreateComponent implements OnInit {
         const exercise = this.createExercise();
         console.log(exercise);
         this.saveExercise(exercise);
-
-        console.log(this.exerciseFormGroup.value.sourceFilename); // todo
         break;
       }
       // todo
@@ -84,6 +87,26 @@ export class ExerciseCreateComponent implements OnInit {
 
   saveExercise(exercise: Exercise) {
     this.exerciseSercise.createExercise(exercise)
+      .subscribe(
+        data => {
+          console.log(data);
+          const sourceCode = this.createSourceCode(data.id);
+          this.saveSourceCode(sourceCode);
+        },
+        error => console.log(error)
+      );
+  }
+
+  createSourceCode(exerciseId: number): SourceCode {
+    const sourceCode = new SourceCode();
+    sourceCode.fileName = this.exerciseFormGroup.value.sourceFilename;
+    sourceCode.exerciseId = exerciseId;
+    console.log(sourceCode);
+    return sourceCode;
+  }
+
+  saveSourceCode(sourceCode: SourceCode) {
+    this.sourceCodeService.createSourceCode(sourceCode)
       .subscribe(
         data => {
           console.log(data);

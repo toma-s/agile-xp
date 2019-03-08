@@ -20,8 +20,10 @@ public class SourceCodeController {
 
         // TODO: 08-Mar-19 create file
 
-        SourceCode _message = repository.save(new SourceCode());
-        System.out.format("Created source code %s for exercise #%s", sourceCode.getFileName(), sourceCode.getId());
+        System.out.println(sourceCode.getExerciseId());
+
+        SourceCode _message = repository.save(new SourceCode(sourceCode.getFileName(), sourceCode.getExerciseId()));
+        System.out.format("Created source code %s for exercise #%s", sourceCode.getFileName(), sourceCode.getExerciseId());
         return _message;
     }
 }
