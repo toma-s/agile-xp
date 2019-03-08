@@ -2,36 +2,35 @@
 
 <div *ngIf="course$ | async as course" class="mat-elevation-z2 card">
 
-    <h2>Course: {{ course.name }}</h2>
+  <h2>Course: {{ course.name }}</h2>
 
-    <p><strong>Created: </strong>{{ course.created }}</p>
+  <p><strong>Created: </strong>{{ course.created }}</p>
 
-    <p><strong>Description: </strong>{{ course.description }}</p>
+  <p><strong>Description: </strong>{{ course.description }}</p>
 
-    <div *ngIf="lessons$ | async as lessons">
+  <div *ngIf="lessons$ | async as lessons">
 
-        <h3>Syllabus</h3>
+    <h3>Syllabus</h3>
 
-        <mat-accordion>
-            <mat-expansion-panel *ngFor="let lesson of lessons">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <p>Lesson: {{ lesson.name }}</p>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        <p>{{ lesson.description }}</p>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <p>Exercise #</p>
-                <button mat-raised-button color="primary" [routerLink]="['lessonEdit', lesson.id]" 
-                routerLinkActive="active">Edit lesson</button>
-                <button mat-raised-button color="primary" (click)="todo">Delete lesson</button>
-            </mat-expansion-panel>
-        </mat-accordion>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let lesson of lessons">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <p>Lesson: {{ lesson.name }}</p>
+          </mat-panel-title>
+          <mat-panel-description>
+            <p>{{ lesson.description }}</p>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>Exercise #</p>
+        <button mat-raised-button color="primary" [routerLink]="['lessonEdit', lesson.id]"
+          routerLinkActive="active">Edit lesson</button>
+        <button mat-raised-button color="primary" (click)="todo">Delete lesson</button>
+      </mat-expansion-panel>
+    </mat-accordion>
 
-    </div>
+  </div>
 
-    
+
 
 </div>
-

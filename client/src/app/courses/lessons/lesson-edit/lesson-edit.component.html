@@ -2,12 +2,12 @@
 
 <div class="mat-elevation-z2 card">
 
-    <div *ngIf="lesson$ | async as lesson">
+	<div *ngIf="lesson$ | async as lesson">
 
-        <p>todo exercises list</p>
+		<p>todo exercises list</p>
 
-        <button mat-raised-button color="primary" [routerLink]="['exerciseCreate', lesson.id]" 
-                routerLinkActive="active">Add exercise</button>
+		<button mat-raised-button color="primary" [routerLink]="'exerciseCreate'" routerLinkActive="active">Add
+			exercise</button>
 
-    </div>
+	</div>
 </div>

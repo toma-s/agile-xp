@@ -7,14 +7,14 @@
     <h2>Create new course</h2>
 
     <div class="form__inputs">
-    
+
       <mat-form-field>
         <input matInput placeholder="Title" required name="course-name" [(ngModel)]="course.name" maxlength="35">
       </mat-form-field>
 
       <mat-form-field>
-        <textarea matInput placeholder="Description" rows="6" required name="course-description" 
-        [(ngModel)]="course.description"  maxlength="300">
+        <textarea matInput placeholder="Description" rows="6" required name="course-description"
+          [(ngModel)]="course.description" maxlength="300">
         </textarea>
       </mat-form-field>
 
@@ -24,27 +24,27 @@
 
         <div class="form__inputs">
 
-        <div formArrayName="lessons">
-          <div *ngFor="let lesson of lessonFormGroup.controls; let i = index;">
-            <div [formGroupName]="i">
-              <div>
+          <div formArrayName="lessons">
+            <div *ngFor="let lesson of lessonFormGroup.controls; let i = index;">
+              <div [formGroupName]="i">
+                <div>
 
-                <mat-form-field>
-                  <input matInput placeholder="Lesson title" required name="lesson-name" 
-                  formControlName="lessonName"  maxlength="35">
-                </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Lesson title" required name="lesson-name" formControlName="lessonName"
+                      maxlength="35">
+                  </mat-form-field>
 
-                <mat-form-field>
-                  <input matInput placeholder="Lesson description" required name="lesson-description" 
-                  formControlName="lessonDescription"  maxlength="35">
-                </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Lesson description" required name="lesson-description"
+                      formControlName="lessonDescription" maxlength="35">
+                  </mat-form-field>
 
-                <button type="button" mat-raised-button color="warn" (click)="removeLesson()">Delete</button>
+                  <button type="button" mat-raised-button color="warn" (click)="removeLesson()">Delete</button>
 
+                </div>
               </div>
             </div>
           </div>
-        </div>
           <div>
             <button type="button" mat-raised-button color="primary" (click)="addLesson()">Add lesson</button>
           </div>
@@ -57,7 +57,7 @@
       <button mat-raised-button color="accent" type="submit">Create</button>
     </div>
 
-    
+
 
   </form>
 
