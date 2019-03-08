@@ -12,7 +12,7 @@ public class HiddenTestController {
     @Autowired
     HiddenTestRepository repository;
 
-    @PostMapping(value = "/sourceCode/create")
+    @PostMapping(value = "/hiddenTest/create")
     public HiddenTest postCourse(@RequestBody HiddenTest hiddenTest) {
 
         // TODO: 08-Mar-19 create file
