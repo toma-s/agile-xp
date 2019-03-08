@@ -17,7 +17,7 @@
           <!-- <div [hidden]="types.size != 0"> -->
 
             <mat-form-field>
-              <mat-select placeholder="Exercise type" [(ngModel)]="selectedTypeValue" name="type">
+              <mat-select placeholder="Exercise type" [(ngModel)]="selectedTypeValue" name="exercise-type">
                 <mat-option *ngFor="let type of types" [value]="type.value">
                   {{type.name}}
                 </mat-option>
@@ -25,13 +25,31 @@
             </mat-form-field>
 
 
-            <div [hidden]="selectedTypeValue">
-              <container-element [ngSwitch]="selectedTypeValue">
-                <div *ngSwitchCase="">
-
+            <div *ngIf="selectedTypeValue.length !== 0">
+              <p>val: {{selectedTypeValue}}</p>
+              <div [ngSwitch]="selectedTypeValue">
+                <div *ngSwitchCase="'black-box'">
+                  <p>black box</p>
                 </div>
-              </container-element>
+                <div *ngSwitchCase="'white-box'">
+                  <p>white box</p>
+                </div>
+                <div *ngSwitchCase="'quiz'">
+                  <p>quiz</p>
+                </div>
+                <div *ngSwitchCase="'theory'">
+                  <p>theory</p>
+                </div>
+                <div *ngSwitchCase="'self-eval'">
+                  <p>self eval</p>
+                </div>
+                <div *ngSwitchDefault>
+                  <p>nic</p>
+                </div>
+              </div>
             </div>
+
+            <button type="button" (click)="showVal()">Show val</button>
             
 
           <!-- </div> -->

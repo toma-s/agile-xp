@@ -13,7 +13,7 @@ export class ExerciseCreateComponent implements OnInit {
   submitted = false;
   exercise = new Exercise();
   types = new Array<ExerciseType>();
-  selectedTypeValue: string;
+  selectedTypeValue = '';
 
   constructor(private exerciseTypeServise: ExerciseTypeService) { }
 
@@ -30,6 +30,10 @@ export class ExerciseCreateComponent implements OnInit {
         },
         error => console.log(error)
       );
+  }
+
+  showVal() {
+    console.log(this.selectedTypeValue);
   }
 
 }
