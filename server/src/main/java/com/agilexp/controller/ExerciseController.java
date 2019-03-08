@@ -19,13 +19,13 @@ public class ExerciseController {
     public Exercise postExercise(@RequestBody Exercise exercise) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
-        Exercise _message = repository.save(new Exercise(
+        Exercise _exercise = repository.save(new Exercise(
                 exercise.getName(),
                 exercise.getLessonId(),
                 exercise.getType(),
                 created,
                 exercise.getDescription()));
         System.out.format("Created exercise %s at %s for lesson #%s", exercise.getName(), created, exercise.getLessonId());
-        return _message;
+        return _exercise;
     }
 }

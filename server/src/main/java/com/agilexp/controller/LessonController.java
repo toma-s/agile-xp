@@ -22,11 +22,11 @@ public class LessonController {
     public Lesson postCourse(@RequestBody Lesson lesson) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
-        Lesson _message = repository.save(new Lesson(lesson.getName(), lesson.getCourseId(),
+        Lesson _lesson = repository.save(new Lesson(lesson.getName(), lesson.getCourseId(),
                 created, lesson.getDescription()));
         System.out.format("Created lesson %s at %s from course #%s", lesson.getName(), created,
                 lesson.getCourseId());
-        return _message;
+        return _lesson;
     }
 
     @GetMapping(value="/lessons/lesson-{id}")
