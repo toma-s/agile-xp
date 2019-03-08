@@ -16,14 +16,12 @@ public class SourceCodeController {
     SourceCodeRepository repository;
 
     @PostMapping(value = "/sourceCode/create")
-    public SourceCode postCourse(@RequestBody SourceCode sourceCode) {
+    public SourceCode postSourceCode(@RequestBody SourceCode sourceCode) {
 
         // TODO: 08-Mar-19 create file
 
-        System.out.println(sourceCode.getExerciseId());
-
-        SourceCode _message = repository.save(new SourceCode(sourceCode.getFileName(), sourceCode.getExerciseId()));
-        System.out.format("Created source code %s for exercise #%s", sourceCode.getFileName(), sourceCode.getExerciseId());
-        return _message;
+        SourceCode _sourceCode = repository.save(new SourceCode(sourceCode.getFileName(), sourceCode.getExerciseId()));
+        System.out.format("Created source code %s for exercise #%s\n", sourceCode.getFileName(), sourceCode.getExerciseId());
+        return _sourceCode;
     }
 }

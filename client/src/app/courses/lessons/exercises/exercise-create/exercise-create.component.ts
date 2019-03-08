@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SourceCode } from '../shared/source-code.model';
 import { SourceCodeService } from '../shared/source-code.service';
 import { HiddenTestService } from '../shared/hidden-test.service';
+import { HiddenTest } from '../shared/hidden-test.model';
 
 @Component({
   selector: 'app-exercise-create',
@@ -90,14 +91,16 @@ export class ExerciseCreateComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          const sourceCode = this.createSourceCode(data.id);
+          const sourceCode = this.createSourceCodeObject(data.id);
           this.saveSourceCode(sourceCode);
+          const hiddenTest = this.createHiddenTestObject(data.id);
+          this.saveHiddenTest(hiddenTest);
         },
         error => console.log(error)
       );
   }
 
-  createSourceCode(exerciseId: number): SourceCode {
+  createSourceCodeObject(exerciseId: number): SourceCode {
     const sourceCode = new SourceCode();
     sourceCode.fileName = this.exerciseFormGroup.value.sourceFilename;
     sourceCode.exerciseId = exerciseId;
@@ -107,6 +110,24 @@ export class ExerciseCreateComponent implements OnInit {
 
   saveSourceCode(sourceCode: SourceCode) {
     this.sourceCodeService.createSourceCode(sourceCode)
+      .subscribe(
+        data => {
+          console.log(data);
+        },
+        error => console.log(error)
+      );
+  }
+
+  createHiddenTestObject(exerciseId: number): HiddenTest {
+    const hiddenTest = new HiddenTest();
+    hiddenTest.fileName = this.exerciseFormGroup.value.testFilename;
+    hiddenTest.exerciseId = exerciseId;
+    console.log(hiddenTest);
+    return hiddenTest;
+  }
+
+  saveHiddenTest(hiddenTest: HiddenTest) {
+    this.hiddenTestService.createHiddenTest(hiddenTest)
       .subscribe(
         data => {
           console.log(data);

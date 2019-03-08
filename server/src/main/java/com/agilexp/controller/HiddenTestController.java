@@ -13,12 +13,12 @@ public class HiddenTestController {
     HiddenTestRepository repository;
 
     @PostMapping(value = "/hiddenTest/create")
-    public HiddenTest postCourse(@RequestBody HiddenTest hiddenTest) {
+    public HiddenTest postHiddenTest(@RequestBody HiddenTest hiddenTest) {
 
         // TODO: 08-Mar-19 create file
 
-        HiddenTest _hidden_test = repository.save(new HiddenTest());
-        System.out.format("Created source code %s for exercise #%s", hiddenTest.getFileName(), hiddenTest.getId());
-        return _hidden_test;
+        HiddenTest _hiddenTest = repository.save(new HiddenTest(hiddenTest.getFileName(), hiddenTest.getExerciseId()));
+        System.out.format("Created hidden test %s for exercise #%s\n", hiddenTest.getFileName(), hiddenTest.getExerciseId());
+        return _hiddenTest;
     }
 }
