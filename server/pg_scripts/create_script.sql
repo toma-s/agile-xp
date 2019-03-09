@@ -36,6 +36,7 @@ drop table if exists source_codes CASCADE;
 create table source_codes (
 	id serial primary key,
 	filename text,
+	code text,
 	exercise_id int references exercises on delete cascade
 );
 

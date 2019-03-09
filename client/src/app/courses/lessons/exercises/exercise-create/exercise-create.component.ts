@@ -103,6 +103,7 @@ export class ExerciseCreateComponent implements OnInit {
   createSourceCodeObject(exerciseId: number): SourceCode {
     const sourceCode = new SourceCode();
     sourceCode.fileName = this.exerciseFormGroup.value.sourceFilename;
+    sourceCode.code = this.exerciseFormGroup.value.sourceCode;
     sourceCode.exerciseId = exerciseId;
     console.log(sourceCode);
     return sourceCode;

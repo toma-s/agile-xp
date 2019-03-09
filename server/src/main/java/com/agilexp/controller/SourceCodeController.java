@@ -2,6 +2,7 @@ package com.agilexp.controller;
 
 import com.agilexp.model.SourceCode;
 import com.agilexp.repository.SourceCodeRepository;
+import com.agilexp.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +15,17 @@ import java.util.Date;
 public class SourceCodeController {
     @Autowired
     SourceCodeRepository repository;
+    private final StorageService storageService;
+
+    @Autowired
+    public SourceCodeController(StorageService storageService) {
+        this.storageService = storageService;
+    }
 
     @PostMapping(value = "/sourceCode/create")
     public SourceCode postSourceCode(@RequestBody SourceCode sourceCode) {
 
-        // TODO: 08-Mar-19 create file
-
-        SourceCode _sourceCode = repository.save(new SourceCode(sourceCode.getFileName(), sourceCode.getExerciseId()));
+        SourceCode _sourceCode = repository.save(new SourceCode(sourceCode.getFileName(), sourceCode.getCode(), sourceCode.getExerciseId()));
         System.out.format("Created source code %s for exercise #%s\n", sourceCode.getFileName(), sourceCode.getExerciseId());
         return _sourceCode;
     }
