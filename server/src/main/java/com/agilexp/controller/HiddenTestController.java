@@ -17,7 +17,7 @@ public class HiddenTestController {
 
         // TODO: 08-Mar-19 create file
 
-        HiddenTest _hiddenTest = repository.save(new HiddenTest(hiddenTest.getFileName(), hiddenTest.getExerciseId()));
+        HiddenTest _hiddenTest = repository.save(new HiddenTest(hiddenTest.getFileName(), hiddenTest.getCode(), hiddenTest.getExerciseId()));
         System.out.format("Created hidden test %s for exercise #%s\n", hiddenTest.getFileName(), hiddenTest.getExerciseId());
         return _hiddenTest;
     }

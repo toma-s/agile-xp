@@ -122,6 +122,7 @@ export class ExerciseCreateComponent implements OnInit {
   createHiddenTestObject(exerciseId: number): HiddenTest {
     const hiddenTest = new HiddenTest();
     hiddenTest.fileName = this.exerciseFormGroup.value.testFilename;
+    hiddenTest.code = this.exerciseFormGroup.value.testCode;
     hiddenTest.exerciseId = exerciseId;
     console.log(hiddenTest);
     return hiddenTest;

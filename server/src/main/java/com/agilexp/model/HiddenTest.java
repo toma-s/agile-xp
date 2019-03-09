@@ -12,13 +12,17 @@ public class HiddenTest {
     @Column(name="filename")
     private String fileName;
 
+    @Column(name="code")
+    private String code;
+
     @Column(name="exercise_id")
     private long exerciseId;
 
     public HiddenTest() {}
 
-    public HiddenTest(String fileName, long exerciseId) {
+    public HiddenTest(String fileName, String code, long exerciseId) {
         this.fileName = fileName;
+        this.code = code;
         this.exerciseId = exerciseId;
     }
 
@@ -36,6 +40,14 @@ public class HiddenTest {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public long getExerciseId() {
