@@ -26,6 +26,9 @@ public class SourceCodeController {
     public SourceCode postSourceCode(@RequestBody SourceCode sourceCode) {
 
         SourceCode _sourceCode = repository.save(new SourceCode(sourceCode.getFileName(), sourceCode.getCode(), sourceCode.getExerciseId()));
+
+        storageService.store(_sourceCode);
+
         System.out.format("Created source code %s for exercise #%s\n", sourceCode.getFileName(), sourceCode.getExerciseId());
         return _sourceCode;
     }
