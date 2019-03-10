@@ -9,6 +9,8 @@ import { ExerciseService } from '../lessons/exercises/shared/exercise.service';
 import { Exercise } from '../lessons/exercises/shared/exercise.model';
 import { Course } from '../shared/course.model';
 import { Lesson } from '../lessons/shared/lesson.model';
+import { ExerciseTypeService } from '../lessons/exercises/shared/exercise-type.service';
+import { ExerciseType } from '../lessons/exercises/shared/exercise-type.model';
 
 @Component({
   selector: 'app-course-detail',
@@ -21,11 +23,13 @@ export class CourseDetailComponent implements OnInit {
   course$: Observable<Course>;
   lessons$: Observable<Lesson>;
   exercises$: Observable<Exercise>;
+  exerciseTypes$: Observable<ExerciseType>;
 
   constructor(
     private courseService: CourseService,
     private lessonService: LessonService,
     private exerciseService: ExerciseService,
+    private exerciseTypeService: ExerciseTypeService,
     private route: ActivatedRoute
   ) { }
 
@@ -33,6 +37,7 @@ export class CourseDetailComponent implements OnInit {
     this.getCourse();
     this.getLessons();
     this.getExercises();
+    this.getExerciseTypeNames();
   }
 
   getCourse() {
@@ -64,6 +69,17 @@ export class CourseDetailComponent implements OnInit {
       );
   }
 
+  getExerciseTypeNames() {
+    this.exerciseTypeService.getExericseTypesList()
+      .subscribe(
+        data => {
+          this.exerciseTypes$ = data;
+          console.log(data);
+        },
+        error => console.log(error)
+      );
+  }
+
   getExercisesByLessonId(lessonId: number) {
     const x = new Array<Exercise>();
     this.exercises$.forEach(ex => {
@@ -72,6 +88,17 @@ export class CourseDetailComponent implements OnInit {
       }
     });
     return x;
+  }
+
+  getExerciseTypeName(value: string) {
+    let typeName = '';
+    this.exerciseTypes$.forEach(et => {
+      console.log(et.value === value);
+      if (et.value === value) {
+        typeName = et.name;
+      }
+    });
+    return typeName;
   }
 
 }

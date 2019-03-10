@@ -14,6 +14,7 @@
 
     <mat-accordion>
       <mat-expansion-panel *ngFor="let lesson of lessons">
+
         <mat-expansion-panel-header>
           <mat-panel-title>
             <p>Lesson: {{ lesson.name }}</p>
@@ -22,16 +23,21 @@
             <p>{{ lesson.description }}</p>
           </mat-panel-description>
         </mat-expansion-panel-header>
+
         <mat-nav-list *ngIf="exercises$ as exercises">
           <mat-list-item *ngFor="let exercise of getExercisesByLessonId(lesson.id)" 
                             [routerLink]="['lesson', lesson.id, 'exerciseSolve', exercise.id]" routerLinkActive="active">
-            {{exercise.name}}
+            <p>{{exercise.name}}</p>
+            <p>{{getExerciseTypeName(exercise.type)}}</p>
           </mat-list-item>
         </mat-nav-list>
+
         <button mat-raised-button color="primary" [routerLink]="['lessonEdit', lesson.id]" routerLinkActive="active">
           Edit lesson
         </button>
+
         <button mat-raised-button color="primary" (click)="todo">Delete lesson</button>
+        
       </mat-expansion-panel>
     </mat-accordion>
 
