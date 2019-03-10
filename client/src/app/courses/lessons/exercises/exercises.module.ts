@@ -10,11 +10,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 import { WhiteBoxComponent } from './white-box/white-box.component';
+import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
 
 @NgModule({
   declarations: [
     ExerciseCreateComponent,
     WhiteBoxComponent,
+    ExerciseSolveComponent,
   ],
   imports: [
     CommonModule,
