@@ -93,7 +93,6 @@ export class CourseDetailComponent implements OnInit {
   getExerciseTypeName(value: string) {
     let typeName = '';
     this.exerciseTypes$.forEach(et => {
-      console.log(et.value === value);
       if (et.value === value) {
         typeName = et.name;
       }

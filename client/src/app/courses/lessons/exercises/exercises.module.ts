@@ -11,6 +11,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 import { WhiteBoxComponent } from './white-box/white-box.component';
 import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
+import { ExercisesRoutingModule } from './exercises-routing.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.componen
     MatSortModule,
     MatTableModule,
     MatExpansionModule,
+    ExercisesRoutingModule,
   ]
 })
 export class ExercisesModule { }
