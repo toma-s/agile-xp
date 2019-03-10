@@ -23,13 +23,15 @@ export class ExerciseSolveComponent implements OnInit {
   }
 
   getExercise() {
-    const exercise = this.route.paramMap.pipe(
+    this.exercise$ = this.route.paramMap.pipe(
       switchMap(((params: ParamMap) =>
         this.exerciseService.getExerciseById(Number(params.get('exerciseId')))
       ))
     );
-    console.log(exercise);
-    this.exercise$ = exercise;
+    console.log(this.exercise$);
+    this.exercise$.subscribe(
+      data => console.log(data)
+    );
   }
 
 }

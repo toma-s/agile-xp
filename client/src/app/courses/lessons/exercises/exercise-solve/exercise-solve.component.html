@@ -1,11 +1,15 @@
 <a mat-button color="primary" routerLink="../../../../" routerLinkActive="active" mat-button>Back</a>
 
 <div class="mat-elevation-z2 card">
-  <p>
-    exercise-solve works!
-  </p>
 
-  <div [ngSwitch]="exercise$.type">
+  <div *ngIf="exercise$ | async as exercise">
+
+    <p>Name: {{ exercise.name }}</p>
+    <p>Description: {{ exercise.description }}</p>
+    <p>Type: {{ exercise.type }}</p>
+
+    <div [ngSwitch]="exercise.type">
+      
       <div *ngSwitchCase="'black-box'">
         <p>black box</p>
       </div>
@@ -28,4 +32,6 @@
         <!--temp-->
       </div>
     </div>
+  </div>
+
 </div>
