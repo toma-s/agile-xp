@@ -22,9 +22,18 @@
             <p>{{ lesson.description }}</p>
           </mat-panel-description>
         </mat-expansion-panel-header>
+        <mat-nav-list *ngIf="exercises$ as exercises">
+          <mat-list-item *ngFor="let exercise of exercises">
+            <a>{{exercise.name}}</a>
+            <button mat-icon-button>
+                <mat-icon>study</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-nav-list>
         <p>Exercise #</p>
-        <button mat-raised-button color="primary" [routerLink]="['lessonEdit', lesson.id]"
-          routerLinkActive="active">Edit lesson</button>
+        <button mat-raised-button color="primary" [routerLink]="['lessonEdit', lesson.id]" routerLinkActive="active">
+          Edit lesson
+        </button>
         <button mat-raised-button color="primary" (click)="todo">Delete lesson</button>
       </mat-expansion-panel>
     </mat-accordion>

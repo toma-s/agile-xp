@@ -10,7 +10,7 @@ import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
 import { CdkColumnDef } from '@angular/cdk/table';
 
 import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatProgressSpinnerModule, MatIconModule,
-  MatFormFieldModule, MatSelectModule, MatSortModule, MatToolbarModule } from '@angular/material';
+  MatFormFieldModule, MatSelectModule, MatSortModule, MatToolbarModule, MatListModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -44,6 +44,7 @@ import { CoursesModule } from './courses/courses.module';
     MatSelectModule,
     MatSortModule,
     MatTableModule,
+    MatListModule,
     CoursesModule
   ],
   providers: [CdkColumnDef],

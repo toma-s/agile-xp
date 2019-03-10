@@ -67,7 +67,7 @@ public class FileSystemStorageService implements StorageService {
     public void store(HiddenTest hiddenTest) {
         String fileName = hiddenTest.getFileName();
         String code = hiddenTest.getCode();
-        String directoryName = "source_code" + hiddenTest.getId();
+        String directoryName = "hidden_test" + hiddenTest.getId();
 
         Path directoryLocation = createFolder(directoryName);
         storeFile(fileName, code, directoryLocation);

@@ -14,4 +14,8 @@ export class ExerciseService {
   createExercise(exercise: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}` + `/create`, exercise);
   }
+
+  getExercisesList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}`);
+  }
 }
