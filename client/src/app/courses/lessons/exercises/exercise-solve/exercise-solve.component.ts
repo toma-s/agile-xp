@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { ExerciseService } from '../shared/exercise.service';
 
 @Component({
   selector: 'app-exercise-solve',
@@ -7,9 +11,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExerciseSolveComponent implements OnInit {
 
-  constructor() { }
+  exercise$: Observable<any>;
+
+  constructor(
+    private route: ActivatedRoute,
+    private exerciseService: ExerciseService
+  ) { }
 
   ngOnInit() {
+    this.getExercise();
+  }
+
+  getExercise() {
+    const exercise = this.route.paramMap.pipe(
+      switchMap(((params: ParamMap) =>
+        this.exerciseService.getExerciseById(Number(params.get('exerciseId')))
+      ))
+    );
+    console.log(exercise);
+    this.exercise$ = exercise;
   }
 
 }

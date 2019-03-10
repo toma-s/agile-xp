@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -49,5 +50,13 @@ public class ExerciseController {
 
         List<Exercise> exercises = new ArrayList<>(repository.findByLessonId(lessonId));
         return exercises;
+    }
+
+    @GetMapping(value="/exercises/exercise-{id}")
+    public Exercise getExerciseById(@PathVariable("id") long id) {
+        System.out.println("Get exercise with id " + id + "...");
+
+        Optional<Exercise> taskDataOptional = repository.findById(id);
+        return taskDataOptional.orElse(null);
     }
 }

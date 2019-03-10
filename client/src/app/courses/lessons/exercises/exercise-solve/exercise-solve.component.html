@@ -4,4 +4,28 @@
   <p>
     exercise-solve works!
   </p>
+
+  <div [ngSwitch]="exercise$.type">
+      <div *ngSwitchCase="'black-box'">
+        <p>black box</p>
+      </div>
+      <div *ngSwitchCase="'white-box'">
+        <p>white box</p>
+        <solve-white-box></solve-white-box>
+      </div>
+      <div *ngSwitchCase="'quiz'">
+        <p>quiz</p>
+      </div>
+      <div *ngSwitchCase="'theory'">
+        <p>theory</p>
+      </div>
+      <div *ngSwitchCase="'self-eval'">
+        <p>self eval</p>
+      </div>
+      <div *ngSwitchDefault>
+        <p>default</p>
+        <solve-white-box></solve-white-box>
+        <!--temp-->
+      </div>
+    </div>
 </div>

@@ -15,6 +15,10 @@ export class ExerciseService {
     return this.http.post(`${this.baseUrl}` + `/create`, exercise);
   }
 
+  getExerciseById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise-${id}`);
+  }
+
   getExercisesList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
   }
