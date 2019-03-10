@@ -1,21 +1,22 @@
-<a mat-button color="primary" routerLink="../../../../" routerLinkActive="active" mat-button>Back</a>
+<!-- <a mat-button color="primary" routerLink="../../../../" routerLinkActive="active" mat-button>Back</a> -->
 
+<!-- <div class="mat-elevation-z2 card"> -->
 <div class="mat-elevation-z2 card">
 
   <div *ngIf="exercise$ | async as exercise">
 
-    <p>Name: {{ exercise.name }}</p>
-    <p>Description: {{ exercise.description }}</p>
-    <p>Type: {{ exercise.type }}</p>
+    <!-- <p>Name: {{ exercise.name }}</p> -->
+    <!-- <p>Description: {{ exercise.description }}</p> -->
+    <!-- <p>Type: {{ exercise.type }}</p> -->
 
     <div [ngSwitch]="exercise.type">
-      
+
       <div *ngSwitchCase="'black-box'">
         <p>black box</p>
       </div>
       <div *ngSwitchCase="'white-box'">
-        <p>white box</p>
-        <solve-white-box></solve-white-box>
+        <!-- <p>white box</p> -->
+        <solve-white-box [solutionFormGroup]="solutionFormGroup" [exercise]="exercise"></solve-white-box>
       </div>
       <div *ngSwitchCase="'quiz'">
         <p>quiz</p>
@@ -28,10 +29,17 @@
       </div>
       <div *ngSwitchDefault>
         <p>default</p>
-        <solve-white-box></solve-white-box>
         <!--temp-->
       </div>
     </div>
+
+    <mat-toolbar class="toolbar">
+      <mat-toolbar-row>
+        <span>toolbar</span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <!-- <pre>{{ solutionFormGroup.value | json }}</pre> -->
   </div>
 
 </div>
