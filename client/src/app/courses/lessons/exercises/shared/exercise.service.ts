@@ -18,4 +18,8 @@ export class ExerciseService {
   getExercisesList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
   }
+
+  getExercisesByLessonId(lessonId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise-lesson-${lessonId}`);
+  }
 }

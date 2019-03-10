@@ -1,6 +1,7 @@
 package com.agilexp.controller;
 
 import com.agilexp.model.Exercise;
+import com.agilexp.model.Lesson;
 import com.agilexp.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,14 @@ public class ExerciseController {
         repository.findAll().forEach(exercises::add);
 
         System.out.println(exercises);
+        return exercises;
+    }
+
+    @GetMapping(value="/exercises/exercise-lesson-{lessonId}")
+    public List<Exercise> getLessonsByExerciseId(@PathVariable("lessonId") long lessonId) {
+        System.out.println("Get exercises with lesson id " + lessonId + "...");
+
+        List<Exercise> exercises = new ArrayList<>(repository.findByLessonId(lessonId));
         return exercises;
     }
 }

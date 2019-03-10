@@ -23,7 +23,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-nav-list *ngIf="exercises$ as exercises">
-          <mat-list-item *ngFor="let exercise of exercises">
+          <mat-list-item *ngFor="let exercise of getExercisesByLessonId(lesson.id)">
             <a>{{exercise.name}}</a>
             <button mat-icon-button>
                 <mat-icon>study</mat-icon>
