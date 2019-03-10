@@ -21,7 +21,7 @@ public class CourseController {
     CourseRepository repository;
 
     @GetMapping(value="/courses/course-{id}")
-    public Course getTaskById(@PathVariable("id") long id) {
+    public Course getCourseById(@PathVariable("id") long id) {
         System.out.println("Get course with id " + id + "...");
 
         Optional<Course> taskDataOptional = repository.findById(id);
@@ -42,9 +42,9 @@ public class CourseController {
     public Course postCourse(@RequestBody Course course) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
-        Course _message = repository.save(new Course(course.getName(), created, course.getDescription()));
+        Course _course = repository.save(new Course(course.getName(), created, course.getDescription()));
         System.out.format("Created course %s at %s", course.getName(), created);
-        return _message;
+        return _course;
     }
 
     @DeleteMapping("/courses/delete-{id}")

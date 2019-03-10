@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Course } from '../shared/course.model';
 import { CourseService } from '../shared/course.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Lesson } from '../shared/lesson.model';
-import { LessonService } from '../shared/lesson.service';
+import { Lesson } from '../lessons/shared/lesson.model';
+import { LessonService } from '../lessons/shared/lesson.service';
 
 
 @Component({
@@ -18,6 +18,7 @@ export class CourseCreateComponent implements OnInit {
 
   course = new Course();
   lessons = new Array<Lesson>();
+  submitted = false;
 
   get lessonFormGroup() {
     return this.lessonsFormGroup.get('lessons') as FormArray;
@@ -33,13 +34,6 @@ export class CourseCreateComponent implements OnInit {
     return this.fb.group({
       lessonName: [null, Validators.compose([Validators.required])],
       lessonDescription: [null, Validators.compose([Validators.required])]
-    });
-  }
-
-  createExercise(): FormGroup {
-    return this.fb.group({
-      exerciseName: [null, Validators.compose([Validators.required])],
-      exerciseDescription: [null, Validators.compose([Validators.required])]
     });
   }
 
@@ -75,8 +69,7 @@ export class CourseCreateComponent implements OnInit {
     this.createLessons();
     console.log(this.lessons);
     this.saveCourse();
-
-    // this.reset();
+    this.submitted = true;
   }
 
   createLessons() {
@@ -120,34 +113,4 @@ export class CourseCreateComponent implements OnInit {
     this.course = new Course();
     this.lessons = new Array<Lesson>();
   }
-
-
-  // course: Course = new Course();
-  // submitted = false;
-  // response = undefined;
-
-  // constructor(private courseService: CourseService) { }
-
-  // ngOnInit(): void {
-  // }
-
-  // newCourse(): void {
-  //   this.course = new Course();
-  //   this.submitted = false;
-  //   this.response = undefined;
-  // }
-
-  // save() {
-  //   this.courseService.createCourse(this.course)
-  //     .subscribe(
-  //       data => console.log(data),
-  //       error => console.log(error)
-  //     );
-  // }
-
-  // onSubmit() {
-  //   this.submitted = true;
-  //   this.save();
-  // }
-
 }

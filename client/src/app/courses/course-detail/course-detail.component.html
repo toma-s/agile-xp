@@ -1,8 +1,45 @@
-<div *ngIf="course$ | async as course">
+<a mat-button color="primary" routerLink="../../coursesList" routerLinkActive="active" mat-button>Back</a>
 
-    <h4>Course: {{ course.name }}</h4>
+<div *ngIf="course$ | async as course" class="mat-elevation-z2 card">
 
-    <p><strong>Created: </strong>{{ course.created }}</p>
+  <h2>Course: {{ course.name }}</h2>
+
+  <p><strong>Created: </strong>{{ course.created }}</p>
+
+  <p><strong>Description: </strong>{{ course.description }}</p>
+
+  <div *ngIf="lessons$ | async as lessons">
+
+    <h3>Syllabus</h3>
+
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let lesson of lessons">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <p>Lesson: {{ lesson.name }}</p>
+          </mat-panel-title>
+          <mat-panel-description>
+            <p>{{ lesson.description }}</p>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-nav-list *ngIf="exercises$ as exercises">
+          <mat-list-item *ngFor="let exercise of getExercisesByLessonId(lesson.id)">
+            <a>{{exercise.name}}</a>
+            <button mat-icon-button>
+                <mat-icon>study</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-nav-list>
+        <p>Exercise #</p>
+        <button mat-raised-button color="primary" [routerLink]="['lessonEdit', lesson.id]" routerLinkActive="active">
+          Edit lesson
+        </button>
+        <button mat-raised-button color="primary" (click)="todo">Delete lesson</button>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+
+
 
 </div>
-

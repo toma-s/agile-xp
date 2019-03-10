@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.nio.file.*;
 import java.util.stream.Stream;
 
+import com.agilexp.model.HiddenTest;
+import com.agilexp.model.SourceCode;
 import com.agilexp.model.TaskContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -48,6 +50,52 @@ public class FileSystemStorageService implements StorageService {
         }
         catch (IOException e) {
             throw new StorageException("Failed to store files", e);
+        }
+    }
+
+    @Override
+    public void store(SourceCode sourceCode) {
+        String fileName = sourceCode.getFileName();
+        String code = sourceCode.getCode();
+        String directoryName = "source_code" + sourceCode.getId();
+
+        Path directoryLocation = createFolder(directoryName);
+        storeFile(fileName, code, directoryLocation);
+    }
+
+    @Override
+    public void store(HiddenTest hiddenTest) {
+        String fileName = hiddenTest.getFileName();
+        String code = hiddenTest.getCode();
+        String directoryName = "hidden_test" + hiddenTest.getId();
+
+        Path directoryLocation = createFolder(directoryName);
+        storeFile(fileName, code, directoryLocation);
+    }
+
+    private Path createFolder(String directoryName) {
+        Path directoryLocation;
+        try {
+            Files.createDirectory(Paths.get(this.rootLocation.resolve(directoryName).toString()));
+            directoryLocation = this.rootLocation.resolve(directoryName);
+        } catch (IOException e) {
+            throw new StorageException("Failed to create folder for task");
+        }
+        return directoryLocation;
+    }
+
+    private void storeFile(String fileName, String code, Path directoryLocation) {
+        try {
+            if (fileName.isEmpty()) {
+                throw new StorageException("Failed to store file with empty name");
+            }
+            if (code.isEmpty()) {
+                throw new StorageException("Failed to store empty file");
+            }
+            Files.write(directoryLocation.resolve(fileName), code.getBytes(), StandardOpenOption.CREATE);
+        }
+        catch (IOException e) {
+            throw new StorageException("Failed to store file", e);
         }
     }
 

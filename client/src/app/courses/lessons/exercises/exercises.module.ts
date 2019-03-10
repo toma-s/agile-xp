@@ -7,21 +7,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatListModule } from '@angular/material/list';
 
-import { CoursesRoutingModule } from './courses-routing.module';
-import { CoursesComponent } from './courses.component';
-import { CourseCreateComponent } from './course-create/course-create.component';
-import { CoursesListComponent } from './courses-list/courses-list.component';
-import { CourseDetailComponent } from './course-detail/course-detail.component';
-import { LessonsModule } from './lessons/lessons.module';
+import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
+import { WhiteBoxComponent } from './white-box/white-box.component';
 
 @NgModule({
   declarations: [
-    CourseCreateComponent,
-    CoursesListComponent,
-    CoursesComponent,
-    CourseDetailComponent
+    ExerciseCreateComponent,
+    WhiteBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -40,10 +33,6 @@ import { LessonsModule } from './lessons/lessons.module';
     MatSortModule,
     MatTableModule,
     MatExpansionModule,
-    MatListModule,
-    LessonsModule,
-    CoursesRoutingModule,
   ]
 })
-
-export class CoursesModule { }
+export class ExercisesModule { }

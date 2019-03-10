@@ -1,0 +1,60 @@
+<a mat-button color="primary" routerLink="../" routerLinkActive="active" mat-button>Back</a>
+
+<div [hidden]="submitted" class="mat-elevation-z2">
+  <form (ngSubmit)="submit()" class="form" [formGroup]="exerciseFormGroup">
+    <h2>Create new exercise</h2>
+    <div class="form__inputs">
+      <mat-form-field>
+        <input matInput placeholder="Title" required name="exercise-name" formControlName="name" maxlength="35">
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea matInput placeholder="Description" rows="6" required name="exercise-description"
+          formControlName="description" maxlength="1000">
+            </textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Exercise type" formControlName="selectedTypeValue" name="exercise-type">
+          <mat-option *ngFor="let type of types" [value]="type.value">
+            {{type.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <!-- <div *ngIf="selectedTypeValue.length !== 0"> -->
+      <div [ngSwitch]="selectedTypeValue">
+        <div *ngSwitchCase="'black-box'">
+          <p>black box</p>
+        </div>
+        <div *ngSwitchCase="'white-box'">
+          <p>white box</p>
+          <white-box></white-box>
+        </div>
+        <div *ngSwitchCase="'quiz'">
+          <p>quiz</p>
+        </div>
+        <div *ngSwitchCase="'theory'">
+          <p>theory</p>
+        </div>
+        <div *ngSwitchCase="'self-eval'">
+          <p>self eval</p>
+        </div>
+        <div *ngSwitchDefault>
+          <p>default</p>
+          <white-box></white-box>
+          <!--temp-->
+        </div>
+      </div>
+      <!-- </div> -->
+
+      <pre>{{ exerciseFormGroup.value | json }}</pre>
+
+      <div class="submit">
+        <button mat-raised-button color="accent" type="submit">Create</button>
+      </div>
+
+    </div>
+  </form>
+</div>
