@@ -65,4 +65,8 @@ export class ExerciseSolveComponent implements OnInit {
     });
   }
 
+  run() {
+    console.log('run!');
+  }
+
 }
