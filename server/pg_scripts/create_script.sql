@@ -48,4 +48,24 @@ create table hidden_tests (
 	exercise_id int references exercises on delete cascade
 );
 
+drop table if exists solutions cascade;
+create table solutions (
+	id serial primary key,
+	exercise_id int references exercises on delete cascade
+);
 
+drop table if exists solution_source_code cascade;
+create table solution_source_code (
+	id serial primary key,
+	solution_id int references solutions on delete cascade,
+	filename text,
+	code text
+);
+
+drop table if exists solution_hidden_test cascade;
+create table solution_hidden_test (
+	id serial primary key,
+	solution_id int references solutions on delete cascade,
+	filename text,
+	code text
+);

@@ -14,7 +14,7 @@ public class Lesson {
     @Column(name="name")
     private String name;
 
-    @Column(name="courseId")
+    @Column(name="course_id")
     private long courseId;
 
     @Column(name="created")
