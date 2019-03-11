@@ -1,25 +1,24 @@
 <form (ngSubmit)="submit()" [formGroup]="solutionFormGroup">
   <div class="pane">
 
-    <div class="pane--left">
+    <div class="pane--side">
       <textarea readonly>
         Name: {{ exercise.name }}
         Description: {{ exercise.description }}
         Type: {{ exercise.type }}
       </textarea>
-    </div>
 
-    <div class="pane--right">
-      <div class="pane--top">
-        <textarea matInput autofocus name="sourceCode" formControlName="sourceCode"></textarea>
-      </div>
-
-      <div class="pane--bottom">
-        <textarea matInput name="testCode" formControlName="testCode"></textarea>
+      <div class="pane--out">
       </div>
     </div>
 
+    <div class="pane--code">
+      <textarea matInput autofocus name="sourceCode" formControlName="sourceCode"></textarea>
+    </div>
 
+    <div class="pane--code">
+      <textarea matInput autofocus name="sourceCode" formControlName="sourceCode"></textarea>
+    </div>
 
   </div>
 </form>
