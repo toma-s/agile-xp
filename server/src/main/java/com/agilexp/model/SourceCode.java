@@ -57,4 +57,14 @@ public class SourceCode {
     public void setExerciseId(long exerciseId) {
         this.exerciseId = exerciseId;
     }
+
+    @Override
+    public String toString() {
+        return "SourceCode{" +
+                "id=" + id +
+                ", fileName='" + fileName + '\'' +
+                ", code='" + code + '\'' +
+                ", exerciseId=" + exerciseId +
+                '}';
+    }
 }

@@ -57,4 +57,14 @@ public class HiddenTest {
     public void setExerciseId(long exerciseId) {
         this.exerciseId = exerciseId;
     }
+
+    @Override
+    public String toString() {
+        return "HiddenTest{" +
+                "id=" + id +
+                ", fileName='" + fileName + '\'' +
+                ", code='" + code + '\'' +
+                ", exerciseId=" + exerciseId +
+                '}';
+    }
 }

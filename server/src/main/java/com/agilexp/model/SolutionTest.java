@@ -58,4 +58,14 @@ public class SolutionTest {
     public void setCode(String code) {
         this.code = code;
     }
+
+    @Override
+    public String toString() {
+        return "SolutionTest{" +
+                "id=" + id +
+                ", solutionId=" + solutionId +
+                ", fileName='" + fileName + '\'' +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }
