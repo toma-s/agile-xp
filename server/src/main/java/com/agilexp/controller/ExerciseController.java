@@ -45,7 +45,7 @@ public class ExerciseController {
     }
 
     @GetMapping(value="/exercises/exercise-lesson-{lessonId}")
-    public List<Exercise> getLessonsByExerciseId(@PathVariable("lessonId") long lessonId) {
+    public List<Exercise> getExercisesByLessonId(@PathVariable("lessonId") long lessonId) {
         System.out.println("Get exercises with lesson id " + lessonId + "...");
 
         List<Exercise> exercises = new ArrayList<>(repository.findByLessonId(lessonId));

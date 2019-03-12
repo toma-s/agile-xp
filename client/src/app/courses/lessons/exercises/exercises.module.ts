@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { MonacoEditorModule } from 'ngx-monaco-editor';
+
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 import { CreateWhiteBoxComponent } from './exercise-create/create-white-box/create-white-box.component';
 import { SolveWhiteBoxComponent } from './exercise-solve/solve-white-box/solve-white-box.component';
@@ -39,6 +41,7 @@ import { ExercisesRoutingModule } from './exercises-routing.module';
     MatTableModule,
     MatExpansionModule,
     ExercisesRoutingModule,
+    MonacoEditorModule
   ]
 })
 export class ExercisesModule { }

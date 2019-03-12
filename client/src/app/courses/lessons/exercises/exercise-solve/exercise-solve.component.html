@@ -2,11 +2,7 @@
 
 <div class="mat-elevation-z2 card">
 
-  <div *ngIf="exercise$ | async as exercise">
-
-    <!-- <p>Name: {{ exercise.name }}</p> -->
-    <!-- <p>Description: {{ exercise.description }}</p> -->
-    <!-- <p>Type: {{ exercise.type }}</p> -->
+  <div *ngIf="exercise">
 
     <div [ngSwitch]="exercise.type">
 
@@ -14,8 +10,8 @@
         <p>black box</p>
       </div>
       <div *ngSwitchCase="'white-box'">
-        <!-- <p>white box</p> -->
-        <solve-white-box [solutionFormGroup]="solutionFormGroup" [exercise]="exercise"></solve-white-box>
+        <solve-white-box [exercise]="exercise" [solutionSourceCodes]="solutionSourceCodes">
+        </solve-white-box>
       </div>
       <div *ngSwitchCase="'quiz'">
         <p>quiz</p>
@@ -28,7 +24,6 @@
       </div>
       <div *ngSwitchDefault>
         <p>default</p>
-        <!--temp-->
       </div>
     </div>
 
@@ -39,7 +34,6 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <!-- <pre>{{ solutionFormGroup.value | json }}</pre> -->
   </div>
 
 </div>

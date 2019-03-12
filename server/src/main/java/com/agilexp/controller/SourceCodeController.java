@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -31,5 +33,13 @@ public class SourceCodeController {
 
         System.out.format("Created source code %s for exercise #%s\n", sourceCode.getFileName(), sourceCode.getExerciseId());
         return _sourceCode;
+    }
+
+    @GetMapping(value="/sourceCode/source-codes-exercise-{exerciseId}")
+    public List<SourceCode> getSourceCodesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+        System.out.println("Get source codes with exercise id " + exerciseId + "...");
+
+        List<SourceCode> sourceCodes = new ArrayList<>(repository.findByExerciseId(exerciseId));
+        return sourceCodes;
     }
 }

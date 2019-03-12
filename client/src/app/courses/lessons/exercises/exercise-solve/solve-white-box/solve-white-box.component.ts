@@ -1,6 +1,7 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, Input } from '@angular/core';
 import { Exercise } from '../../shared/exercise.model';
+import { SourceCode } from '../../shared/source-code.model';
+import { SolutionSourceCode } from '../../shared/solution-source-code.model';
 
 @Component({
   selector: 'solve-white-box',
@@ -9,7 +10,10 @@ import { Exercise } from '../../shared/exercise.model';
 })
 export class SolveWhiteBoxComponent {
 
-  @Input() solutionFormGroup: FormGroup;
+  editorOptions = {theme: 'vs', language: 'java'};
+
+  // @Input() solutionFormGroup: FormGroup;
   @Input() exercise: Exercise;
+  @Input() solutionSourceCodes: Array<SolutionSourceCode>;
 
 }

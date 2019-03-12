@@ -14,4 +14,8 @@ export class SourceCodeService {
   createSourceCode(sourceCode: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}` + `/create`, sourceCode);
   }
+
+  getSourceCodesByExerciseId(exerciseId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/source-codes-exercise-${exerciseId}`);
+  }
 }

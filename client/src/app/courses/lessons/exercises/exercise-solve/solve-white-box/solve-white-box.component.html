@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]="solutionFormGroup">
+<div *ngIf="exercise">
   <div class="pane">
 
     <div class="pane--side">
@@ -14,12 +14,16 @@
     </div>
 
     <div class="pane--code">
-      <textarea matInput autofocus name="sourceCode" formControlName="sourceCode"></textarea>
+      <div *ngFor="let sourceCode of solutionSourceCodes">
+          <ngx-monaco-editor [options]="editorOptions" class="editor" [(ngModel)]="sourceCode.code"></ngx-monaco-editor>
+      </div>
     </div>
 
     <div class="pane--code">
-      <textarea matInput autofocus name="sourceCode" formControlName="sourceCode"></textarea>
+      <div>
+        <textarea matInput name="testCode"></textarea>
+      </div>
     </div>
 
   </div>
-</form>
+</div>
