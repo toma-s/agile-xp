@@ -1,4 +1,4 @@
-export class SourceCode {
+export class ExerciseTest {
   id: number;
   fileName: string;
   code: string;

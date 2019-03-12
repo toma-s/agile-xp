@@ -1,4 +1,4 @@
-export class SolutionSourceCode {
+export class SolutionSource {
   id: number;
   solutionId: number;
   fileName: string;

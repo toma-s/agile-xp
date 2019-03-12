@@ -3,8 +3,8 @@ package com.agilexp.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="source_codes")
-public class SourceCode {
+@Table(name="exercise_sources")
+public class ExerciseSource {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -18,9 +18,9 @@ public class SourceCode {
     @Column(name="exercise_id")
     private long exerciseId;
 
-    public SourceCode() {}
+    public ExerciseSource() {}
 
-    public SourceCode(String fileName, String code, long exerciseId) {
+    public ExerciseSource(String fileName, String code, long exerciseId) {
         this.fileName = fileName;
         this.code = code;
         this.exerciseId = exerciseId;
@@ -60,7 +60,7 @@ public class SourceCode {
 
     @Override
     public String toString() {
-        return "SourceCode{" +
+        return "ExerciseSource{" +
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
                 ", code='" + code + '\'' +

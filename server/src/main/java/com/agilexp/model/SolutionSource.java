@@ -3,11 +3,14 @@ package com.agilexp.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="hidden_tests")
-public class HiddenTest {
+@Table(name="solution_sources")
+public class SolutionSource {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column(name="solution_id")
+    private long solutionId;
 
     @Column(name="filename")
     private String fileName;
@@ -15,15 +18,12 @@ public class HiddenTest {
     @Column(name="code")
     private String code;
 
-    @Column(name="exercise_id")
-    private long exerciseId;
+    public SolutionSource() {}
 
-    public HiddenTest() {}
-
-    public HiddenTest(String fileName, String code, long exerciseId) {
+    public SolutionSource(long solutionId, String fileName, String code) {
+        this.solutionId = solutionId;
         this.fileName = fileName;
         this.code = code;
-        this.exerciseId = exerciseId;
     }
 
     public long getId() {
@@ -32,6 +32,14 @@ public class HiddenTest {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getSolutionId() {
+        return solutionId;
+    }
+
+    public void setSolutionId(long solutionId) {
+        this.solutionId = solutionId;
     }
 
     public String getFileName() {
@@ -50,21 +58,13 @@ public class HiddenTest {
         this.code = code;
     }
 
-    public long getExerciseId() {
-        return exerciseId;
-    }
-
-    public void setExerciseId(long exerciseId) {
-        this.exerciseId = exerciseId;
-    }
-
     @Override
     public String toString() {
-        return "HiddenTest{" +
+        return "SolutionSource{" +
                 "id=" + id +
+                ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +
                 ", code='" + code + '\'' +
-                ", exerciseId=" + exerciseId +
                 '}';
     }
 }

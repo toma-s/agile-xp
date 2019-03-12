@@ -5,10 +5,10 @@ import { Exercise } from '../shared/exercise.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExerciseService } from '../shared/exercise.service';
 import { ActivatedRoute } from '@angular/router';
-import { SourceCode } from '../shared/source-code.model';
-import { SourceCodeService } from '../shared/source-code.service';
-import { HiddenTestService } from '../shared/hidden-test.service';
-import { HiddenTest } from '../shared/hidden-test.model';
+import { ExerciseSource } from '../shared/exercise-source.model';
+import { ExerciseSourceService } from '../shared/exercise-source.service';
+import { ExerciseTestService } from '../shared/exercise-test.service';
+import { ExerciseTest } from '../shared/exercise-test.model';
 
 @Component({
   selector: 'app-exercise-create',
@@ -24,8 +24,8 @@ export class ExerciseCreateComponent implements OnInit {
   constructor(
     private exerciseSercise: ExerciseService,
     private exerciseTypeServise: ExerciseTypeService,
-    private sourceCodeService: SourceCodeService,
-    private hiddenTestService: HiddenTestService,
+    private sourceCodeService: ExerciseSourceService,
+    private exerciseTestService: ExerciseTestService,
     private fb: FormBuilder,
     private route: ActivatedRoute
   ) { }
@@ -93,15 +93,15 @@ export class ExerciseCreateComponent implements OnInit {
           console.log(data);
           const sourceCode = this.createSourceCodeObject(data.id);
           this.saveSourceCode(sourceCode);
-          const hiddenTest = this.createHiddenTestObject(data.id);
-          this.saveHiddenTest(hiddenTest);
+          const exerciseTest = this.createExerciseTestObject(data.id);
+          this.saveExerciseTest(exerciseTest);
         },
         error => console.log(error)
       );
   }
 
-  createSourceCodeObject(exerciseId: number): SourceCode {
-    const sourceCode = new SourceCode();
+  createSourceCodeObject(exerciseId: number): ExerciseSource {
+    const sourceCode = new ExerciseSource();
     sourceCode.fileName = this.exerciseFormGroup.value.sourceFilename;
     sourceCode.code = this.exerciseFormGroup.value.sourceCode;
     sourceCode.exerciseId = exerciseId;
@@ -109,7 +109,7 @@ export class ExerciseCreateComponent implements OnInit {
     return sourceCode;
   }
 
-  saveSourceCode(sourceCode: SourceCode) {
+  saveSourceCode(sourceCode: ExerciseSource) {
     this.sourceCodeService.createSourceCode(sourceCode)
       .subscribe(
         data => {
@@ -119,17 +119,17 @@ export class ExerciseCreateComponent implements OnInit {
       );
   }
 
-  createHiddenTestObject(exerciseId: number): HiddenTest {
-    const hiddenTest = new HiddenTest();
-    hiddenTest.fileName = this.exerciseFormGroup.value.testFilename;
-    hiddenTest.code = this.exerciseFormGroup.value.testCode;
-    hiddenTest.exerciseId = exerciseId;
-    console.log(hiddenTest);
-    return hiddenTest;
+  createExerciseTestObject(exerciseId: number): ExerciseTest {
+    const exerciseTest = new ExerciseTest();
+    exerciseTest.fileName = this.exerciseFormGroup.value.testFilename;
+    exerciseTest.code = this.exerciseFormGroup.value.testCode;
+    exerciseTest.exerciseId = exerciseId;
+    console.log(exerciseTest);
+    return exerciseTest;
   }
 
-  saveHiddenTest(hiddenTest: HiddenTest) {
-    this.hiddenTestService.createHiddenTest(hiddenTest)
+  saveExerciseTest(exerciseTest: ExerciseTest) {
+    this.exerciseTestService.createExerciseTest(exerciseTest)
       .subscribe(
         data => {
           console.log(data);

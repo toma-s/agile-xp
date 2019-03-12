@@ -1,4 +1,4 @@
-export class HiddenTest {
+export class ExerciseSource {
   id: number;
   fileName: string;
   code: string;

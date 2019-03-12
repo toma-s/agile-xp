@@ -5,8 +5,8 @@ import java.net.MalformedURLException;
 import java.nio.file.*;
 import java.util.stream.Stream;
 
-import com.agilexp.model.HiddenTest;
-import com.agilexp.model.SourceCode;
+import com.agilexp.model.ExerciseSource;
+import com.agilexp.model.ExerciseTest;
 import com.agilexp.model.TaskContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -54,7 +54,7 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(SourceCode sourceCode) {
+    public void store(ExerciseSource sourceCode) {
         String fileName = sourceCode.getFileName();
         String code = sourceCode.getCode();
         String directoryName = "source_code" + sourceCode.getId();
@@ -64,7 +64,7 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(HiddenTest hiddenTest) {
+    public void store(ExerciseTest hiddenTest) {
         String fileName = hiddenTest.getFileName();
         String code = hiddenTest.getCode();
         String directoryName = "hidden_test" + hiddenTest.getId();

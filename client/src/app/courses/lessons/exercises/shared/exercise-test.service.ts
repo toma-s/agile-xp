@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class HiddenTestService {
+export class ExerciseTestService {
 
   private baseUrl = 'http://localhost:8080/api/hiddenTest';
 
   constructor(private http: HttpClient) { }
 
-  createHiddenTest(hiddenTest: Object): Observable<any> {
+  createExerciseTest(hiddenTest: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}` + `/create`, hiddenTest);
   }
 }

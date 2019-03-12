@@ -1,33 +1,31 @@
 package com.agilexp.controller;
 
-import com.agilexp.model.SourceCode;
-import com.agilexp.repository.SourceCodeRepository;
+import com.agilexp.model.ExerciseSource;
+import com.agilexp.repository.ExerciseSourceRepository;
 import com.agilexp.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
-public class SourceCodeController {
+public class ExerciseSourceController {
     @Autowired
-    SourceCodeRepository repository;
+    ExerciseSourceRepository repository;
     private final StorageService storageService;
 
     @Autowired
-    public SourceCodeController(StorageService storageService) {
+    public ExerciseSourceController(StorageService storageService) {
         this.storageService = storageService;
     }
 
     @PostMapping(value = "/sourceCode/create")
-    public SourceCode postSourceCode(@RequestBody SourceCode sourceCode) {
+    public ExerciseSource postSourceCode(@RequestBody ExerciseSource sourceCode) {
 
-        SourceCode _sourceCode = repository.save(new SourceCode(sourceCode.getFileName(), sourceCode.getCode(), sourceCode.getExerciseId()));
+        ExerciseSource _sourceCode = repository.save(new ExerciseSource(sourceCode.getFileName(), sourceCode.getCode(), sourceCode.getExerciseId()));
 
         storageService.store(_sourceCode);
 
@@ -36,10 +34,10 @@ public class SourceCodeController {
     }
 
     @GetMapping(value="/sourceCode/source-codes-exercise-{exerciseId}")
-    public List<SourceCode> getSourceCodesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+    public List<ExerciseSource> getSourceCodesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get source codes with exercise id " + exerciseId + "...");
 
-        List<SourceCode> sourceCodes = new ArrayList<>(repository.findByExerciseId(exerciseId));
+        List<ExerciseSource> sourceCodes = new ArrayList<>(repository.findByExerciseId(exerciseId));
         return sourceCodes;
     }
 }

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SolutonSourceCodeService {
+export class SolutonSourceService {
 
   private baseUrl = 'http://localhost:8080/api/solutionSourceCodes';
 

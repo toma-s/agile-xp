@@ -1,16 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { ExerciseService } from '../shared/exercise.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { Exercise } from '../shared/exercise.model';
 import { SolutonService } from '../shared/soluton.service';
 import { Solution } from '../shared/solution.model';
-import { SolutionSourceCode } from '../shared/solution-source-code.model';
-import { SourceCode } from '../shared/source-code.model';
-import { SourceCodeService } from '../shared/source-code.service';
-import { SolutonSourceCodeService } from '../shared/soluton-source-code.service';
+import { SolutionSource } from '../shared/solution-source.model';
+import { ExerciseSource } from '../shared/exercise-source.model';
+import { ExerciseSourceService } from '../shared/exercise-source.service';
+import { SolutonSourceService } from '../shared/soluton-source.service';
 
 @Component({
   selector: 'app-exercise-solve',
@@ -20,17 +18,17 @@ import { SolutonSourceCodeService } from '../shared/soluton-source-code.service'
 export class ExerciseSolveComponent implements OnInit {
 
   exercise: Exercise = new Exercise();
-  sourceCodes: SourceCode[] = new Array<SourceCode>();
+  sourceCodes: ExerciseSource[] = new Array<ExerciseSource>();
   solution: Solution = new Solution();
-  solutionSourceCodes: SolutionSourceCode[] = new Array<SolutionSourceCode>();
+  solutionSourceCodes: SolutionSource[] = new Array<SolutionSource>();
   submitted = false;
 
   constructor(
     private route: ActivatedRoute,
     private exerciseService: ExerciseService,
     private solutionService: SolutonService,
-    private sourceCodeService: SourceCodeService,
-    private solutionSourceCodeService: SolutonSourceCodeService
+    private sourceCodeService: ExerciseSourceService,
+    private solutionSourceCodeService: SolutonSourceService
   ) { }
 
   ngOnInit() {
@@ -65,9 +63,9 @@ export class ExerciseSolveComponent implements OnInit {
       );
   }
 
-  createSolutionSourceCodes(sourceCodes: Array<SourceCode>) {
+  createSolutionSourceCodes(sourceCodes: Array<ExerciseSource>) {
     sourceCodes.forEach(sc => {
-      const solutionSourceCode = new SolutionSourceCode();
+      const solutionSourceCode = new SolutionSource();
       // solutionSourceCode.solutionId = this.solution.id;
       solutionSourceCode.fileName = sc.fileName;
       solutionSourceCode.code = sc.code;

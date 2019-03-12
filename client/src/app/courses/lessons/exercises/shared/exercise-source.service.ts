@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SourceCodeService {
+export class ExerciseSourceService {
 
   private baseUrl = 'http://localhost:8080/api/sourceCode';
 
