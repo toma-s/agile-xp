@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class SolutonSourceService {
 
-  private baseUrl = 'http://localhost:8080/api/solutionSourceCodes';
+  private baseUrl = 'http://localhost:8080/api/solution-sources';
 
   constructor(private http: HttpClient) { }
 
-  createSolutionSourceCode(solutionSourceCode: Object): Observable<any> {
-    return this.http.post(`${this.baseUrl}` + `/create`, solutionSourceCode);
+  createSolutionSource(solutionSource: Object): Observable<any> {
+    return this.http.post(`${this.baseUrl}/create`, solutionSource);
   }
 }

@@ -44,7 +44,7 @@ public class ExerciseController {
         return exercises;
     }
 
-    @GetMapping(value="/exercises/exercise-lesson-{lessonId}")
+    @GetMapping(value="/exercises/lesson/{lessonId}")
     public List<Exercise> getExercisesByLessonId(@PathVariable("lessonId") long lessonId) {
         System.out.println("Get exercises with lesson id " + lessonId + "...");
 
@@ -52,7 +52,7 @@ public class ExerciseController {
         return exercises;
     }
 
-    @GetMapping(value="/exercises/exercise-{id}")
+    @GetMapping(value="/exercises/{id}")
     public Exercise getExerciseById(@PathVariable("id") long id) {
         System.out.println("Get exercise with id " + id + "...");
 

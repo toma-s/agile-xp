@@ -12,6 +12,6 @@ export class SolutonService {
   constructor(private http: HttpClient) { }
 
   createSolution(solution: Object): Observable<any> {
-    return this.http.post(`${this.baseUrl}` + `/create`, solution);
+    return this.http.post(`${this.baseUrl}/create`, solution);
   }
 }

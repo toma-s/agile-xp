@@ -12,11 +12,11 @@ export class ExerciseService {
   constructor(private http: HttpClient) { }
 
   createExercise(exercise: Object): Observable<any> {
-    return this.http.post(`${this.baseUrl}` + `/create`, exercise);
+    return this.http.post(`${this.baseUrl}/create`, exercise);
   }
 
   getExerciseById(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/exercise-${id}`);
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 
   getExercisesList(): Observable<any> {
@@ -24,6 +24,6 @@ export class ExerciseService {
   }
 
   getExercisesByLessonId(lessonId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/exercise-lesson-${lessonId}`);
+    return this.http.get(`${this.baseUrl}/lesson/${lessonId}`);
   }
 }

@@ -52,7 +52,7 @@ export class ExerciseSolveComponent implements OnInit {
   }
 
   getSourceCodes() {
-    this.sourceCodeService.getSourceCodesByExerciseId(this.exercise.id)
+    this.sourceCodeService.getExerciseSourcesByExerciseId(this.exercise.id)
       .subscribe(
         data => {
           this.sourceCodes = data;
@@ -113,7 +113,7 @@ export class ExerciseSolveComponent implements OnInit {
     this.solutionSourceCodes.forEach(ssc => {
       ssc.solutionId = this.solution.id;
       console.log(ssc);
-      this.solutionSourceCodeService.createSolutionSourceCode(ssc)
+      this.solutionSourceCodeService.createSolutionSource(ssc)
         .subscribe(
           data => {
             console.log(data);

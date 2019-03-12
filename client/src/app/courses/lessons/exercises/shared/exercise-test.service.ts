@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class ExerciseTestService {
 
-  private baseUrl = 'http://localhost:8080/api/hiddenTest';
+  private baseUrl = 'http://localhost:8080/api/exercise-tests';
 
   constructor(private http: HttpClient) { }
 
-  createExerciseTest(hiddenTest: Object): Observable<any> {
-    return this.http.post(`${this.baseUrl}` + `/create`, hiddenTest);
+  createExerciseTest(exerciseTest: Object): Observable<any> {
+    return this.http.post(`${this.baseUrl}` + `/create`, exerciseTest);
   }
 }

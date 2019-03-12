@@ -7,15 +7,15 @@ import { Observable } from 'rxjs';
 })
 export class ExerciseSourceService {
 
-  private baseUrl = 'http://localhost:8080/api/sourceCode';
+  private baseUrl = 'http://localhost:8080/api/exercise-sources';
 
   constructor(private http: HttpClient) { }
 
-  createSourceCode(sourceCode: Object): Observable<any> {
-    return this.http.post(`${this.baseUrl}` + `/create`, sourceCode);
+  createExerciseSource(exerciseSource: Object): Observable<any> {
+    return this.http.post(`${this.baseUrl}/create`, exerciseSource);
   }
 
-  getSourceCodesByExerciseId(exerciseId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/source-codes-exercise-${exerciseId}`);
+  getExerciseSourcesByExerciseId(exerciseId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
   }
 }

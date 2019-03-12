@@ -19,13 +19,13 @@ public class ExerciseTestController {
         this.storageService = storageService;
     }
 
-    @PostMapping(value = "/hiddenTest/create")
-    public ExerciseTest postHiddenTest(@RequestBody ExerciseTest hiddenTest) {
-        ExerciseTest _hiddenTest = repository.save(new ExerciseTest(hiddenTest.getFileName(), hiddenTest.getCode(), hiddenTest.getExerciseId()));
+    @PostMapping(value = "/exercise-tests/create")
+    public ExerciseTest postExerciseTest(@RequestBody ExerciseTest exerciseTest) {
+        ExerciseTest _exerciseTest = repository.save(new ExerciseTest(exerciseTest.getFileName(), exerciseTest.getCode(), exerciseTest.getExerciseId()));
 
-        storageService.store(_hiddenTest);
+        storageService.store(_exerciseTest);
 
-        System.out.format("Created hidden test %s for exercise #%s\n", hiddenTest.getFileName(), hiddenTest.getExerciseId());
-        return _hiddenTest;
+        System.out.format("Created exercise test %s for exercise #%s\n", exerciseTest.getFileName(), exerciseTest.getExerciseId());
+        return _exerciseTest;
     }
 }

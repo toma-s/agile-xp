@@ -110,7 +110,7 @@ export class ExerciseCreateComponent implements OnInit {
   }
 
   saveSourceCode(sourceCode: ExerciseSource) {
-    this.sourceCodeService.createSourceCode(sourceCode)
+    this.sourceCodeService.createExerciseSource(sourceCode)
       .subscribe(
         data => {
           console.log(data);

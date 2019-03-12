@@ -12,15 +12,15 @@ export class LessonService {
   constructor(private http: HttpClient) { }
 
   createLesson(lesson: Object): Observable<any> {
-    return this.http.post(`${this.baseUrl}` + `/create`, lesson);
+    return this.http.post(`${this.baseUrl}/create`, lesson);
   }
 
-  getLessonsByCourseId(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/lesson-course-${id}`);
+  getLessonsByCourseId(courseId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/course/${courseId}`);
   }
 
   getLessonById(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/lesson-${id}`);
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 }
 

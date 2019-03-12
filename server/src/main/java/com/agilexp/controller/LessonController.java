@@ -29,7 +29,7 @@ public class LessonController {
         return _lesson;
     }
 
-    @GetMapping(value="/lessons/lesson-{id}")
+    @GetMapping(value="/lessons/{id}")
     public Lesson getLessonById(@PathVariable("id") long id) {
         System.out.println("Get lesson with id " + id + "...");
 
@@ -37,11 +37,11 @@ public class LessonController {
         return taskDataOptional.orElse(null);
     }
 
-    @GetMapping(value="/lessons/lesson-course-{id}")
-    public List<Lesson> getLessonsByCourseId(@PathVariable("id") long id) {
-        System.out.println("Get lessons with course id " + id + "...");
+    @GetMapping(value="/lessons/course/{courseId}")
+    public List<Lesson> getLessonsByCourseId(@PathVariable("courseId") long courseId) {
+        System.out.println("Get lessons with course id " + courseId + "...");
 
-        List<Lesson> lessons = new ArrayList<>(repository.findByCourseId(id));
+        List<Lesson> lessons = new ArrayList<>(repository.findByCourseId(courseId));
         return lessons;
     }
 

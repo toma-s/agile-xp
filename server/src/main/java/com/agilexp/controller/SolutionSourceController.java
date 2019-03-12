@@ -12,7 +12,7 @@ public class SolutionSourceController {
     @Autowired
     SolutionSourceRepository repository;
 
-    @PostMapping(value = "/solutionSourceCodes/create")
+    @PostMapping(value = "/solution-sources/create")
     public SolutionSource postSolutionSourceCode(@RequestBody SolutionSource solutionSourceCode) {
         SolutionSource _solutionSourceCode = repository.save(new SolutionSource(
                 solutionSourceCode.getSolutionId(),

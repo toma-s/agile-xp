@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ExerciseTypeService {
 
-  private baseUrl = 'http://localhost:8080/api/exerciseTypes';
+  private baseUrl = 'http://localhost:8080/api/exercise-types';
 
   constructor(private http: HttpClient) { }
 
@@ -16,6 +16,6 @@ export class ExerciseTypeService {
   }
 
   getExerciseTypeByValue(type: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/exercise-type-${type}`);
+    return this.http.get(`${this.baseUrl}/type/${type}`);
   }
 }
