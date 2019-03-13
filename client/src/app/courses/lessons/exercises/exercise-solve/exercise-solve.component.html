@@ -10,7 +10,7 @@
         <p>black box</p>
       </div>
       <div *ngSwitchCase="'white-box'">
-        <solve-white-box [exercise]="exercise" [solutionSourceCodes]="solutionSourceCodes">
+        <solve-white-box [exercise]="exercise" [solutionSources]="solutionSources" [solutionTests]="solutionTests">
         </solve-white-box>
       </div>
       <div *ngSwitchCase="'quiz'">

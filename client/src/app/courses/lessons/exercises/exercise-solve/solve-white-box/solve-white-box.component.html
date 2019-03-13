@@ -14,14 +14,14 @@
     </div>
 
     <div class="pane--code">
-      <div *ngFor="let sourceCode of solutionSourceCodes">
-          <ngx-monaco-editor [options]="editorOptions" class="editor" [(ngModel)]="sourceCode.code"></ngx-monaco-editor>
+      <div *ngFor="let source of solutionSources">
+        <ngx-monaco-editor [options]="editorOptions" class="editor" [(ngModel)]="source.code"></ngx-monaco-editor>
       </div>
     </div>
 
     <div class="pane--code">
-      <div>
-        <textarea matInput name="testCode"></textarea>
+      <div *ngFor="let test of solutionTests">
+        <ngx-monaco-editor [options]="editorOptions" class="editor" [(ngModel)]="test.code"></ngx-monaco-editor>
       </div>
     </div>
 

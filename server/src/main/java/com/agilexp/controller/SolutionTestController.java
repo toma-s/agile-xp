@@ -12,8 +12,9 @@ public class SolutionTestController {
     @Autowired
     SolutionTestRepository repository;
 
-    @PostMapping(value = "/solutionTests/create")
+    @PostMapping(value = "/solution-tests/create")
     public SolutionTest postSolutionTest(@RequestBody SolutionTest solutionTest) {
+        System.out.println(solutionTest.getCode());
         SolutionTest _solutionTest = repository.save(new SolutionTest(
                 solutionTest.getSolutionId(),
                 solutionTest.getFileName(),

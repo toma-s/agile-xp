@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
 
-  .pane--side {
+  &--side {
     float: left;
     height: 100%;
     width: 33.33%;
@@ -37,7 +37,7 @@
 
   }
 
-  .pane--code {
+  &--code {
     float: left;
     height: 100%;
     width: 33.33%;

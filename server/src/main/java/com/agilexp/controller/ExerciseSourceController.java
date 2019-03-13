@@ -34,10 +34,10 @@ public class ExerciseSourceController {
     }
 
     @GetMapping(value="/exercise-sources/exercise/{exerciseId}")
-    public List<ExerciseSource> getExerciseSourceByExerciseId(@PathVariable("exerciseId") long exerciseSourceId) {
-        System.out.println("Get exercise sources with exercise id " + exerciseSourceId + "...");
+    public List<ExerciseSource> getExerciseSourceByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+        System.out.println("Get exercise sources with exercise id " + exerciseId + "...");
 
-        List<ExerciseSource> exerciseSources = new ArrayList<>(repository.findByExerciseId(exerciseSourceId));
+        List<ExerciseSource> exerciseSources = new ArrayList<>(repository.findByExerciseId(exerciseId));
         return exerciseSources;
     }
 }

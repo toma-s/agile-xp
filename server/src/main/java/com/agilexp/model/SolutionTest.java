@@ -3,7 +3,7 @@ package com.agilexp.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="solution_test")
+@Table(name="solution_tests")
 public class SolutionTest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -6,6 +6,9 @@ import com.agilexp.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
@@ -27,5 +30,13 @@ public class ExerciseTestController {
 
         System.out.format("Created exercise test %s for exercise #%s\n", exerciseTest.getFileName(), exerciseTest.getExerciseId());
         return _exerciseTest;
+    }
+
+    @GetMapping(value="/exercise-tests/exercise/{exerciseId}")
+    public List<ExerciseTest> getExerciseTestByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+        System.out.println("Get exercise tests with exercise id " + exerciseId + "...");
+
+        List<ExerciseTest> exerciseTests = new ArrayList<>(repository.findByExerciseId(exerciseId));
+        return exerciseTests;
     }
 }
