@@ -25,8 +25,8 @@
         </mat-expansion-panel-header>
 
         <mat-nav-list *ngIf="exercises$ as exercises">
-          <mat-list-item *ngFor="let exercise of getExercisesByLessonId(lesson.id)" 
-                            [routerLink]="['lesson', lesson.id, 'exerciseSolve', exercise.id]" routerLinkActive="active">
+          <mat-list-item *ngFor="let exercise of getExercisesByLessonId(lesson.id)"
+            [routerLink]="['lesson', lesson.id, 'exerciseSolve', exercise.id]" routerLinkActive="active">
             <p>{{ exercise.name }}</p>
             <p>{{ getExerciseTypeName(exercise.type) }}</p>
           </mat-list-item>

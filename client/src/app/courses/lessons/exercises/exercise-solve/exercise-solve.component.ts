@@ -27,7 +27,7 @@ export class ExerciseSolveComponent implements OnInit {
   solution: Solution = new Solution();
   solutionSources: SolutionSource[] = new Array<SolutionSource>();
   solutionTests: SolutionTest[] = new Array<SolutionTest>();
-  submitted = false;
+  output: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -128,6 +128,7 @@ export class ExerciseSolveComponent implements OnInit {
         console.log(this.solutionSources);
         this.saveSolutionSources();
         this.saveSolutionTests();
+        this.getEstimation();
         break;
       }
       default: {
@@ -163,6 +164,10 @@ export class ExerciseSolveComponent implements OnInit {
           error => console.log(error)
         );
     });
+  }
+
+  getEstimation() {
+    
   }
 
 }

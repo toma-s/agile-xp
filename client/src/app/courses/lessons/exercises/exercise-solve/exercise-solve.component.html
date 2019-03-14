@@ -10,7 +10,7 @@
         <p>black box</p>
       </div>
       <div *ngSwitchCase="'white-box'">
-        <solve-white-box [exercise]="exercise" [solutionSources]="solutionSources" [solutionTests]="solutionTests">
+        <solve-white-box [exercise]="exercise" [solutionSources]="solutionSources" [solutionTests]="solutionTests" [output]="output">
         </solve-white-box>
       </div>
       <div *ngSwitchCase="'quiz'">
@@ -35,5 +35,6 @@
     </mat-toolbar>
 
   </div>
+
 
 </div>

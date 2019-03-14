@@ -15,5 +15,6 @@ export class SolveWhiteBoxComponent {
   @Input() exercise: Exercise;
   @Input() solutionSources: Array<SolutionSource>;
   @Input() solutionTests: Array<SolutionTest>;
+  @Input() output: string;
 
 }

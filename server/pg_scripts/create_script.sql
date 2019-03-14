@@ -70,4 +70,9 @@ create table solution_tests (
 	code text
 );
 
-
+drop table if exists solution_estimations cascade;
+create table solution_estimations (
+	id serial primary key,
+	solution_id int references solutions on delete cascade,
+	estimation text
+);

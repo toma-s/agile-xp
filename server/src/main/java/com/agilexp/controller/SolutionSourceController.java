@@ -13,13 +13,13 @@ public class SolutionSourceController {
     SolutionSourceRepository repository;
 
     @PostMapping(value = "/solution-sources/create")
-    public SolutionSource postSolutionSourceCode(@RequestBody SolutionSource solutionSourceCode) {
-        SolutionSource _solutionSourceCode = repository.save(new SolutionSource(
-                solutionSourceCode.getSolutionId(),
-                solutionSourceCode.getFileName(),
-                solutionSourceCode.getCode()
+    public SolutionSource postSolutionSource(@RequestBody SolutionSource solutionSource) {
+        SolutionSource _solutionSource = repository.save(new SolutionSource(
+                solutionSource.getSolutionId(),
+                solutionSource.getFileName(),
+                solutionSource.getCode()
         ));
-        System.out.format("Created solution source code %s", solutionSourceCode);
-        return _solutionSourceCode;
+        System.out.format("Created solution source %s", solutionSource);
+        return _solutionSource;
     }
 }
