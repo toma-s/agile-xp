@@ -57,7 +57,6 @@ public class SolutionEstimationController {
 
         String solutionEstimationResult = getEstimation(solutionSource, solutionTest);
         String exerciseEstimationResult = getEstimation(solutionSource, exerciseTests);
-//        solutionEstimation.setEstimation(getEstimation(solutionSource, solutionTest, exerciseTests));
 
         solutionEstimation.setEstimation(solutionEstimationResult + exerciseEstimationResult);
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);

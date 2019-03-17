@@ -1,3 +1,106 @@
+<div [formGroup]="exerciseFormGroup">
+
+  <h3>Source code</h3>
+  <div formArrayName="sources" class="env mat-elevation-z1">
+    <mat-tab-group>
+      <mat-tab *ngFor="let source of exerciseFormGroup.controls.sources.controls; let i = index;">
+        <div [formGroupName]="i">
+          <ng-template mat-tab-label>
+            {{ source.controls.sourceFilename.value }}
+            <button mat-icon-button type="button">
+              <mat-icon (click)="editFileName(source.controls.sourceFilename)">edit</mat-icon>
+            </button>
+            <button mat-icon-button type="button">
+              <mat-icon (click)="removeSourceFile(i)">clear</mat-icon>
+            </button>
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="env__container">
+              <ngx-monaco-editor *ngIf="source.controls.sourceCode" [options]="editorOptions"
+                formControlName="sourceCode" class="env__editor">
+              </ngx-monaco-editor>
+            </div>
+          </ng-template>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <button mat-icon-button type="button">
+            <mat-icon (click)="addSourceFile()">add</mat-icon>
+          </button>
+        </ng-template>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+
+  <h3>Tests</h3>
+  <div formArrayName="tests" class="env mat-elevation-z1">
+    <mat-tab-group>
+      <mat-tab *ngFor="let test of exerciseFormGroup.controls.tests.controls; let i = index;">
+        <div [formGroupName]="i">
+          <ng-template mat-tab-label>
+            {{ test.controls.testFilename.value }}
+            <button mat-icon-button type="button">
+              <mat-icon (click)="editFileName(test.controls.testFilename)">edit</mat-icon>
+            </button>
+            <button mat-icon-button type="button">
+              <mat-icon (click)="removeTestFile(i)">clear</mat-icon>
+            </button>
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="env__container">
+              <ngx-monaco-editor [options]="editorOptions" formControlName="testCode" class="env__editor">
+              </ngx-monaco-editor>
+            </div>
+          </ng-template>
+        </div>
+      </mat-tab>
+      <mat-tab>
+          <ng-template mat-tab-label>
+            <button mat-icon-button type="button">
+              <mat-icon (click)="addTestFile()">add</mat-icon>
+            </button>
+          </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <!-- <div [formGroup]="exerciseFormGroup" *ngIf="exerciseFormGroup">
+    <div *ngIf="exerciseFormGroup.value.sources">
+      <div formArrayName="sources">
+        <div *ngFor="let source of exerciseFormGroup.controls.sources.controls; let i = index;">
+          <div [formGroupName]="i">
+            <mat-form-field class="mat-elevation-z2">
+              <input matInput placeholder="Source code filename" required name="sourceFilename"
+                formControlName="sourceFilename">
+            </mat-form-field>
+            <mat-form-field class="mat-elevation-z2">
+              <textarea matInput placeholder="Source code" rows="20" required name="sourceCode"
+                formControlName="sourceCode"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div formArrayName="tests" *ngIf="exerciseFormGroup.value.tests">
+      <div *ngFor="let test of exerciseFormGroup.controls.tests.controls; let i = index;">
+        <div [formGroupName]="i">
+          <mat-form-field class="mat-elevation-z2">
+            <input matInput placeholder="Test code filename" required name="testFilename"
+              formControlName="testFilename">
+          </mat-form-field>
+
+          <mat-form-field class="mat-elevation-z2">
+            <textarea matInput placeholder="Test code" rows="20" required name="testCode"
+              formControlName="testCode"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- 
 <mat-form-field class="mat-elevation-z2">
   <input matInput placeholder="Source code filename" required name="sourceFilename" formControlName="sourceFilename">
 </mat-form-field>
@@ -14,4 +117,4 @@
 
 <mat-form-field class="mat-elevation-z2">
   <textarea matInput placeholder="Test code" rows="20" required name="testCode" formControlName="testCode"></textarea>
-</mat-form-field>
+</mat-form-field> -->
