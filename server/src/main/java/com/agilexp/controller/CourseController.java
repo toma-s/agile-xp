@@ -20,7 +20,7 @@ public class CourseController {
     @Autowired
     CourseRepository repository;
 
-    @GetMapping(value="/courses/course-{id}")
+    @GetMapping(value="/courses/{id}")
     public Course getCourseById(@PathVariable("id") long id) {
         System.out.println("Get course with id " + id + "...");
 
@@ -47,7 +47,7 @@ public class CourseController {
         return _course;
     }
 
-    @DeleteMapping("/courses/delete-{id}")
+    @DeleteMapping("/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable("id") long id) {
         System.out.println("Delete Course with ID = " + id + "...");
 

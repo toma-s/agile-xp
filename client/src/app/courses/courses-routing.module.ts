@@ -5,6 +5,7 @@ import { CourseCreateComponent } from './course-create/course-create.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { LessonEditComponent } from './lessons/lesson-edit/lesson-edit.component';
+import { ExerciseSolveComponent } from './lessons/exercises/exercise-solve/exercise-solve.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'courses/coursesList', component: CoursesListComponent},
   { path: 'courses/courseDetail/:id', component: CourseDetailComponent},
   { path: 'courses/courseDetail/:courseId/lessonEdit/:lessonId', component: LessonEditComponent},
+  { path: 'courses/courseDetail/:courseId/lesson/:lessonId/exerciseSolve/:exerciseId', component: ExerciseSolveComponent},
   { path: '../', redirectTo: 'courses' }
 ];
 

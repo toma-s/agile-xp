@@ -1,0 +1,31 @@
+<div *ngIf="exercise">
+  <div class="pane">
+
+    <div class="pane--side">
+      <textarea readonly>
+        Name: {{ exercise.name }}
+        Description: {{ exercise.description }}
+        Type: {{ exercise.type }}
+      </textarea>
+
+      <div class="pane--out" *ngIf="solutionEstimation">
+        <div class="pane--text">
+          <div>{{ solutionEstimation.estimation }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pane--code">
+      <div *ngFor="let source of solutionSources">
+        <ngx-monaco-editor [options]="editorOptions" class="editor" [(ngModel)]="source.code"></ngx-monaco-editor>
+      </div>
+    </div>
+
+    <div class="pane--code">
+      <div *ngFor="let test of solutionTests">
+        <ngx-monaco-editor [options]="editorOptions" class="editor" [(ngModel)]="test.code"></ngx-monaco-editor>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -15,6 +15,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 
+import { MonacoEditorModule } from 'ngx-monaco-editor';
+
 import { CoursesModule } from './courses/courses.module';
 
 
@@ -45,7 +47,8 @@ import { CoursesModule } from './courses/courses.module';
     MatSortModule,
     MatTableModule,
     MatListModule,
-    CoursesModule
+    CoursesModule,
+    MonacoEditorModule.forRoot()
   ],
   providers: [CdkColumnDef],
   bootstrap: [AppComponent]

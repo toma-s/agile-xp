@@ -14,7 +14,7 @@ public class Lesson {
     @Column(name="name")
     private String name;
 
-    @Column(name="courseId")
+    @Column(name="course_id")
     private long courseId;
 
     @Column(name="created")
@@ -70,5 +70,16 @@ public class Lesson {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", courseId=" + courseId +
+                ", created=" + created +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

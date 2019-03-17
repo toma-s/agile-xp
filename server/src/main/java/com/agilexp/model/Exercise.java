@@ -13,7 +13,7 @@ public class Exercise {
     @Column(name="name")
     private String name;
 
-    @Column(name="lessonId")
+    @Column(name="lesson_id")
     private long lessonId;
 
     @Column(name="type")

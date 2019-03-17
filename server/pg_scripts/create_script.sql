@@ -32,20 +32,47 @@ create table exercises (
 	description text
 );
 
-drop table if exists source_codes CASCADE;
-create table source_codes (
+drop table if exists exercise_sources CASCADE;
+create table exercise_sources (
 	id serial primary key,
 	filename text,
 	code text,
 	exercise_id int references exercises on delete cascade
 );
 
-drop table if exists hidden_tests CASCADE;
-create table hidden_tests (
+drop table if exists exercise_tests CASCADE;
+create table exercise_tests (
 	id serial primary key,
 	filename text,
 	code text,
 	exercise_id int references exercises on delete cascade
 );
 
+drop table if exists solutions cascade;
+create table solutions (
+	id serial primary key,
+	exercise_id int references exercises on delete cascade
+);
 
+drop table if exists solution_sources cascade;
+create table solution_sources (
+	id serial primary key,
+	solution_id int references solutions on delete cascade,
+	filename text,
+	code text
+);
+
+drop table if exists solution_tests cascade;
+create table solution_tests (
+	id serial primary key,
+	solution_id int references solutions on delete cascade,
+	filename text,
+	code text
+);
+
+drop table if exists solution_estimations cascade;
+create table solution_estimations (
+	id serial primary key,
+	solution_id int references solutions on delete cascade,
+	estimation text
+);

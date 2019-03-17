@@ -59,4 +59,13 @@ public class Course {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", created=" + created +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

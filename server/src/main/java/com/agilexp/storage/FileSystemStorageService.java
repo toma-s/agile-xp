@@ -5,9 +5,7 @@ import java.net.MalformedURLException;
 import java.nio.file.*;
 import java.util.stream.Stream;
 
-import com.agilexp.model.HiddenTest;
-import com.agilexp.model.SourceCode;
-import com.agilexp.model.TaskContent;
+import com.agilexp.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -54,26 +52,40 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(SourceCode sourceCode) {
-        String fileName = sourceCode.getFileName();
-        String code = sourceCode.getCode();
-        String directoryName = "source_code" + sourceCode.getId();
+    public void store(SolutionSource solutionSource) {
+        String fileName = solutionSource.getFileName();
+        String code = solutionSource.getCode();
+        String directoryName = "solution_source" + solutionSource.getId();
 
         Path directoryLocation = createFolder(directoryName);
         storeFile(fileName, code, directoryLocation);
     }
 
     @Override
-    public void store(HiddenTest hiddenTest) {
-        String fileName = hiddenTest.getFileName();
-        String code = hiddenTest.getCode();
-        String directoryName = "hidden_test" + hiddenTest.getId();
+    public void store(SolutionTest solutionTest) {
+        String fileName = solutionTest.getFileName();
+        String code = solutionTest.getCode();
+        String directoryName = "solution_test" + solutionTest.getId();
+
+        Path directoryLocation = createFolder(directoryName);
+        storeFile(fileName, code, directoryLocation);
+    }
+
+    @Override
+    public void store(ExerciseTest exerciseTest) {
+        String fileName = exerciseTest.getFileName();
+        String code = exerciseTest.getCode();
+        String directoryName = "exercise_test" + exerciseTest.getId();
 
         Path directoryLocation = createFolder(directoryName);
         storeFile(fileName, code, directoryLocation);
     }
 
     private Path createFolder(String directoryName) {
+        if (Files.isDirectory(Paths.get(this.rootLocation.toString(), directoryName))) {
+            return this.rootLocation.resolve(directoryName);
+        }
+
         Path directoryLocation;
         try {
             Files.createDirectory(Paths.get(this.rootLocation.resolve(directoryName).toString()));
