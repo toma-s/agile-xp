@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
@@ -49,6 +50,7 @@ import { CoursesModule } from './courses/courses.module';
     MatTableModule,
     MatListModule,
     MatTabsModule,
+    MatDialogModule,
     CoursesModule,
     MonacoEditorModule.forRoot()
   ],
