@@ -9,30 +9,9 @@
   margin-bottom: 40px;
 }
 
-// .mat-elevation-z2 {
-//   float: left;
-//   clear: both;
-//   margin-bottom: 40px;
-//   width: 50%;
-//   padding: 10px;
-// }
-
 .env {
-
-  // border: 1px solid #dadada;
   padding: 10px;
-
-  &__tabs {
-    background: green;
-    height: 5vh;
-    width: 100%;
-
-    .env__tab {
-      background: sienna;
-      width: 10%;
-      height: 100%;
-    }
-  }
+  background-color: #ebebeb;
 
   .env__container {
     overflow: hidden;

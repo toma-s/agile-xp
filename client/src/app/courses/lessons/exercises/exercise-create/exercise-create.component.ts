@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ExerciseType } from '../shared/exercise-type.model';
 import { ExerciseTypeService } from '../shared/exercise-type.service';
 import { Exercise } from '../shared/exercise.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ExerciseService } from '../shared/exercise.service';
 import { ActivatedRoute } from '@angular/router';
 import { ExerciseSource } from '../shared/exercise-source.model';
@@ -60,7 +60,7 @@ export class ExerciseCreateComponent implements OnInit {
 
     switch (this.exerciseFormGroup.value.selectedTypeValue) {
       case 'white-box': {
-        this.exercise = this.createExercise();
+        this.setExerciseValues();
         console.log(this.exercise);
         this.saveExercise();
         break;
@@ -74,65 +74,79 @@ export class ExerciseCreateComponent implements OnInit {
     }
   }
 
-  createExercise(): Exercise {
-    const exercise = new Exercise();
-    exercise.name = this.exerciseFormGroup.value.name;
-    exercise.lessonId = this.route.snapshot.params['lessonId'];
-    exercise.type = this.exerciseFormGroup.value.selectedTypeValue;
-    exercise.description = this.exerciseFormGroup.value.description;
-    return exercise;
+  setExerciseValues() {
+    this.exercise.name = this.exerciseFormGroup.value.name;
+    this.exercise.lessonId = this.route.snapshot.params['lessonId'];
+    this.exercise.type = this.exerciseFormGroup.value.selectedTypeValue;
+    this.exercise.description = this.exerciseFormGroup.value.description;
   }
 
   saveExercise() {
     this.exerciseSercise.createExercise(this.exercise)
       .subscribe(
         data => {
+          this.exercise.id = data.id;
           console.log(data);
-          const sourceCode = this.createSourceCodeObject(data.id);
-          this.saveSourceCode(sourceCode);
-          const exerciseTest = this.createExerciseTestObject(data.id);
-          this.saveExerciseTest(exerciseTest);
+          const exerciseSources = this.createSourceCodeObjects(data.id);
+          this.saveSourceCodes(exerciseSources);
+          const exerciseTests = this.createExerciseTestObjects(data.id);
+          this.saveExerciseTests(exerciseTests);
         },
         error => console.log(error)
       );
   }
 
-  createSourceCodeObject(exerciseId: number): ExerciseSource {
-    const sourceCode = new ExerciseSource();
-    sourceCode.fileName = this.exerciseFormGroup.value.sourceFilename;
-    sourceCode.code = this.exerciseFormGroup.value.sourceCode;
-    sourceCode.exerciseId = exerciseId;
-    console.log(sourceCode);
-    return sourceCode;
+  createSourceCodeObjects(exerciseId: number): Array<ExerciseSource> {
+    const exerciseSourceObjects = new Array<ExerciseSource>();
+    const exerciseSources: FormArray = this.exerciseFormGroup.get('sources') as FormArray;
+    console.log(exerciseSources);
+    exerciseSources.value.forEach(es => {
+      const exerciseSource = new ExerciseSource();
+      exerciseSource.fileName = es.sourceFilename;
+      exerciseSource.code = es.sourceCode;
+      exerciseSource.exerciseId = exerciseId;
+      exerciseSourceObjects.push(exerciseSource);
+    });
+    console.log(exerciseSourceObjects);
+    return exerciseSourceObjects;
   }
 
-  saveSourceCode(sourceCode: ExerciseSource) {
-    this.sourceCodeService.createExerciseSource(sourceCode)
-      .subscribe(
-        data => {
-          console.log(data);
-        },
-        error => console.log(error)
-      );
+  saveSourceCodes(exerciseSources: Array<ExerciseSource>) {
+    exerciseSources.forEach(es => {
+      this.sourceCodeService.createExerciseSource(es)
+        .subscribe(
+          data => {
+            console.log(data);
+          },
+          error => console.log(error)
+        );
+    })
   }
 
-  createExerciseTestObject(exerciseId: number): ExerciseTest {
-    const exerciseTest = new ExerciseTest();
-    exerciseTest.fileName = this.exerciseFormGroup.value.testFilename;
-    exerciseTest.code = this.exerciseFormGroup.value.testCode;
-    exerciseTest.exerciseId = exerciseId;
-    console.log(exerciseTest);
-    return exerciseTest;
+  createExerciseTestObjects(exerciseId: number): Array<ExerciseTest> {
+    const exerciseTestObjects = new Array<ExerciseTest>();
+    const exerciseTests: FormArray = this.exerciseFormGroup.get('tests') as FormArray;
+    exerciseTests.value.forEach(et => {
+      const exerciseTest = new ExerciseTest();
+      exerciseTest.fileName = et.testFilename;
+      exerciseTest.code = et.testCode;
+      exerciseTest.exerciseId = exerciseId;
+      exerciseTestObjects.push(exerciseTest);
+    });
+    console.log(exerciseTestObjects);
+    return exerciseTestObjects;
   }
 
-  saveExerciseTest(exerciseTest: ExerciseTest) {
-    this.exerciseTestService.createExerciseTest(exerciseTest)
-      .subscribe(
-        data => {
-          console.log(data);
-        },
-        error => console.log(error)
-      );
+  saveExerciseTests(exerciseTests: Array<ExerciseTest>) {
+    exerciseTests.forEach(et => {
+      this.exerciseTestService.createExerciseTest(et)
+        .subscribe(
+          data => {
+            console.log(data);
+          },
+          error => console.log(error)
+        );
+    })
   }
 
 }
