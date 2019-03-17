@@ -22,9 +22,7 @@
         </mat-select>
       </mat-form-field>
 
-
-      <!-- <div *ngIf="selectedTypeValue.length !== 0"> -->
-      <div [ngSwitch]="selectedTypeValue">
+      <div [ngSwitch]="exerciseFormGroup.value.selectedTypeValue">
         <div *ngSwitchCase="'black-box'">
           <p>black box</p>
         </div>
@@ -43,13 +41,10 @@
         </div>
         <div *ngSwitchDefault>
           <p>default</p>
-          <create-white-box></create-white-box>
-          <!--temp-->
         </div>
       </div>
-      <!-- </div> -->
 
-      <pre>{{ exerciseFormGroup.value | json }}</pre>
+      <!-- <pre>{{ exerciseFormGroup.value | json }}</pre> -->
 
       <div class="submit">
         <button mat-raised-button color="accent" type="submit">Create</button>

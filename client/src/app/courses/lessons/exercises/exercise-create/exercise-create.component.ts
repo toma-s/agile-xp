@@ -20,6 +20,7 @@ export class ExerciseCreateComponent implements OnInit {
   submitted = false;
   types = new Array<ExerciseType>();
   exerciseFormGroup: FormGroup;
+  exercise: Exercise = new Exercise();
 
   constructor(
     private exerciseSercise: ExerciseService,
@@ -63,9 +64,9 @@ export class ExerciseCreateComponent implements OnInit {
 
     switch (this.exerciseFormGroup.value.selectedTypeValue) {
       case 'white-box': {
-        const exercise = this.createExercise();
-        console.log(exercise);
-        this.saveExercise(exercise);
+        this.exercise = this.createExercise();
+        console.log(this.exercise);
+        this.saveExercise();
         break;
       }
       // todo
@@ -86,8 +87,8 @@ export class ExerciseCreateComponent implements OnInit {
     return exercise;
   }
 
-  saveExercise(exercise: Exercise) {
-    this.exerciseSercise.createExercise(exercise)
+  saveExercise() {
+    this.exerciseSercise.createExercise(this.exercise)
       .subscribe(
         data => {
           console.log(data);
