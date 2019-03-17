@@ -15,7 +15,7 @@ public class SolutionController {
     @PostMapping(value = "/solutions/create")
     public Solution postCourse(@RequestBody Solution solution) {
         Solution _solution = repository.save(new Solution(solution.getExerciseId()));
-        System.out.format("Created solution %s", solution);
+        System.out.format("Created solution %s\n", solution);
         return _solution;
     }
 }

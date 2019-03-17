@@ -2,7 +2,9 @@ truncate table
 	courses,
 	lessons,
 	exercise_types,
-	exercises
+	exercises,
+	exercise_sources,
+	exercise_tests
 restart identity cascade;
 
 INSERT INTO courses (id, name, created, description)
@@ -144,7 +146,7 @@ public class Morse {
 }
 ');
 
-insert into exercise_sources (id, exercise_id, filename, code)
+insert into exercise_tests (id, exercise_id, filename, code)
 values	(
 	1,
 	1,

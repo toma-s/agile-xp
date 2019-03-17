@@ -4,4 +4,5 @@ import com.agilexp.model.SolutionSource;
 import org.springframework.data.repository.CrudRepository;
 
 public interface SolutionSourceRepository extends CrudRepository<SolutionSource, Long> {
+    SolutionSource findSolutionSourceBySolutionId(long solutionId);
 }

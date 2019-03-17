@@ -26,7 +26,7 @@ public class ExerciseTestController {
     public ExerciseTest postExerciseTest(@RequestBody ExerciseTest exerciseTest) {
         ExerciseTest _exerciseTest = repository.save(new ExerciseTest(exerciseTest.getFileName(), exerciseTest.getCode(), exerciseTest.getExerciseId()));
 
-        storageService.store(_exerciseTest);
+//        storageService.store(_exerciseTest);
 
         System.out.format("Created exercise test %s for exercise #%s\n", exerciseTest.getFileName(), exerciseTest.getExerciseId());
         return _exerciseTest;

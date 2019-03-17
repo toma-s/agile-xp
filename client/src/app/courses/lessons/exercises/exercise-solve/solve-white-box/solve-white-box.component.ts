@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Exercise } from '../../shared/exercise.model';
 import { SolutionSource } from '../../shared/solution-source.model';
 import { SolutionTest } from '../../shared/solution-test.model';
+import { SolutionEstimation } from '../../shared/solution-extimation.model';
 
 @Component({
   selector: 'solve-white-box',
@@ -15,6 +16,6 @@ export class SolveWhiteBoxComponent {
   @Input() exercise: Exercise;
   @Input() solutionSources: Array<SolutionSource>;
   @Input() solutionTests: Array<SolutionTest>;
-  @Input() output: string;
+  @Input() solutionEstimation: SolutionEstimation;
 
 }

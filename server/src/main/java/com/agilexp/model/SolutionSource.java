@@ -64,7 +64,7 @@ public class SolutionSource {
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +
-                ", code='" + code + '\'' +
+//                ", code='" + code + '\'' +
                 '}';
     }
 }

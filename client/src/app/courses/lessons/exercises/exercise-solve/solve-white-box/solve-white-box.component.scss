@@ -24,14 +24,16 @@
       width: 100%;
       position: absolute;
       bottom: 0;
+      background: forestgreen;
 
-      textarea {
+      .pane--text {
         resize: none;
         width: calc(100% - 2px);
         height: calc(100% - 2px);
         padding: 0;
         border: 1px solid;
         border-right: 0px solid;
+        font-family: monospace;
       }
     }
 

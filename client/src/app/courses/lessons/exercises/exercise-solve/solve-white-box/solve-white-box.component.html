@@ -8,8 +8,10 @@
         Type: {{ exercise.type }}
       </textarea>
 
-      <div class="pane--out">
-        <textarea readonly [(ngModel)]="output"></textarea>
+      <div class="pane--out" *ngIf="solutionEstimation">
+        <div class="pane--text">
+          <div>{{ solutionEstimation.estimation }}</div>
+        </div>
       </div>
     </div>
 

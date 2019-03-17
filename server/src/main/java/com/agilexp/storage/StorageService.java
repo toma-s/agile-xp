@@ -1,8 +1,6 @@
 package com.agilexp.storage;
 
-import com.agilexp.model.ExerciseSource;
-import com.agilexp.model.ExerciseTest;
-import com.agilexp.model.TaskContent;
+import com.agilexp.model.*;
 import org.springframework.core.io.Resource;
 
 import java.nio.file.Path;
@@ -14,9 +12,11 @@ public interface StorageService {
 
     void store(TaskContent taskContent, Long id);
 
-    void store(ExerciseSource sourceCode);
+    void store(SolutionSource solutionSour);
 
-    void store(ExerciseTest hiddenTest);
+    void store(SolutionTest solutionTest);
+
+    void store(ExerciseTest exerciseTest);
 
     Stream<Path> loadAll();
 

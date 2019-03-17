@@ -63,7 +63,7 @@ public class ExerciseTest {
         return "ExerciseTest{" +
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
-                ", code='" + code + '\'' +
+//                ", code='" + code + '\'' +
                 ", exerciseId=" + exerciseId +
                 '}';
     }

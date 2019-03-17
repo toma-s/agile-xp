@@ -87,7 +87,8 @@ public class CompilerTester {
 
         Class<?> junitTest = null;
         try {
-            junitTest = Class.forName(this.content.getTestFilename().substring(0, this.content.getTestFilename().lastIndexOf('.')), true, classLoader);
+            String className = this.content.getTestFilename().substring(0, this.content.getTestFilename().lastIndexOf('.'));
+            junitTest = Class.forName(className, true, classLoader);
         } catch (ClassNotFoundException | NullPointerException e) {
             e.printStackTrace();
         }

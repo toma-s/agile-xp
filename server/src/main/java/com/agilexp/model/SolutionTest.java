@@ -65,7 +65,7 @@ public class SolutionTest {
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +
-                ", code='" + code + '\'' +
+//                ", code='" + code + '\'' +
                 '}';
     }
 }

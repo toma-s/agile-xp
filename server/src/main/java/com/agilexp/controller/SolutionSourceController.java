@@ -19,7 +19,7 @@ public class SolutionSourceController {
                 solutionSource.getFileName(),
                 solutionSource.getCode()
         ));
-        System.out.format("Created solution source %s", solutionSource);
+        System.out.format("Created solution source %s\n", solutionSource);
         return _solutionSource;
     }
 }

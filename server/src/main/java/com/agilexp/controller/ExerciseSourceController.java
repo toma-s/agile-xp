@@ -27,7 +27,7 @@ public class ExerciseSourceController {
 
         ExerciseSource _sourceCode = repository.save(new ExerciseSource(sourceCode.getFileName(), sourceCode.getCode(), sourceCode.getExerciseId()));
 
-        storageService.store(_sourceCode);
+//        storageService.store(_sourceCode);
 
         System.out.format("Created source code %s for exercise #%s\n", sourceCode.getFileName(), sourceCode.getExerciseId());
         return _sourceCode;

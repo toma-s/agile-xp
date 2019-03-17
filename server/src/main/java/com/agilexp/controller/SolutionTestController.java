@@ -14,13 +14,12 @@ public class SolutionTestController {
 
     @PostMapping(value = "/solution-tests/create")
     public SolutionTest postSolutionTest(@RequestBody SolutionTest solutionTest) {
-        System.out.println(solutionTest.getCode());
         SolutionTest _solutionTest = repository.save(new SolutionTest(
                 solutionTest.getSolutionId(),
                 solutionTest.getFileName(),
                 solutionTest.getCode()
         ));
-        System.out.format("Created solution test %s", solutionTest);
+        System.out.format("Created solution test %s\n", solutionTest);
         return _solutionTest;
     }
 }

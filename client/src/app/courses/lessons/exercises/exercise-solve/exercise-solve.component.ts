@@ -13,6 +13,8 @@ import { ExerciseTestService } from '../shared/exercise-test.service';
 import { ExerciseTest } from '../shared/exercise-test.model';
 import { SolutionTest } from '../shared/solution-test.model';
 import { SolutonTestService } from '../shared/soluton-test.service';
+import { SolutionEstimationService } from '../shared/solution-estimation.service';
+import { SolutionEstimation } from '../shared/solution-extimation.model';
 
 @Component({
   selector: 'app-exercise-solve',
@@ -27,7 +29,7 @@ export class ExerciseSolveComponent implements OnInit {
   solution: Solution = new Solution();
   solutionSources: SolutionSource[] = new Array<SolutionSource>();
   solutionTests: SolutionTest[] = new Array<SolutionTest>();
-  output: string;
+  solutionEstimation: SolutionEstimation = new SolutionEstimation();
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +38,8 @@ export class ExerciseSolveComponent implements OnInit {
     private exerciseCodeService: ExerciseSourceService,
     private exerciseTestService: ExerciseTestService,
     private solutionSourceService: SolutonSourceService,
-    private solutionTestService: SolutonTestService
+    private solutionTestService: SolutonTestService,
+    private solutionEstimationService: SolutionEstimationService
   ) { }
 
   ngOnInit() {
@@ -101,6 +104,7 @@ export class ExerciseSolveComponent implements OnInit {
   }
 
   run() {
+    this.solutionEstimation.estimation = 'Running...';
     this.createSolution();
     this.saveSolution();
   }
@@ -127,8 +131,6 @@ export class ExerciseSolveComponent implements OnInit {
         console.log('white-box');
         console.log(this.solutionSources);
         this.saveSolutionSources();
-        this.saveSolutionTests();
-        this.getEstimation();
         break;
       }
       default: {
@@ -146,6 +148,7 @@ export class ExerciseSolveComponent implements OnInit {
         .subscribe(
           data => {
             console.log(data);
+            this.saveSolutionTests();
           },
           error => console.log(error)
         );
@@ -160,6 +163,7 @@ export class ExerciseSolveComponent implements OnInit {
         .subscribe(
           data => {
             console.log(data);
+            this.getEstimation();
           },
           error => console.log(error)
         );
@@ -167,7 +171,14 @@ export class ExerciseSolveComponent implements OnInit {
   }
 
   getEstimation() {
-    
+    this.solutionEstimationService.estimateSolution(this.solution.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.solutionEstimation = data;
+        },
+        error => console.log(error)
+      );
   }
 
 }
