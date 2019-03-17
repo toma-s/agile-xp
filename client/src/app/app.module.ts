@@ -14,6 +14,7 @@ import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatProgressSpinnerMo
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
@@ -47,6 +48,7 @@ import { CoursesModule } from './courses/courses.module';
     MatSortModule,
     MatTableModule,
     MatListModule,
+    MatTabsModule,
     CoursesModule,
     MonacoEditorModule.forRoot()
   ],

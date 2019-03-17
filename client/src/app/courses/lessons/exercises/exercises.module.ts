@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
@@ -40,6 +41,7 @@ import { ExercisesRoutingModule } from './exercises-routing.module';
     MatSortModule,
     MatTableModule,
     MatExpansionModule,
+    MatTabsModule,
     ExercisesRoutingModule,
     MonacoEditorModule
   ]

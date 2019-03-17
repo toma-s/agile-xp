@@ -50,11 +50,7 @@ export class ExerciseCreateComponent implements OnInit {
     this.exerciseFormGroup = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      selectedTypeValue: ['', Validators.required],
-      sourceFilename: [],
-      sourceCode: [],
-      testFilename: [],
-      testCode: []
+      selectedTypeValue: ['', Validators.required]
     });
   }
 

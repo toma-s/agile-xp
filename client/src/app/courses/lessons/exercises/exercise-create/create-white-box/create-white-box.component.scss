@@ -16,3 +16,34 @@
   width: 50%;
   padding: 10px;
 }
+
+.env {
+
+  // border: 1px solid #c9c9c9;
+  padding: 10px;
+
+  &__tabs {
+    background: green;
+    height: 5vh;
+    width: 100%;
+
+    .env__tab {
+      background: sienna;
+      width: 10%;
+      height: 100%;
+    }
+  }
+
+  .env__container {
+    overflow: hidden;
+
+    .env__editor {
+      border: 1px solid;
+      height: 80vh;
+      width: calc(100% - 20px);
+    }
+  }
+
+  
+}
+
