@@ -8,7 +8,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Tester {
 
@@ -33,6 +35,7 @@ public class Tester {
         try {
             String className = testFilename.substring(0, testFilename.lastIndexOf('.'));
             System.out.println(className);
+            System.out.println(Files.isDirectory(outDir.toPath()));
             junitTest = Class.forName(className, true, classLoader);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

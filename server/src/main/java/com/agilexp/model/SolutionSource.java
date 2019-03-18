@@ -57,6 +57,10 @@ public class SolutionSource {
     public void setCode(String code) {
         this.code = code;
     }
+//
+//    public String getDirectoryName() {
+//        return "solution_sources" + this.id;
+//    }
 
     @Override
     public String toString() {

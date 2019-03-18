@@ -59,6 +59,10 @@ public class SolutionTest {
         this.code = code;
     }
 
+//    public String getDirectoryName() {
+//        return "solution_tests" + this.id;
+//    }
+
     @Override
     public String toString() {
         return "SolutionTest{" +

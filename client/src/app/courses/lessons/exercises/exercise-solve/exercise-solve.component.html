@@ -1,18 +1,12 @@
-<!-- <a mat-button color="primary" routerLink="../../../../" routerLinkActive="active" mat-button>Back</a> -->
 
 <div class="mat-elevation-z2 card">
-
   <div *ngIf="exercise">
-
     <div [ngSwitch]="exercise.type">
-
       <div *ngSwitchCase="'black-box'">
         <p>black box</p>
       </div>
       <div *ngSwitchCase="'white-box'">
-        <solve-white-box [exercise]="exercise" [solutionSources]="solutionSources" 
-        [solutionTests]="solutionTests" [solutionEstimation]="solutionEstimation">
-        </solve-white-box>
+        <solve-white-box [exercise]="exercise"></solve-white-box>
       </div>
       <div *ngSwitchCase="'quiz'">
         <p>quiz</p>
@@ -27,15 +21,5 @@
         <p>default</p>
       </div>
     </div>
-
-    <mat-toolbar class="toolbar">
-      <mat-toolbar-row>
-        <button class="toolbar__run" (click)="run()">Run</button>
-        <span>toolbar</span>
-      </mat-toolbar-row>
-    </mat-toolbar>
-
   </div>
-
-
 </div>

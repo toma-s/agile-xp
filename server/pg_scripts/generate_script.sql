@@ -146,6 +146,49 @@ public class Morse {
 }
 ');
 
+insert into exercise_sources (id, exercise_id, filename, code)
+values	(
+	2,
+	1,
+	'Player.java',
+	'public enum Player {
+    B(1), W(0), NONE(-1);
+
+    private final int value;
+
+    Player(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+
+}
+');
+
+insert into exercise_sources (id, exercise_id, filename, code)
+values	(
+	3,
+	1,
+	'Alpha.java',
+	'public enum Alpha {
+    A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
+
+    private final int value;
+
+    Alpha(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+');
+
+
 insert into exercise_tests (id, exercise_id, filename, code)
 values	(
 	1,
