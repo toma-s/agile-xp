@@ -3,6 +3,8 @@ package com.agilexp.repository;
 import com.agilexp.model.SolutionTest;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface SolutionTestRepository extends CrudRepository<SolutionTest, Long> {
-    SolutionTest findSolutionTestBySolutionId(long solutionId);
+    List<SolutionTest> findSolutionTestsBySolutionId(long solutionId);
 }

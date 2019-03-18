@@ -51,7 +51,8 @@ create table exercise_tests (
 drop table if exists solutions cascade;
 create table solutions (
 	id serial primary key,
-	exercise_id int references exercises on delete cascade
+	exercise_id int references exercises on delete cascade,
+	created timestamp
 );
 
 drop table if exists solution_sources cascade;

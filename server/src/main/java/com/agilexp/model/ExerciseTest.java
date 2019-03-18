@@ -58,6 +58,10 @@ public class ExerciseTest {
         this.exerciseId = exerciseId;
     }
 
+//    public String getDirectoryName() {
+//        return "exercise_tests" + this.id;
+//    }
+
     @Override
     public String toString() {
         return "ExerciseTest{" +

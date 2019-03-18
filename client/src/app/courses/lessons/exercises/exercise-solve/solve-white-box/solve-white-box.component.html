@@ -1,31 +1,74 @@
 <div *ngIf="exercise">
   <div class="pane">
 
-    <div class="pane--side">
-      <textarea readonly>
-        Name: {{ exercise.name }}
-        Description: {{ exercise.description }}
-        Type: {{ exercise.type }}
-      </textarea>
+    <div class="pane__side">
+      <h3 class="pane__name">{{ exercise.name }}</h3>
+      <div class="pane__description">
+        <textarea readonly>{{ exercise.description }}</textarea>
+      </div>
 
-      <div class="pane--out" *ngIf="solutionEstimation">
-        <div class="pane--text">
-          <div>{{ solutionEstimation.estimation }}</div>
-        </div>
+      <div class="pane__out" *ngIf="solutionEstimation.estimation">
+        <textarea readonly>{{ solutionEstimation.estimation }}</textarea>
       </div>
     </div>
 
-    <div class="pane--code">
-      <div *ngFor="let source of solutionSources">
-        <ngx-monaco-editor [options]="editorOptions" class="editor" [(ngModel)]="source.code"></ngx-monaco-editor>
-      </div>
+    <div class="pane__code">
+      <mat-tab-group [selectedIndex]="0">
+        <mat-tab *ngFor="let source of solutionSources">
+          <ng-template mat-tab-label>
+            {{ source.fileName }}
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="container">
+              <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="source.code" class="editor"></ngx-monaco-editor>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <!-- <mat-tab>
+          <ng-template mat-tab-label>
+            <button mat-icon-button type="button">
+              <mat-icon (click)="addSourceFile()">add</mat-icon>
+            </button>
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="container">
+            </div>
+          </ng-template>
+        </mat-tab> -->
+      </mat-tab-group>
     </div>
 
-    <div class="pane--code">
-      <div *ngFor="let test of solutionTests">
-        <ngx-monaco-editor [options]="editorOptions" class="editor" [(ngModel)]="test.code"></ngx-monaco-editor>
-      </div>
+    <div class="pane__code">
+      <mat-tab-group>
+        <mat-tab *ngFor="let test of solutionTests">
+          <ng-template mat-tab-label>
+            {{ test.fileName }}
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="container">
+              <ngx-monaco-editor [options]="editorOptions" class="editor" [(ngModel)]="test.code"></ngx-monaco-editor>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <!-- <mat-tab>
+          <ng-template mat-tab-label>
+            <button mat-icon-button type="button">
+              <mat-icon (click)="addSourceFile()">add</mat-icon>
+            </button>
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="container">
+            </div>
+          </ng-template>
+        </mat-tab> -->
+      </mat-tab-group>
     </div>
-
   </div>
 </div>
+
+<mat-toolbar class="toolbar">
+  <mat-toolbar-row>
+    <a mat-button color="primary" routerLink="../../../../" routerLinkActive="active" mat-button>Back</a>
+    <button class="toolbar__run" (click)="run()">Run</button>
+  </mat-toolbar-row>
+</mat-toolbar>
