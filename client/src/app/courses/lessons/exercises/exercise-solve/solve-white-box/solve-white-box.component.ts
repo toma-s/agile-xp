@@ -147,4 +147,10 @@ export class SolveWhiteBoxComponent implements OnInit {
       );
   }
 
+  addSourceFile() {
+    const newFile = new SolutionSource();
+    newFile.fileName = 'NewSolutionSourceFile.java';
+    this.solutionSources.push(newFile);
+  }
+
 }
