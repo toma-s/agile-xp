@@ -1,12 +1,12 @@
 package refactored;
 
-
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.*;
 
-class ReversiRefactoredException {
+class ReversiFileException {
 
     private static final int SIZE = 8;
     Player[][] playground;
@@ -16,13 +16,18 @@ class ReversiRefactoredException {
     Player winner = Player.NONE;
     boolean ended = false;
 
-    ReversiRefactoredException() {
+    ReversiFileException() {
     }
 
-    ReversiRefactoredException(String gameFilename) {
-        String[] gameConfig = readGameConfig(gameFilename);
-        initGame(gameConfig);
-        initTilesCount();
+    ReversiFileException(String gameFilename) {
+        try {
+            String[] gameConfig = readGameConfig(gameFilename);
+            initGame(gameConfig);
+            initTilesCount();
+        } catch (Exception e) {
+            ended = true;
+            System.out.println(e.getMessage());
+        }
     }
 
     private void run() {
@@ -39,7 +44,7 @@ class ReversiRefactoredException {
                 reader.close();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("IO exception occurred on reading input: " + e.getMessage());
         }
     }
 
@@ -49,7 +54,11 @@ class ReversiRefactoredException {
         Path path = gameFile.toPath();
         try {
             gameConfig = Files.readAllLines(path).toArray(new String[0]);
-        } catch (IOException e) {}
+        } catch (NoSuchFileException e) {
+            System.out.println("Could not open game configuration file.");
+        } catch (IOException e) {
+            System.out.println("Could not read game configuration file.");
+        }
         return gameConfig;
     }
 
@@ -116,14 +125,18 @@ class ReversiRefactoredException {
     }
 
     void initTilesCount() {
-        for (int r = 0; r < SIZE; r++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (playground[r][c] == Player.B) {
-                    left.put(Player.B, left.get(Player.B) + 1);
-                } else if (playground[r][c] == Player.W) {
-                    left.put(Player.W, left.get(Player.W) + 1);
+        try {
+            for (int r = 0; r < SIZE; r++) {
+                for (int c = 0; c < SIZE; c++) {
+                    if (playground[r][c] == Player.B) {
+                        left.put(Player.B, left.get(Player.B) + 1);
+                    } else if (playground[r][c] == Player.W) {
+                        left.put(Player.W, left.get(Player.W) + 1);
+                    }
                 }
             }
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Playground  is not valid" + e.getMessage());
         }
     }
 
@@ -304,7 +317,7 @@ class ReversiRefactoredException {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        ReversiRefactoredException rev = new ReversiRefactoredException(fileName);
+        ReversiFileException rev = new ReversiFileException(fileName);
         rev.run();
 
     }
