@@ -80,6 +80,7 @@ ul li {
 a {
 	text-decoration: underline;
 	color: black;
+	font-size: 1.3em;
 }
 
 a:hover {
@@ -104,6 +105,12 @@ button {
 	background-color: var(--main-color);
 	border: none;
 	color: white;
+	width: 128px;
+	height: 36px;
+}
+
+button a {
+	text-decoration: none;
 }
 
 div #switchLang__div {
@@ -143,7 +150,6 @@ button #switchLang__btn {
 .dl-present a {
 	/*text-decoration: none;*/
 	color: white;
-	font-size: 1em;
 }
 
 .timeline-event-text {
