@@ -1,12 +1,17 @@
 package refactored;
 
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-class ReversiRefactoredException {
+public class ReversiRefactoredSmall {
 
     private static final int SIZE = 8;
     Player[][] playground;
@@ -16,10 +21,10 @@ class ReversiRefactoredException {
     Player winner = Player.NONE;
     boolean ended = false;
 
-    ReversiRefactoredException() {
+    ReversiRefactoredSmall() {
     }
 
-    ReversiRefactoredException(String gameFilename) {
+    ReversiRefactoredSmall(String gameFilename) {
         String[] gameConfig = readGameConfig(gameFilename);
         initGame(gameConfig);
         initTilesCount();
@@ -49,7 +54,11 @@ class ReversiRefactoredException {
         Path path = gameFile.toPath();
         try {
             gameConfig = Files.readAllLines(path).toArray(new String[0]);
-        } catch (IOException e) {}
+        } catch (NoSuchFileException e) {
+            System.out.println("Could not open game configuration file.");
+        } catch (IOException e) {
+            System.out.println("Could not read game configuration file.");
+        }
         return gameConfig;
     }
 
@@ -304,7 +313,7 @@ class ReversiRefactoredException {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        ReversiRefactoredException rev = new ReversiRefactoredException(fileName);
+        ReversiRefactoredSmall rev = new ReversiRefactoredSmall(fileName);
         rev.run();
 
     }
