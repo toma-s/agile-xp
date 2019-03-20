@@ -49,6 +49,7 @@ h1 {
 	background-color: var(--main-color);
 	color: white;
 	padding: 10px;
+	margin-bottom: 36px;
 }
 
 h2 {
@@ -132,15 +133,15 @@ button #switchLang__btn {
 	font-size: 1.4em;
 }
 
-.switchSource__div {
-	margin: 30px;
-}
-
 .switchSource__div button {
 	font-size: 1.4em;
 	width: 240px;
 	height: 40px;
 	margin: 15px 25px 15px 15px;
+}
+
+.content {
+	margin: 24px;
 }
 
 .dl-present__div {
