@@ -1,33 +1,35 @@
 package refactored;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-public class ReversiRefactoredSmall {
+public class ReversiLeft {
 
     private static final int SIZE = 8;
     Player[][] playground;
-    private HashMap<Player, Integer> left = new HashMap<>() {{ put(Player.B, 0); put(Player.W, 0); }};
+    int leftB = 0;
+    int leftW = 0;
+//    private HashMap<Player, Integer> left = new HashMap<>() {{ put(Player.B, 0); put(Player.W, 0); }};
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
     Player winner = Player.NONE;
     boolean ended = false;
 
-    ReversiRefactoredSmall() {
+    ReversiLeft() {
     }
 
-    ReversiRefactoredSmall(String gameFilename) {
-        String[] gameConfig = readGameConfig(gameFilename);
-        initGame(gameConfig);
-        initTilesCount();
+    ReversiLeft(String gameFilename) {
+        try {
+            String[] gameConfig = readGameConfig(gameFilename);
+            initGame(gameConfig);
+            initTilesCount();
+        } catch (Exception e) {
+            ended = true;
+            System.out.println(e.getMessage());
+        }
     }
 
     private void run() {
@@ -44,7 +46,7 @@ public class ReversiRefactoredSmall {
                 reader.close();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("IO exception occurred on reading input: " + e.getMessage());
         }
     }
 
@@ -125,14 +127,20 @@ public class ReversiRefactoredSmall {
     }
 
     void initTilesCount() {
-        for (int r = 0; r < SIZE; r++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (playground[r][c] == Player.B) {
-                    left.put(Player.B, left.get(Player.B) + 1);
-                } else if (playground[r][c] == Player.W) {
-                    left.put(Player.W, left.get(Player.W) + 1);
+        try {
+            for (int r = 0; r < SIZE; r++) {
+                for (int c = 0; c < SIZE; c++) {
+                    if (playground[r][c] == Player.B) {
+                        leftB++;
+//                        left.put(Player.B, left.get(Player.B) + 1);
+                    } else if (playground[r][c] == Player.W) {
+                        leftW++;
+//                        left.put(Player.W, left.get(Player.W) + 1);
+                    }
                 }
             }
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Playground  is not valid" + e.getMessage());
         }
     }
 
@@ -157,11 +165,11 @@ public class ReversiRefactoredSmall {
     }
 
     int getLeftB() {
-        return left.get(Player.B);
+        return leftB;
     }
 
     int getLeftW() {
-        return left.get(Player.W);
+        return leftW;
     }
 
     void execute(String tile) {
@@ -260,17 +268,26 @@ public class ReversiRefactoredSmall {
         return toFLip;
     }
 
-    void flipTiles(ArrayList<List<Integer>> tiles) {
-        tiles.forEach(tile -> {
-            Player previous = playground[tile.get(0)][tile.get(1)];
-            playground[tile.get(0)][tile.get(1)] = onTurn;
-            if (previous == Player.NONE) {
-                left.put(onTurn, left.get(onTurn) + 1);
-            } else if (previous != onTurn) {
-                left.put(previous, left.get(previous) - 1);
-                left.put(onTurn, left.get(onTurn) + 1);
+    void flipTiles(List<List<Integer>> tiles) {
+        for (List<Integer> tile : tiles) {
+            int r = tile.get(0);
+            int c = tile.get(1);
+            if (playground[r][c] == onTurn) break; // debugging [4]
+            if (playground[r][c] == Player.NONE) {
+                playground[r][c] = onTurn;
+                if (onTurn == Player.B) leftB++;
+                else if (onTurn == Player.W) leftW++;
+            } else {
+                playground[r][c] = onTurn;
+                if (onTurn == Player.B) {
+                    leftB++;
+                    leftW--;
+                } else {
+                    leftW++;
+                    leftB--;
+                }
             }
-        });
+        }
     }
 
     boolean areValidMoves() {
@@ -313,7 +330,7 @@ public class ReversiRefactoredSmall {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        ReversiRefactoredSmall rev = new ReversiRefactoredSmall(fileName);
+        ReversiLeft rev = new ReversiLeft(fileName);
         rev.run();
 
     }

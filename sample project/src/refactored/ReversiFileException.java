@@ -45,7 +45,6 @@ class ReversiFileException {
             }
         } catch (Exception e) {
             System.out.println("IO exception occurred on reading input: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
