@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReversiSmall {
+public class ReversiDuplicity {
 
     private static final int SIZE = 8;
     Player[][] playground;
@@ -21,10 +21,10 @@ public class ReversiSmall {
     Player winner = Player.NONE;
     boolean ended = false;
 
-    ReversiSmall() {
+    ReversiDuplicity() {
     }
 
-    ReversiSmall(String gameFilename) {
+    ReversiDuplicity(String gameFilename) {
         try {
             String[] gameConfig = readGameConfig(gameFilename);
             initGame(gameConfig);
@@ -86,16 +86,16 @@ public class ReversiSmall {
     }
 
     void setOnTurn(String player) {
-        if (player == null || ! player.matches("[B|W]")) {
+        if (!isOnTurnInputCorrect(player)) {
             System.out.println("Incorrect player on turn input.");
             return;
         }
         onTurn = Player.valueOf(player);
     }
 
-//    boolean isOnTurnInputCorrect(String onTurn) {
-//        return onTurn != null && onTurn.matches("[B|W]");
-//    }
+    boolean isOnTurnInputCorrect(String onTurn) {
+        return onTurn != null && onTurn.matches("[B|W]");
+    }
 
     void createPlayground() {
         playground = new Player[SIZE][SIZE];
@@ -331,7 +331,7 @@ public class ReversiSmall {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        ReversiSmall rev = new ReversiSmall(fileName);
+        ReversiDuplicity rev = new ReversiDuplicity(fileName);
         rev.run();
 
     }

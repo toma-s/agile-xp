@@ -10,9 +10,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
-public class ReversiSmallTest {
+public class ReversiDuplicityTest {
 
-    private ReversiSmall rev = new ReversiSmall();
+    private ReversiDuplicity rev = new ReversiDuplicity();
 
 
     // Player
@@ -44,7 +44,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testReadGameConfigInit() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         String[] gameConfig = game.readGameConfig("game_init_b_starts.txt");
 
         assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
@@ -55,7 +55,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testReadGameConfigEmpty() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         String[] gameConfig = game.readGameConfig("game_empty.txt");
 
         assertEquals("lines number of empty config file", 0, gameConfig.length);
@@ -63,7 +63,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testReadGameConfigOneLine() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         String[] gameConfig = game.readGameConfig("game_one_line.txt");
 
         assertEquals("lines number of 1-line config file", 1, gameConfig.length);
@@ -72,11 +72,49 @@ public class ReversiSmallTest {
 
     @Test
     public void testReadGameConfigNotExisting() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         String[] gameConfig = game.readGameConfig("game_not_existing.txt");
 
         String[] expectedGameConfig = new String[]{};
         assertArrayEquals(expectedGameConfig, gameConfig);
+    }
+
+    
+    // isOnTurnInputCorrect
+
+    @Test
+    public void testIsOnTurnInputCorrectB() {
+        ReversiDuplicity game = rev;
+
+        assertTrue("on turn value of config file: B", game.isOnTurnInputCorrect("B"));
+    }
+
+    @Test
+    public void testIsOnTurnInputCorrectW() {
+        ReversiDuplicity game = rev;
+
+        assertTrue("on turn value of config file: W", game.isOnTurnInputCorrect("W"));
+    }
+
+    @Test
+    public void testIsOnTurnInputCorrectA() {
+        ReversiDuplicity game = rev;
+
+        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("A"));
+    }
+
+    @Test
+    public void testIsOnTurnInputCorrectNONE() {
+        ReversiDuplicity game = rev;
+
+        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("NONE"));
+    }
+
+    @Test
+    public void testIsOnTurnInputCorrectnull() {
+        ReversiDuplicity game = rev;
+
+        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect(null));
     }
 
 
@@ -84,7 +122,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetOnTurnB() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.setOnTurn("B");
 
         assertEquals("set player on turn: B", Player.B, game.onTurn);
@@ -92,7 +130,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetOnTurnW() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.setOnTurn("W");
 
         assertEquals("set player on turn: W", Player.W, game.onTurn);
@@ -100,7 +138,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetOnTurnA() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.setOnTurn("A");
 
         assertEquals(Player.NONE, game.onTurn);
@@ -108,7 +146,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetOnTurnNone() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.setOnTurn("NONE");
 
         assertEquals(Player.NONE, game.onTurn);
@@ -116,7 +154,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetOnTurnnull() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.setOnTurn(null);
 
         assertEquals(Player.NONE, game.onTurn);
@@ -126,17 +164,68 @@ public class ReversiSmallTest {
 
     @Test
     public void testCreatePlayground() {
-        ReversiSmall game = getRevWithPlayground();
+        ReversiDuplicity game = getRevWithPlayground();
 
         assertArrayEquals("create empty playground", getEmptyPlayground(), game.playground);
     }
+
+
+    // isTileInputCorrect
+
+//    @Test
+//    public void testTileInputA1() {
+//        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
+//        assertTrue("tile input: A1", game.isTileInputCorrect("A1"));
+//    }
+//
+//    @Test
+//    public void testTileInputAA() {
+//        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
+//        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
+//    }
+//
+//    @Test
+//    public void testTileInput11() {
+//        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
+//        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
+//    }
+//
+//    @Test
+//    public void testTileInputa1()  {
+//        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
+//        assertFalse("tile input: a1", game.isTileInputCorrect("a1"));
+//    }
+//
+//    @Test
+//    public void testTileInput1A() {
+//        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
+//        assertFalse("tile input: 1A", game.isTileInputCorrect("1A"));
+//    }
+//
+//    @Test
+//    public void testTileInputI1() {
+//        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
+//        assertFalse("tile input: I1", game.isTileInputCorrect("I1"));
+//    }
+//
+//    @Test
+//    public void testTileInputA9() {
+//        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
+//        assertFalse("tile input: A9", game.isTileInputCorrect("A9"));
+//    }
+//
+//    @Test
+//    public void testTileInputI9() {
+//        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
+//        assertFalse("tile input: I9", game.isTileInputCorrect("I9"));
+//    }
 
 
     // setTile
 
     @Test
     public void testSetTileA1() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.setTile("A1", Player.B);
 
         assertEquals("set player B on tile A1", Player.B, getTile(game, Alpha.A, 1));
@@ -144,7 +233,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetTileAA() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.setTile("AA", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -154,7 +243,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetTile11() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.setTile("11", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -164,7 +253,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetTilea1() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.setTile("a1", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -174,7 +263,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetTile1A() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.setTile("1A", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -184,7 +273,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetTileI1() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.setTile("I1", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -194,7 +283,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetTileA9() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.setTile("A9", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -204,7 +293,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSetTileI9() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.setTile("I9", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -218,7 +307,7 @@ public class ReversiSmallTest {
     @Test
     public void testFillPlaygroundInit() {
         String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5"};
-        ReversiSmall game = getRevWithPlayground();
+        ReversiDuplicity game = getRevWithPlayground();
         game.fillPlayground(gameConfig);
 
         assertEquals("fill playground with initial game config", Player.B, getTile(game, Alpha.E, 4));
@@ -230,7 +319,7 @@ public class ReversiSmallTest {
     @Test
     public void testFillPlaygroundConfigLen1() {
         String[] gameConfig = new String[] {"one"};
-        ReversiSmall game = getRevWithPlayground();
+        ReversiDuplicity game = getRevWithPlayground();
         game.fillPlayground(gameConfig);
 
         Player[][] expectedPlayground = getEmptyPlayground();
@@ -239,7 +328,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testFillPlaygroundNull() {
-        ReversiSmall game = getRevWithPlayground();
+        ReversiDuplicity game = getRevWithPlayground();
         game.fillPlayground(null);
 
         Player[][] expectedPlayground = getEmptyPlayground();
@@ -249,7 +338,7 @@ public class ReversiSmallTest {
     @Test
     public void testFillPlaygroundIncorrectConfig() {
         String[] gameConfig = new String[] {"B", "AA BB", "CC DD"};
-        ReversiSmall game = getRevWithPlayground();
+        ReversiDuplicity game = getRevWithPlayground();
         game.fillPlayground(gameConfig);
 
         Player[][] expectedPlayground = getEmptyPlayground();
@@ -262,7 +351,7 @@ public class ReversiSmallTest {
     @Test
     public void testInitGameInit() {
         String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5"};
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.initGame(gameConfig);
 
         assertEquals("init playground on initial game config", Player.B, game.onTurn);
@@ -275,7 +364,7 @@ public class ReversiSmallTest {
     @Test
     public void testInitGameNoLines() {
         String[] gameConfig = new String[] {};
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.initGame(gameConfig);
 
         assertArrayEquals(null, game.playground);
@@ -284,7 +373,7 @@ public class ReversiSmallTest {
     @Test
     public void testInitGameOneLine() {
         String[] gameConfig = new String[] {"E4 D5"};
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.initGame(gameConfig);
 
         assertArrayEquals(null, game.playground);
@@ -293,7 +382,7 @@ public class ReversiSmallTest {
     @Test
     public void testInitGameFourLines() {
         String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5", "E4 D5"};
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.initGame(gameConfig);
 
         assertArrayEquals(null, game.playground);
@@ -301,7 +390,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testInitGameNull() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.initGame(null);
 
         assertArrayEquals(null, game.playground);
@@ -310,7 +399,7 @@ public class ReversiSmallTest {
     @Test
     public void testInitGameOnlyB() {
         String[] gameConfig = new String[] {"B", "E4 D5"};
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
         game.initGame(gameConfig);
 
         assertArrayEquals(null, game.playground);
@@ -322,7 +411,7 @@ public class ReversiSmallTest {
     @Test
     public void testInitTilesCountInit() {
         String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5"};
-        ReversiSmall game = initReversi(gameConfig);
+        ReversiDuplicity game = initReversi(gameConfig);
         game.initTilesCount();
 
         assertEquals("init tiles count on initial game config", 2, game.getLeftB());
@@ -331,7 +420,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testInitTilesCountEmpty() {
-        ReversiSmall game = getRevWithPlayground();
+        ReversiDuplicity game = getRevWithPlayground();
 
         assertEquals("init tiles count on empty game config", 0, game.getLeftB());
         assertEquals("init tiles count on empty game config", 0, game.getLeftW());
@@ -342,7 +431,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testGetLeftB() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
 
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
     }
@@ -351,17 +440,17 @@ public class ReversiSmallTest {
 
     @Test
     public void testGetLeftW() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
 
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
 
 
-    // ReversiSmall
+    // ReversiDuplicity
 
     @Test
     public void testInit() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
 
         assertEquals("on turn player on initial game config", Player.B, game.onTurn);
         assertEquals("playground on initial game config", Player.W, getTile(game, Alpha.D, 4));
@@ -374,7 +463,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testEmpty() {
-        ReversiSmall game = new ReversiSmall("game_empty.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_empty.txt");
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -384,7 +473,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testOneLine() {
-        ReversiSmall game = new ReversiSmall("game_one_line.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_one_line.txt");
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -394,7 +483,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testAllNum() {
-        ReversiSmall game = new ReversiSmall("game_all_num.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_all_num.txt");
 
         assertArrayEquals(getEmptyPlayground(), game.playground);
         assertEquals(Player.B, game.onTurn);
@@ -404,7 +493,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testAllAlpha() {
-        ReversiSmall game = new ReversiSmall("game_all_alpha.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_all_alpha.txt");
 
         assertArrayEquals(getEmptyPlayground(), game.playground);
         assertEquals(Player.B, game.onTurn);
@@ -414,7 +503,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testNoOnTurn() {
-        ReversiSmall game = new ReversiSmall("game_no_on_turn.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_no_on_turn.txt");
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -443,42 +532,42 @@ public class ReversiSmallTest {
 
     @Test
     public void testIsWithinPlayground00() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
 
         assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
     }
 
     @Test
     public void testIsWithinPlayground77() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
 
         assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
     }
 
     @Test
     public void testIsWithinPlaygroundNegR() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
 
         assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
     }
 
     @Test
     public void testIsWithinPlaygroundNegC() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
 
         assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
     }
 
     @Test
     public void testIsWithinPlaygroundLargeR() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
 
         assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
     }
 
     @Test
     public void testIsWithinPlaygroundLargeC() {
-        ReversiSmall game = rev;
+        ReversiDuplicity game = rev;
 
         assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
     }
@@ -488,14 +577,14 @@ public class ReversiSmallTest {
 
     @Test
     public void testIsEmptyInit00() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
 
         assertTrue("is empty (0, 0) on init", game.isEmpty(0, 0));
     }
 
     @Test
     public void testIsEmptyInit33() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
 
         assertFalse("is empty (3, 3) on init", game.isEmpty(3, 3));
     }
@@ -505,14 +594,14 @@ public class ReversiSmallTest {
 
     @Test
     public void testIsGameOverInit() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
 
         assertFalse("is game over on init", game.isGameOver());
     }
 
     @Test
     public void testIsGameOverOnEnd() {
-        ReversiSmall game = new ReversiSmall("game_complete.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_complete.txt");
         assertFalse("is game over on init", game.isGameOver());
     }
 
@@ -521,7 +610,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testGetTilesToFlipInit32() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         ArrayList<List<Integer>> tiles = game.getTilesToFlip(3, 2);
         ArrayList<List<Integer>> expected = new ArrayList<>();
         expected.add(Arrays.asList(3, 3));
@@ -536,7 +625,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testGetTilesToFlipInit00() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         ArrayList<List<Integer>> tiles = game.getTilesToFlip(0, 0);
 
         assertEquals("tiles to flip on onit - (0, 0)", 0, tiles.size());
@@ -547,7 +636,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testFlipTiles() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         ArrayList<List<Integer>> tiles = new ArrayList<>();
         tiles.add(Arrays.asList(3, 3));
         tiles.add(Arrays.asList(3, 2));
@@ -561,7 +650,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testGetPossibleMovesEmptyInit() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         ArrayList<String> tiles = game.getPossibleMoves();
 
         assertEquals("valid length", 4, tiles.size());
@@ -573,7 +662,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testGetPossibleMovesEmpty() {
-        ReversiSmall game = getRevWithPlayground();
+        ReversiDuplicity game = getRevWithPlayground();
         ArrayList<String> tiles = game.getPossibleMoves();
 
         assertEquals("valid length", 0, tiles.size());
@@ -584,14 +673,14 @@ public class ReversiSmallTest {
 
     @Test
     public void testAreValidMovesInit() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
 
         assertTrue("...", game.areValidMoves());
     }
 
     @Test
     public void testAreValidMovesOnEnd() {
-        ReversiSmall game = new ReversiSmall("game_complete.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_complete.txt");
 
         assertFalse("...", game.areValidMoves());
     }
@@ -601,7 +690,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSwapPlayerOnTurnBtoW() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.swapPlayerOnTurn();
 
         assertEquals("...", Player.W, game.onTurn);
@@ -609,7 +698,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testSwapPlayerOnTurnWtoB() {
-        ReversiSmall game = new ReversiSmall("game_init_w_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_w_starts.txt");
         game.swapPlayerOnTurn();
 
         assertEquals("...", Player.B, game.onTurn);
@@ -619,7 +708,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testEndGame() {
-        ReversiSmall game = new ReversiSmall("game_complete.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_complete.txt");
         game.endGame();
 
         assertTrue("...", game.ended);
@@ -631,7 +720,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testMoveOnNotEmpty() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.move(Alpha.E,5);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -639,7 +728,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testMoveOutOfBoundsBelow() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.move(Alpha.A,9);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -647,7 +736,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testMoveOutOfBoundsAbove() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.move(Alpha.A,0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -655,7 +744,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testMoveOnNotAdjacent() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.move(Alpha.A,1);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -663,7 +752,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testMoveFlipRight() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.move(Alpha.C,4);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 4));
@@ -675,7 +764,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testMoveFlipUp() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.move(Alpha.E, 6);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.E, 5));
@@ -687,7 +776,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testMoveFlipLeft() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.move(Alpha.F, 5);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.E, 5));
@@ -699,7 +788,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testMoveFlipDown() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.move(Alpha.D, 3);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 4));
@@ -715,7 +804,7 @@ public class ReversiSmallTest {
         moves.add(new Pair<>(Alpha.E, 6));
         moves.add(new Pair<>(Alpha.D, 6));
         moves.add(new Pair<>(Alpha.C, 7));
-        ReversiSmall game = setMoves(moves);
+        ReversiDuplicity game = setMoves(moves);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 6));
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.C, 7));
@@ -729,7 +818,7 @@ public class ReversiSmallTest {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.E, 6));
         moves.add(new Pair<>(Alpha.F, 6));
-        ReversiSmall game = setMoves(moves);
+        ReversiDuplicity game = setMoves(moves);
 
         assertEquals("check if flipped", Player.W, getTile(game, Alpha.E, 5));
         assertEquals("check if flipped", Player.W, getTile(game, Alpha.F, 6));
@@ -744,7 +833,7 @@ public class ReversiSmallTest {
         moves.add(new Pair<>(Alpha.D, 3));
         moves.add(new Pair<>(Alpha.E, 3));
         moves.add(new Pair<>(Alpha.F, 2));
-        ReversiSmall game = setMoves(moves);
+        ReversiDuplicity game = setMoves(moves);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.E, 3));
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.F, 2));
@@ -758,7 +847,7 @@ public class ReversiSmallTest {
         ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(Alpha.D, 3));
         moves.add(new Pair<>(Alpha.C, 3));
-        ReversiSmall game = setMoves(moves);
+        ReversiDuplicity game = setMoves(moves);
 
         assertEquals("check if flipped", Player.W, getTile(game, Alpha.D, 4));
         assertEquals("check if flipped", Player.W, getTile(game, Alpha.C, 3));
@@ -774,7 +863,7 @@ public class ReversiSmallTest {
         moves.add(new Pair<>(Alpha.C, 3));
         moves.add(new Pair<>(Alpha.C, 4));
         moves.add(new Pair<>(Alpha.E, 3));
-        ReversiSmall game = setMoves(moves);
+        ReversiDuplicity game = setMoves(moves);
 
         assertEquals("check if flipped (D,3) correctly", Player.W, getTile(game, Alpha.D, 3));
         assertEquals("check if flipped (E,4) correctly", Player.W, getTile(game, Alpha.E, 4));
@@ -815,7 +904,7 @@ public class ReversiSmallTest {
         moves.add(new Pair<>(Alpha.E, 1)); moves.add(new Pair<>(Alpha.B, 8));
         moves.add(new Pair<>(Alpha.A, 1)); moves.add(new Pair<>(Alpha.B, 2));
         moves.add(new Pair<>(Alpha.G, 8)); moves.add(new Pair<>(Alpha.G, 7));
-        ReversiSmall game = setMoves(moves);
+        ReversiDuplicity game = setMoves(moves);
 
         assertFalse("if the are valid moves", game.areValidMoves());
         assertEquals("W left", 28, game.getLeftW());
@@ -828,7 +917,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testExecute() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.execute("C4");
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 4));
@@ -840,7 +929,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testExecuteA1() {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         game.execute("A1");
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -848,7 +937,7 @@ public class ReversiSmallTest {
 
     @Test
     public void testFinishGame() {
-        ReversiSmall game = new ReversiSmall("game_almost_complete.txt");
+        ReversiDuplicity game = new ReversiDuplicity("game_almost_complete.txt");
         game.execute("G7");
 
         assertFalse("if the are valid moves", game.areValidMoves());
@@ -860,13 +949,13 @@ public class ReversiSmallTest {
 
     // utility functions
 
-    private Player getTile(ReversiSmall game, Alpha c0, int r0) {
+    private Player getTile(ReversiDuplicity game, Alpha c0, int r0) {
         return game.playground[r0-1][c0.getValue()];
     }
 
 
-    private ReversiSmall setMoves(ArrayList<Pair<Alpha, Integer>> moves) {
-        ReversiSmall game = new ReversiSmall("game_init_b_starts.txt");
+    private ReversiDuplicity setMoves(ArrayList<Pair<Alpha, Integer>> moves) {
+        ReversiDuplicity game = new ReversiDuplicity("game_init_b_starts.txt");
         for (Pair<Alpha, Integer> move  : moves) {
             Alpha r = move.getKey();
             Integer c = move.getValue();
@@ -875,14 +964,14 @@ public class ReversiSmallTest {
         return game;
     }
 
-    private ReversiSmall initReversi(String[] gameConfig) {
-        ReversiSmall rev = new ReversiSmall();
+    private ReversiDuplicity initReversi(String[] gameConfig) {
+        ReversiDuplicity rev = new ReversiDuplicity();
         rev.initGame(gameConfig);
         return rev;
     }
 
-    private ReversiSmall getRevWithPlayground() {
-        ReversiSmall rev = new ReversiSmall();
+    private ReversiDuplicity getRevWithPlayground() {
+        ReversiDuplicity rev = new ReversiDuplicity();
         rev.createPlayground();
         return rev;
     }
