@@ -3,6 +3,8 @@ package refactored;
 import javafx.util.Pair;
 import org.junit.Test;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +15,19 @@ import static org.junit.Assert.assertEquals;
 public class ReversiAbstrLevelTest {
 
     private ReversiAbstrLevel rev = new ReversiAbstrLevel();
+
+    private String gameConfigDir = "./game_config/";
+    private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
+    private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
+    private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
+    private Path gameComplete = new File(gameConfigDir + "game_complete.txt").toPath();
+    private Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    private Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
+    private Path gameInitBStarts = new File(gameConfigDir + "game_init_b_starts.txt").toPath();
+    private Path gameInitWStarts = new File(gameConfigDir + "game_init_w_starts.txt").toPath();
+    private Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    private Path gameOneLine = new File(gameConfigDir + "game_one_line.txt").toPath();
+    private Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
 
 
     // Player
@@ -43,9 +58,9 @@ public class ReversiAbstrLevelTest {
     // readGameConfig
 
     @Test
-    public void testReadGameConfigInit() {
+    public void testReadGameConfigInitB() {
         ReversiAbstrLevel game = rev;
-        String[] gameConfig = game.readGameConfig("game_init_b_starts.txt");
+        String[] gameConfig = game.readGameConfig(gameInitBStarts);
 
         assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
         assertEquals("1st line of initial config file", "B", gameConfig[0]);
@@ -54,9 +69,20 @@ public class ReversiAbstrLevelTest {
     }
 
     @Test
+    public void testReadGameConfigInitW() {
+        ReversiAbstrLevel game = rev;
+        String[] gameConfig = game.readGameConfig(gameInitWStarts);
+
+        assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
+        assertEquals("1st line of initial config file", "W", gameConfig[0]);
+        assertEquals("2nd line of initial config file", "E4 D5", gameConfig[1]);
+        assertEquals("3rd line of initial config file", "D4 E5", gameConfig[2]);
+    }
+
+    @Test
     public void testReadGameConfigEmpty() {
         ReversiAbstrLevel game = rev;
-        String[] gameConfig = game.readGameConfig("game_empty.txt");
+        String[] gameConfig = game.readGameConfig(gameEmpty);
 
         assertEquals("lines number of empty config file", 0, gameConfig.length);
     }
@@ -64,16 +90,28 @@ public class ReversiAbstrLevelTest {
     @Test
     public void testReadGameConfigOneLine() {
         ReversiAbstrLevel game = rev;
-        String[] gameConfig = game.readGameConfig("game_one_line.txt");
+        String[] gameConfig = game.readGameConfig(gameOneLine);
 
         assertEquals("lines number of 1-line config file", 1, gameConfig.length);
         assertEquals("1st line of 1-line config file", "E4 D5", gameConfig[0]);
     }
 
     @Test
+    public void testReadGameConfigFourLines() {
+        ReversiAbstrLevel game = rev;
+        String[] gameConfig = game.readGameConfig(gameFourLines);
+
+        assertEquals(4, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
+        assertEquals("E4 D5", gameConfig[1]);
+        assertEquals("D4 E5", gameConfig[2]);
+        assertEquals("E4 D5", gameConfig[3]);
+    }
+
+    @Test
     public void testReadGameConfigNotExisting() {
         ReversiAbstrLevel game = rev;
-        String[] gameConfig = game.readGameConfig("game_not_existing.txt");
+        String[] gameConfig = game.readGameConfig(gameNotExisting);
 
         String[] expectedGameConfig = new String[]{};
         assertArrayEquals(expectedGameConfig, gameConfig);
@@ -174,7 +212,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testSetTileA1() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.setTile("A1", Player.B);
 
         assertEquals("set player B on tile A1", Player.B, getTile(game, Alpha.A, 1));
@@ -182,7 +220,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testSetTileAA() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.setTile("AA", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -192,7 +230,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testSetTile11() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.setTile("11", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -202,7 +240,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testSetTilea1() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.setTile("a1", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -212,7 +250,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testSetTile1A() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.setTile("1A", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -222,7 +260,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testSetTileI1() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.setTile("I1", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -232,7 +270,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testSetTileA9() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.setTile("A9", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -242,7 +280,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testSetTileI9() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.setTile("I9", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
@@ -380,7 +418,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testGetLeftB() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
 
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
     }
@@ -389,7 +427,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testGetLeftW() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
 
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
@@ -399,7 +437,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testInit() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
 
         assertEquals("on turn player on initial game config", Player.B, game.onTurn);
         assertEquals("playground on initial game config", Player.W, getTile(game, Alpha.D, 4));
@@ -412,7 +450,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testEmpty() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_empty.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameEmpty);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -422,7 +460,17 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testOneLine() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_one_line.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameOneLine);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testFourLines() {
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameFourLines);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -432,7 +480,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testAllNum() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_all_num.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameAllNum);
 
         assertArrayEquals(getEmptyPlayground(), game.playground);
         assertEquals(Player.B, game.onTurn);
@@ -442,7 +490,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testAllAlpha() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_all_alpha.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameAllAlpha);
 
         assertArrayEquals(getEmptyPlayground(), game.playground);
         assertEquals(Player.B, game.onTurn);
@@ -452,7 +500,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testNoOnTurn() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_no_on_turn.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameNoOnTurn);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -465,14 +513,14 @@ public class ReversiAbstrLevelTest {
 
 //    @Test
 //    public void testIsEmptyInit00() {
-//        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+//        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
 //
 //        assertTrue("is empty (0, 0) on init", game.isEmpty(0, 0));
 //    }
 //
 //    @Test
 //    public void testIsEmptyInit33() {
-//        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+//        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
 //
 //        assertFalse("is empty (3, 3) on init", game.isEmpty(3, 3));
 //    }
@@ -482,14 +530,14 @@ public class ReversiAbstrLevelTest {
 
 //    @Test
 //    public void testIsGameOverInit() {
-//        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+//        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
 //
 //        assertFalse("is game over on init", game.isGameOver());
 //    }
 //
 //    @Test
 //    public void testIsGameOverOnEnd() {
-//        ReversiAbstrLevel game = new ReversiAbstrLevel("game_complete.txt");
+//        ReversiAbstrLevel game = new ReversiAbstrLevel(gameComplete);
 //        assertFalse("is game over on init", game.isGameOver());
 //    }
 
@@ -498,7 +546,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testGetTilesToFlipInit32() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         ArrayList<List<Integer>> tiles = game.getTilesToFlip(3, 2);
         ArrayList<List<Integer>> expected = new ArrayList<>();
         expected.add(Arrays.asList(3, 3));
@@ -513,7 +561,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testGetTilesToFlipInit00() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         ArrayList<List<Integer>> tiles = game.getTilesToFlip(0, 0);
 
         assertEquals("tiles to flip on onit - (0, 0)", 0, tiles.size());
@@ -524,7 +572,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testFlipTiles() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         ArrayList<List<Integer>> tiles = new ArrayList<>();
         tiles.add(Arrays.asList(3, 3));
         tiles.add(Arrays.asList(3, 2));
@@ -538,7 +586,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testGetPossibleMovesEmptyInit() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         ArrayList<String> tiles = game.getPossibleMoves();
 
         assertEquals("valid length", 4, tiles.size());
@@ -561,14 +609,14 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testAreValidMovesInit() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
 
         assertTrue("...", game.areValidMoves());
     }
 
     @Test
     public void testAreValidMovesOnEnd() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_complete.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameComplete);
 
         assertFalse("...", game.areValidMoves());
     }
@@ -578,7 +626,7 @@ public class ReversiAbstrLevelTest {
 
 //    @Test
 //    public void testSwapPlayerOnTurnBtoW() {
-//        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+//        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
 //        game.swapPlayerOnTurn();
 //
 //        assertEquals("...", Player.W, game.onTurn);
@@ -596,7 +644,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testEndGame() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_complete.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameComplete);
         game.endGame();
 
         assertTrue("...", game.ended);
@@ -608,7 +656,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testMoveOnNotEmpty() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.move(Alpha.E,5);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -616,7 +664,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testMoveOutOfBoundsBelow() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.move(Alpha.A,9);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -624,7 +672,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testMoveOutOfBoundsAbove() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.move(Alpha.A,0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -632,7 +680,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testMoveOnNotAdjacent() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.move(Alpha.A,1);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -640,7 +688,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testMoveFlipRight() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.move(Alpha.C,4);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 4));
@@ -652,7 +700,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testMoveFlipUp() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.move(Alpha.E, 6);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.E, 5));
@@ -664,7 +712,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testMoveFlipLeft() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.move(Alpha.F, 5);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.E, 5));
@@ -676,7 +724,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testMoveFlipDown() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.move(Alpha.D, 3);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 4));
@@ -805,7 +853,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testExecute() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.execute("C4");
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 4));
@@ -817,7 +865,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testExecuteA1() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         game.execute("A1");
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -825,7 +873,7 @@ public class ReversiAbstrLevelTest {
 
     @Test
     public void testFinishGame() {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_almost_complete.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameAlmostComplete);
         game.execute("G7");
 
         assertFalse("if the are valid moves", game.areValidMoves());
@@ -841,9 +889,8 @@ public class ReversiAbstrLevelTest {
         return game.playground[r0-1][c0.getValue()];
     }
 
-
     private ReversiAbstrLevel setMoves(ArrayList<Pair<Alpha, Integer>> moves) {
-        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_b_starts.txt");
+        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitBStarts);
         for (Pair<Alpha, Integer> move  : moves) {
             Alpha r = move.getKey();
             Integer c = move.getValue();

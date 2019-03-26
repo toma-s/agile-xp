@@ -305,9 +305,9 @@ public class ReversiAlpha {
 //        String fileName = "game_all_alpha.txt";
 
         File gameFile = new File("./game_config_num/" + fileName);
-        Path path = gameFile.toPath();
+        Path gameFilePath = gameFile.toPath();
 
-        ReversiAlpha rev = new ReversiAlpha(path);
+        ReversiAlpha rev = new ReversiAlpha(gameFilePath);
         rev.run();
 
     }
