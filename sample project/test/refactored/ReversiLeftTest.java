@@ -103,6 +103,20 @@ public class ReversiLeftTest {
         assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("A"));
     }
 
+    @Test
+    public void testIsOnTurnInputCorrectNONE() {
+        ReversiLeft game = rev;
+
+        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("NONE"));
+    }
+
+    @Test
+    public void testIsOnTurnInputCorrectnull() {
+        ReversiLeft game = rev;
+
+        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect(null));
+    }
+
 
     // setOnTurn
 
@@ -123,6 +137,14 @@ public class ReversiLeftTest {
     }
 
     @Test
+    public void testSetOnTurnA() {
+        ReversiLeft game = rev;
+        game.setOnTurn("A");
+
+        assertEquals(Player.NONE, game.onTurn);
+    }
+
+    @Test
     public void testSetOnTurnNone() {
         ReversiLeft game = rev;
         game.setOnTurn("NONE");
@@ -131,9 +153,9 @@ public class ReversiLeftTest {
     }
 
     @Test
-    public void testSetOnTurnA() {
+    public void testSetOnTurnnull() {
         ReversiLeft game = rev;
-        game.setOnTurn("A");
+        game.setOnTurn(null);
 
         assertEquals(Player.NONE, game.onTurn);
     }
@@ -203,7 +225,7 @@ public class ReversiLeftTest {
     // setTile
 
     @Test
-    public void testSetTileA1B() {
+    public void testSetTileA1() {
         ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
         game.setTile("A1", Player.B);
 
@@ -211,7 +233,7 @@ public class ReversiLeftTest {
     }
 
     @Test
-    public void testSetTileAllAlpha() {
+    public void testSetTileAA() {
         ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
         game.setTile("AA", Player.B);
 
@@ -221,9 +243,59 @@ public class ReversiLeftTest {
     }
 
     @Test
-    public void testSetTileAllNum() {
+    public void testSetTile11() {
         ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
         game.setTile("11", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTilea1() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.setTile("a1", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTile1A() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.setTile("1A", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTileI1() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.setTile("I1", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTileA9() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.setTile("A9", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTileI9() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.setTile("I9", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
         assertArrayEquals(expectedPlayground, game.playground);
@@ -390,30 +462,55 @@ public class ReversiLeftTest {
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
 
-//    @Test(expected = IncorrectGameConfigFileException.class)
-//    public void testEmpty() throws IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_empty.txt");
-//    }
-//
-//    @Test(expected = IncorrectGameConfigFileException.class)
-//    public void testOneLine() throws IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_one_line.txt");
-//    }
-//
-//    @Test(expected = IncorrectGameConfigFileException.class)
-//    public void testAllNum() throws IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_all_num.txt");
-//    }
-//
-//    @Test(expected = IncorrectGameConfigFileException.class)
-//    public void testAllAlpha() throws IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_all_alpha.txt");
-//    }
-//
-//    @Test(expected = IncorrectGameConfigFileException.class)
-//    public void testNoOnTurn() throws IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_no_on_turn.txt");
-//    }
+    @Test
+    public void testEmpty() {
+        ReversiLeft game = new ReversiLeft("game_empty.txt");
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testOneLine() {
+        ReversiLeft game = new ReversiLeft("game_one_line.txt");
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testAllNum() {
+        ReversiLeft game = new ReversiLeft("game_all_num.txt");
+
+        assertArrayEquals(getEmptyPlayground(), game.playground);
+        assertEquals(Player.B, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testAllAlpha() {
+        ReversiLeft game = new ReversiLeft("game_all_alpha.txt");
+
+        assertArrayEquals(getEmptyPlayground(), game.playground);
+        assertEquals(Player.B, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testNoOnTurn() {
+        ReversiLeft game = new ReversiLeft("game_no_on_turn.txt");
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
 
 
     // printPlayground
@@ -622,37 +719,37 @@ public class ReversiLeftTest {
 
     // move
 
-//    @Test(expected = NotPermittedMoveException.class)
-//    public void testMoveOnNotEmpty() throws NotPermittedMoveException, IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
-//        game.move(Alpha.E,5);
-//
-//        assertEquals("check if didn't change", Player.W, getTile(game, Alpha.E, 5));
-//    }
-//
-//    @Test(expected = NotPermittedMoveException.class)
-//    public void testMoveOutOfBoundsBelow() throws NotPermittedMoveException, IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
-//        game.move(Alpha.A,9);
-//
-//        assertEquals("check if didn't change", Player.NONE, getTile(game, Alpha.A, 9));
-//    }
-//
-//    @Test(expected = NotPermittedMoveException.class)
-//    public void testMoveOutOfBoundsAbove() throws NotPermittedMoveException, IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
-//        game.move(Alpha.A,0);
-//
-//        assertEquals("check if didn't change", Player.NONE, getTile(game, Alpha.A, 0));
-//    }
-//
-//    @Test(expected = NotPermittedMoveException.class)
-//    public void testMoveOnNotAdjacent() throws NotPermittedMoveException, IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
-//        game.move(Alpha.A,1);
-//
-//        assertEquals("check if didn't change", Player.NONE, getTile(game, Alpha.A, 1));
-//    }
+    @Test
+    public void testMoveOnNotEmpty() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.move(Alpha.E,5);
+
+        assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveOutOfBoundsBelow() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.move(Alpha.A,9);
+
+        assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveOutOfBoundsAbove() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.move(Alpha.A,0);
+
+        assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveOnNotAdjacent() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.move(Alpha.A,1);
+
+        assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
+    }
 
     @Test
     public void testMoveFlipRight() {
@@ -831,13 +928,13 @@ public class ReversiLeftTest {
         assertEquals("B left", 4, game.getLeftB());
     }
 
-//    @Test(expected = NotPermittedMoveException.class)
-//    public void testExecuteA1() throws NotPermittedMoveException, IncorrectGameConfigFileException {
-//        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
-//        game.execute("A1");
-//
-//        assertEquals("check if didn't change", Player.NONE, getTile(game, Alpha.A, 1));
-//    }
+    @Test
+    public void testExecuteA1() {
+        ReversiLeft game = new ReversiLeft("game_init_b_starts.txt");
+        game.execute("A1");
+
+        assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
+    }
 
     @Test
     public void testFinishGame() {
@@ -904,3 +1001,4 @@ public class ReversiLeftTest {
         return init;
     }
 }
+

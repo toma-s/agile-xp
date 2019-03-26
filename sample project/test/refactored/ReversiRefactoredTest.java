@@ -101,6 +101,20 @@ public class ReversiRefactoredTest {
         assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("A"));
     }
 
+    @Test
+    public void testIsOnTurnInputCorrectNONE() {
+        ReversiRefactored game = rev;
+
+        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("NONE"));
+    }
+
+    @Test
+    public void testIsOnTurnInputCorrectnull() {
+        ReversiRefactored game = rev;
+
+        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect(null));
+    }
+
 
     // setOnTurn
 
@@ -121,15 +135,23 @@ public class ReversiRefactoredTest {
     }
 
     @Test(expected = IncorrectGameConfigFileException.class)
+    public void testSetOnTurnA() throws IncorrectGameConfigFileException {
+        ReversiRefactored game = rev;
+        game.setOnTurn("A");
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
     public void testSetOnTurnNone() throws IncorrectGameConfigFileException {
         ReversiRefactored game = rev;
         game.setOnTurn("NONE");
     }
 
     @Test(expected = IncorrectGameConfigFileException.class)
-    public void testSetOnTurnA() throws IncorrectGameConfigFileException {
+    public void testSetOnTurnnull() throws IncorrectGameConfigFileException {
         ReversiRefactored game = rev;
-        game.setOnTurn("A");
+        game.setOnTurn(null);
+
+        assertEquals(Player.NONE, game.onTurn);
     }
 
 
@@ -148,72 +170,102 @@ public class ReversiRefactoredTest {
     @Test
     public void testTileInputA1() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
-        assertTrue("tile input: A1", game.isTileInputCorrect("A1"));
+        assertTrue(game.isTileInputCorrect("A1"));
     }
 
     @Test
     public void testTileInputAA() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
-        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
+        assertFalse(game.isTileInputCorrect("a1"));
     }
 
     @Test
     public void testTileInput11() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
-        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
+        assertFalse(game.isTileInputCorrect("a1"));
     }
 
     @Test
     public void testTileInputa1() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
-        assertFalse("tile input: a1", game.isTileInputCorrect("a1"));
+        assertFalse(game.isTileInputCorrect("a1"));
     }
 
     @Test
     public void testTileInput1A() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
-        assertFalse("tile input: 1A", game.isTileInputCorrect("1A"));
+        assertFalse(game.isTileInputCorrect("1A"));
     }
 
     @Test
     public void testTileInputI1() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
-        assertFalse("tile input: I1", game.isTileInputCorrect("I1"));
+        assertFalse(game.isTileInputCorrect("I1"));
     }
 
     @Test
     public void testTileInputA9() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
-        assertFalse("tile input: A9", game.isTileInputCorrect("A9"));
+        assertFalse(game.isTileInputCorrect("A9"));
     }
 
     @Test
     public void testTileInputI9() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
-        assertFalse("tile input: I9", game.isTileInputCorrect("I9"));
+        assertFalse(game.isTileInputCorrect("I9"));
     }
 
 
     // setTile
 
     @Test
-    public void testSetTileA1B() throws IncorrectGameConfigFileException {
+    public void testSetTileA1() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
         game.setTile("A1", Player.B);
 
-        assertEquals("set player B on tile A1", Player.B, getTile(game, Alpha.A, 1));
+        assertEquals(Player.B, getTile(game, Alpha.A, 1));
     }
 
     @Test(expected = IncorrectGameConfigFileException.class)
-    public void testSetTileAllAlpha() throws IncorrectGameConfigFileException {
+    public void testSetTileAA() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
         game.setTile("AA", Player.B);
     }
 
     @Test(expected = IncorrectGameConfigFileException.class)
-    public void testSetTileAllNum() throws IncorrectGameConfigFileException {
+    public void testSetTile11() throws IncorrectGameConfigFileException {
         ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
         game.setTile("11", Player.B);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testSetTilea1() throws IncorrectGameConfigFileException {
+        ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
+        game.setTile("a1", Player.B);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testSetTile1A() throws IncorrectGameConfigFileException {
+        ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
+        game.setTile("1A", Player.B);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testSetTileI1() throws IncorrectGameConfigFileException {
+        ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
+        game.setTile("I1", Player.B);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testSetTileA9() throws IncorrectGameConfigFileException {
+        ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
+        game.setTile("A9", Player.B);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testSetTileI9() throws IncorrectGameConfigFileException {
+        ReversiRefactored game = new ReversiRefactored("game_init_b_starts.txt");
+        game.setTile("I9", Player.B);
     }
 
 

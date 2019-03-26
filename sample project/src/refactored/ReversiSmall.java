@@ -1,7 +1,5 @@
 package refactored;
 
-import exception.IncorrectGameConfigFileException;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -10,34 +8,34 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class ReversiMoveException {
+public class ReversiSmall {
 
     private static final int SIZE = 8;
     Player[][] playground;
-    private HashMap<Player, Integer> left = new HashMap<>() {{ put(Player.B, 0); put(Player.W, 0); }};
+    int leftB = 0;
+    int leftW = 0;
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
     Player winner = Player.NONE;
     boolean ended = false;
 
-    ReversiMoveException() {
+    ReversiSmall() {
     }
 
-    ReversiMoveException(String gameFilename) throws IncorrectGameConfigFileException {
+    ReversiSmall(String gameFilename) {
         try {
             String[] gameConfig = readGameConfig(gameFilename);
             initGame(gameConfig);
             initTilesCount();
-        } catch (IncorrectGameConfigFileException e) {
+        } catch (Exception e) {
             ended = true;
-            throw new IncorrectGameConfigFileException(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
-    private void run() throws IncorrectGameConfigFileException {
+    private void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
             String line;
@@ -50,51 +48,54 @@ public class ReversiMoveException {
                 execute(line);
                 reader.close();
             }
-        } catch (IOException e) {
-            throw new IncorrectGameConfigFileException("IO exception occurred on reading user input: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("IO exception occurred on reading input: " + e.getMessage());
         }
     }
 
-    String[] readGameConfig(String gameFilename) throws IncorrectGameConfigFileException {
+    String[] readGameConfig(String gameFilename) {
         String[] gameConfig = new String[] {};
         File gameFile = new File("./game_config/" + gameFilename);
         Path path = gameFile.toPath();
         try {
             gameConfig = Files.readAllLines(path).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            throw new IncorrectGameConfigFileException("Game configuration file does not exist.");
+            System.out.println("Could not open game configuration file.");
         } catch (IOException e) {
-            throw new IncorrectGameConfigFileException("Could not read game configuration file.", e);
+            System.out.println("Could not read game configuration file.");
         }
         return gameConfig;
     }
 
-    void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
+    void initGame(String[] gameConfig) {
         if (gameConfig == null) {
-            throw new IncorrectGameConfigFileException("Game configuration is null");
+            System.out.println("Game configuration is null");
+            return;
         }
         if (gameConfig.length != 3) {
-            throw new IncorrectGameConfigFileException("Game configuration must contain 3 lines.");
+            System.out.println("Game configuration must contain 3 lines.");
+            return;
         }
         try {
             setOnTurn(gameConfig[0]);
             createPlayground();
             fillPlayground(gameConfig);
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new IncorrectGameConfigFileException("Game configuration is incorrect.");
+            System.out.println("Game configuration is incorrect.");
         }
     }
 
-    void setOnTurn(String player) throws IncorrectGameConfigFileException {
-        if (!isOnTurnInputCorrect(player)) {
-            throw new IncorrectGameConfigFileException("Incorrect player on turn input.");
+    void setOnTurn(String player) {
+        if (player == null || ! player.matches("[B|W]")) {
+            System.out.println("Incorrect player on turn input.");
+            return;
         }
         onTurn = Player.valueOf(player);
     }
 
-    boolean isOnTurnInputCorrect(String onTurn) {
-        return onTurn != null && onTurn.matches("[B|W]");
-    }
+//    boolean isOnTurnInputCorrect(String onTurn) {
+//        return onTurn != null && onTurn.matches("[B|W]");
+//    }
 
     void createPlayground() {
         playground = new Player[SIZE][SIZE];
@@ -105,7 +106,7 @@ public class ReversiMoveException {
         }
     }
 
-    void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
+    void fillPlayground(String[] gameConfig) {
         try {
             for (int i = 1; i < 3; i++) {
                 String[] tiles = gameConfig[i].split(" ");
@@ -114,32 +115,33 @@ public class ReversiMoveException {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
+            System.out.println("Game configuration file is incorrect.");
         }
     }
 
-    void setTile(String tile, Player player) throws IncorrectGameConfigFileException {
-        if (!isTileInputCorrect(tile)) {
-            throw new IncorrectGameConfigFileException("Incorrect tile input");
+    void setTile(String tile, Player player) {
+        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
+            System.out.println("Incorrect tile input");
+            return;
         }
         int r = Integer.parseInt(tile.substring(1, 2)) - 1;
         int c = Alpha.valueOf(tile.substring(0, 1)).getValue();
         playground[r][c] = player;
     }
 
-    void initTilesCount() throws IncorrectGameConfigFileException {
+    void initTilesCount() {
         try {
             for (int r = 0; r < SIZE; r++) {
                 for (int c = 0; c < SIZE; c++) {
                     if (playground[r][c] == Player.B) {
-                        left.put(Player.B, left.get(Player.B) + 1);
+                        leftB++;
                     } else if (playground[r][c] == Player.W) {
-                        left.put(Player.W, left.get(Player.W) + 1);
+                        leftW++;
                     }
                 }
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            throw new IncorrectGameConfigFileException("Playground  is not valid");
+            System.out.println("Playground  is not valid" + e.getMessage());
         }
     }
 
@@ -164,15 +166,15 @@ public class ReversiMoveException {
     }
 
     int getLeftB() {
-        return left.get(Player.B);
+        return leftB;
     }
 
     int getLeftW() {
-        return left.get(Player.W);
+        return leftW;
     }
 
     void execute(String tile) {
-        if (!isTileInputCorrect(tile)) {
+        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
             System.out.println("Incorrect tile input");
             return;
         }
@@ -181,12 +183,12 @@ public class ReversiMoveException {
         move(c, r);
     }
 
-    boolean isTileInputCorrect(String tile) {
-        if (tile.length() != 2) return false;
-        String r = tile.substring(1, 2);
-        String c = tile.substring(0, 1);
-        return r.matches("[1-8]") && c.matches("[A-H]");
-    }
+//    boolean isTileInputCorrect(String tile) {
+//        if (tile.length() != 2) return false;
+//        String r = tile.substring(1, 2);
+//        String c = tile.substring(0, 1);
+//        return r.matches("[1-8]") && c.matches("[A-H]");
+//    }
 
     void move(Alpha c0, int r0) {
         int r = r0 - 1;
@@ -267,17 +269,26 @@ public class ReversiMoveException {
         return toFLip;
     }
 
-    void flipTiles(ArrayList<List<Integer>> tiles) {
-        tiles.forEach(tile -> {
-            Player previous = playground[tile.get(0)][tile.get(1)];
-            playground[tile.get(0)][tile.get(1)] = onTurn;
-            if (previous == Player.NONE) {
-                left.put(onTurn, left.get(onTurn) + 1);
-            } else if (previous != onTurn) {
-                left.put(previous, left.get(previous) - 1);
-                left.put(onTurn, left.get(onTurn) + 1);
+    void flipTiles(List<List<Integer>> tiles) {
+        for (List<Integer> tile : tiles) {
+            int r = tile.get(0);
+            int c = tile.get(1);
+            if (playground[r][c] == onTurn) break;
+            if (playground[r][c] == Player.NONE) {
+                playground[r][c] = onTurn;
+                if (onTurn == Player.B) leftB++;
+                else if (onTurn == Player.W) leftW++;
+            } else {
+                playground[r][c] = onTurn;
+                if (onTurn == Player.B) {
+                    leftB++;
+                    leftW--;
+                } else {
+                    leftW++;
+                    leftB--;
+                }
             }
-        });
+        }
     }
 
     boolean areValidMoves() {
@@ -320,13 +331,8 @@ public class ReversiMoveException {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        ReversiMoveException rev;
-        try {
-            rev = new ReversiMoveException(fileName);
-            rev.run();
-        } catch (IncorrectGameConfigFileException e) {
-            System.out.println(e.getMessage());
-        }
+        ReversiSmall rev = new ReversiSmall(fileName);
+        rev.run();
 
     }
 

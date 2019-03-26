@@ -102,6 +102,20 @@ public class ReversiFileExceptionTest {
         assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("A"));
     }
 
+    @Test
+    public void testIsOnTurnInputCorrectNONE() {
+        ReversiFileException game = rev;
+
+        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("NONE"));
+    }
+
+    @Test
+    public void testIsOnTurnInputCorrectnull() {
+        ReversiFileException game = rev;
+
+        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect(null));
+    }
+
 
     // setOnTurn
 
@@ -122,6 +136,14 @@ public class ReversiFileExceptionTest {
     }
 
     @Test
+    public void testSetOnTurnA() {
+        ReversiFileException game = rev;
+        game.setOnTurn("A");
+
+        assertEquals(Player.NONE, game.onTurn);
+    }
+
+    @Test
     public void testSetOnTurnNone() {
         ReversiFileException game = rev;
         game.setOnTurn("NONE");
@@ -130,9 +152,9 @@ public class ReversiFileExceptionTest {
     }
 
     @Test
-    public void testSetOnTurnA() {
+    public void testSetOnTurnnull() {
         ReversiFileException game = rev;
-        game.setOnTurn("A");
+        game.setOnTurn(null);
 
         assertEquals(Player.NONE, game.onTurn);
     }
@@ -202,7 +224,7 @@ public class ReversiFileExceptionTest {
     // setTile
 
     @Test
-    public void testSetTileA1B() {
+    public void testSetTileA1() {
         ReversiFileException game = new ReversiFileException("game_init_b_starts.txt");
         game.setTile("A1", Player.B);
 
@@ -210,7 +232,7 @@ public class ReversiFileExceptionTest {
     }
 
     @Test
-    public void testSetTileAllAlpha() {
+    public void testSetTileAA() {
         ReversiFileException game = new ReversiFileException("game_init_b_starts.txt");
         game.setTile("AA", Player.B);
 
@@ -220,9 +242,59 @@ public class ReversiFileExceptionTest {
     }
 
     @Test
-    public void testSetTileAllNum() {
+    public void testSetTile11() {
         ReversiFileException game = new ReversiFileException("game_init_b_starts.txt");
         game.setTile("11", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTilea1() {
+        ReversiFileException game = new ReversiFileException("game_init_b_starts.txt");
+        game.setTile("a1", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTile1A() {
+        ReversiFileException game = new ReversiFileException("game_init_b_starts.txt");
+        game.setTile("1A", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTileI1() {
+        ReversiFileException game = new ReversiFileException("game_init_b_starts.txt");
+        game.setTile("I1", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTileA9() {
+        ReversiFileException game = new ReversiFileException("game_init_b_starts.txt");
+        game.setTile("A9", Player.B);
+
+        Player[][] expectedPlayground = getInitPlayground();
+        assertArrayEquals(expectedPlayground, game.playground);
+        assertEquals(Player.B, game.onTurn);
+    }
+
+    @Test
+    public void testSetTileI9() {
+        ReversiFileException game = new ReversiFileException("game_init_b_starts.txt");
+        game.setTile("I9", Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
         assertArrayEquals(expectedPlayground, game.playground);

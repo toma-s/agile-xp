@@ -94,7 +94,7 @@ class ReversiRefactored {
     }
 
     boolean isOnTurnInputCorrect(String onTurn) {
-        return onTurn.matches("[B|W]");
+        return onTurn != null && onTurn.matches("[B|W]");
     }
 
     void createPlayground() {
