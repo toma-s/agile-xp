@@ -1,25 +1,30 @@
 package refactored;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-class ReversiFileException {
+public class ReversiAbstrLevel {
 
     private static final int SIZE = 8;
     Player[][] playground;
-    private HashMap<Player, Integer> left = new HashMap<>() {{ put(Player.B, 0); put(Player.W, 0); }};
+    int leftB = 0;
+    int leftW = 0;
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
     Player winner = Player.NONE;
     boolean ended = false;
 
-    ReversiFileException() {
+    ReversiAbstrLevel() {
     }
 
-    ReversiFileException(Path gameFilePath) {
+    ReversiAbstrLevel(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
@@ -79,16 +84,16 @@ class ReversiFileException {
     }
 
     void setOnTurn(String player) {
-        if (!isOnTurnInputCorrect(player)) {
+        if (player == null || ! player.matches("[B|W]")) {
             System.out.println("Incorrect player on turn input.");
             return;
         }
         onTurn = Player.valueOf(player);
     }
 
-    boolean isOnTurnInputCorrect(String onTurn) {
-        return onTurn != null && onTurn.matches("[B|W]");
-    }
+//    boolean isOnTurnInputCorrect(String onTurn) {
+//        return onTurn != null && onTurn.matches("[B|W]");
+//    }
 
     void createPlayground() {
         playground = new Player[SIZE][SIZE];
@@ -113,7 +118,7 @@ class ReversiFileException {
     }
 
     void setTile(String tile, Player player) {
-        if (!isTileInputCorrect(tile)) {
+        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
             System.out.println("Incorrect tile input");
             return;
         }
@@ -127,9 +132,9 @@ class ReversiFileException {
             for (int r = 0; r < SIZE; r++) {
                 for (int c = 0; c < SIZE; c++) {
                     if (playground[r][c] == Player.B) {
-                        left.put(Player.B, left.get(Player.B) + 1);
+                        leftB++;
                     } else if (playground[r][c] == Player.W) {
-                        left.put(Player.W, left.get(Player.W) + 1);
+                        leftW++;
                     }
                 }
             }
@@ -159,15 +164,15 @@ class ReversiFileException {
     }
 
     int getLeftB() {
-        return left.get(Player.B);
+        return leftB;
     }
 
     int getLeftW() {
-        return left.get(Player.W);
+        return leftW;
     }
 
     void execute(String tile) {
-        if (!isTileInputCorrect(tile)) {
+        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
             System.out.println("Incorrect tile input");
             return;
         }
@@ -176,26 +181,19 @@ class ReversiFileException {
         move(c, r);
     }
 
-    boolean isTileInputCorrect(String tile) {
-        if (tile.length() != 2) return false;
-        String r = tile.substring(1, 2);
-        String c = tile.substring(0, 1);
-        return r.matches("[1-8]") && c.matches("[A-H]");
-    }
-
     void move(Alpha c0, int r0) {
         int r = r0 - 1;
         int c = c0.getValue();
 
-        if (!(isWithinPlayground(r, c))) {
+        if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
-        if (!isEmpty(r, c)) {
+        if (playground[r][c] != Player.NONE) {
             System.out.println("Move on not empty tile is not permitted");
             return;
         }
-        if (isGameOver()) {
+        if (winner != Player.NONE) {
             System.out.println("The game is over. No moves are permitted");
             return;
         }
@@ -207,21 +205,18 @@ class ReversiFileException {
         }
         flipTiles(tilesToFlip);
 
-        swapPlayerOnTurn();
+        if (onTurn == Player.W) onTurn = Player.B;
+        else if (onTurn == Player.B) onTurn = Player.W;
         if (! areValidMoves()) endGame();
     }
 
-    boolean isWithinPlayground(int r, int c) {
-        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
-    }
+//    boolean isEmpty(int r, int c) {
+//        return playground[r][c] == Player.NONE;
+//    }
 
-    boolean isEmpty(int r, int c) {
-        return playground[r][c] == Player.NONE;
-    }
-
-    boolean isGameOver() {
-        return winner != Player.NONE;
-    }
+//    boolean isGameOver() {
+//        return winner != Player.NONE;
+//    }
 
     ArrayList<List<Integer>> getTilesToFlip(int r0, int c0) {
         ArrayList<List<Integer>> toFLip = new ArrayList<>();
@@ -236,16 +231,16 @@ class ReversiFileException {
             int c = c0;
             r += direction[0];
             c += direction[1];
-            if (isWithinPlayground(r, c) && playground[r][c] != opposite) continue;
+            if (r >= 0 && c >= 0 && r < SIZE && c < SIZE && playground[r][c] != opposite) continue;
             r += direction[0];
             c += direction[1];
-            if (!isWithinPlayground(r, c)) continue;
+            if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) continue;
             while (playground[r][c] == opposite) {
                 r += direction[0];
                 c += direction[1];
-                if (!isWithinPlayground(r, c)) break;
+                if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) break;
             }
-            if (!isWithinPlayground(r, c)) continue;
+            if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) continue;
             if (playground[r][c] != onTurn) continue;
             while (true) {
                 r -= direction[0];
@@ -262,17 +257,26 @@ class ReversiFileException {
         return toFLip;
     }
 
-    void flipTiles(ArrayList<List<Integer>> tiles) {
-        tiles.forEach(tile -> {
-            Player previous = playground[tile.get(0)][tile.get(1)];
-            playground[tile.get(0)][tile.get(1)] = onTurn;
-            if (previous == Player.NONE) {
-                left.put(onTurn, left.get(onTurn) + 1);
-            } else if (previous != onTurn) {
-                left.put(previous, left.get(previous) - 1);
-                left.put(onTurn, left.get(onTurn) + 1);
+    void flipTiles(List<List<Integer>> tiles) {
+        for (List<Integer> tile : tiles) {
+            int r = tile.get(0);
+            int c = tile.get(1);
+            if (playground[r][c] == onTurn) break;
+            if (playground[r][c] == Player.NONE) {
+                playground[r][c] = onTurn;
+                if (onTurn == Player.B) leftB++;
+                else if (onTurn == Player.W) leftW++;
+            } else {
+                playground[r][c] = onTurn;
+                if (onTurn == Player.B) {
+                    leftB++;
+                    leftW--;
+                } else {
+                    leftW++;
+                    leftB--;
+                }
             }
-        });
+        }
     }
 
     boolean areValidMoves() {
@@ -294,10 +298,10 @@ class ReversiFileException {
         return tiles;
     }
 
-    void swapPlayerOnTurn() {
-        if (onTurn == Player.W) onTurn = Player.B;
-        else if (onTurn == Player.B) onTurn = Player.W;
-    }
+//    void swapPlayerOnTurn() {
+//        if (onTurn == Player.W) onTurn = Player.B;
+//        else if (onTurn == Player.B) onTurn = Player.W;
+//    }
 
     void endGame() {
         printTilesLeftCount();
@@ -318,7 +322,7 @@ class ReversiFileException {
         File gameFile = new File("./game_config_num/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
-        ReversiFileException rev = new ReversiFileException(gameFilePath);
+        ReversiAbstrLevel rev = new ReversiAbstrLevel(gameFilePath);
         rev.run();
 
     }

@@ -22,9 +22,9 @@ class ReversiRefactored {
     ReversiRefactored() {
     }
 
-    ReversiRefactored(String gameFilename) throws IncorrectGameConfigFileException {
+    ReversiRefactored(Path gameFilePath) throws IncorrectGameConfigFileException {
         try {
-            String[] gameConfig = readGameConfig(gameFilename);
+            String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
             initTilesCount();
         } catch (IncorrectGameConfigFileException e) {
@@ -56,12 +56,10 @@ class ReversiRefactored {
         }
     }
 
-    String[] readGameConfig(String gameFilename) throws IncorrectGameConfigFileException {
+    String[] readGameConfig(Path gameFilePath) throws IncorrectGameConfigFileException {
         String[] gameConfig;
-        File gameFile = new File("./game_config/" + gameFilename);
-        Path path = gameFile.toPath();
         try {
-            gameConfig = Files.readAllLines(path).toArray(new String[0]);
+            gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
             throw new IncorrectGameConfigFileException("Game configuration file does not exist.");
         } catch (IOException e) {
@@ -94,7 +92,7 @@ class ReversiRefactored {
     }
 
     boolean isOnTurnInputCorrect(String onTurn) {
-        return onTurn.matches("[B|W]");
+        return onTurn != null && onTurn.matches("[B|W]");
     }
 
     void createPlayground() {
@@ -312,10 +310,13 @@ class ReversiRefactored {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
+        File gameFile = new File("./game_config_num/" + fileName);
+        Path gameFilePath = gameFile.toPath();
+
         ReversiRefactored rev;
 
         try {
-            rev = new ReversiRefactored(fileName);
+            rev = new ReversiRefactored(gameFilePath);
             rev.run();
         } catch (IncorrectGameConfigFileException e) {
             System.out.println(e.getMessage());

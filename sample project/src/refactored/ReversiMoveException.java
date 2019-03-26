@@ -26,9 +26,9 @@ public class ReversiMoveException {
     ReversiMoveException() {
     }
 
-    ReversiMoveException(String gameFilename) throws IncorrectGameConfigFileException {
+    ReversiMoveException(Path gameFilePath) throws IncorrectGameConfigFileException {
         try {
-            String[] gameConfig = readGameConfig(gameFilename);
+            String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
             initTilesCount();
         } catch (IncorrectGameConfigFileException e) {
@@ -55,12 +55,10 @@ public class ReversiMoveException {
         }
     }
 
-    String[] readGameConfig(String gameFilename) throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {};
-        File gameFile = new File("./game_config/" + gameFilename);
-        Path path = gameFile.toPath();
+    String[] readGameConfig(Path gameFilePath) throws IncorrectGameConfigFileException {
+        String[] gameConfig;
         try {
-            gameConfig = Files.readAllLines(path).toArray(new String[0]);
+            gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
             throw new IncorrectGameConfigFileException("Game configuration file does not exist.");
         } catch (IOException e) {
@@ -93,7 +91,7 @@ public class ReversiMoveException {
     }
 
     boolean isOnTurnInputCorrect(String onTurn) {
-        return onTurn.matches("[B|W]");
+        return onTurn != null && onTurn.matches("[B|W]");
     }
 
     void createPlayground() {
@@ -320,9 +318,12 @@ public class ReversiMoveException {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
+        File gameFile = new File("./game_config_num/" + fileName);
+        Path gameFilePath = gameFile.toPath();
+
         ReversiMoveException rev;
         try {
-            rev = new ReversiMoveException(fileName);
+            rev = new ReversiMoveException(gameFilePath);
             rev.run();
         } catch (IncorrectGameConfigFileException e) {
             System.out.println(e.getMessage());
