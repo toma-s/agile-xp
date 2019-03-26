@@ -24,9 +24,9 @@ public class ReversiOneThing {
     ReversiOneThing() {
     }
 
-    ReversiOneThing(String gameFilename) {
+    ReversiOneThing(Path gameFilePath) {
         try {
-            String[] gameConfig = readGameConfig(gameFilename);
+            String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
             initTilesCount();
         } catch (Exception e) {
@@ -62,12 +62,10 @@ public class ReversiOneThing {
         }
     }
 
-    String[] readGameConfig(String gameFilename) {
+    String[] readGameConfig(Path gameFilePath) {
         String[] gameConfig = new String[] {};
-        File gameFile = new File("./game_config/" + gameFilename);
-        Path path = gameFile.toPath();
         try {
-            gameConfig = Files.readAllLines(path).toArray(new String[0]);
+            gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
             System.out.println("Could not open game configuration file.");
         } catch (IOException e) {
@@ -453,7 +451,10 @@ public class ReversiOneThing {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        ReversiOneThing rev = new ReversiOneThing(fileName);
+        File gameFile = new File("./game_config_num/" + fileName);
+        Path gameFilePath = gameFile.toPath();
+
+        ReversiOneThing rev = new ReversiOneThing(gameFilePath);
         rev.run();
 
     }

@@ -634,7 +634,7 @@ public class ReversiAbstrLevelTest {
 //
 //    @Test
 //    public void testSwapPlayerOnTurnWtoB() {
-//        ReversiAbstrLevel game = new ReversiAbstrLevel("game_init_w_starts.txt");
+//        ReversiAbstrLevel game = new ReversiAbstrLevel(gameInitWStarts);
 //        game.swapPlayerOnTurn();
 //
 //        assertEquals("...", Player.B, game.onTurn);

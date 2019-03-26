@@ -3,6 +3,8 @@ package refactored;
 import javafx.util.Pair;
 import org.junit.Test;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -11,6 +13,19 @@ import static org.junit.Assert.assertEquals;
 public class ReversiOneThingTest {
 
     private ReversiOneThing rev = new ReversiOneThing();
+
+    private String gameConfigDir = "./game_config/";
+    private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
+    private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
+    private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
+    private Path gameComplete = new File(gameConfigDir + "game_complete.txt").toPath();
+    private Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    private Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
+    private Path gameInitBStarts = new File(gameConfigDir + "game_init_b_starts.txt").toPath();
+    private Path gameInitWStarts = new File(gameConfigDir + "game_init_w_starts.txt").toPath();
+    private Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    private Path gameOneLine = new File(gameConfigDir + "game_one_line.txt").toPath();
+    private Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
 
 
     // Player
@@ -43,7 +58,7 @@ public class ReversiOneThingTest {
     @Test
     public void testReadGameConfigInit() {
         ReversiOneThing game = rev;
-        String[] gameConfig = game.readGameConfig("game_init_b_starts.txt");
+        String[] gameConfig = game.readGameConfig(gameInitBStarts);
 
         assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
         assertEquals("1st line of initial config file", "B", gameConfig[0]);
@@ -54,7 +69,7 @@ public class ReversiOneThingTest {
     @Test
     public void testReadGameConfigEmpty() {
         ReversiOneThing game = rev;
-        String[] gameConfig = game.readGameConfig("game_empty.txt");
+        String[] gameConfig = game.readGameConfig(gameEmpty);
 
         assertEquals("lines number of empty config file", 0, gameConfig.length);
     }
@@ -62,7 +77,7 @@ public class ReversiOneThingTest {
     @Test
     public void testReadGameConfigOneLine() {
         ReversiOneThing game = rev;
-        String[] gameConfig = game.readGameConfig("game_one_line.txt");
+        String[] gameConfig = game.readGameConfig(gameOneLine);
 
         assertEquals("lines number of 1-line config file", 1, gameConfig.length);
         assertEquals("1st line of 1-line config file", "E4 D5", gameConfig[0]);
@@ -71,7 +86,7 @@ public class ReversiOneThingTest {
     @Test
     public void testReadGameConfigNotExisting() {
         ReversiOneThing game = rev;
-        String[] gameConfig = game.readGameConfig("game_not_existing.txt");
+        String[] gameConfig = game.readGameConfig(gameNotExisting);
 
         String[] expectedGameConfig = new String[]{};
         assertArrayEquals(expectedGameConfig, gameConfig);
@@ -134,7 +149,7 @@ public class ReversiOneThingTest {
 
 //    @Test
 //    public void testSetTileA1() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.setTile("A1", Player.B);
 //
 //        assertEquals("set player B on tile A1", Player.B, getTile(game, Alpha.A, 1));
@@ -142,7 +157,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testSetTileAA() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.setTile("AA", Player.B);
 //
 //        Player[][] expectedPlayground = getInitPlayground();
@@ -152,7 +167,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testSetTile11() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.setTile("11", Player.B);
 //
 //        Player[][] expectedPlayground = getInitPlayground();
@@ -162,7 +177,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testSetTilea1() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.setTile("a1", Player.B);
 //
 //        Player[][] expectedPlayground = getInitPlayground();
@@ -172,7 +187,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testSetTile1A() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.setTile("1A", Player.B);
 //
 //        Player[][] expectedPlayground = getInitPlayground();
@@ -182,7 +197,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testSetTileI1() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.setTile("I1", Player.B);
 //
 //        Player[][] expectedPlayground = getInitPlayground();
@@ -192,7 +207,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testSetTileA9() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.setTile("A9", Player.B);
 //
 //        Player[][] expectedPlayground = getInitPlayground();
@@ -202,7 +217,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testSetTileI9() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.setTile("I9", Player.B);
 //
 //        Player[][] expectedPlayground = getInitPlayground();
@@ -340,7 +355,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testGetLeftB() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
     }
@@ -349,7 +364,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testGetLeftW() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
@@ -359,7 +374,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testInit() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 
         assertEquals("on turn player on initial game config", Player.B, game.onTurn);
         assertEquals("playground on initial game config", Player.W, getTile(game, Alpha.D, 4));
@@ -372,7 +387,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testEmpty() {
-        ReversiOneThing game = new ReversiOneThing("game_empty.txt");
+        ReversiOneThing game = new ReversiOneThing(gameEmpty);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -382,7 +397,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testOneLine() {
-        ReversiOneThing game = new ReversiOneThing("game_one_line.txt");
+        ReversiOneThing game = new ReversiOneThing(gameOneLine);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -392,7 +407,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testAllNum() {
-        ReversiOneThing game = new ReversiOneThing("game_all_num.txt");
+        ReversiOneThing game = new ReversiOneThing(gameAllNum);
 
         assertArrayEquals(getEmptyPlayground(), game.playground);
         assertEquals(Player.B, game.onTurn);
@@ -402,7 +417,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testAllAlpha() {
-        ReversiOneThing game = new ReversiOneThing("game_all_alpha.txt");
+        ReversiOneThing game = new ReversiOneThing(gameAllAlpha);
 
         assertArrayEquals(getEmptyPlayground(), game.playground);
         assertEquals(Player.B, game.onTurn);
@@ -412,7 +427,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testNoOnTurn() {
-        ReversiOneThing game = new ReversiOneThing("game_no_on_turn.txt");
+        ReversiOneThing game = new ReversiOneThing(gameNoOnTurn);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -425,7 +440,7 @@ public class ReversiOneThingTest {
 
 //    @Test
 //    public void testGetTilesToFlipInit32() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        ArrayList<List<Integer>> tiles = game.getTilesToFlip(3, 2);
 //        ArrayList<List<Integer>> expected = new ArrayList<>();
 //        expected.add(Arrays.asList(3, 3));
@@ -440,7 +455,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testGetTilesToFlipInit00() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        ArrayList<List<Integer>> tiles = game.getTilesToFlip(0, 0);
 //
 //        assertEquals("tiles to flip on onit - (0, 0)", 0, tiles.size());
@@ -451,7 +466,7 @@ public class ReversiOneThingTest {
 
 //    @Test
 //    public void testFlipTiles() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        ArrayList<List<Integer>> tiles = new ArrayList<>();
 //        tiles.add(Arrays.asList(3, 3));
 //        tiles.add(Arrays.asList(3, 2));
@@ -465,7 +480,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testGetPossibleMovesEmptyInit() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        ArrayList<String> tiles = game.getPossibleMoves();
 //
 //        assertEquals("valid length", 4, tiles.size());
@@ -488,14 +503,14 @@ public class ReversiOneThingTest {
 
     @Test
     public void testAreValidMovesInit() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 
         assertTrue("...", game.areValidMoves());
     }
 
     @Test
     public void testAreValidMovesOnEnd() {
-        ReversiOneThing game = new ReversiOneThing("game_complete.txt");
+        ReversiOneThing game = new ReversiOneThing(gameComplete);
 
         assertFalse("...", game.areValidMoves());
     }
@@ -505,7 +520,7 @@ public class ReversiOneThingTest {
 
 //    @Test
 //    public void testEndGame() {
-//        ReversiOneThing game = new ReversiOneThing("game_complete.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameComplete);
 //        game.endGame();
 //
 //        assertTrue("...", game.ended);
@@ -517,7 +532,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testMoveOnNotEmpty() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
         game.move(Alpha.E,5);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -525,7 +540,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testMoveOutOfBoundsBelow() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
         game.move(Alpha.A,9);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -533,7 +548,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testMoveOutOfBoundsAbove() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
         game.move(Alpha.A,0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -541,7 +556,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testMoveOnNotAdjacent() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
         game.move(Alpha.A,1);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -549,7 +564,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testMoveFlipRight() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
         game.move(Alpha.C,4);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 4));
@@ -561,7 +576,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testMoveFlipUp() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
         game.move(Alpha.E, 6);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.E, 5));
@@ -573,7 +588,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testMoveFlipLeft() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
         game.move(Alpha.F, 5);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.E, 5));
@@ -585,7 +600,7 @@ public class ReversiOneThingTest {
 
     @Test
     public void testMoveFlipDown() {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
         game.move(Alpha.D, 3);
 
         assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 4));
@@ -714,7 +729,7 @@ public class ReversiOneThingTest {
 
 //    @Test
 //    public void testExecute() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.execute("C4");
 //
 //        assertEquals("check if flipped", Player.B, getTile(game, Alpha.D, 4));
@@ -726,7 +741,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testExecuteA1() {
-//        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
 //        game.execute("A1");
 //
 //        assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -734,7 +749,7 @@ public class ReversiOneThingTest {
 //
 //    @Test
 //    public void testFinishGame() {
-//        ReversiOneThing game = new ReversiOneThing("game_almost_complete.txt");
+//        ReversiOneThing game = new ReversiOneThing(gameAlmostComplete);
 //        game.execute("G7");
 //
 //        assertFalse("if the are valid moves", game.areValidMoves());
@@ -752,7 +767,7 @@ public class ReversiOneThingTest {
 
 
     private ReversiOneThing setMoves(ArrayList<Pair<Alpha, Integer>> moves) {
-        ReversiOneThing game = new ReversiOneThing("game_init_b_starts.txt");
+        ReversiOneThing game = new ReversiOneThing(gameInitBStarts);
         for (Pair<Alpha, Integer> move  : moves) {
             Alpha r = move.getKey();
             Integer c = move.getValue();

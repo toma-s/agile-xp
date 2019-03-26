@@ -19,9 +19,9 @@ class ReversiFileException {
     ReversiFileException() {
     }
 
-    ReversiFileException(String gameFilename) {
+    ReversiFileException(Path gameFilePath) {
         try {
-            String[] gameConfig = readGameConfig(gameFilename);
+            String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
             initTilesCount();
         } catch (Exception e) {
@@ -48,12 +48,10 @@ class ReversiFileException {
         }
     }
 
-    String[] readGameConfig(String gameFilename) {
+    String[] readGameConfig(Path gameFilePath) {
         String[] gameConfig = new String[] {};
-        File gameFile = new File("./game_config/" + gameFilename);
-        Path path = gameFile.toPath();
         try {
-            gameConfig = Files.readAllLines(path).toArray(new String[0]);
+            gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
             System.out.println("Could not open game configuration file.");
         } catch (IOException e) {
@@ -317,7 +315,10 @@ class ReversiFileException {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        ReversiFileException rev = new ReversiFileException(fileName);
+        File gameFile = new File("./game_config_num/" + fileName);
+        Path gameFilePath = gameFile.toPath();
+
+        ReversiFileException rev = new ReversiFileException(gameFilePath);
         rev.run();
 
     }
