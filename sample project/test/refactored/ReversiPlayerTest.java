@@ -109,6 +109,17 @@ public class ReversiPlayerTest {
     }
 
     @Test
+    public void testReadGameConfigInitW() {
+        ReversiPlayer game = rev;
+        String[] gameConfig = game.readGameConfig(gameInitWStarts);
+
+        assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
+        assertEquals("1st line of initial config file", "W", gameConfig[0]);
+        assertEquals("2nd line of initial config file", "E4 D5", gameConfig[1]);
+        assertEquals("3rd line of initial config file", "D4 E5", gameConfig[2]);
+    }
+
+    @Test
     public void testInitGameNoLines() {
         String[] gameConfig = new String[] {};
         ReversiPlayer game = rev;
