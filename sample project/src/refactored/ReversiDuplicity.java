@@ -194,7 +194,7 @@ public class ReversiDuplicity {
         int r = r0 - 1;
         int c = c0.getValue();
 
-        if (!(isWithinPlayground(r, c))) {
+        if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
@@ -218,9 +218,9 @@ public class ReversiDuplicity {
         if (! areValidMoves()) endGame();
     }
 
-    boolean isWithinPlayground(int r, int c) {
-        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
-    }
+//    boolean isWithinPlayground(int r, int c) {
+//        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
+//    }
 
     boolean isEmpty(int r, int c) {
         return playground[r][c] == Player.NONE;
@@ -243,16 +243,16 @@ public class ReversiDuplicity {
             int c = c0;
             r += direction[0];
             c += direction[1];
-            if (isWithinPlayground(r, c) && playground[r][c] != opposite) continue;
+            if (r >= 0 && c >= 0 && r < SIZE && c < SIZE && playground[r][c] != opposite) continue;
             r += direction[0];
             c += direction[1];
-            if (!isWithinPlayground(r, c)) continue;
+            if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) continue;
             while (playground[r][c] == opposite) {
                 r += direction[0];
                 c += direction[1];
-                if (!isWithinPlayground(r, c)) break;
+                if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) break;
             }
-            if (!isWithinPlayground(r, c)) continue;
+            if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) continue;
             if (playground[r][c] != onTurn) continue;
             while (true) {
                 r -= direction[0];

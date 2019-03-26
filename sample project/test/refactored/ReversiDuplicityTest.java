@@ -530,47 +530,47 @@ public class ReversiDuplicityTest {
 
     // isWithinPlayground
 
-    @Test
-    public void testIsWithinPlayground00() {
-        ReversiDuplicity game = rev;
-
-        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
-    }
-
-    @Test
-    public void testIsWithinPlayground77() {
-        ReversiDuplicity game = rev;
-
-        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
-    }
-
-    @Test
-    public void testIsWithinPlaygroundNegR() {
-        ReversiDuplicity game = rev;
-
-        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
-    }
-
-    @Test
-    public void testIsWithinPlaygroundNegC() {
-        ReversiDuplicity game = rev;
-
-        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
-    }
-
-    @Test
-    public void testIsWithinPlaygroundLargeR() {
-        ReversiDuplicity game = rev;
-
-        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
-    }
-
-    @Test
-    public void testIsWithinPlaygroundLargeC() {
-        ReversiDuplicity game = rev;
-
-        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
-    }
+//    @Test
+//    public void testIsWithinPlayground00() {
+//        ReversiDuplicity game = rev;
+//
+//        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlayground77() {
+//        ReversiDuplicity game = rev;
+//
+//        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlaygroundNegR() {
+//        ReversiDuplicity game = rev;
+//
+//        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlaygroundNegC() {
+//        ReversiDuplicity game = rev;
+//
+//        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlaygroundLargeR() {
+//        ReversiDuplicity game = rev;
+//
+//        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlaygroundLargeC() {
+//        ReversiDuplicity game = rev;
+//
+//        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
+//    }
 
 
     // isEmpty
