@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ReversiConstant {
 
-    private static final int SIZE = 8;
+//    private static final int SIZE = 8;
     int[][] playground;
     int leftB = 0;
     int leftW = 0;
@@ -92,9 +92,9 @@ public class ReversiConstant {
             } else if ("W".equals(gameConfig[0])) {
                 onTurn = 0;
             }
-            playground = new int[SIZE][SIZE];
-            for (int r = 0; r < SIZE; r++) {
-                for (int c = 0; c < SIZE; c++) {
+            playground = new int[8][8];
+            for (int r = 0; r < 8; r++) {
+                for (int c = 0; c < 8; c++) {
                     playground[r][c] = -1;
                 }
             }
@@ -121,8 +121,8 @@ public class ReversiConstant {
 
     void initTilesCount() {
         try {
-            for (int r = 0; r < SIZE; r++) {
-                for (int c = 0; c < SIZE; c++) {
+            for (int r = 0; r < 8; r++) {
+                for (int c = 0; c <= 7; c++) {
                     if (playground[r][c] == 1) {
                         leftB++;
                     } else if (playground[r][c] == 0) {
@@ -138,9 +138,9 @@ public class ReversiConstant {
     private void printPlayground() {
         String[] abc = "ABCDEFGH".split("");
         System.out.printf("  %s\n", String.join(" ", abc));
-        for (int r = 0; r < SIZE; r++) {
+        for (int r = 0; r <= 7; r++) {
             System.out.print((r + 1) + " ");
-            for (int c = 0; c < SIZE; c++) {
+            for (int c = 0; c < 8; c++) {
                 switch (playground[r][c]) {
                     case 1: System.out.print("B "); break;
                     case 0: System.out.print("W "); break;
@@ -167,7 +167,7 @@ public class ReversiConstant {
         int r = r0 - 1;
         int c = c0.getValue();
 
-        if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) {
+        if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
@@ -192,16 +192,16 @@ public class ReversiConstant {
             int dirC = c;
             dirR += direction[0];
             dirC += direction[1];
-            if (dirR >= 0 && dirC >= 0 && dirR < SIZE && dirC < SIZE && playground[dirR][dirC] != opposite) continue;
+            if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
-            if (!(dirR >= 0 && dirC >= 0 && dirR < SIZE && dirC < SIZE)) continue;
+            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];
-                if (!(dirR >= 0 && dirC >= 0 && dirR < SIZE && dirC < SIZE)) break;
+                if (!(dirR >= 0 && dirC >= 0 && dirR <= 7 && dirC < 8)) break;
             }
-            if (!(dirR >= 0 && dirC >= 0 && dirR < SIZE && dirC < SIZE)) continue;
+            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
             if (playground[dirR][dirC] != onTurn) continue;
             while (true) {
                 dirR -= direction[0];
@@ -267,16 +267,16 @@ public class ReversiConstant {
                     int dirC = c;
                     dirR += direction[0];
                     dirC += direction[1];
-                    if (dirR >= 0 && dirC >= 0 && dirR < SIZE && dirC < SIZE && playground[dirR][dirC] != opposite) continue;
+                    if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
                     dirR += direction[0];
                     dirC += direction[1];
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < SIZE && dirC < SIZE)) continue;
+                    if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
                     while (playground[dirR][dirC] == opposite) {
                         dirR += direction[0];
                         dirC += direction[1];
-                        if (!(dirR >= 0 && dirC >= 0 && dirR < SIZE && dirC < SIZE)) break;
+                        if (!(dirR >= 0 && dirC >= 0 && dirR <= 7 && dirC <= 7)) break;
                     }
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < SIZE && dirC < SIZE)) continue;
+                    if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
                     if (playground[dirR][dirC] != onTurn) continue;
                     while (true) {
                         dirR -= direction[0];
