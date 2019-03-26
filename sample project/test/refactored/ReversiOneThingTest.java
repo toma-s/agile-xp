@@ -95,6 +95,18 @@ public class ReversiOneThingTest {
     }
 
     @Test
+    public void testReadGameConfigFourLines() {
+        ReversiOneThing game = rev;
+        String[] gameConfig = game.readGameConfig(gameFourLines);
+
+        assertEquals(4, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
+        assertEquals("E4 D5", gameConfig[1]);
+        assertEquals("D4 E5", gameConfig[2]);
+        assertEquals("E4 D5", gameConfig[3]);
+    }
+
+    @Test
     public void testReadGameConfigNotExisting() {
         ReversiOneThing game = rev;
         String[] gameConfig = game.readGameConfig(gameNotExisting);
@@ -409,6 +421,16 @@ public class ReversiOneThingTest {
     @Test
     public void testOneLine() {
         ReversiOneThing game = new ReversiOneThing(gameOneLine);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testFourLines() {
+        ReversiOneThing game = new ReversiOneThing(gameFourLines);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);

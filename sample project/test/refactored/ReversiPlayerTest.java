@@ -138,6 +138,18 @@ public class ReversiPlayerTest {
     }
 
     @Test
+    public void testReadGameConfigFourLines() {
+        ReversiPlayer game = rev;
+        String[] gameConfig = game.readGameConfig(gameFourLines);
+
+        assertEquals(4, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
+        assertEquals("E4 D5", gameConfig[1]);
+        assertEquals("D4 E5", gameConfig[2]);
+        assertEquals("E4 D5", gameConfig[3]);
+    }
+
+    @Test
     public void testInitGameFourLines() {
         String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5", "E4 D5"};
         ReversiPlayer game = rev;
@@ -232,6 +244,16 @@ public class ReversiPlayerTest {
     @Test
     public void testOneLine() {
         ReversiPlayer game = new ReversiPlayer(gameOneLine);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(-1, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
+    public void testFourLines() {
+        ReversiPlayer game = new ReversiPlayer(gameFourLines);
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);

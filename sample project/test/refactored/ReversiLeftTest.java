@@ -97,6 +97,18 @@ public class ReversiLeftTest {
     }
 
     @Test
+    public void testReadGameConfigFourLines() {
+        ReversiLeft game = rev;
+        String[] gameConfig = game.readGameConfig(gameFourLines);
+
+        assertEquals(4, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
+        assertEquals("E4 D5", gameConfig[1]);
+        assertEquals("D4 E5", gameConfig[2]);
+        assertEquals("E4 D5", gameConfig[3]);
+    }
+
+    @Test
     public void testReadGameConfigNotExisting() {
         ReversiLeft game = rev;
         String[] gameConfig = game.readGameConfig(gameNotExisting);
@@ -501,6 +513,16 @@ public class ReversiLeftTest {
     @Test
     public void testOneLine() {
         ReversiLeft game = new ReversiLeft(gameOneLine);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testFourLines() {
+        ReversiLeft game = new ReversiLeft(gameFourLines);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);

@@ -97,6 +97,18 @@ public class ReversiDuplicityTest {
     }
 
     @Test
+    public void testReadGameConfigFourLines() {
+        ReversiDuplicity game = rev;
+        String[] gameConfig = game.readGameConfig(gameFourLines);
+
+        assertEquals(4, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
+        assertEquals("E4 D5", gameConfig[1]);
+        assertEquals("D4 E5", gameConfig[2]);
+        assertEquals("E4 D5", gameConfig[3]);
+    }
+
+    @Test
     public void testReadGameConfigNotExisting() {
         ReversiDuplicity game = rev;
         String[] gameConfig = game.readGameConfig(gameNotExisting);
@@ -500,6 +512,16 @@ public class ReversiDuplicityTest {
     @Test
     public void testOneLine() {
         ReversiDuplicity game = new ReversiDuplicity(gameOneLine);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testFourLines() {
+        ReversiDuplicity game = new ReversiDuplicity(gameFourLines);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);

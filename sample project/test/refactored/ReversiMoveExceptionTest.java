@@ -97,6 +97,18 @@ public class ReversiMoveExceptionTest {
         assertEquals("1st line of 1-line config file", "E4 D5", gameConfig[0]);
     }
 
+    @Test
+    public void testReadGameConfigFourLines() throws IncorrectGameConfigFileException {
+        ReversiMoveException game = rev;
+        String[] gameConfig = game.readGameConfig(gameFourLines);
+
+        assertEquals(4, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
+        assertEquals("E4 D5", gameConfig[1]);
+        assertEquals("D4 E5", gameConfig[2]);
+        assertEquals("E4 D5", gameConfig[3]);
+    }
+
     @Test(expected = IncorrectGameConfigFileException.class)
     public void testReadGameConfigNotExisting() throws IncorrectGameConfigFileException {
         ReversiMoveException game = rev;
@@ -459,6 +471,11 @@ public class ReversiMoveExceptionTest {
     @Test(expected = IncorrectGameConfigFileException.class)
     public void testOneLine() throws IncorrectGameConfigFileException {
         ReversiMoveException game = new ReversiMoveException(gameOneLine);
+    }
+
+    @Test(expected = IncorrectGameConfigFileException.class)
+    public void testFourLines() throws IncorrectGameConfigFileException {
+        ReversiMoveException game = new ReversiMoveException(gameFourLines);
     }
 
     @Test(expected = IncorrectGameConfigFileException.class)
