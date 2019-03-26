@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReversiAlpha {
+public class ReversiPlayer {
 
     private static final int SIZE = 8;
     Player[][] playground;
@@ -21,10 +21,10 @@ public class ReversiAlpha {
     Player winner = Player.NONE;
     boolean ended = false;
 
-    ReversiAlpha() {
+    ReversiPlayer() {
     }
 
-    ReversiAlpha(String gameFilename) {
+    ReversiPlayer(String gameFilename) {
         try {
             String[] gameConfig = readGameConfig(gameFilename);
             initGame(gameConfig);
@@ -303,7 +303,7 @@ public class ReversiAlpha {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        ReversiAlpha rev = new ReversiAlpha(fileName);
+        ReversiPlayer rev = new ReversiPlayer(fileName);
         rev.run();
 
     }
