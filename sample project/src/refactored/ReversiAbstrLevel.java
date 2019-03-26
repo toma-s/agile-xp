@@ -282,17 +282,8 @@ public class ReversiAbstrLevel {
     }
 
     boolean areValidMoves() {
-        ArrayList<String> tiles = new ArrayList<>();
-        for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++) {
-                if (playground[r][c] != Player.NONE) continue;
-                if (getTilesToFlip(r,c).size() == 0) continue;
-                String rString = String.valueOf(r + 1);
-                String cString = Alpha.values()[c].toString();
-                tiles.add(cString.concat(rString));
-            }
-        }
-        return tiles.size() != 0;
+        int movesNum = getPossibleMoves().size();
+        return movesNum != 0;
     }
 
     ArrayList<String> getPossibleMoves() {
