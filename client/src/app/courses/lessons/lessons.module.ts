@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import { LessonEditComponent } from './lesson-edit/lesson-edit.component';
 import { LessonsRoutingModule } from './lessons-routing.module';
 import { ExercisesModule } from './exercises/exercises.module';
@@ -34,7 +36,8 @@ import { ExercisesModule } from './exercises/exercises.module';
     MatTableModule,
     MatExpansionModule,
     LessonsRoutingModule,
-    ExercisesModule
+    ExercisesModule,
+    DragDropModule
   ]
 })
 export class LessonsModule { }

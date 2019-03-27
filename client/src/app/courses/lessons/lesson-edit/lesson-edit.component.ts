@@ -5,6 +5,8 @@ import { switchMap } from 'rxjs/operators';
 import { ExerciseService } from '../exercises/shared/exercise.service';
 import { Lesson } from '../shared/lesson.model';
 import { Exercise } from '../exercises/shared/exercise.model';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { forkJoin, of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-lesson-edit',
@@ -58,6 +60,31 @@ export class LessonEditComponent implements OnInit {
 
   getIndex() {
     this.index = this.exercises.length;
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    const newExercisesArray = Object.assign([], this.exercises);
+    moveItemInArray(this.exercises, event.previousIndex, event.currentIndex);
+    this.reorder(newExercisesArray);
+  }
+
+  reorder(newExercisesArray) {
+    const observables = [];
+    for (let i = 0; i < this.exercises.length; i++) {
+      this.exercises[i].index = i;
+      observables.push(
+        this.exerciseService.updateExercise(this.exercises[i].id, this.exercises[i])
+      )
+    }
+    forkJoin(...observables).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+        this.exercises = Object.assign([], newExercisesArray);
+      }
+    )
   }
 
 }

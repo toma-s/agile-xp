@@ -4,7 +4,15 @@
 
 	<div *ngIf="index">
 
-		<p>todo exercises list</p>
+		<h2>{{lesson.name}}</h2>
+
+		<h4>{{lesson.description}}</h4>
+
+		<p>Exercises:</p>
+
+		<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+			<div class="example-box" *ngFor="let exercise of exercises" cdkDrag>{{exercise.name}}</div>
+		</div>
 
 		<button mat-raised-button color="primary" [routerLink]="['exerciseCreate', index]" routerLinkActive="active">
 			Add exercise
