@@ -23,12 +23,16 @@
   </div>
 </div>
 
-<mat-toolbar class="toolbar" *ngIf="exercises">
+<mat-toolbar class="toolbar">
   <mat-toolbar-row>
     <a mat-button color="primary" routerLink="../../../../" routerLinkActive="active">Back</a>
 
-    <div class="nav">
-      <a mat-button color="primary" [routerLink]="['../../../../', previous]" routerLinkActive="active">Previous</a>
+    <div class="nav" >
+      <a mat-button color="primary" [routerLink]="['../', previousExerciseId]" routerLinkActive="active"
+        [disabled]="0 > previousIndex">Previous</a>
+
+      <a mat-button color="primary" [routerLink]="['../', nextExerciseId]" routerLinkActive="active"
+        [disabled]="nextIndex >= maxIndex">Next</a>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
