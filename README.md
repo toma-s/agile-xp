@@ -14,4 +14,4 @@ It provides the user with practical tasks for test-driven development, exercises
 
 The application will include basic system administration tools: users administration, managing the exercises and their results, and source code version control. 
 
-The system will be implemented using technologies/tools: JavaScript (jQuery, Bootstrap), MySQL, HTML5, CSS, compilers of selected languages, testing libraries, virtual server.
+The system will be implemented using technologies/tools: Java, Spring framework (Spring Boot, Spring Data JPA), Maven, PostgreSQL, JUnit4 testing library, Angular, TypeScript, SCSS, HTML5, virtual server.
