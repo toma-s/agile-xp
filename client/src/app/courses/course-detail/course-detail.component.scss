@@ -6,14 +6,13 @@ button {
     padding: 20px;
 }
 
-// .exercise {
+.exercise {
 
     .exercise__name {
-        float: left;
+        width: 50%;
     }
 
     .exercise__type {
-        float: right;
         color: darkgrey;
     }
-// }
+}
