@@ -11,7 +11,10 @@ import { Exercise } from '../shared/exercise.model';
 })
 export class ExerciseSolveComponent implements OnInit {
 
-  exercise: Exercise = new Exercise();
+  exercise: Exercise;
+  exercises: Array<Exercise>;
+  previous: number;
+  next: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,6 +23,7 @@ export class ExerciseSolveComponent implements OnInit {
 
   ngOnInit() {
     this.getExercise();
+    this.getExercises();
   }
 
   getExercise() {
@@ -32,8 +36,25 @@ export class ExerciseSolveComponent implements OnInit {
       data => {
         console.log(data);
         this.exercise = data;
-      }
+      },
+      error => console.log(error)
     );
+  }
+
+  getExercises() {
+    this.exerciseService.getExercisesList()
+      .subscribe(
+        data => {
+          console.log(data);
+          this.exercises = data;
+          this.getPrevious();
+        },
+        error => console.log(error)
+      );   
+  }
+
+  getPrevious() {
+    
   }
 
 }

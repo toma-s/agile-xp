@@ -1,4 +1,3 @@
-
 <div class="mat-elevation-z2 card">
   <div *ngIf="exercise">
     <div [ngSwitch]="exercise.type">
@@ -24,8 +23,12 @@
   </div>
 </div>
 
-<mat-toolbar class="toolbar">
+<mat-toolbar class="toolbar" *ngIf="exercises">
   <mat-toolbar-row>
-    <a mat-button color="primary" routerLink="../../../../" routerLinkActive="active" mat-button>Back</a>
+    <a mat-button color="primary" routerLink="../../../../" routerLinkActive="active">Back</a>
+
+    <div class="nav">
+      <a mat-button color="primary" [routerLink]="['../../../../', previous]" routerLinkActive="active">Previous</a>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
