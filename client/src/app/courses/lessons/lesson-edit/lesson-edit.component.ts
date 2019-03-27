@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LessonService } from '../shared/lesson.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { ExerciseService } from '../exercises/shared/exercise.service';
+import { Lesson } from '../shared/lesson.model';
+import { Exercise } from '../exercises/shared/exercise.model';
 
 @Component({
   selector: 'app-lesson-edit',
@@ -11,10 +13,13 @@ import { Observable } from 'rxjs';
 })
 export class LessonEditComponent implements OnInit {
 
-  lesson$: Observable<any>;
+  lesson: Lesson;
+  exercises: Array<Exercise>;
+  index: number;
 
   constructor(
     private lessonServise: LessonService,
+    private exerciseService: ExerciseService,
     private route: ActivatedRoute
   ) { }
 
@@ -23,13 +28,36 @@ export class LessonEditComponent implements OnInit {
   }
 
   getLessonByIdParam() {
-    const lesson = this.route.paramMap.pipe(
+    const lesson$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.lessonServise.getLessonById(Number(params.get('lessonId')))
       )
     );
-    console.log(lesson);
-    this.lesson$ = lesson;
+    lesson$
+      .subscribe(
+        data => {
+          console.log(data);
+          this.lesson = data;
+          this.getExercises();
+        },
+        error => console.log(error)
+      );
+  }
+
+  getExercises() {
+    this.exerciseService.getExercisesByLessonId(this.lesson.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.exercises = data;
+          this.getIndex();
+        },
+        error => console.log(error)
+      )
+  }
+
+  getIndex() {
+    this.index = this.exercises.length;
   }
 
 }

@@ -21,10 +21,10 @@ VALUES	(1, 'Black box', 'black-box'),
 		(4, 'Theory', 'theory'),
 		(5, 'Self-Evaluation', 'self-eval');
 
-INSERT INTO exercises (id, name, lesson_id, type, created, description)
-VALUES	(1, 'Exercise one', 1, 'white-box', '2019-03-09 20:53:09.851', 'Exercise one description'),
-		(2, 'Exercise two', 1, 'black-box', '2019-03-09 20:53:09.851', 'Exercise two description'),
-		(3, 'Exercise three', 1, 'quiz', '2019-03-09 20:53:09.851', 'Exercise three description');
+INSERT INTO exercises (id, name, index, lesson_id, type, created, description)
+VALUES	(1, 'Exercise one', 0, 1, 'white-box', '2019-03-09 20:53:09.851', 'Exercise one description'),
+		(2, 'Exercise two', 1, 1, 'black-box', '2019-03-09 20:53:09.851', 'Exercise two description'),
+		(3, 'Exercise three', 2, 1, 'quiz', '2019-03-09 20:53:09.851', 'Exercise three description');
 
 insert into exercise_sources (id, exercise_id, filename, code)
 values	(

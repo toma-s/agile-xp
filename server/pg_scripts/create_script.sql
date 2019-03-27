@@ -26,6 +26,7 @@ drop table if exists exercises CASCADE;
 create table exercises (
 	id serial primary key,
 	name text,
+	index int,
 	lesson_id int references lessons on delete cascade,
 	type text references exercise_types on delete cascade,
 	created timestamp,
