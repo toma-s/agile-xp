@@ -2,11 +2,26 @@
 
 <nav>
 
-  <a mat-stroked-button color="primary" routerLink="courseCreate" routerLinkActive="active" mat-button>Create course</a>
+  <a routerLink="courseCreate" routerLinkActive="active">
+    <mat-card class="link">
+      <mat-icon class="link__icon">add</mat-icon>
+      <mat-card-content class="link__content">
+        <button mat-button type="button" mat-stroked-button color="primary">
+          Create course
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </a>
 
-  <a mat-stroked-button color="primary" routerLink="coursesList" routerLinkActive="active" mat-button>View courses</a>
+
+  <a routerLink="coursesList" routerLinkActive="active">
+  <mat-card class="link">
+    <mat-icon class="link__icon">remove_red_eye</mat-icon>
+    <mat-card-content class="link__content">
+      <button mat-button type="button" mat-stroked-button color="primary">
+        View courses
+      </button>
+    </mat-card-content>
+  </mat-card></a>
 
 </nav>
-
-
-

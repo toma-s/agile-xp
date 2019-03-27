@@ -5,7 +5,7 @@ import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
 import { CoursesComponent } from './courses/courses.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'sendTask', pathMatch: 'full'},
+  { path: '', redirectTo: 'courses', pathMatch: 'full'},
   { path: 'courses', component: CoursesComponent},
   { path: 'sendTask', component: SendTaskComponent},
   { path: 'tasksList', component: TasksListComponent}

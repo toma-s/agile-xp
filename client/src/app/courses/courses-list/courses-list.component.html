@@ -31,7 +31,7 @@
         Created
       </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.created}}
+        {{element.created | date:'EEEE, MMMM d, y. HH:mm zzzz' }}
       </mat-cell>
     </ng-container>
 

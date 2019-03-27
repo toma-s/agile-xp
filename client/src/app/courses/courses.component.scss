@@ -1,14 +1,34 @@
 h1 {
-    a {
-        text-decoration: none;
-        color: black;
-    }
+  a {
+    text-decoration: none;
+    color: black;
+  }
 }
 
 nav {
-    a {
+  a {
     text-decoration: none;
     color: black;
     margin-right: 20px;
-    }
+  }
+}
+
+.link {
+  width: 20%;
+  margin: 20px;
+  float: left;
+
+  .link__icon {
+    display: inline-block;
+    height: 100%;
+    font-size: 64px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .link__content button {
+    width: 100%;
+  }
 }

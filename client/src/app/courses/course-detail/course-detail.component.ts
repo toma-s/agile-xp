@@ -99,5 +99,15 @@ export class CourseDetailComponent implements OnInit {
     });
     return typeName;
   }
+  
+  delete(lesson: Lesson) {
+    this.lessonService.deleteLesson(lesson.id).subscribe(
+      data => {
+        console.log(data);
+        this.getLessons();
+      },
+      error => console.log(error)
+    );
+  }
 
 }

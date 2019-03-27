@@ -30,7 +30,4 @@ export class CourseService {
   deleteAll(): Observable<any> {
     return this.http.delete(`${this.baseUrl}/delete`, { responseType: 'text'});
   }
-
-  // TODO: 24-Feb-19 findByAuthor
-  // TODO: 24-Feb-19 updateCourse
 }
