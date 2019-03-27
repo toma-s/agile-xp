@@ -3,6 +3,8 @@ package com.agilexp.controller;
 import com.agilexp.model.Lesson;
 import com.agilexp.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -45,5 +47,12 @@ public class LessonController {
         return lessons;
     }
 
-    // TODO: 05-Mar-19 getById getAll deleteById deleteAll updateLesson
+    @DeleteMapping("/lessons/{id}")
+    public ResponseEntity<String> deleteLesson(@PathVariable("id") long id) {
+        System.out.println("Delete Lesson with ID = " + id + "...");
+
+        repository.deleteById(id);
+
+        return new ResponseEntity<>("Lesson has been deleted!", HttpStatus.OK);
+    }
 }

@@ -22,6 +22,8 @@ export class LessonService {
   getLessonById(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
-}
 
-// todo getLessonById GetLessonsList deleteLesson deleteAll
+  deleteLesson(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text'});
+  }
+}

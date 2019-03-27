@@ -65,7 +65,4 @@ public class CourseController {
         return new ResponseEntity<>("All Courses have been deleted!", HttpStatus.OK);
     }
 
-    // TODO: 24-Feb-19 findByAuthor
-    // TODO: 24-Feb-19 updateCourse
-
 }
