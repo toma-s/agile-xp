@@ -25,6 +25,7 @@ public class ExerciseController {
         Timestamp created = new Timestamp(date.getTime());
         Exercise _exercise = repository.save(new Exercise(
                 exercise.getName(),
+                exercise.getIndex(),
                 exercise.getLessonId(),
                 exercise.getType(),
                 created,

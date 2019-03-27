@@ -13,6 +13,9 @@ public class Exercise {
     @Column(name="name")
     private String name;
 
+    @Column(name="index")
+    private long index;
+
     @Column(name="lesson_id")
     private long lessonId;
 
@@ -27,10 +30,11 @@ public class Exercise {
 
     public Exercise() {}
 
-    public Exercise(String name, long lessonId, String type, Timestamp created, String description) {
+    public Exercise(String name, long index, long lessonId, String type, Timestamp created, String description) {
+        this.name = name;
+        this.index = index;
         this.lessonId = lessonId;
         this.type = type;
-        this.name = name;
         this.created = created;
         this.description = description;
     }
@@ -49,6 +53,14 @@ public class Exercise {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getIndex() {
+        return index;
+    }
+
+    public void setIndex(long index) {
+        this.index = index;
     }
 
     public long getLessonId() {
@@ -88,6 +100,7 @@ public class Exercise {
         return "Exercise{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", index=" + index +
                 ", lessonId=" + lessonId +
                 ", type='" + type + '\'' +
                 ", created=" + created +

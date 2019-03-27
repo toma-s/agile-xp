@@ -1,5 +1,15 @@
 .card {
-  height: calc(100vh - 64px - 40px - 40px);
+  height: calc(100vh - 64px - 40px - 40px - 5vh);
   width: calc(100%);
 }
 
+.toolbar {
+  min-height: 5vh;
+  max-height: 5vh;
+  margin-top: 15px;
+  
+  &__run {
+    float: left;
+    width: 72px;
+  }
+}

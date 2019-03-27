@@ -4,11 +4,13 @@ import { ExerciseTypeService } from '../shared/exercise-type.service';
 import { Exercise } from '../shared/exercise.model';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ExerciseService } from '../shared/exercise.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ExerciseSource } from '../shared/exercise-source.model';
 import { ExerciseSourceService } from '../shared/exercise-source.service';
 import { ExerciseTestService } from '../shared/exercise-test.service';
 import { ExerciseTest } from '../shared/exercise-test.model';
+import { LessonService } from '../../shared/lesson.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-exercise-create',
@@ -21,6 +23,7 @@ export class ExerciseCreateComponent implements OnInit {
   types = new Array<ExerciseType>();
   exerciseFormGroup: FormGroup;
   exercise: Exercise = new Exercise();
+  index: number;
 
   constructor(
     private exerciseSercise: ExerciseService,
@@ -33,6 +36,7 @@ export class ExerciseCreateComponent implements OnInit {
 
   ngOnInit() {
     this.getExerciseTypes();
+    this.getIndex();
     this.createForm();
   }
 
@@ -44,6 +48,21 @@ export class ExerciseCreateComponent implements OnInit {
         },
         error => console.log(error)
       );
+  }
+
+  getIndex() {
+    const index$ = this.route.paramMap.pipe(
+      switchMap(((params: ParamMap) =>
+        params.get('index')
+      ))
+    );
+    index$.subscribe(
+      data => {
+        console.log(data);
+        this.index = Number(data);
+      },
+      error => console.log(error)
+    );
   }
 
   createForm() {
@@ -76,6 +95,7 @@ export class ExerciseCreateComponent implements OnInit {
 
   setExerciseValues() {
     this.exercise.name = this.exerciseFormGroup.value.name;
+    this.exercise.index = this.index;
     this.exercise.lessonId = this.route.snapshot.params['lessonId'];
     this.exercise.type = this.exerciseFormGroup.value.selectedTypeValue;
     this.exercise.description = this.exerciseFormGroup.value.description;
