@@ -29,12 +29,8 @@ public class FileSystemStorageService implements StorageService {
         String taskDirectoryName = "task" + id;
         Path directoryLocation;
 
-        try {
-            Files.createDirectory(Paths.get(this.rootLocation.resolve(taskDirectoryName).toString()));
-            directoryLocation = this.rootLocation.resolve(taskDirectoryName);
-        } catch (IOException e) {
-            throw new StorageException("Failed to create folder for task");
-        }
+        createFolder(taskDirectoryName);
+        directoryLocation = this.rootLocation.resolve(taskDirectoryName);
 
         try {
             if (taskContent.getSourceFilename().isEmpty() || taskContent.getTestFilename().isEmpty()) {
@@ -78,11 +74,15 @@ public class FileSystemStorageService implements StorageService {
         String directoryName = "exercise_test" + exerciseTest.getId();
 
         Path directoryLocation = createFolder(directoryName);
-        storeFile(fileName, code, directoryLocation);
+        try {
+            storeFile(fileName, code, directoryLocation);
+        } catch (StorageException e) {
+            throw new StorageException(e.getMessage());
+        }
     }
 
     private Path createFolder(String directoryName) {
-        if (Files.isDirectory(Paths.get(this.rootLocation.toString(), directoryName))) {
+        if (Paths.get(this.rootLocation.toString(), directoryName).toFile().isDirectory()) {
             return this.rootLocation.resolve(directoryName);
         }
 
@@ -96,7 +96,7 @@ public class FileSystemStorageService implements StorageService {
         return directoryLocation;
     }
 
-    private void storeFile(String fileName, String code, Path directoryLocation) {
+    private void storeFile(String fileName, String code, Path directoryLocation) throws StorageException {
         try {
             if (fileName.isEmpty()) {
                 throw new StorageException("Failed to store file with empty name");
