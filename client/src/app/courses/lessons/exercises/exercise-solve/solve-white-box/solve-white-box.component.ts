@@ -20,7 +20,7 @@ import { SolutionEstimationService } from '../../shared/solution-estimation.serv
 })
 export class SolveWhiteBoxComponent implements OnInit {
 
-  editorOptions = { theme: 'vs', language: 'java' };
+  editorOptions = { theme: 'vs', language: 'java', minimap: {'enabled': false} };
 
   @Input() exercise: Exercise;
   exerciseSources: Array<ExerciseSource> = new Array<ExerciseSource>();
