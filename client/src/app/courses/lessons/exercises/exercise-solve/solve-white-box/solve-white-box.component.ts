@@ -5,7 +5,6 @@ import { SolutionTest } from '../../shared/solution-test.model';
 import { SolutionEstimation } from '../../shared/solution-extimation.model';
 import { ExerciseSourceService } from '../../shared/exercise-source.service';
 import { ExerciseTestService } from '../../shared/exercise-test.service';
-import { FormGroup } from '@angular/forms';
 import { ExerciseSource } from '../../shared/exercise-source.model';
 import { ExerciseTest } from '../../shared/exercise-test.model';
 import { Solution } from '../../shared/solution.model';
@@ -21,7 +20,7 @@ import { SolutionEstimationService } from '../../shared/solution-estimation.serv
 })
 export class SolveWhiteBoxComponent implements OnInit {
 
-  editorOptions = {theme: 'vs', language: 'java'};
+  editorOptions = { theme: 'vs', language: 'java' };
 
   @Input() exercise: Exercise;
   exerciseSources: Array<ExerciseSource> = new Array<ExerciseSource>();
@@ -39,7 +38,7 @@ export class SolveWhiteBoxComponent implements OnInit {
     private solutionSourceService: SolutonSourceService,
     private solutionTestService: SolutonTestService,
     private solutionEstimationService: SolutionEstimationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     console.log(this.exercise);
@@ -49,14 +48,14 @@ export class SolveWhiteBoxComponent implements OnInit {
 
   getSourceCodes() {
     this.exerciseCodeService.getExerciseSourcesByExerciseId(this.exercise.id)
-    .subscribe(
-      data => {
-        this.exerciseSources = data;
-        console.log(this.exerciseSources);
-        this.createSolutionSources(data);
-      },
-      error => console.log(error)
-    );
+      .subscribe(
+        data => {
+          this.exerciseSources = data;
+          console.log(this.exerciseSources);
+          this.createSolutionSources(data);
+        },
+        error => console.log(error)
+      );
   }
 
   createSolutionSources(sourceCodes: Array<ExerciseSource>) {

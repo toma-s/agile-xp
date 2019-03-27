@@ -4,19 +4,17 @@ import com.agilexp.compiler.Compiler;
 import com.agilexp.compiler.exception.CompilationFailedException;
 import com.agilexp.model.*;
 import com.agilexp.repository.*;
+import com.agilexp.storage.StorageException;
 import com.agilexp.storage.StorageService;
 import com.agilexp.tester.Tester;
 import com.agilexp.tester.exception.TestFailedException;
 import org.junit.runner.Result;
-import org.junit.runners.model.TestTimedOutException;
+import org.junit.runner.notification.Failure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -28,9 +26,6 @@ public class SolutionEstimationController {
 
     @Autowired
     private SolutionRepository solutionRepository;
-
-    @Autowired
-    private ExerciseRepository exerciseRepository;
 
     @Autowired
     private SolutionSourceRepository solutionSourceRepository;
@@ -58,25 +53,46 @@ public class SolutionEstimationController {
         Solution solution = solutionRepository.findById(solutionId);
         List<ExerciseTest> exerciseTests = exerciseTestRepository.findByExerciseId(solution.getExerciseId());
 
-        String solutionEstimationResult = getEstimationWithSolutionTests(solutionSources, solutionTests, solutionId);
-        String exerciseEstimationResult = getEstimation(solutionSources, exerciseTests, solutionId);
+        String estimation = getEstimation(solutionSources, solutionTests, exerciseTests, solutionId);
+        solutionEstimation.setEstimation(estimation);
 
-        solutionEstimation.setEstimation(solutionEstimationResult + exerciseEstimationResult);
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", solutionEstimation);
         return _solutionEstimation;
     }
 
-    private String getEstimationWithSolutionTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, long solutionId) {
-        storeFilesWithSolutionTests(solutionSources, solutionTests);
-        List<Path> filesPaths = getPathsWithSolutionTests(solutionSources, solutionTests);
+    private String getEstimation(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests,
+                                 List<ExerciseTest> exerciseTests, long solutionId) {
+        try {
+            String solutionEstimationResult = estimateWithPublicTests(solutionSources, solutionTests, solutionId);
+            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests, solutionId);
+            return solutionEstimationResult + exerciseEstimationResult;
+        } catch (StorageException e) {
+            e.printStackTrace();
+            return "File storing failed: " + e.getMessage();
+        } catch (CompilationFailedException e) {
+            e.printStackTrace();
+            return "Compilation failed: " + e.getMessage();
+        } catch (TestFailedException e) {
+            e.printStackTrace();
+            return "Tests run failed: " + e.getMessage();
+        }
+    }
+
+    private String estimateWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, long solutionId)
+            throws CompilationFailedException, TestFailedException {
+        try {
+            storeFilesWithPublicTests(solutionSources, solutionTests);
+        } catch (StorageException e) {
+            throw new StorageException(e.getMessage());
+        }
+        List<Path> filesPaths = getPathsWithPublicTests(solutionSources, solutionTests);
         Path outDirPath = storageService.load("solution_public" + solutionId);
 
         try {
             Compiler.compile(filesPaths, outDirPath);
         } catch (CompilationFailedException e) {
-            e.printStackTrace();
-            return "Compilation failed: " + e.getMessage();
+            throw new CompilationFailedException(e.getMessage());
         }
         System.out.println("compiled");
 
@@ -85,8 +101,7 @@ public class SolutionEstimationController {
             try {
                 solutionTestsResults.add(Tester.test(outDirPath, solutionTest.getFileName()));
             } catch (TestFailedException e) {
-                e.printStackTrace();
-                return "Tests run failed: " + e.getMessage();
+                throw new TestFailedException(e.getMessage());
             }
         }
         System.out.println("tested");
@@ -94,12 +109,16 @@ public class SolutionEstimationController {
         return getResult(solutionTestsResults, "Public");
     }
 
-    private void storeFilesWithSolutionTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests) {
-        solutionSources.forEach(storageService::store);
-        solutionTests.forEach(storageService::store);
+    private void storeFilesWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests) {
+        try {
+            solutionSources.forEach(storageService::store);
+            solutionTests.forEach(storageService::store);
+        } catch (StorageException e) {
+            throw new StorageException(e.getMessage());
+        }
     }
 
-    private List<Path> getPathsWithSolutionTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests) {
+    private List<Path> getPathsWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests) {
         List<Path> paths = new ArrayList<>();
         solutionSources.forEach(solutionSource ->
                 paths.add(storageService
@@ -112,9 +131,14 @@ public class SolutionEstimationController {
         return paths;
     }
 
-    private String getEstimation(List<SolutionSource> solutionSources, List<ExerciseTest> exerciseTests, long solutionId) {
-        storeFiles(solutionSources, exerciseTests);
-        List<Path> filesPaths = getPaths(solutionSources, exerciseTests);
+    private String estimateWithPrivateTests(List<SolutionSource> solutionSources, List<ExerciseTest> exerciseTests, long solutionId) {
+        try {
+            storeFilesWithPrivateTests(solutionSources, exerciseTests);
+        } catch (StorageException e) {
+            e.printStackTrace();
+            return "File storing failed: " + e.getMessage();
+        }
+        List<Path> filesPaths = getPathsWithPrivateTests(solutionSources, exerciseTests);
         Path outDirPath = storageService.load("solution_private" + solutionId);
 
         try {
@@ -138,12 +162,16 @@ public class SolutionEstimationController {
         return getResult(exerciseTestsResults, "Private");
     }
 
-    private void storeFiles(List<SolutionSource> solutionSources, List<ExerciseTest> exerciseTests) {
-        solutionSources.forEach(storageService::store);
-        exerciseTests.forEach(storageService::store);
+    private void storeFilesWithPrivateTests(List<SolutionSource> solutionSources, List<ExerciseTest> exerciseTests) {
+        try {
+            solutionSources.forEach(storageService::store);
+            exerciseTests.forEach(storageService::store);
+        } catch (StorageException e) {
+            throw new StorageException(e.getMessage());
+        }
     }
 
-    private List<Path> getPaths(List<SolutionSource> solutionSources, List<ExerciseTest> exerciseTests) {
+    private List<Path> getPathsWithPrivateTests(List<SolutionSource> solutionSources, List<ExerciseTest> exerciseTests) {
         List<Path> paths = new ArrayList<>();
         solutionSources.forEach(solutionSource ->
                 paths.add(storageService
@@ -171,18 +199,18 @@ public class SolutionEstimationController {
 
     private StringBuffer getResultInfo(Result result) {
         StringBuffer output = new StringBuffer();
-        output.append("Test runtime: ")
-            .append(result.getRunTime())
-            .append(" ms")
-            .append("\nTest success: ")
-            .append(result.wasSuccessful())
-            .append("\nFailures count: ")
-            .append(result.getFailureCount())
-            .append("\nFailures: ")
-            .append(result.getFailures())
-            .append("\nIgnored count: ")
-            .append(result.getIgnoreCount())
-            .append("\n\n");
+        output.append("Test runtime: ").append(result.getRunTime()).append(" ms")
+            .append("\nTest success: ").append(result.wasSuccessful())
+            .append("\nFailures count: ").append(result.getFailureCount());
+        if (result.getFailureCount() > 0) {
+            output.append("\nFailures: ");
+            List<Failure> failures = result.getFailures();
+            for (int i = 0; i < failures.size(); i++) {
+                Failure failure = failures.get(i);
+                output.append("\n").append(i + 1).append(") ").append(failure);
+            }
+        }
+        output.append("\nIgnored count: ").append(result.getIgnoreCount()).append("\n\n");
         return output;
     }
 }
