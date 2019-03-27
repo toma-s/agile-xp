@@ -17,6 +17,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import { CoursesModule } from './courses/courses.module';
@@ -52,7 +54,8 @@ import { CoursesModule } from './courses/courses.module';
     MatTabsModule,
     MatDialogModule,
     CoursesModule,
-    MonacoEditorModule.forRoot()
+    MonacoEditorModule.forRoot(),
+    DragDropModule
   ],
   providers: [CdkColumnDef],
   bootstrap: [AppComponent]

@@ -26,4 +26,8 @@ export class ExerciseService {
   getExercisesByLessonId(lessonId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/lesson/${lessonId}`);
   }
+
+  updateExercise(id: number, value: any): Observable<Object> {
+    return this.http.put(`${this.baseUrl}/${id}`, value)
+  }
 }
