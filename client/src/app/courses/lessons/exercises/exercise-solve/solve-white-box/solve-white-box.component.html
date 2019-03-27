@@ -10,6 +10,10 @@
       <div class="pane__out" *ngIf="solutionEstimation.estimation">
         <textarea readonly>{{ solutionEstimation.estimation }}</textarea>
       </div>
+
+      <div class="pane__run">
+        <button mat-button color="accent" class="toolbar__run" (click)="run()">Run</button>
+      </div>
     </div>
 
     <div class="pane__code">
@@ -65,10 +69,3 @@
     </div>
   </div>
 </div>
-
-<mat-toolbar class="toolbar">
-  <mat-toolbar-row>
-    <a mat-button color="primary" routerLink="../../../../" routerLinkActive="active" mat-button>Back</a>
-    <button class="toolbar__run" (click)="run()">Run</button>
-  </mat-toolbar-row>
-</mat-toolbar>

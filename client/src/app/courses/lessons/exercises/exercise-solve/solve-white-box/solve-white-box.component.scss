@@ -1,5 +1,5 @@
 .pane {
-  height: calc(100vh - 64px - 40px - 40px - 5vh);
+  height: calc(100vh - 64px - 40px - 40px);
   width: calc(100%);
   top: 0;
   left: 0;
@@ -44,6 +44,14 @@
         width: calc(100% - 3px);
       }
     }
+
+    .pane__run {
+      height: calc(40px - 1px);
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      border-top: 1px solid #ebebeb;
+    }
   }
 
   .pane__code {
@@ -52,7 +60,7 @@
     width: calc(37.5% - 1px);
 
     .container {
-      height: calc(100vh - 64px - 40px - 40px - 5vh - 48px - 2px);
+      height: calc(100vh - 64px - 40px - 40px - 48px - 2px);
       border: 1px solid #ebebeb;
       border-right: 0px solid;
 
@@ -64,12 +72,3 @@
   }
 }
 
-.toolbar {
-  min-height: 5vh;
-  max-height: 5vh;
-  
-  &__run {
-    float: left;
-    width: 72px;
-  }
-}

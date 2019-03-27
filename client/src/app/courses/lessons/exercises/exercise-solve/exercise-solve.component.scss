@@ -3,3 +3,12 @@
   width: calc(100%);
 }
 
+.toolbar {
+  min-height: 5vh;
+  max-height: 5vh;
+  
+  &__run {
+    float: left;
+    width: 72px;
+  }
+}
