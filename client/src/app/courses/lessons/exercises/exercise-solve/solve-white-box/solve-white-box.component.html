@@ -18,7 +18,7 @@
 
     <div class="output" *ngIf="solutionEstimation.estimation">
       <mat-divider></mat-divider>
-      <textarea readonly>{{ solutionEstimation.estimation }}</textarea>
+      <p>{{ solutionEstimation.estimation }}</p>
     </div>
 
   </div>
@@ -32,8 +32,8 @@
             {{ source.fileName }}
           </ng-template>
           <ng-template matTabContent>
-            <div class="input__container">
-              <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="source.code" class="input__editor">
+            <div class="input__editor">
+              <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="source.code" class="input__monaco">
               </ngx-monaco-editor>
             </div>
           </ng-template>
@@ -48,8 +48,8 @@
             {{ test.fileName }}
           </ng-template>
           <ng-template matTabContent>
-            <div class="input__container">
-              <ngx-monaco-editor [options]="editorOptions" class="input__editor" [(ngModel)]="test.code">
+            <div class="input__editor">
+              <ngx-monaco-editor [options]="editorOptions" class="input__monaco" [(ngModel)]="test.code">
               </ngx-monaco-editor>
             </div>
           </ng-template>
@@ -61,9 +61,9 @@
   <div class="mat-elevation-z2 card">
     <div class="input__group">
       <mat-tab-group>
-        <mat-tab>
+        <mat-tab *ngFor="let config of solutionConfigs">
           <ng-template mat-tab-label>
-            file name
+            {{ config.fileName }}
             <!-- <button mat-icon-button type="button">
               <mat-icon (click)="editFileName(test.controls.testFilename)">edit</mat-icon>
             </button>
@@ -72,7 +72,9 @@
             </button> -->
           </ng-template>
           <ng-template matTabContent>
-            file content
+            <div class="input__text">
+              <textarea>{{ config.text }}</textarea>
+            </div>
           </ng-template>
         </mat-tab>
         <!-- <mat-tab>

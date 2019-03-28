@@ -31,6 +31,7 @@ public class ExerciseConfigController {
         System.out.println("Get exercise configs with exercise id " + exerciseId + "...");
 
         List<ExerciseConfig> exerciseConfigs = new ArrayList<>(repository.findByExerciseId(exerciseId));
+        System.out.format("Found exercise configs from exercise %s: %s\n", exerciseId, exerciseConfigs);
         return exerciseConfigs;
     }
 }

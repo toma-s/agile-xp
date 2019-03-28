@@ -75,14 +75,13 @@ export class SolveWhiteBoxComponent implements OnInit {
   }
 
   getSourceTests() {
-    this.exerciseTestService.getExerciseTestsByExerciseId(this.exercise.id)
-      .subscribe(
-        data => {
-          this.exerciseTests = data;
-          console.log(this.exerciseTests);
-          this.createSolutionTests(data);
-        }
-      );
+    this.exerciseTestService.getExerciseTestsByExerciseId(this.exercise.id).subscribe(
+      data => {
+        this.exerciseTests = data;
+        console.log(this.exerciseTests);
+        this.createSolutionTests(data);
+      }
+    );
   }
 
   createSolutionTests(sourceTests: Array<ExerciseTest>) {
@@ -95,8 +94,29 @@ export class SolveWhiteBoxComponent implements OnInit {
   }
 
   getSourceConfigs() {
-    this.exerciseConfigService.
+    this.exerciseConfigService.getExerciseConfigsByExerciseId(this.exercise.id).subscribe(
+      data => {
+        console.log(data);
+        this.exerciseConfigs = data;
+        console.log(this.exerciseConfigs);
+        this.createSolutionConfigs();
+      },
+      error => console.log(error)
+    );
   }
+
+  createSolutionConfigs() {
+    // TODO | for all
+    this.solutionConfigs = Object.assign([], this.exerciseConfigs);
+    console.log(this.solutionConfigs);
+    // this.exerciseConfigs.forEach(ec => {
+    //   const exerciseConfig = new ExerciseConfig();
+    //   exerciseConfig.fileName = ec.fileName;
+    //   exerciseConfig.text = ec.text;
+    //   this.solutionConfigs.push(exerciseConfig);
+    // });
+  }
+
 
   run() {
     this.solutionEstimation.estimation = 'Running...';
