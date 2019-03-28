@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
@@ -18,6 +19,7 @@ import { CreateWhiteBoxComponent,
 import { SolveWhiteBoxComponent } from './exercise-solve/solve-white-box/solve-white-box.component';
 import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   entryComponents: [
@@ -28,7 +30,8 @@ import { ExercisesRoutingModule } from './exercises-routing.module';
     CreateWhiteBoxComponent,
     SolveWhiteBoxComponent,
     ExerciseSolveComponent,
-    DialogOverviewExampleDialogComponent
+    DialogOverviewExampleDialogComponent,
+    ToolbarComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +52,7 @@ import { ExercisesRoutingModule } from './exercises-routing.module';
     MatExpansionModule,
     MatTabsModule,
     MatDialogModule,
+    MatDividerModule,
     ExercisesRoutingModule,
     MonacoEditorModule
   ]

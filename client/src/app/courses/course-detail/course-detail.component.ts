@@ -5,12 +5,12 @@ import { switchMap, filter, map } from 'rxjs/operators';
 
 import { CourseService } from '../shared/course.service';
 import { LessonService } from '../lessons/shared/lesson.service';
-import { ExerciseService } from '../lessons/exercises/shared/exercise.service';
-import { Exercise } from '../lessons/exercises/shared/exercise.model';
+import { ExerciseService } from '../lessons/exercises/shared/exercise/exercise.service';
+import { Exercise } from '../lessons/exercises/shared/exercise/exercise.model';
 import { Course } from '../shared/course.model';
 import { Lesson } from '../lessons/shared/lesson.model';
-import { ExerciseTypeService } from '../lessons/exercises/shared/exercise-type.service';
-import { ExerciseType } from '../lessons/exercises/shared/exercise-type.model';
+import { ExerciseTypeService } from '../lessons/exercises/shared/exercise-type/exercise-type.service';
+import { ExerciseType } from '../lessons/exercises/shared/exercise-type/exercise-type.model';
 
 @Component({
   selector: 'app-course-detail',
@@ -99,7 +99,7 @@ export class CourseDetailComponent implements OnInit {
     });
     return typeName;
   }
-  
+
   delete(lesson: Lesson) {
     this.lessonService.deleteLesson(lesson.id).subscribe(
       data => {

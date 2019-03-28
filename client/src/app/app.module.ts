@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -53,6 +54,7 @@ import { CoursesModule } from './courses/courses.module';
     MatListModule,
     MatTabsModule,
     MatDialogModule,
+    MatDividerModule,
     CoursesModule,
     MonacoEditorModule.forRoot(),
     DragDropModule

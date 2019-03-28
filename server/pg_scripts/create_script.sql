@@ -2,17 +2,17 @@ drop table if exists courses CASCADE;
 create table courses (
 	id serial primary key,
 	name text,
-	created timestamp,
-	description text
+    description text,
+	created timestamp
 );
 
 drop table if exists lessons CASCADE;
 create table lessons (
 	id serial primary key,
 	name text,
-	course_id int references courses on delete cascade,
-	created timestamp,
-	description text
+    description text,
+    created timestamp,
+	course_id int references courses on delete cascade
 );
 
 drop table if exists exercise_types CASCADE;
@@ -26,11 +26,11 @@ drop table if exists exercises CASCADE;
 create table exercises (
 	id serial primary key,
 	name text,
+    description text,
 	index int,
-	lesson_id int references lessons on delete cascade,
-	type text references exercise_types on delete cascade,
-	created timestamp,
-	description text
+    created timestamp,
+    type text references exercise_types on delete cascade,
+	lesson_id int references lessons on delete cascade
 );
 
 drop table if exists exercise_sources CASCADE;
@@ -49,32 +49,48 @@ create table exercise_tests (
 	exercise_id int references exercises on delete cascade
 );
 
+drop table if exists exercise_configs cascade;
+create table exercise_configs (
+    id serial primary key,
+    filename text,
+    text text,
+    exercise_id int references exercises on delete cascade
+);
+
 drop table if exists solutions cascade;
 create table solutions (
 	id serial primary key,
-	exercise_id int references exercises on delete cascade,
-	created timestamp
+    created timestamp,
+	exercise_id int references exercises on delete cascade
 );
 
 drop table if exists solution_sources cascade;
 create table solution_sources (
 	id serial primary key,
-	solution_id int references solutions on delete cascade,
-	filename text,
-	code text
+    filename text,
+	code text,
+    solution_id int references solutions on delete cascade
 );
 
 drop table if exists solution_tests cascade;
 create table solution_tests (
 	id serial primary key,
-	solution_id int references solutions on delete cascade,
 	filename text,
-	code text
+	code text,
+    solution_id int references solutions on delete cascade
+);
+
+drop table if exists solution_configs cascade;
+create table solution_configs (
+    id serial primary key,
+    filename text,
+    text text,
+    solution_id int references solutions on delete cascade
 );
 
 drop table if exists solution_estimations cascade;
 create table solution_estimations (
 	id serial primary key,
-	solution_id int references solutions on delete cascade,
-	estimation text
+	estimation text,
+    solution_id int references solutions on delete cascade
 );
