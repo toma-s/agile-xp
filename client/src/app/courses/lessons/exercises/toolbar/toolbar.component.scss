@@ -1,0 +1,10 @@
+.toolbar {
+  min-height: 5vh;
+  max-height: 5vh;
+  margin: 15px 0;
+  
+  &__run {
+    float: left;
+    width: 72px;
+  }
+}

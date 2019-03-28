@@ -18,6 +18,7 @@ import { CreateWhiteBoxComponent,
 import { SolveWhiteBoxComponent } from './exercise-solve/solve-white-box/solve-white-box.component';
 import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   entryComponents: [
@@ -28,7 +29,8 @@ import { ExercisesRoutingModule } from './exercises-routing.module';
     CreateWhiteBoxComponent,
     SolveWhiteBoxComponent,
     ExerciseSolveComponent,
-    DialogOverviewExampleDialogComponent
+    DialogOverviewExampleDialogComponent,
+    ToolbarComponent
   ],
   imports: [
     CommonModule,

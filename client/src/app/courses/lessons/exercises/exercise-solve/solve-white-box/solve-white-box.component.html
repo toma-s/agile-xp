@@ -1,21 +1,26 @@
 <div *ngIf="exercise">
-  <div class="pane">
+  <div class="mat-elevation-z2 card">
 
-    <div class="pane__side">
-      <h3 class="pane__name">{{ exercise.name }}</h3>
-      <div class="pane__description">
-        <textarea readonly>{{ exercise.description }}</textarea>
-      </div>
+    <div class="pane">
 
-      <div class="pane__out" *ngIf="solutionEstimation.estimation">
-        <textarea readonly>{{ solutionEstimation.estimation }}</textarea>
-      </div>
+      <div class="pane__side">
+        <h3 class="pane__name">{{ exercise.name }}</h3>
+        <div class="pane__description">
+          <textarea readonly>{{ exercise.description }}</textarea>
+        </div>
 
-      <div class="pane__run">
-        <button mat-button color="accent" class="toolbar__run" (click)="run()">Run</button>
+        <div class="pane__out" *ngIf="solutionEstimation.estimation">
+          <textarea readonly>{{ solutionEstimation.estimation }}</textarea>
+        </div>
+
+        <div class="pane__run">
+          <button mat-button color="accent" class="toolbar__run" (click)="run()">Run</button>
+        </div>
       </div>
     </div>
+  </div>
 
+  <div class="mat-elevation-z2 card">
     <div class="pane__code">
       <mat-tab-group [selectedIndex]="0">
         <mat-tab *ngFor="let source of solutionSources">
@@ -24,21 +29,11 @@
           </ng-template>
           <ng-template matTabContent>
             <div class="container">
-              <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="source.code" class="editor"></ngx-monaco-editor>
+              <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="source.code" class="editor">
+              </ngx-monaco-editor>
             </div>
           </ng-template>
         </mat-tab>
-        <!-- <mat-tab>
-          <ng-template mat-tab-label>
-            <button mat-icon-button type="button">
-              <mat-icon (click)="addSourceFile()">add</mat-icon>
-            </button>
-          </ng-template>
-          <ng-template matTabContent>
-            <div class="container">
-            </div>
-          </ng-template>
-        </mat-tab> -->
       </mat-tab-group>
     </div>
 
@@ -54,18 +49,20 @@
             </div>
           </ng-template>
         </mat-tab>
-        <!-- <mat-tab>
-          <ng-template mat-tab-label>
-            <button mat-icon-button type="button">
-              <mat-icon (click)="addSourceFile()">add</mat-icon>
-            </button>
-          </ng-template>
-          <ng-template matTabContent>
-            <div class="container">
-            </div>
-          </ng-template>
-        </mat-tab> -->
       </mat-tab-group>
     </div>
+  </div>
+
+  <div class="mat-elevation-z2 card">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          file name
+        </ng-template>
+        <ng-template matTabContent>
+          file content
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

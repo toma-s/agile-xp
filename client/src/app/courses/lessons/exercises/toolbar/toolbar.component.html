@@ -1,0 +1,13 @@
+<mat-toolbar class="toolbar" *ngIf="exercise">
+  <mat-toolbar-row>
+    <a mat-button color="primary" routerLink="../../../../" routerLinkActive="active">Back</a>
+
+    <div class="nav">
+      <a mat-button color="primary" [routerLink]="['../', previousExerciseId]" routerLinkActive="active"
+        [disabled]="0 > previousIndex">Previous</a>
+
+      <a mat-button color="primary" [routerLink]="['../', nextExerciseId]" routerLinkActive="active"
+        [disabled]="nextIndex >= maxIndex">Next</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
