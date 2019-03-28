@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
@@ -51,6 +52,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatExpansionModule,
     MatTabsModule,
     MatDialogModule,
+    MatDividerModule,
     ExercisesRoutingModule,
     MonacoEditorModule
   ]

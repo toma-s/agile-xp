@@ -1,3 +1,48 @@
+.card {
+  margin: 15px 0;
+
+  .exercise {
+    text-align: center;
+
+    .exercise__name {
+      width: 70%;
+      margin-left: 15%;
+    }
+
+    .exercise__description {
+      width: 50%;
+      margin-left: 25%;
+    }
+  }
+
+  .output {
+    white-space: pre-line;
+    font-family: monospace;
+
+    textarea {
+      resize: none;
+      border: none;
+      padding: 4px;
+      width: calc(100% - 8px);
+      height: 192px;
+    }
+  }
+
+  .input__group {
+    height: 60vh;
+
+    .input__container {
+      height: calc(60vh - 48px);
+      border: 1px solid #ebebeb;
+
+      .input__editor {
+        height: 100%;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
 .pane {
   height: calc(100vh - 64px - 40px - 40px - 5vh);
   width: calc(100%);
@@ -31,7 +76,7 @@
         border: 0;
       }
     }
-    
+
     .pane__out {
       height: calc(30% - 1px);
       width: 100%;
@@ -79,4 +124,3 @@
     }
   }
 }
-
