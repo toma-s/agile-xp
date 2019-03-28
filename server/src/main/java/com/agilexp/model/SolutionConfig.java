@@ -3,8 +3,8 @@ package com.agilexp.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="solution_sources")
-public class SolutionSource {
+@Table(name="solution_configs")
+public class SolutionConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -15,15 +15,16 @@ public class SolutionSource {
     @Column(name="filename")
     private String fileName;
 
-    @Column(name="code")
-    private String code;
+    @Column(name="text")
+    private String text;
 
-    public SolutionSource() {}
+    public SolutionConfig() {
+    }
 
-    public SolutionSource(long solutionId, String fileName, String code) {
+    public SolutionConfig(long solutionId, String fileName, String text) {
         this.solutionId = solutionId;
         this.fileName = fileName;
-        this.code = code;
+        this.text = text;
     }
 
     public long getId() {
@@ -50,21 +51,21 @@ public class SolutionSource {
         this.fileName = fileName;
     }
 
-    public String getCode() {
-        return code;
+    public String getText() {
+        return text;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
     public String toString() {
-        return "SolutionSource{" +
+        return "SolutionConfig{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +
-//                ", code='" + code + '\'' +
+                ", text='" + text + '\'' +
                 '}';
     }
 }
