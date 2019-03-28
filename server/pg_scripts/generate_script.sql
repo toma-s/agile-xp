@@ -12,7 +12,7 @@ truncate table
 INSERT INTO exercise_types (id, name, value)
 VALUES	(1, 'Black box', 'black-box'),
 				(2, 'Multiple Choice Quiz', 'quiz'),
-				(3, 'Interactive Lesson', 'white-box'),
+				(3, 'Interactive Exercise', 'white-box'),
 				(4, 'Theory', 'theory'),
 				(5, 'Self-Evaluation', 'self-eval');
 
