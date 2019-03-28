@@ -23,7 +23,7 @@ public class Morse {
         letters['P'] = ".--.";
         letters['Q'] = "--.-";
         letters['R'] = ".-.";
-        letters['S'] = "...";
+        letters['S'] = "..";
         letters['T'] = "-";
         letters['U'] = "..-";
         letters['V'] = "...-";
