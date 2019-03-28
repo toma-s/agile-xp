@@ -50,6 +50,7 @@ public class Tester {
 
     private static Result runTests(Class<?> junitTest) {
         JUnitCore junit = new JUnitCore();
-        return junit.run(junitTest);
+        Result result = junit.run(junitTest);
+        return result;
     }
 }
