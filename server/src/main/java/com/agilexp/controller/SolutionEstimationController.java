@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class SolutionEstimationController {
     @Autowired
-    SolutionEstimationRepository repository;
+    private SolutionEstimationRepository repository;
 
     @Autowired
     private SolutionRepository solutionRepository;
@@ -32,6 +32,9 @@ public class SolutionEstimationController {
 
     @Autowired
     private SolutionTestRepository solutionTestRepository;
+
+    @Autowired
+    private SolutionConfigRepository solutionConfigRepository;
 
     @Autowired
     private ExerciseTestRepository exerciseTestRepository;
@@ -50,6 +53,8 @@ public class SolutionEstimationController {
 
         List<SolutionSource> solutionSources = solutionSourceRepository.findSolutionSourcesBySolutionId(solutionId);
         List<SolutionTest> solutionTests = solutionTestRepository.findSolutionTestsBySolutionId(solutionId);
+        List<SolutionConfig> solutionConfigs = solutionConfigRepository.findSolutionConfigBySolutionId(solutionId);
+        // TODO: 28-Mar-19 continue
         Solution solution = solutionRepository.findById(solutionId);
         List<ExerciseTest> exerciseTests = exerciseTestRepository.findByExerciseId(solution.getExerciseId());
 

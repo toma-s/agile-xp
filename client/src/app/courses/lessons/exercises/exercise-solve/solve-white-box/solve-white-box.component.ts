@@ -15,6 +15,7 @@ import { SolutionEstimationService } from '../../shared/solution-estimation/solu
 import { SolutionConfig } from '../../shared/solution-config/solution-config.model';
 import { ExerciseConfig } from '../../shared/exercise-config/exercise-config.model';
 import { ExerciseConfigService } from '../../shared/exercise-config/exercise-config.service';
+import { SolutionConfigService } from '../../shared/solution-config/solution-config.service';
 
 @Component({
   selector: 'solve-white-box',
@@ -43,7 +44,8 @@ export class SolveWhiteBoxComponent implements OnInit {
     private solutionService: SolutonService,
     private solutionSourceService: SolutonSourceService,
     private solutionTestService: SolutonTestService,
-    private solutionEstimationService: SolutionEstimationService
+    private solutionEstimationService: SolutionEstimationService,
+    private solutionConfigService: SolutionConfigService
   ) { }
 
   ngOnInit() {
@@ -59,19 +61,10 @@ export class SolveWhiteBoxComponent implements OnInit {
         data => {
           this.exerciseSources = data;
           console.log(this.exerciseSources);
-          this.createSolutionSources(data);
+          this.solutionSources = Object.assign([], this.exerciseSources);
         },
         error => console.log(error)
       );
-  }
-
-  createSolutionSources(sourceCodes: Array<ExerciseSource>) {
-    sourceCodes.forEach(sc => {
-      const solutionSource = new SolutionSource();
-      solutionSource.fileName = sc.fileName;
-      solutionSource.code = sc.code;
-      this.solutionSources.push(solutionSource);
-    });
   }
 
   getSourceTests() {
@@ -79,18 +72,9 @@ export class SolveWhiteBoxComponent implements OnInit {
       data => {
         this.exerciseTests = data;
         console.log(this.exerciseTests);
-        this.createSolutionTests(data);
+        this.solutionTests = Object.assign([], this.exerciseTests);
       }
     );
-  }
-
-  createSolutionTests(sourceTests: Array<ExerciseTest>) {
-    sourceTests.forEach(st => {
-      const solutionTest = new SolutionTest();
-      solutionTest.fileName = st.fileName;
-      solutionTest.code = st.code;
-      this.solutionTests.push(solutionTest);
-    });
   }
 
   getSourceConfigs() {
@@ -99,22 +83,10 @@ export class SolveWhiteBoxComponent implements OnInit {
         console.log(data);
         this.exerciseConfigs = data;
         console.log(this.exerciseConfigs);
-        this.createSolutionConfigs();
+        this.solutionConfigs = Object.assign([], this.exerciseConfigs);
       },
       error => console.log(error)
     );
-  }
-
-  createSolutionConfigs() {
-    // TODO | for all
-    this.solutionConfigs = Object.assign([], this.exerciseConfigs);
-    console.log(this.solutionConfigs);
-    // this.exerciseConfigs.forEach(ec => {
-    //   const exerciseConfig = new ExerciseConfig();
-    //   exerciseConfig.fileName = ec.fileName;
-    //   exerciseConfig.text = ec.text;
-    //   this.solutionConfigs.push(exerciseConfig);
-    // });
   }
 
 
@@ -132,6 +104,7 @@ export class SolveWhiteBoxComponent implements OnInit {
           this.solution = data;
           this.saveSolutionSources();
           this.saveSolutionTests();
+          this.saveSolutionConfigs();
         },
         error => console.log(error)
       );
@@ -159,10 +132,24 @@ export class SolveWhiteBoxComponent implements OnInit {
         .subscribe(
           data => {
             console.log(data);
-            this.getEstimation();
           },
           error => console.log(error)
         );
+    });
+  }
+
+  saveSolutionConfigs() {
+    this.solutionConfigs.forEach(sc => {
+      sc.solutionId = this.solution.id;
+      console.log(sc);
+      this.solutionConfigService.createSolutionConfig(sc).subscribe(
+        data => {
+          console.log(data);
+          // TODO | move to saveSolution...subscribe()
+          this.getEstimation();
+        },
+        error => console.log(error)
+      );
     });
   }
 
@@ -177,10 +164,10 @@ export class SolveWhiteBoxComponent implements OnInit {
       );
   }
 
-  addSourceFile() {
-    const newFile = new SolutionSource();
-    newFile.fileName = 'NewSolutionSourceFile.java';
-    this.solutionSources.push(newFile);
-  }
+  // addSourceFile() {
+  //   const newFile = new SolutionSource();
+  //   newFile.fileName = 'NewSolutionSourceFile.java';
+  //   this.solutionSources.push(newFile);
+  // }
 
 }
