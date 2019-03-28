@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ExericseConfigService {
+export class ExerciseConfigService {
 
   private baseUrl = 'http://localhost:8080/api/exercise-configs';
 
@@ -13,5 +13,9 @@ export class ExericseConfigService {
 
   createExerciseConfig(exerciseConfig: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}/create`, exerciseConfig);
+  }
+
+  getExerciseConfigsByExerciseId(exerciseId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
   }
 }

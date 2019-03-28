@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface ExerciseConfigRepository extends CrudRepository<ExerciseConfig, Long> {
-    List<ExerciseConfig> findExerciseConfigBySolutionId(long solutionId);
+    List<ExerciseConfig> findByExerciseId(long exerciseId);
 }

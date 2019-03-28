@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ColutionConfigService {
+export class SolutionConfigService {
 
   private baseUrl = 'http://localhost:8080/api/solution-configs';
 

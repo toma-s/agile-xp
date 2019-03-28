@@ -9,8 +9,8 @@ public class ExerciseConfig {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name="solution_id")
-    private long solutionId;
+    @Column(name="exercise_id")
+    private long exerciseId;
 
     @Column(name="filename")
     private String fileName;
@@ -22,7 +22,7 @@ public class ExerciseConfig {
     }
 
     public ExerciseConfig(long solutionId, String fileName, String text) {
-        this.solutionId = solutionId;
+        this.exerciseId = solutionId;
         this.fileName = fileName;
         this.text = text;
     }
@@ -35,12 +35,12 @@ public class ExerciseConfig {
         this.id = id;
     }
 
-    public long getSolutionId() {
-        return solutionId;
+    public long getExerciseId() {
+        return exerciseId;
     }
 
-    public void setSolutionId(long solutionId) {
-        this.solutionId = solutionId;
+    public void setExerciseId(long exerciseId) {
+        this.exerciseId = exerciseId;
     }
 
     public String getFileName() {
@@ -63,7 +63,7 @@ public class ExerciseConfig {
     public String toString() {
         return "ExerciseConfig{" +
                 "id=" + id +
-                ", solutionId=" + solutionId +
+                ", exerciseId=" + exerciseId +
                 ", fileName='" + fileName + '\'' +
                 ", text='" + text + '\'' +
                 '}';

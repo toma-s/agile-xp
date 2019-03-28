@@ -12,6 +12,9 @@ import { SolutonService } from '../../shared/solution/soluton.service';
 import { SolutonSourceService } from '../../shared/solution-source/solution-source.service';
 import { SolutonTestService } from '../../shared/solution-test/solution-test.service';
 import { SolutionEstimationService } from '../../shared/solution-estimation/solution-estimation.service';
+import { SolutionConfig } from '../../shared/solution-config/solution-config.model';
+import { ExerciseConfig } from '../../shared/exercise-config/exercise-config.model';
+import { ExerciseConfigService } from '../../shared/exercise-config/exercise-config.service';
 
 @Component({
   selector: 'solve-white-box',
@@ -25,15 +28,18 @@ export class SolveWhiteBoxComponent implements OnInit {
   @Input() exercise: Exercise;
   exerciseSources: Array<ExerciseSource> = new Array<ExerciseSource>();
   exerciseTests: Array<ExerciseTest> = new Array<ExerciseTest>();
+  exerciseConfigs: Array<ExerciseConfig> = new Array<ExerciseConfig>();
 
   solution: Solution = new Solution();
   solutionSources: SolutionSource[] = new Array<SolutionSource>();
   solutionTests: SolutionTest[] = new Array<SolutionTest>();
   solutionEstimation: SolutionEstimation = new SolutionEstimation();
+  solutionConfigs: SolutionConfig[] = new Array<SolutionConfig>();
 
   constructor(
     private exerciseCodeService: ExerciseSourceService,
     private exerciseTestService: ExerciseTestService,
+    private exerciseConfigService: ExerciseConfigService,
     private solutionService: SolutonService,
     private solutionSourceService: SolutonSourceService,
     private solutionTestService: SolutonTestService,
@@ -43,7 +49,8 @@ export class SolveWhiteBoxComponent implements OnInit {
   ngOnInit() {
     console.log(this.exercise);
     this.getSourceCodes();
-    this.getTests();
+    this.getSourceTests();
+    this.getSourceConfigs();
   }
 
   getSourceCodes() {
@@ -67,7 +74,7 @@ export class SolveWhiteBoxComponent implements OnInit {
     });
   }
 
-  getTests() {
+  getSourceTests() {
     this.exerciseTestService.getExerciseTestsByExerciseId(this.exercise.id)
       .subscribe(
         data => {
@@ -85,6 +92,10 @@ export class SolveWhiteBoxComponent implements OnInit {
       solutionTest.code = st.code;
       this.solutionTests.push(solutionTest);
     });
+  }
+
+  getSourceConfigs() {
+    this.exerciseConfigService.
   }
 
   run() {

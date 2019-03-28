@@ -25,16 +25,18 @@ public class ExerciseSourceController {
     @PostMapping(value = "/exercise-sources/create")
     public ExerciseSource postExerciseSource(@RequestBody ExerciseSource sourceCode) {
 
-        ExerciseSource _sourceCode = repository.save(new ExerciseSource(sourceCode.getFileName(), sourceCode.getCode(), sourceCode.getExerciseId()));
-
-//        storageService.store(_sourceCode);
+        ExerciseSource _sourceCode = repository.save(new ExerciseSource(
+                sourceCode.getFileName(),
+                sourceCode.getCode(),
+                sourceCode.getExerciseId()
+        ));
 
         System.out.format("Created source code %s for exercise #%s\n", sourceCode.getFileName(), sourceCode.getExerciseId());
         return _sourceCode;
     }
 
     @GetMapping(value="/exercise-sources/exercise/{exerciseId}")
-    public List<ExerciseSource> getExerciseSourceByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+    public List<ExerciseSource> getExerciseSourcesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get exercise sources with exercise id " + exerciseId + "...");
 
         List<ExerciseSource> exerciseSources = new ArrayList<>(repository.findByExerciseId(exerciseId));
