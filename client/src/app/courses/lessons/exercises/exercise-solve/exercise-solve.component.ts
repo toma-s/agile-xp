@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { ExerciseService } from '../shared/exercise.service';
-import { Exercise } from '../shared/exercise.model';
+import { ExerciseService } from '../shared/exercise/exercise.service';
+import { Exercise } from '../shared/exercise/exercise.model';
 
 @Component({
   selector: 'app-exercise-solve',

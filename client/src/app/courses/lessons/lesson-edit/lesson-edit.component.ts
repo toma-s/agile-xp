@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LessonService } from '../shared/lesson.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { ExerciseService } from '../exercises/shared/exercise.service';
+import { ExerciseService } from '../exercises/shared/exercise/exercise.service';
 import { Lesson } from '../shared/lesson.model';
-import { Exercise } from '../exercises/shared/exercise.model';
+import { Exercise } from '../exercises/shared/exercise/exercise.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { forkJoin, of, Observable } from 'rxjs';
 
@@ -55,7 +55,7 @@ export class LessonEditComponent implements OnInit {
           this.getIndex();
         },
         error => console.log(error)
-      )
+      );
   }
 
   getIndex() {
@@ -74,7 +74,7 @@ export class LessonEditComponent implements OnInit {
       this.exercises[i].index = i;
       observables.push(
         this.exerciseService.updateExercise(this.exercises[i].id, this.exercises[i])
-      )
+      );
     }
     forkJoin(...observables).subscribe(
       data => {
@@ -84,7 +84,7 @@ export class LessonEditComponent implements OnInit {
         console.log(error);
         this.exercises = Object.assign([], newExercisesArray);
       }
-    )
+    );
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Exercise } from '../shared/exercise.model';
-import { ExerciseService } from '../shared/exercise.service';
+import { Exercise } from '../shared/exercise/exercise.model';
+import { ExerciseService } from '../shared/exercise/exercise.service';
 
 @Component({
   selector: 'toolbar',
@@ -31,7 +31,7 @@ export class ToolbarComponent implements OnInit {
           this.exercises = data;
           this.getIndexes();
         }
-      )
+      );
     }
 
   getIndexes() {

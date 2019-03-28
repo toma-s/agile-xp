@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ExerciseType } from '../shared/exercise-type.model';
-import { ExerciseTypeService } from '../shared/exercise-type.service';
-import { Exercise } from '../shared/exercise.model';
+import { ExerciseType } from '../shared/exercise-type/exercise-type.model';
+import { ExerciseTypeService } from '../shared/exercise-type/exercise-type.service';
+import { Exercise } from '../shared/exercise/exercise.model';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ExerciseService } from '../shared/exercise.service';
+import { ExerciseService } from '../shared/exercise/exercise.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ExerciseSource } from '../shared/exercise-source.model';
-import { ExerciseSourceService } from '../shared/exercise-source.service';
-import { ExerciseTestService } from '../shared/exercise-test.service';
-import { ExerciseTest } from '../shared/exercise-test.model';
+import { ExerciseSource } from '../shared/exercise-source/exercise-source.model';
+import { ExerciseSourceService } from '../shared/exercise-source/exercise-source.service';
+import { ExerciseTestService } from '../shared/exercise-test/exercise-test.service';
+import { ExerciseTest } from '../shared/exercise-test/exercise-test.model';
 import { LessonService } from '../../shared/lesson.service';
 import { switchMap } from 'rxjs/operators';
 
@@ -140,7 +140,7 @@ export class ExerciseCreateComponent implements OnInit {
           },
           error => console.log(error)
         );
-    })
+    });
   }
 
   createExerciseTestObjects(exerciseId: number): Array<ExerciseTest> {
@@ -166,7 +166,7 @@ export class ExerciseCreateComponent implements OnInit {
           },
           error => console.log(error)
         );
-    })
+    });
   }
 
 }

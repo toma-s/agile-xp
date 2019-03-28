@@ -1,17 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Exercise } from '../../shared/exercise.model';
-import { SolutionSource } from '../../shared/solution-source.model';
-import { SolutionTest } from '../../shared/solution-test.model';
-import { SolutionEstimation } from '../../shared/solution-extimation.model';
-import { ExerciseSourceService } from '../../shared/exercise-source.service';
-import { ExerciseTestService } from '../../shared/exercise-test.service';
-import { ExerciseSource } from '../../shared/exercise-source.model';
-import { ExerciseTest } from '../../shared/exercise-test.model';
-import { Solution } from '../../shared/solution.model';
-import { SolutonService } from '../../shared/soluton.service';
-import { SolutonSourceService } from '../../shared/soluton-source.service';
-import { SolutonTestService } from '../../shared/soluton-test.service';
-import { SolutionEstimationService } from '../../shared/solution-estimation.service';
+import { Exercise } from '../../shared/exercise/exercise.model';
+import { SolutionSource } from '../../shared/solution-source/solution-source.model';
+import { SolutionTest } from '../../shared/solution-test/solution-test.model';
+import { SolutionEstimation } from '../../shared/solution-estimation/solution-estimation.model';
+import { ExerciseSourceService } from '../../shared/exercise-source/exercise-source.service';
+import { ExerciseTestService } from '../../shared/exercise-test/exercise-test.service';
+import { ExerciseSource } from '../../shared/exercise-source/exercise-source.model';
+import { ExerciseTest } from '../../shared/exercise-test/exercise-test.model';
+import { Solution } from '../../shared/solution/solution.model';
+import { SolutonService } from '../../shared/solution/soluton.service';
+import { SolutonSourceService } from '../../shared/solution-source/solution-source.service';
+import { SolutonTestService } from '../../shared/solution-test/solution-test.service';
+import { SolutionEstimationService } from '../../shared/solution-estimation/solution-estimation.service';
 
 @Component({
   selector: 'solve-white-box',
