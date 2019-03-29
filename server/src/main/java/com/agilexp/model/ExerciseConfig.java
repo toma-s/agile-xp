@@ -65,7 +65,7 @@ public class ExerciseConfig {
                 "id=" + id +
                 ", exerciseId=" + exerciseId +
                 ", fileName='" + fileName + '\'' +
-                ", text='" + text.substring(0, 10) + '\'' +
+//                ", text='" + text + '\'' +
                 '}';
     }
 }

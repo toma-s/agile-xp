@@ -20,7 +20,6 @@ public class Compiler {
             StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
             Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(getFiles(filePaths));
             final Iterable<String> options = Arrays.asList("-d", outDir.resolve("out").toString());
-            System.out.println(options);
             compiler.getTask(null, fileManager, null, options, null, compilationUnits).call();
             if (! diagnostics.getDiagnostics().isEmpty()) {
                 StringBuilder message = new StringBuilder();

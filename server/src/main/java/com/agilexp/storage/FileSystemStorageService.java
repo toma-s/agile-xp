@@ -78,11 +78,11 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(SolutionConfig solutionConfig, Path outDirPath) {
+    public void store(SolutionConfig solutionConfig) {
         String fileName = solutionConfig.getFileName();
         String code = solutionConfig.getText();
 
-        Path directoryLocation = outDirPath.resolve("out");
+        Path directoryLocation = createFolder("game_config");
         storeFile(fileName, code, directoryLocation);
     }
 
@@ -121,11 +121,7 @@ public class FileSystemStorageService implements StorageService {
             if (fileName.isEmpty()) {
                 throw new StorageException("Failed to store file with empty name");
             }
-            if (text.isEmpty()) {
-                directoryLocation.resolve(fileName);
-            } else {
-                Files.write(directoryLocation.resolve(fileName), text.getBytes(), StandardOpenOption.CREATE);
-            }
+            Files.write(directoryLocation.resolve(fileName), text.getBytes(), StandardOpenOption.CREATE);
         }
         catch (IOException e) {
             throw new StorageException("Failed to store file", e);
