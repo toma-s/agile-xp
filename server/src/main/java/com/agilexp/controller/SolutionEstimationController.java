@@ -72,9 +72,10 @@ public class SolutionEstimationController {
     private String getEstimation(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionConfig> solutionConfigs,
                                  List<ExerciseTest> exerciseTests, List<ExerciseConfig> exerciseConfigs, long solutionId) {
         try {
-            String solutionEstimationResult = estimateWithPublicTests(solutionSources, solutionTests/*, solutionConfigs*/, solutionId);
-            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests/*, exerciseConfigs*/, solutionId);
-            return solutionEstimationResult + exerciseEstimationResult;
+            String solutionEstimationResult = estimateWithPublicTests(solutionSources, solutionTests, solutionConfigs, solutionId);
+//            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests/*, exerciseConfigs*/, solutionId);
+//            return solutionEstimationResult + exerciseEstimationResult;
+            return solutionEstimationResult;
         } catch (StorageException e) {
             e.printStackTrace();
             return "File storing failed: " + e.getMessage();
@@ -87,7 +88,7 @@ public class SolutionEstimationController {
         }
     }
 
-    private String estimateWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, long solutionId) throws CompilationFailedException, TestFailedException {
+    private String estimateWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionConfig> solutionConfigs, long solutionId) throws CompilationFailedException, TestFailedException {
         try {
             storeFilesWithPublicTests(solutionSources, solutionTests);
         } catch (StorageException e) {
@@ -103,8 +104,8 @@ public class SolutionEstimationController {
         }
         System.out.println("compiled");
 
-//        solutionConfigs.forEach(solutionConfig -> storageService.store(solutionConfig, outDirPath));
-//        System.out.println("stored configs");
+        solutionConfigs.forEach(storageService::store);
+        System.out.println("stored configs");
 
         List<Result> solutionTestsResults = new ArrayList<>();
         for (SolutionTest solutionTest : solutionTests) {
