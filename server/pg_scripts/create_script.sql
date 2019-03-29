@@ -17,9 +17,10 @@ create table lessons (
 
 drop table if exists exercise_types CASCADE;
 create table exercise_types (
-	id serial,
+	id serial primary key,
 	name text,
-	value text primary key
+	value text,
+	constraint unique_value unique (value)
 );
 
 drop table if exists exercises CASCADE;
@@ -29,8 +30,9 @@ create table exercises (
     description text,
 	index int,
     created timestamp,
-    type text references exercise_types on delete cascade,
-	lesson_id int references lessons on delete cascade
+    type_id int references exercise_types on delete cascade,
+	lesson_id int references lessons on delete cascade,
+	constraint unique_index_lesson_id unique (index, lesson_id)
 );
 
 drop table if exists exercise_sources CASCADE;
