@@ -60,6 +60,7 @@ export class LessonEditComponent implements OnInit {
 
   getIndex() {
     this.index = this.exercises.length;
+    console.log(this.index);
   }
 
   drop(event: CdkDragDrop<string[]>) {

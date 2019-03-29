@@ -73,9 +73,8 @@ public class SolutionEstimationController {
                                  List<ExerciseTest> exerciseTests, List<ExerciseConfig> exerciseConfigs, long solutionId) {
         try {
             String solutionEstimationResult = estimateWithPublicTests(solutionSources, solutionTests, solutionConfigs, solutionId);
-//            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests/*, exerciseConfigs*/, solutionId);
-//            return solutionEstimationResult + exerciseEstimationResult;
-            return solutionEstimationResult;
+            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests/*, exerciseConfigs*/, solutionId);
+            return solutionEstimationResult + exerciseEstimationResult;
         } catch (StorageException e) {
             e.printStackTrace();
             return "File storing failed: " + e.getMessage();
