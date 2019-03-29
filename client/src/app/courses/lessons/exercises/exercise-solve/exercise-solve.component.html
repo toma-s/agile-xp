@@ -2,7 +2,10 @@
 
   <toolbar [exercise]="exercise"></toolbar>
 
-  <div [ngSwitch]="exercise.type">
+  <div *ngIf="exerciseType" [ngSwitch]="exerciseType.value">
+    <div *ngSwitchCase="'source-test'">
+      <solve-intro></solve-intro>
+    </div>
     <div *ngSwitchCase="'black-box'">
       <p>black box</p>
     </div>

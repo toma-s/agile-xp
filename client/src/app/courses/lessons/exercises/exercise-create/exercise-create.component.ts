@@ -97,7 +97,8 @@ export class ExerciseCreateComponent implements OnInit {
     this.exercise.name = this.exerciseFormGroup.value.name;
     this.exercise.index = this.index;
     this.exercise.lessonId = this.route.snapshot.params['lessonId'];
-    this.exercise.type = this.exerciseFormGroup.value.selectedTypeValue;
+    // TODO
+    // this.exercise.typeId = this.exerciseFormGroup.value.selectedTypeValue;
     this.exercise.description = this.exerciseFormGroup.value.description;
   }
 
