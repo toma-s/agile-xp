@@ -39,6 +39,9 @@ public class SolutionEstimationController {
     @Autowired
     private ExerciseTestRepository exerciseTestRepository;
 
+    @Autowired
+    private ExerciseConfigRepository exerciseConfigRepository;
+
     private final StorageService storageService;
 
     @Autowired
@@ -54,11 +57,11 @@ public class SolutionEstimationController {
         List<SolutionSource> solutionSources = solutionSourceRepository.findSolutionSourcesBySolutionId(solutionId);
         List<SolutionTest> solutionTests = solutionTestRepository.findSolutionTestsBySolutionId(solutionId);
         List<SolutionConfig> solutionConfigs = solutionConfigRepository.findSolutionConfigBySolutionId(solutionId);
-        // TODO: 28-Mar-19 continue
         Solution solution = solutionRepository.findById(solutionId);
         List<ExerciseTest> exerciseTests = exerciseTestRepository.findByExerciseId(solution.getExerciseId());
+        List<ExerciseConfig> exerciseConfigs = exerciseConfigRepository.findByExerciseId(solution.getExerciseId());
 
-        String estimation = getEstimation(solutionSources, solutionTests, exerciseTests, solutionId);
+        String estimation = getEstimation(solutionSources, solutionTests, solutionConfigs, exerciseTests, exerciseConfigs, solutionId);
         solutionEstimation.setEstimation(estimation);
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
@@ -66,11 +69,11 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-    private String getEstimation(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests,
-                                 List<ExerciseTest> exerciseTests, long solutionId) {
+    private String getEstimation(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionConfig> solutionConfigs,
+                                 List<ExerciseTest> exerciseTests, List<ExerciseConfig> exerciseConfigs, long solutionId) {
         try {
-            String solutionEstimationResult = estimateWithPublicTests(solutionSources, solutionTests, solutionId);
-            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests, solutionId);
+            String solutionEstimationResult = estimateWithPublicTests(solutionSources, solutionTests/*, solutionConfigs*/, solutionId);
+            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests/*, exerciseConfigs*/, solutionId);
             return solutionEstimationResult + exerciseEstimationResult;
         } catch (StorageException e) {
             e.printStackTrace();
@@ -84,8 +87,7 @@ public class SolutionEstimationController {
         }
     }
 
-    private String estimateWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, long solutionId)
-            throws CompilationFailedException, TestFailedException {
+    private String estimateWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, long solutionId) throws CompilationFailedException, TestFailedException {
         try {
             storeFilesWithPublicTests(solutionSources, solutionTests);
         } catch (StorageException e) {
@@ -100,6 +102,9 @@ public class SolutionEstimationController {
             throw new CompilationFailedException(e.getMessage());
         }
         System.out.println("compiled");
+
+//        solutionConfigs.forEach(solutionConfig -> storageService.store(solutionConfig, outDirPath));
+//        System.out.println("stored configs");
 
         List<Result> solutionTestsResults = new ArrayList<>();
         for (SolutionTest solutionTest : solutionTests) {

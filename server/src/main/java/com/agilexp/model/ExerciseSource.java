@@ -63,7 +63,7 @@ public class ExerciseSource {
         return "ExerciseSource{" +
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
-//                ", code='" + code + '\'' +
+                ", code='" + code.substring(0, 10) + '\'' +
                 ", exerciseId=" + exerciseId +
                 '}';
     }

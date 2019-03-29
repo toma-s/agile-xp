@@ -54,7 +54,7 @@ public class FileSystemStorageService implements StorageService {
         String directoryName = "solution_source" + solutionSource.getId();
 
         Path directoryLocation = createFolder(directoryName);
-        storeFile(fileName, code, directoryLocation);
+        storeSourceCode(fileName, code, directoryLocation);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class FileSystemStorageService implements StorageService {
         String directoryName = "solution_test" + solutionTest.getId();
 
         Path directoryLocation = createFolder(directoryName);
-        storeFile(fileName, code, directoryLocation);
+        storeSourceCode(fileName, code, directoryLocation);
     }
 
     @Override
@@ -74,11 +74,16 @@ public class FileSystemStorageService implements StorageService {
         String directoryName = "exercise_test" + exerciseTest.getId();
 
         Path directoryLocation = createFolder(directoryName);
-        try {
-            storeFile(fileName, code, directoryLocation);
-        } catch (StorageException e) {
-            throw new StorageException(e.getMessage());
-        }
+        storeSourceCode(fileName, code, directoryLocation);
+    }
+
+    @Override
+    public void store(SolutionConfig solutionConfig, Path outDirPath) {
+        String fileName = solutionConfig.getFileName();
+        String code = solutionConfig.getText();
+
+        Path directoryLocation = outDirPath.resolve("out");
+        storeFile(fileName, code, directoryLocation);
     }
 
     private Path createFolder(String directoryName) {
@@ -96,7 +101,7 @@ public class FileSystemStorageService implements StorageService {
         return directoryLocation;
     }
 
-    private void storeFile(String fileName, String code, Path directoryLocation) throws StorageException {
+    private void storeSourceCode(String fileName, String code, Path directoryLocation) throws StorageException {
         try {
             if (fileName.isEmpty()) {
                 throw new StorageException("Failed to store file with empty name");
@@ -105,6 +110,22 @@ public class FileSystemStorageService implements StorageService {
                 throw new StorageException("Failed to store empty file");
             }
             Files.write(directoryLocation.resolve(fileName), code.getBytes(), StandardOpenOption.CREATE);
+        }
+        catch (IOException e) {
+            throw new StorageException("Failed to store file", e);
+        }
+    }
+
+    private void storeFile(String fileName, String text, Path directoryLocation) {
+        try {
+            if (fileName.isEmpty()) {
+                throw new StorageException("Failed to store file with empty name");
+            }
+            if (text.isEmpty()) {
+                directoryLocation.resolve(fileName);
+            } else {
+                Files.write(directoryLocation.resolve(fileName), text.getBytes(), StandardOpenOption.CREATE);
+            }
         }
         catch (IOException e) {
             throw new StorageException("Failed to store file", e);
