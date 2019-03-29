@@ -18,6 +18,8 @@ public interface StorageService {
 
     void store(ExerciseTest exerciseTest);
 
+    void store(SolutionConfig solutionConfig, Path outDirPath);
+
     Stream<Path> loadAll();
 
     Path load(String filename);

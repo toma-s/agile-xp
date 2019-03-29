@@ -1630,3 +1630,70 @@ values (2,
 E4 D5
 D4 E5
 ');
+
+insert into exercise_configs (id, exercise_id, filename, text) -- game_all_alpha
+values (3,
+        4,
+        'game_all_alpha.txt',
+        'B
+EE DD
+DD EE
+');
+
+insert into exercise_configs (id, exercise_id, filename, text) -- game_all_num
+values (4,
+        4,
+        'game_all_num.txt',
+        'B
+EE DD
+DD EE
+');
+
+insert into exercise_configs (id, exercise_id, filename, text) -- game_almost_complete
+values (5,
+        4,
+        'game_almost_complete.txt',
+        'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+');
+
+insert into exercise_configs (id, exercise_id, filename, text) -- game_complete
+values (6,
+        4,
+        'game_complete.txt',
+        'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+');
+
+insert into exercise_configs (id, exercise_id, filename, text) -- game_empty
+values (7,
+        4,
+        'game_empty.txt',
+        '');
+
+insert into exercise_configs (id, exercise_id, filename, text) -- game_four_lines
+values (8,
+        4,
+        'game_four_lines.txt',
+        'B
+E4 D5
+D4 E5
+E4 D5
+');
+
+insert into exercise_configs (id, exercise_id, filename, text) -- game_no_on_turn
+values (9,
+        4,
+        'game_no_on_turn.txt',
+        'E4 D5
+D4 E5
+');
+
+insert into exercise_configs (id, exercise_id, filename, text) -- game_one_line
+values (10,
+        4,
+        'game_one_line.txt',
+        'E4 D5
+');

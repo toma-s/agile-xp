@@ -59,17 +59,13 @@ public class SolutionTest {
         this.code = code;
     }
 
-//    public String getDirectoryName() {
-//        return "solution_tests" + this.id;
-//    }
-
     @Override
     public String toString() {
         return "SolutionTest{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +
-//                ", code='" + code + '\'' +
+                ", code='" + code.substring(0, 10) + '\'' +
                 '}';
     }
 }

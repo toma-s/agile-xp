@@ -65,7 +65,7 @@ public class SolutionConfig {
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +
-                ", text='" + text + '\'' +
+                ", text='" + text.substring(0, 10) + '\'' +
                 '}';
     }
 }
