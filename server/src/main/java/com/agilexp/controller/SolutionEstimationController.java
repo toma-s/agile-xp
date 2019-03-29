@@ -117,6 +117,8 @@ public class SolutionEstimationController {
         }
         System.out.println("tested");
 
+        storageService.deleteAll(); // clean upload-dir
+
         return getResult(solutionTestsResults, "Public");
     }
 
