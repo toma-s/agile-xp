@@ -27,7 +27,7 @@ INSERT INTO lessons (id, name, course_id, created, description)
 VALUES (1, 'Lesson one', 1, '2019-03-09 20:53:09.851', 'Different exercise types examples'),
        (2, 'Lesson two', 1, '2019-03-09 20:53:09.851', 'Exercises for debugging');
 
-INSERT INTO exercises (id, name, index, lesson_id, type_id, created, description)
+INSERT INTO exercises (id, name, index, lesson_id, typeId, created, description)
 VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
        (2, 'Exercise two', 1, 1, 2, '2019-03-09 20:53:09.851', '(source-test-file)'),
        (3, 'Exercise three', 2, 1, 3, '2019-03-09 20:53:09.851', '(test)'),

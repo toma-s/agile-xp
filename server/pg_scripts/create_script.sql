@@ -30,7 +30,7 @@ create table exercises (
     description text,
 	index int,
     created timestamp,
-    type_id int references exercise_types on delete cascade,
+    typeId int references exercise_types on delete cascade,
 	lesson_id int references lessons on delete cascade,
 	constraint unique_index_lesson_id unique (index, lesson_id)
 );

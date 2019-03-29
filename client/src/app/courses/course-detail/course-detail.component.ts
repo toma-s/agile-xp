@@ -23,7 +23,7 @@ export class CourseDetailComponent implements OnInit {
   course$: Observable<Course>;
   lessons$: Observable<Lesson>;
   exercises$: Observable<Exercise>;
-  exerciseTypes$: Observable<ExerciseType>;
+  exerciseTypes: Array<ExerciseType>;
 
   constructor(
     private courseService: CourseService,
@@ -37,7 +37,7 @@ export class CourseDetailComponent implements OnInit {
     this.getCourse();
     this.getLessons();
     this.getExercises();
-    this.getExerciseTypeNames();
+    this.getExerciseTypes();
   }
 
   getCourse() {
@@ -69,11 +69,11 @@ export class CourseDetailComponent implements OnInit {
       );
   }
 
-  getExerciseTypeNames() {
+  getExerciseTypes() {
     this.exerciseTypeService.getExericseTypesList()
       .subscribe(
         data => {
-          this.exerciseTypes$ = data;
+          this.exerciseTypes = data;
           console.log(data);
         },
         error => console.log(error)
@@ -90,14 +90,8 @@ export class CourseDetailComponent implements OnInit {
     return x;
   }
 
-  getExerciseTypeName(value: string) {
-    let typeName = '';
-    this.exerciseTypes$.forEach(et => {
-      if (et.value === value) {
-        typeName = et.name;
-      }
-    });
-    return typeName;
+  getExerciseTypeName(typeId: number) {
+    return this.exerciseTypes.filter(et => et.id === typeId)[0].name;
   }
 
   delete(lesson: Lesson) {

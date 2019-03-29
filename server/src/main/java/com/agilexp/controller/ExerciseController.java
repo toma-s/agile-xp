@@ -1,7 +1,6 @@
 package com.agilexp.controller;
 
 import com.agilexp.model.Exercise;
-import com.agilexp.model.Lesson;
 import com.agilexp.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,7 @@ public class ExerciseController {
                 exercise.getName(),
                 exercise.getIndex(),
                 exercise.getLessonId(),
-                exercise.getType(),
+                exercise.getTypeId(),
                 created,
                 exercise.getDescription()));
         System.out.format("Created exercise with id %s named %s at %s for lesson #%s", _exercise.getId(), exercise.getName(), created, exercise.getLessonId());
@@ -76,7 +75,7 @@ public class ExerciseController {
             _exercise.setLessonId(exercise.getLessonId());
             _exercise.setDescription(exercise.getDescription());
             _exercise.setCreated(exercise.getCreated());
-            _exercise.setType(exercise.getType());
+            _exercise.setTypeId(exercise.getTypeId());
             return new ResponseEntity<>(repository.save(_exercise), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -3,7 +3,7 @@ export class Exercise {
     name: string;
     index: number;
     lessonId: number;
-    type: string;
+    typeId: number;
     created: Date;
     description: string;
 }
