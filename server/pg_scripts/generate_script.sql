@@ -10,25 +10,31 @@ truncate table
 -- general
 
 INSERT INTO exercise_types (id, name, value)
-VALUES (1, 'Black box', 'black-box'),
-       (2, 'Multiple Choice Quiz', 'quiz'),
-       (3, 'Interactive Exercise', 'white-box'),
-       (4, 'Theory', 'theory'),
-       (5, 'Self-Evaluation', 'self-eval');
+VALUES (1, 'Interactive Exercise', 'source-test'),
+       (2, 'Interactive Exercise', 'source-test-file'),
+       (3, 'Black box', 'test'),
+       (4, 'Black box', 'test-file'),
+       (5, 'Single-answer Quiz', 'single-quiz'),
+       (6, 'Multiple-answer Quiz', 'multiple-quiz'),
+       (7, 'Theory', 'theory');
 
--- Morse
+-- Custom course
 
 INSERT INTO courses (id, name, created, description)
-VALUES (1, 'Course One', '2019-03-09 20:53:09.851', 'Course description');
+VALUES (1, 'Course One', '2019-03-09 20:53:09.851', 'Custom course');
 
 INSERT INTO lessons (id, name, course_id, created, description)
-VALUES (1, 'Lesson one', 1, '2019-03-09 20:53:09.851', 'Lesson description'),
-       (2, 'Lesson two', 1, '2019-03-09 20:53:09.851', 'Lesson description');
+VALUES (1, 'Lesson one', 1, '2019-03-09 20:53:09.851', 'Different exercise types examples'),
+       (2, 'Lesson two', 1, '2019-03-09 20:53:09.851', 'Exercises for debugging');
 
-INSERT INTO exercises (id, name, index, lesson_id, type, created, description)
-VALUES (1, 'Exercise one', 0, 1, 'white-box', '2019-03-09 20:53:09.851', 'Exercise one description'),
-       (2, 'Exercise two', 1, 1, 'black-box', '2019-03-09 20:53:09.851', 'Exercise two description'),
-       (3, 'Exercise three', 2, 1, 'quiz', '2019-03-09 20:53:09.851', 'Exercise three description');
+INSERT INTO exercises (id, name, index, lesson_id, typeId, created, description)
+VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
+       (2, 'Exercise two', 1, 1, 2, '2019-03-09 20:53:09.851', '(source-test-file)'),
+       (3, 'Exercise three', 2, 1, 3, '2019-03-09 20:53:09.851', '(test)'),
+       (4, 'Exercise four', 3, 1, 4, '2019-03-09 20:53:09.851', '(test-file)'),
+       (5, 'Exercise five', 4, 1, 5, '2019-03-09 20:53:09.851', '(single-quiz)'),
+       (6, 'Exercise six', 5, 1, 6, '2019-03-09 20:53:09.851', '(multiple-quiz)'),
+       (7, 'Exercise seven', 6, 1, 7, '2019-03-09 20:53:09.851', '(theory)');
 
 insert into exercise_sources (id, exercise_id, filename, code)
 values (1,
@@ -248,32 +254,12 @@ public class TestMorse {
 }
 ');
 
--- sample
+-- exercise 2
 
-INSERT INTO courses (id, name, created, description)
-VALUES (2, 'Sample course', '2019-03-28 11:08:09.851',
-        'Web application functionality overview. Use agile programming methods to build a game, based on a legacy code');
-
-INSERT INTO lessons (id, name, course_id, created, description)
-VALUES (3, 'Debugging the legacy program', 2, '2019-03-28 11:08:09.851',
-        'The aim is to find bugs in the legacy program and fix them, but keep the original structure of the code. The user should write his/her own tests to find the bugs and fix them');
-
-INSERT INTO lessons (id, name, course_id, created, description)
-VALUES (4, 'Adding new features to the legacy program', 2, '2019-03-28 11:08:09.851',
-        'The aim is to add some features to the legacy code');
-
-INSERT INTO lessons (id, name, course_id, created, description)
-VALUES (5, 'Refactoring lesson', 2, '2019-03-28 11:08:09.851',
-        'The aim is to refactor the code of the legacy program so the program remains functional. Every exercise corresponds to a step of refactoring');
-
-INSERT INTO exercises (id, name, index, lesson_id, type, created, description)
-VALUES (4, 'Exceptions handling: incorrect move', 0, 5, 'white-box', '2019-03-28 11:08:09.851', 'Refactor the code of the legacy program so the program remains functional. Every exercise corresponds to a step of refactoring. Keep the original structure of the code. You should write own tests so the program would maintain functional. The program should pass all your and hidden tests
-
-This exercise focuses on handling exceptions. Errors handling not only makes code robust, but also clean.');
 
 insert into exercise_sources (id, exercise_id, filename, code)
 values (4,
-        4,
+        2,
         'Reversi.java',
         'import java.io.BufferedReader;
 import java.io.File;
@@ -608,7 +594,7 @@ public class Reversi {
 
 insert into exercise_sources (id, exercise_id, filename, code) -- IncorrectGameConfigFileException
 values (5,
-        4,
+        2,
         'IncorrectGameConfigFileException.java',
         'public class IncorrectGameConfigFileException extends Exception {
 
@@ -623,7 +609,7 @@ values (5,
 
 insert into exercise_sources (id, exercise_id, filename, code) -- NotPermittedMoveException
 values (6,
-        4,
+        2,
         'NotPermittedMoveException.java',
         'public class NotPermittedMoveException extends Exception {
 
@@ -634,7 +620,7 @@ values (6,
 
 insert into exercise_sources (id, exercise_id, filename, code) -- Alpha
 values (7,
-        4,
+        2,
         'Alpha.java',
         'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
@@ -652,7 +638,7 @@ values (7,
 
 insert into exercise_sources (id, exercise_id, filename, code) -- Player
 values (8,
-        4,
+        2,
         'Player.java',
         'public enum Player {
     B(1), W(0), NONE(-1);
@@ -671,7 +657,7 @@ values (8,
 
 insert into exercise_tests (id, exercise_id, filename, code) -- ReversiRefactoredTest
 values (2,
-        4,
+        2,
         'ReversiTest.java',
         'import javafx.util.Pair;
 import org.junit.Test;
@@ -1615,7 +1601,7 @@ public class ReversiTest {
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_init_b_starts
 values (1,
-        4,
+        2,
         'game_init_b_starts.txt',
         'B
 E4 D5
@@ -1624,7 +1610,7 @@ D4 E5
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_init_w_starts
 values (2,
-        4,
+        2,
         'game_init_w_starts.txt',
         'W
 E4 D5
@@ -1633,7 +1619,7 @@ D4 E5
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_all_alpha
 values (3,
-        4,
+        2,
         'game_all_alpha.txt',
         'B
 EE DD
@@ -1642,7 +1628,7 @@ DD EE
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_all_num
 values (4,
-        4,
+        2,
         'game_all_num.txt',
         'B
 EE DD
@@ -1651,7 +1637,7 @@ DD EE
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_almost_complete
 values (5,
-        4,
+        2,
         'game_almost_complete.txt',
         'W
 A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
@@ -1660,7 +1646,7 @@ H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_complete
 values (6,
-        4,
+        2,
         'game_complete.txt',
         'W
 A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
@@ -1669,13 +1655,13 @@ H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_empty
 values (7,
-        4,
+        2,
         'game_empty.txt',
         '');
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_four_lines
 values (8,
-        4,
+        2,
         'game_four_lines.txt',
         'B
 E4 D5
@@ -1685,7 +1671,7 @@ E4 D5
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_no_on_turn
 values (9,
-        4,
+        2,
         'game_no_on_turn.txt',
         'E4 D5
 D4 E5
@@ -1693,7 +1679,25 @@ D4 E5
 
 insert into exercise_configs (id, exercise_id, filename, text) -- game_one_line
 values (10,
-        4,
+        2,
         'game_one_line.txt',
         'E4 D5
 ');
+
+-- sample
+
+INSERT INTO courses (id, name, created, description)
+VALUES (2, 'Sample course', '2019-03-28 11:08:09.851',
+        'Web application functionality overview. Use agile programming methods to build a game, based on a legacy code');
+
+INSERT INTO lessons (id, name, course_id, created, description)
+VALUES (3, 'Debugging the legacy program', 2, '2019-03-28 11:08:09.851',
+        'The aim is to find bugs in the legacy program and fix them, but keep the original structure of the code. The user should write his/her own tests to find the bugs and fix them');
+
+INSERT INTO lessons (id, name, course_id, created, description)
+VALUES (4, 'Adding new features to the legacy program', 2, '2019-03-28 11:08:09.851',
+        'The aim is to add some features to the legacy code');
+
+INSERT INTO lessons (id, name, course_id, created, description)
+VALUES (5, 'Refactoring lesson', 2, '2019-03-28 11:08:09.851',
+        'The aim is to refactor the code of the legacy program so the program remains functional. Every exercise corresponds to a step of refactoring');

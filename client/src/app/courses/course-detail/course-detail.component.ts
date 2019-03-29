@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap, filter, map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import { CourseService } from '../shared/course.service';
 import { LessonService } from '../lessons/shared/lesson.service';
@@ -20,10 +20,10 @@ import { ExerciseType } from '../lessons/exercises/shared/exercise-type/exercise
 
 export class CourseDetailComponent implements OnInit {
 
-  course$: Observable<Course>;
-  lessons$: Observable<Lesson>;
-  exercises$: Observable<Exercise>;
-  exerciseTypes$: Observable<ExerciseType>;
+  course: Course;
+  lessons: Array<Lesson>;
+  exercises: Array<Exercise>;
+  exerciseTypes: Array<ExerciseType>;
 
   constructor(
     private courseService: CourseService,
@@ -37,43 +37,55 @@ export class CourseDetailComponent implements OnInit {
     this.getCourse();
     this.getLessons();
     this.getExercises();
-    this.getExerciseTypeNames();
+    this.getExerciseTypes();
   }
 
   getCourse() {
-    const course = this.route.paramMap.pipe(
+    const course$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.courseService.getCourseById(Number(params.get('id')))
       )
     );
-    this.course$ = course;
+    course$.subscribe(
+      data => {
+        this.course = data;
+        console.log(this.course);
+      },
+      error => console.log(error)
+    );
   }
 
   getLessons() {
-    const lessons = this.route.paramMap.pipe(
+    const lessons$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.lessonService.getLessonsByCourseId(Number(params.get('id')))
       )
     );
-    this.lessons$ = lessons;
+    lessons$.subscribe(
+      data => {
+        this.lessons = data;
+        console.log(this.lessons);
+      },
+      error => console.log(error)
+    );
   }
 
   getExercises() {
     this.exerciseService.getExercisesList()
       .subscribe(
         data => {
-          this.exercises$ = data;
+          this.exercises = data;
           console.log(data);
         },
         error => console.log(error)
       );
   }
 
-  getExerciseTypeNames() {
+  getExerciseTypes() {
     this.exerciseTypeService.getExericseTypesList()
       .subscribe(
         data => {
-          this.exerciseTypes$ = data;
+          this.exerciseTypes = data;
           console.log(data);
         },
         error => console.log(error)
@@ -82,7 +94,7 @@ export class CourseDetailComponent implements OnInit {
 
   getExercisesByLessonId(lessonId: number) {
     const x = new Array<Exercise>();
-    this.exercises$.forEach(ex => {
+    this.exercises.forEach(ex => {
       if (ex.lessonId === lessonId) {
         x.push(ex);
       }
@@ -90,14 +102,8 @@ export class CourseDetailComponent implements OnInit {
     return x;
   }
 
-  getExerciseTypeName(value: string) {
-    let typeName = '';
-    this.exerciseTypes$.forEach(et => {
-      if (et.value === value) {
-        typeName = et.name;
-      }
-    });
-    return typeName;
+  getExerciseTypeName(typeId: number) {
+    return this.exerciseTypes.filter(et => et.id === typeId)[0].name;
   }
 
   delete(lesson: Lesson) {
