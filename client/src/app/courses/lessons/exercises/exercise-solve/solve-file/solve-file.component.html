@@ -1,6 +1,7 @@
 <div [formGroup]="solutionFormGroup" class="mat-elevation-z2 card">
+  <div *ngIf="solutionFormGroup.controls.solutionFiles">
     <div formArrayName="solutionFiles" class="file">
-  
+
       <mat-tab-group>
         <mat-tab *ngFor="let file of solutionFormGroup.controls.solutionFiles.controls; let i = index;">
           <div [formGroupName]="i">
@@ -16,6 +17,7 @@
           </div>
         </mat-tab>
       </mat-tab-group>
-  
+
     </div>
   </div>
+</div>
