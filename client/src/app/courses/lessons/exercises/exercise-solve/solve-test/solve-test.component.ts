@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class SolveTestComponent implements OnInit {
 
   @Input() solutionFormGroup: FormGroup;
+  editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
 
   constructor(
     private fb: FormBuilder
@@ -19,13 +20,14 @@ export class SolveTestComponent implements OnInit {
   }
 
   updForm() {
-    this.solutionFormGroup.addControl(
-      'solutionTests', this.fb.array([this.createSolutionTest()])
-    );
+    this.setSolutionTests();
   }
 
-  createSolutionTest() {
-    console.log('createSolutionTest');
+  setSolutionTests() {
+    const exerciseTests = this.solutionFormGroup.controls.exerciseTests.controls;
+    this.solutionFormGroup.addControl(
+      'solutionTests', this.fb.array(exerciseTests)
+    );
   }
 
 }

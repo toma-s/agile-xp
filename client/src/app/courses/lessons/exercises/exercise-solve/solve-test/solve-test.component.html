@@ -1,3 +1,23 @@
-<p>
-  solve-test works!
-</p>
+<div [formGroup]="solutionFormGroup" class="mat-elevation-z2 card">
+  <div class="test">
+    <div formArrayName="solutionTests">
+
+      <mat-tab-group>
+        <mat-tab *ngFor="let test of solutionFormGroup.controls.solutionTests.controls; let i = index;">
+          <div [formGroupName]="i">
+            <ng-template mat-tab-label>
+              {{ test.value.fileName }}
+            </ng-template>
+            <ng-template matTabContent>
+              <div class="test__editor">
+                <ngx-monaco-editor [options]="editorOptions" formControlName="code" class="test__monaco">
+                </ngx-monaco-editor>
+              </div>
+            </ng-template>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+    </div>
+  </div>
+</div>

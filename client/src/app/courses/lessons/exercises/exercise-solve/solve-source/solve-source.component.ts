@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { SolutionSource } from '../../shared/solution-source/solution-source.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'solve-source',
