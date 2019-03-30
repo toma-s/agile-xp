@@ -41,7 +41,7 @@ export class SolveRunComponent implements OnInit {
 
   createSolutionEstimation() {
     this.solutionFormGroup.addControl(
-      'exerciseEstimation', this.createEstimation()
+      'solutionEstimation', this.createEstimation()
     );
   }
 
@@ -54,14 +54,9 @@ export class SolveRunComponent implements OnInit {
   }
 
 
-  run() {
-    this.solutionFormGroup.controls.exerciseEstimation.controls.estimation.value = 'Running...';
+  async run() {
+    this.solutionFormGroup.controls.solutionEstimation.controls.estimation.value = 'Running...';
 
-    // this.getAll();
-    this.save();
-  }
-
-  async save() {
     await this.setSolution();
     await this.saveSolutionItems();
     await this.getEstimation();
@@ -187,40 +182,10 @@ export class SolveRunComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue(data.value);
+          this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue(data.estimation);
         },
         error => console.log(error)
       );
   }
-
-  async getAll() {
-    const solution = await this.saveSolution();
-
-    console.log(solution);
-    this.solution = solution;
-    console.log(this.solution);
-
-    const solutionSources = await this.saveSolutionSources();
-
-    console.log(solutionSources);
-  }
-
-  // -------
-
-  resolveAfter2Seconds(x) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(x);
-      }, 2000);
-    });
-  }
-
-  async addWithAsync() {
-    const result1 = <number>await this.resolveAfter2Seconds(20);
-    const result2 = <number>await this.resolveAfter2Seconds(30);
-    const additionAsyncResult = result1 + result2;
-    console.log(`async result: ${additionAsyncResult}`);
-  }
-
 
 }

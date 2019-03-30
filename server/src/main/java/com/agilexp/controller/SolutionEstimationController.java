@@ -54,18 +54,19 @@ public class SolutionEstimationController {
         SolutionEstimation solutionEstimation = new SolutionEstimation();
         solutionEstimation.setSolutionId(solutionId);
 
-        List<SolutionSource> solutionSources = solutionSourceRepository.findSolutionSourcesBySolutionId(solutionId);
-        List<SolutionTest> solutionTests = solutionTestRepository.findSolutionTestsBySolutionId(solutionId);
-        List<SolutionConfig> solutionConfigs = solutionConfigRepository.findSolutionConfigBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
         List<ExerciseTest> exerciseTests = exerciseTestRepository.findByExerciseId(solution.getExerciseId());
         List<ExerciseConfig> exerciseConfigs = exerciseConfigRepository.findByExerciseId(solution.getExerciseId());
+
+        List<SolutionSource> solutionSources = solutionSourceRepository.findSolutionSourcesBySolutionId(solutionId);
+        List<SolutionTest> solutionTests = solutionTestRepository.findSolutionTestsBySolutionId(solutionId);
+        List<SolutionConfig> solutionConfigs = solutionConfigRepository.findSolutionConfigBySolutionId(solutionId);
 
         String estimation = getEstimation(solutionSources, solutionTests, solutionConfigs, exerciseTests, exerciseConfigs, solutionId);
         solutionEstimation.setEstimation(estimation);
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
-        System.out.format("Created solution estimation %s\n", solutionEstimation);
+        System.out.format("Created solution estimation %s\n", _solutionEstimation);
         return _solutionEstimation;
     }
 
@@ -74,8 +75,8 @@ public class SolutionEstimationController {
         try {
             String solutionEstimationResult = estimateWithPublicTests(solutionSources, solutionTests, solutionConfigs, solutionId);
 //            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests/*, exerciseConfigs*/, solutionId);
-//            return solutionEstimationResult + exerciseEstimationResult;
-            return solutionEstimationResult;
+            String exerciseEstimationResult = "Exercise Estimation with files is not implemented yet";
+            return solutionEstimationResult + exerciseEstimationResult;
         } catch (StorageException e) {
             e.printStackTrace();
             return "File storing failed: " + e.getMessage();
