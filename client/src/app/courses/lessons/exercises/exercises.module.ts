@@ -25,6 +25,7 @@ import { SolveSourceComponent } from './exercise-solve/solve-source/solve-source
 import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.component';
 import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.component';
 import { SolveSingleQuizComponent } from './exercise-solve/solve-single-quiz/solve-single-quiz.component';
+import { SolveMultipleQuizComponent } from './exercise-solve/solve-multiple-quiz/solve-multiple-quiz.component';
 
 @NgModule({
   entryComponents: [
@@ -41,7 +42,8 @@ import { SolveSingleQuizComponent } from './exercise-solve/solve-single-quiz/sol
     SolveSourceComponent,
     SolveTestComponent,
     SolveFileComponent,
-    SolveSingleQuizComponent
+    SolveSingleQuizComponent,
+    SolveMultipleQuizComponent
   ],
   imports: [
     CommonModule,
