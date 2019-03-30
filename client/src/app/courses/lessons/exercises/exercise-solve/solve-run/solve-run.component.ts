@@ -127,7 +127,7 @@ export class SolveRunComponent implements OnInit {
       observables.push(this.saveSolutionSource(sc));
     });
     return new Promise((resolve, reject) => {
-      forkJoin(...observables).subscribe(
+      forkJoin(observables).subscribe(
         data => resolve(data),
         error => reject(error)
       );
@@ -146,7 +146,7 @@ export class SolveRunComponent implements OnInit {
       observables.push(this.saveSolutionTest(st));
     });
     return new Promise((resolve, reject) => {
-      forkJoin(...observables).subscribe(
+      forkJoin(observables).subscribe(
         data => resolve(data),
         error => reject(error)
       );
@@ -165,7 +165,7 @@ export class SolveRunComponent implements OnInit {
       observables.push(this.saveSolutionFile(sf));
     });
     return new Promise((resolve, reject) => {
-      forkJoin(...observables).subscribe(
+      forkJoin(observables).subscribe(
         data => resolve(data),
         error => reject(error)
       );
