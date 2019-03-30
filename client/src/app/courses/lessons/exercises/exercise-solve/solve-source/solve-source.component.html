@@ -7,7 +7,7 @@
           <ng-template mat-tab-label>
             {{ source.value.fileName }}
           </ng-template>
-          <ng-template mat-tab-content>
+          <ng-template matTabContent>
             <div class="source__editor">
               <ngx-monaco-editor [options]="editorOptions" formControlName="code" class="source__monaco">
               </ngx-monaco-editor>
