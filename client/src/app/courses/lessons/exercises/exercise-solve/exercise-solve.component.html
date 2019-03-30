@@ -6,20 +6,23 @@
     <div *ngSwitchCase="'source-test'">
       <solve-intro></solve-intro>
     </div>
-    <div *ngSwitchCase="'black-box'">
-      <p>black box</p>
+    <div *ngSwitchCase="'source-test-file'">
+      <solve-intro></solve-intro>
     </div>
-    <div *ngSwitchCase="'white-box'">
-      <solve-white-box [exercise]="exercise"></solve-white-box>
+    <div *ngSwitchCase="'test'">
+      <solve-intro></solve-intro>
     </div>
-    <div *ngSwitchCase="'quiz'">
-      <p>quiz</p>
+    <div *ngSwitchCase="'test-file'">
+      <solve-intro></solve-intro>
+    </div>
+    <div *ngSwitchCase="'single-quiz'">
+      <solve-intro></solve-intro>
+    </div>
+    <div *ngSwitchCase="'multiple-quiz'">
+      <solve-intro></solve-intro>
     </div>
     <div *ngSwitchCase="'theory'">
-      <p>theory</p>
-    </div>
-    <div *ngSwitchCase="'self-eval'">
-      <p>self eval</p>
+      <solve-intro></solve-intro>
     </div>
     <div *ngSwitchDefault>
       <p>default</p>
