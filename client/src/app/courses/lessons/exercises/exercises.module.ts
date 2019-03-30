@@ -23,6 +23,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SolveIntroComponent } from './exercise-solve/solve-intro/solve-intro.component';
 import { SolveSourceComponent } from './exercise-solve/solve-source/solve-source.component';
 import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.component';
+import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.component';
 
 @NgModule({
   entryComponents: [
@@ -37,7 +38,8 @@ import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.compo
     ToolbarComponent,
     SolveIntroComponent,
     SolveSourceComponent,
-    SolveTestComponent
+    SolveTestComponent,
+    SolveFileComponent
   ],
   imports: [
     CommonModule,
