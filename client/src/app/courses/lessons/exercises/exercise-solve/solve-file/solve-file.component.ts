@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class SolveFileComponent implements OnInit {
 
   @Input() solutionFormGroup: FormGroup;
+  editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
 
   constructor(
     private fb: FormBuilder
@@ -19,13 +20,14 @@ export class SolveFileComponent implements OnInit {
   }
 
   updForm() {
-    this.solutionFormGroup.addControl(
-      'solutionFiles', this.fb.array([this.createSolutionFile()])
-    );
+    this.setSolutionFiles();
   }
 
-  createSolutionFile() {
-    console.log('createSolutionFile');
+  setSolutionFiles() {
+    const exerciseFiles = this.solutionFormGroup.controls.exerciseFiles.controls;
+    this.solutionFormGroup.addControl(
+      'solutionFiles', this.fb.array(exerciseFiles)
+    );
   }
 
 }

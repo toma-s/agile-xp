@@ -1,3 +1,21 @@
-<p>
-  solve-file works!
-</p>
+<div [formGroup]="solutionFormGroup" class="mat-elevation-z2 card">
+    <div formArrayName="solutionFiles" class="file">
+  
+      <mat-tab-group>
+        <mat-tab *ngFor="let file of solutionFormGroup.controls.solutionFiles.controls; let i = index;">
+          <div [formGroupName]="i">
+            <ng-template mat-tab-label>
+              {{ file.value.fileName }}
+            </ng-template>
+            <ng-template matTabContent>
+              <div class="file__editor">
+                <ngx-monaco-editor [options]="editorOptions" formControlName="text" class="file__monaco">
+                </ngx-monaco-editor>
+              </div>
+            </ng-template>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+  
+    </div>
+  </div>
