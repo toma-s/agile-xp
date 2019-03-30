@@ -1,0 +1,21 @@
+.card {
+  margin: 15px 0;
+
+  .run {
+
+    .run__output {
+      white-space: pre-line;
+      font-family: monospace;
+
+      p {
+        resize: none;
+        border: none;
+        padding: 4px;
+        width: calc(100% - 8px);
+        height: 192px;
+        overflow: auto;
+        margin: 0;
+      }
+    }
+  }
+}

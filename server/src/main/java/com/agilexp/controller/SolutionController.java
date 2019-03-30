@@ -16,11 +16,14 @@ public class SolutionController {
     SolutionRepository repository;
 
     @PostMapping(value = "/solutions/create")
-    public Solution postCourse(@RequestBody Solution solution) {
+    public Solution postSolution(@RequestBody Solution solution) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
-        Solution _solution = repository.save(new Solution(solution.getExerciseId(), created));
-        System.out.format("Created solution %s\n", solution);
+        Solution _solution = repository.save(new Solution(
+                solution.getExerciseId(),
+                created
+        ));
+        System.out.format("Created solution %s\n", _solution);
         return _solution;
     }
 }

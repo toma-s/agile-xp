@@ -21,6 +21,12 @@ import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.componen
 import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SolveIntroComponent } from './exercise-solve/solve-intro/solve-intro.component';
+import { SolveSourceComponent } from './exercise-solve/solve-source/solve-source.component';
+import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.component';
+import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.component';
+import { SolveSingleQuizComponent } from './exercise-solve/solve-single-quiz/solve-single-quiz.component';
+import { SolveMultipleQuizComponent } from './exercise-solve/solve-multiple-quiz/solve-multiple-quiz.component';
+import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
 
 @NgModule({
   entryComponents: [
@@ -33,7 +39,13 @@ import { SolveIntroComponent } from './exercise-solve/solve-intro/solve-intro.co
     ExerciseSolveComponent,
     DialogOverviewExampleDialogComponent,
     ToolbarComponent,
-    SolveIntroComponent
+    SolveIntroComponent,
+    SolveSourceComponent,
+    SolveTestComponent,
+    SolveFileComponent,
+    SolveSingleQuizComponent,
+    SolveMultipleQuizComponent,
+    SolveRunComponent
   ],
   imports: [
     CommonModule,

@@ -77,7 +77,7 @@ export class LessonEditComponent implements OnInit {
         this.exerciseService.updateExercise(this.exercises[i].id, this.exercises[i])
       );
     }
-    forkJoin(...observables).subscribe(
+    forkJoin(observables).subscribe(
       data => {
         console.log(data);
       },

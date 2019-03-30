@@ -1,0 +1,13 @@
+<div class="mat-elevation-z2 card">
+
+  <div class="run">
+    <div>
+      <button mat-button color="accent" class="run__button" (click)="run()">Run</button>
+    </div>
+    <div class="run__output" *ngIf="solutionFormGroup.controls.solutionEstimation.controls.estimation.value">
+      <mat-divider></mat-divider>
+      <p>{{ solutionFormGroup.controls.solutionEstimation.controls.estimation.value }}</p>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,17 @@
+.card {
+  margin: 15px 0;
+
+  .test {
+    height: 80vh;
+
+    .test__editor {
+      height: calc(80vh - 48px);
+      border: 1px solid #ebebeb;
+
+      .test__monaco {
+        height: 100%;
+        overflow: hidden;
+      }
+    }
+  }
+}

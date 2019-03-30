@@ -1,0 +1,17 @@
+.card {
+  margin: 15px 0;
+
+  .intro {
+    padding: 12px;
+
+    .intro__name {
+      width: 70%;
+      margin-left: 15%;
+      text-align: center;
+    }
+
+    .intro__description {
+      white-space: pre-line;
+    }
+  }
+}
