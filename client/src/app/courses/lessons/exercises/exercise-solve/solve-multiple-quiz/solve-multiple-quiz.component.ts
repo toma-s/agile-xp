@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'solve-multiple-quiz',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SolveMultipleQuizComponent implements OnInit {
 
-  constructor() { }
+  @Input() solutionFormGroup: FormGroup;
+
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.updForm();
+  }
+
+  updForm() {
+    this.solutionFormGroup.addControl(
+      'solutionMultipleQuiz', this.fb.array([this.createSolutionMultipleQuiz()])
+    );
+  }
+
+  createSolutionMultipleQuiz() {
+    console.log('createSolutionMultipleQuiz');
   }
 
 }

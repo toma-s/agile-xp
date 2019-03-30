@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'solve-source',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SolveSourceComponent implements OnInit {
 
-  constructor() { }
+  @Input() solutionFormGroup: FormGroup;
+
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.updForm();
+  }
+
+  updForm() {
+    this.solutionFormGroup.addControl(
+      'solutionSources', this.fb.array([this.createSolutionSource()])
+    );
+  }
+
+  createSolutionSource() {
+    console.log('createSolutionSource');
   }
 
 }

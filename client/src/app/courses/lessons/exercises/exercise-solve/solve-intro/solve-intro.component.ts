@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'solve-intro',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SolveIntroComponent implements OnInit {
 
-  constructor() { }
+  @Input() solutionFormGroup: FormGroup;
+  exerciseName: string;
+  exerciseDescription: string;
+
+  constructor(
+  ) { }
 
   ngOnInit() {
+    this.getValues();
+  }
+
+  getValues() {
+    this.exerciseName = this.solutionFormGroup.controls.intro.controls.exerciseName.value;
+    this.exerciseDescription = this.solutionFormGroup.controls.intro.controls.exerciseDescription.value;
   }
 
 }
