@@ -5,9 +5,11 @@
   <div *ngIf="exerciseType" [ngSwitch]="exerciseType.value">
     <div *ngSwitchCase="'source-test'">
       <solve-intro></solve-intro>
+      <solve-source></solve-source>
     </div>
     <div *ngSwitchCase="'source-test-file'">
       <solve-intro></solve-intro>
+      <solve-source></solve-source>
     </div>
     <div *ngSwitchCase="'test'">
       <solve-intro></solve-intro>
