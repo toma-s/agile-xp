@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { SolutionSource } from '../../shared/solution-source/solution-source.model';
 
 @Component({
   selector: 'solve-source',
@@ -9,6 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class SolveSourceComponent implements OnInit {
 
   @Input() solutionFormGroup: FormGroup;
+  editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
 
   constructor(
     private fb: FormBuilder
@@ -19,13 +21,14 @@ export class SolveSourceComponent implements OnInit {
   }
 
   updForm() {
-    this.solutionFormGroup.addControl(
-      'solutionSources', this.fb.array([this.createSolutionSource()])
-    );
+    this.setSolutionSources();
   }
 
-  createSolutionSource() {
-    console.log('createSolutionSource');
+  setSolutionSources() {
+    const exerciseSources = this.solutionFormGroup.controls.exerciseSources.controls;
+    this.solutionFormGroup.addControl(
+      'solutionSources', this.fb.array(exerciseSources)
+    );
   }
 
 }

@@ -104,26 +104,26 @@ export class ExerciseSolveComponent implements OnInit {
   createForm() {
     this.solutionFormGroup = this.fb.group({
     });
-    this.setIntro();
+    this.setExerciseIntro();
     switch (this.exerciseType.value) {
       case 'source-test': {
-        this.setSources();
-        this.setTests();
+        this.setExerciseSources();
+        this.setExerciseTests();
         break;
       }
       case 'source-test-file': {
-        this.setSources();
-        this.setTests();
-        this.setFiles();
+        this.setExerciseSources();
+        this.setExerciseTests();
+        this.setExerciseFiles();
         break;
       }
       case 'test': {
-        this.setTests();
+        this.setExerciseTests();
         break;
       }
       case 'test-file': {
-        this.setTests();
-        this.setFiles();
+        this.setExerciseTests();
+        this.setExerciseFiles();
         break;
       }
       case 'single-quiz': {
@@ -141,7 +141,7 @@ export class ExerciseSolveComponent implements OnInit {
     console.log(this.solutionFormGroup);
   }
 
-  setIntro() {
+  setExerciseIntro() {
     this.solutionFormGroup.addControl(
       'intro', this.fb.group({
         exerciseName: [this.exercise.name],
@@ -150,22 +150,51 @@ export class ExerciseSolveComponent implements OnInit {
     );
   }
 
-  setSources() {
+  setExerciseSources() {
     this.solutionFormGroup.addControl(
-      'exerciseSources', this.fb.array(this.exerciseSources)
+      'exerciseSources', this.fb.array(this.getGroup(this.exerciseSources))
     );
   }
 
-  setTests() {
+  setExerciseTests() {
     this.solutionFormGroup.addControl(
-      'exerciseTests', this.fb.array(this.exerciseTests)
+      'exerciseTests', this.fb.array(this.getGroup(this.exerciseTests))
     );
   }
 
-  setFiles() {
+  setExerciseFiles() {
     this.solutionFormGroup.addControl(
-      'exerciseFiles', this.fb.array(this.exerciseConfigs)
+      'exerciseFiles', this.fb.array(this.getGroupForFile(this.exerciseConfigs))
     );
+  }
+
+  getGroup(array: Array<any>) {
+    const fgs = new Array<FormGroup>();
+    array.forEach(e => {
+      const fg = this.fb.group({
+        id: [e.id],
+        fileName: [e.fileName],
+        code: [e.code],
+        exerciseId: [e.exerciseId]
+      });
+      fgs.push(fg);
+    });
+    return fgs;
+  }
+
+  getGroupForFile(array: Array<any>) {
+    // TODO | refactor: remove when code->text
+    const fgs = new Array<FormGroup>();
+    array.forEach(e => {
+      const fg = this.fb.group({
+        id: [e.id],
+        fileName: [e.fileName],
+        text: [e.text],
+        exerciseId: [e.exerciseId]
+      });
+      fgs.push(fg);
+    });
+    return fgs;
   }
 
 }

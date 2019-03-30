@@ -1,5 +1,21 @@
-<!-- <div [formGroup]="solutionFormGroup"> -->
-  <p>
-    solve-source works!
-  </p>
-<!-- </div> -->
+<div [formGroup]="solutionFormGroup" class="mat-elevation-z2 card">
+  <div formArrayName="solutionSources" class="source">
+
+    <mat-tab-group>
+      <mat-tab *ngFor="let source of solutionFormGroup.controls.solutionSources.controls; let i = index;">
+        <div [formGroupName]="i">
+          <ng-template mat-tab-label>
+            {{ source.value.fileName }}
+          </ng-template>
+          <ng-template mat-tab-content>
+            <div class="source__editor">
+              <ngx-monaco-editor [options]="editorOptions" formControlName="code" class="source__monaco">
+              </ngx-monaco-editor>
+            </div>
+          </ng-template>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+  </div>
+</div>
