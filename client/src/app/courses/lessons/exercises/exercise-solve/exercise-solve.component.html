@@ -8,31 +8,37 @@
       <div *ngIf="exerciseType" [ngSwitch]="exerciseType.value">
         <div *ngSwitchCase="'source-test'">
           <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
+          <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
           <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
           <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
         </div>
         <div *ngSwitchCase="'source-test-file'">
-          <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
+          <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro >
+          <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
           <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
           <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
           <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file>
         </div>
         <div *ngSwitchCase="'test'">
           <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
+          <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
           <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
         </div>
         <div *ngSwitchCase="'test-file'">
           <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
+          <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
           <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
           <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file>
         </div>
         <div *ngSwitchCase="'single-quiz'">
           <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
           <solve-single-quiz [solutionFormGroup]="solutionFormGroup"></solve-single-quiz>
+          <!-- TODO | submit -->
         </div>
         <div *ngSwitchCase="'multiple-quiz'">
           <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
           <solve-multiple-quiz [solutionFormGroup]="solutionFormGroup"></solve-multiple-quiz>
+          <!-- TODO | submit -->
         </div>
         <div *ngSwitchCase="'theory'">
           <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>

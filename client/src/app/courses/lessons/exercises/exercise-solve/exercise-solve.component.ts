@@ -144,8 +144,10 @@ export class ExerciseSolveComponent implements OnInit {
   setExerciseIntro() {
     this.solutionFormGroup.addControl(
       'intro', this.fb.group({
+        exerciseId: [this.exercise.id],
         exerciseName: [this.exercise.name],
-        exerciseDescription: [this.exercise.description]
+        exerciseDescription: [this.exercise.description],
+        exerciseType: [this.exerciseType.value]
       })
     );
   }
