@@ -22,6 +22,7 @@ import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SolveIntroComponent } from './exercise-solve/solve-intro/solve-intro.component';
 import { SolveSourceComponent } from './exercise-solve/solve-source/solve-source.component';
+import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.component';
 
 @NgModule({
   entryComponents: [
@@ -35,7 +36,8 @@ import { SolveSourceComponent } from './exercise-solve/solve-source/solve-source
     DialogOverviewExampleDialogComponent,
     ToolbarComponent,
     SolveIntroComponent,
-    SolveSourceComponent
+    SolveSourceComponent,
+    SolveTestComponent
   ],
   imports: [
     CommonModule,
