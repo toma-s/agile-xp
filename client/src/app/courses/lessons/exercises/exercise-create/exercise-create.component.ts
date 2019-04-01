@@ -28,7 +28,7 @@ export class ExerciseCreateComponent implements OnInit {
   constructor(
     private exerciseSercise: ExerciseService,
     private exerciseTypeServise: ExerciseTypeService,
-    private sourceCodeService: ExerciseSourceService,
+    private exerciseSourceService: ExerciseSourceService,
     private exerciseTestService: ExerciseTestService,
     private fb: FormBuilder,
     private route: ActivatedRoute
@@ -108,8 +108,8 @@ export class ExerciseCreateComponent implements OnInit {
         data => {
           this.exercise.id = data.id;
           console.log(data);
-          const exerciseSources = this.createSourceCodeObjects(data.id);
-          this.saveSourceCodes(exerciseSources);
+          const exerciseSources = this.createSourceObjects(data.id);
+          this.saveExerciseSources(exerciseSources);
           const exerciseTests = this.createExerciseTestObjects(data.id);
           this.saveExerciseTests(exerciseTests);
         },
@@ -117,7 +117,7 @@ export class ExerciseCreateComponent implements OnInit {
       );
   }
 
-  createSourceCodeObjects(exerciseId: number): Array<ExerciseSource> {
+  createSourceObjects(exerciseId: number): Array<ExerciseSource> {
     const exerciseSourceObjects = new Array<ExerciseSource>();
     const exerciseSources: FormArray = this.exerciseFormGroup.get('sources') as FormArray;
     console.log(exerciseSources);
@@ -132,9 +132,9 @@ export class ExerciseCreateComponent implements OnInit {
     return exerciseSourceObjects;
   }
 
-  saveSourceCodes(exerciseSources: Array<ExerciseSource>) {
+  saveExerciseSources(exerciseSources: Array<ExerciseSource>) {
     exerciseSources.forEach(es => {
-      this.sourceCodeService.createExerciseSource(es)
+      this.exerciseSourceService.createExerciseSource(es)
         .subscribe(
           data => {
             console.log(data);

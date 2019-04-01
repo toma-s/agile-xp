@@ -31,7 +31,7 @@ export class ExerciseSolveComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private exerciseService: ExerciseService,
-    private exerciseCodeService: ExerciseSourceService,
+    private exerciseSourceService: ExerciseSourceService,
     private exerciseTestService: ExerciseTestService,
     private exerciseConfigService: ExerciseConfigService,
     private exerciseTypeService: ExerciseTypeService,
@@ -61,14 +61,14 @@ export class ExerciseSolveComponent implements OnInit {
     this.exerciseTypeService.getExerciseTypeById(this.exercise.typeId).subscribe(
       data => {
         this.exerciseType = data;
-        this.getSourceCodes();
+        this.getSourceContent();
       },
       error => console.log(error)
     );
   }
 
-  getSourceCodes() {
-    this.exerciseCodeService.getExerciseSourcesByExerciseId(this.exercise.id)
+  getSourceContent() {
+    this.exerciseSourceService.getExerciseSourcesByExerciseId(this.exercise.id)
       .subscribe(
         data => {
           this.exerciseSources = data;
@@ -163,26 +163,11 @@ export class ExerciseSolveComponent implements OnInit {
 
   setExerciseFiles() {
     this.solutionFormGroup.addControl(
-      'exerciseFiles', this.fb.array(this.getGroupForFile(this.exerciseConfigs))
+      'exerciseFiles', this.fb.array(this.getGroup(this.exerciseConfigs))
     );
   }
 
   getGroup(array: Array<any>) {
-    const fgs = new Array<FormGroup>();
-    array.forEach(e => {
-      const fg = this.fb.group({
-        id: [e.id],
-        fileName: [e.fileName],
-        content: [e.content],
-        exerciseId: [e.exerciseId]
-      });
-      fgs.push(fg);
-    });
-    return fgs;
-  }
-
-  getGroupForFile(array: Array<any>) {
-    // TODO | refactor: remove when code->content
     const fgs = new Array<FormGroup>();
     array.forEach(e => {
       const fg = this.fb.group({
