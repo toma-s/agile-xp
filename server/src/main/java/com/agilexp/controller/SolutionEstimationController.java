@@ -34,13 +34,13 @@ public class SolutionEstimationController {
     private SolutionTestRepository solutionTestRepository;
 
     @Autowired
-    private SolutionConfigRepository solutionConfigRepository;
+    private SolutionFileRepository solutionConfigRepository;
 
     @Autowired
     private ExerciseTestRepository exerciseTestRepository;
 
     @Autowired
-    private ExerciseConfigRepository exerciseConfigRepository;
+    private ExerciseFileRepository exerciseFileRepository;
 
     private final StorageService storageService;
 
@@ -54,14 +54,14 @@ public class SolutionEstimationController {
         SolutionEstimation solutionEstimation = createSolutionEstimation(solutionId);
 
         Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseTest> exerciseTests = exerciseTestRepository.findByExerciseId(solution.getExerciseId());
-        List<ExerciseFile> exerciseConfigs = exerciseConfigRepository.findByExerciseId(solution.getExerciseId());
+        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
+        List<ExerciseFile> exerciseFiles = exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId());
 
         List<SolutionSource> solutionSources = solutionSourceRepository.findSolutionSourcesBySolutionId(solutionId);
         List<SolutionTest> solutionTests = solutionTestRepository.findSolutionTestsBySolutionId(solutionId);
-        List<SolutionFile> solutionConfigs = solutionConfigRepository.findSolutionConfigBySolutionId(solutionId);
+        List<SolutionFile> solutionConfigs = solutionConfigRepository.findSolutionFileBySolutionId(solutionId);
 
-        String estimation = getEstimation(solutionSources, solutionTests, solutionConfigs, exerciseTests, exerciseConfigs, solutionId);
+        String estimation = getEstimation(solutionSources, solutionTests, solutionConfigs, exerciseTests, exerciseFiles, solutionId);
         solutionEstimation.setEstimation(estimation);
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);

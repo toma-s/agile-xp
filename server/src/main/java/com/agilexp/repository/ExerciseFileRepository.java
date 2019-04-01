@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ExerciseConfigRepository extends CrudRepository<ExerciseFile, Long> {
-    List<ExerciseFile> findByExerciseId(long exerciseId);
+public interface ExerciseFileRepository extends CrudRepository<ExerciseFile, Long> {
+    List<ExerciseFile> findExerciseFilesByExerciseId(long exerciseId);
 }

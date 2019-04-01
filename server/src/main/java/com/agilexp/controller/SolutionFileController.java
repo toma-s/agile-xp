@@ -1,7 +1,7 @@
 package com.agilexp.controller;
 
 import com.agilexp.model.SolutionFile;
-import com.agilexp.repository.SolutionConfigRepository;
+import com.agilexp.repository.SolutionFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class SolutionFileController {
     @Autowired
-    SolutionConfigRepository repository;
+    SolutionFileRepository repository;
 
     @PostMapping(value = "/solution-files/create")
     public SolutionFile postSolutionFile(@RequestBody SolutionFile solutionFile) {

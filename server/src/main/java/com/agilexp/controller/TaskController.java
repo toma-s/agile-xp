@@ -47,7 +47,7 @@ public class TaskController {
     @PostMapping(value = "/tasks/create")
     public ResponseEntity<String> createTask(@RequestBody TaskContent taskContent) {
         if (taskContent == null || taskContent.isEmpty()) {{
-            return new ResponseEntity<>("Content can't be empty", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("ExerciseContent can't be empty", HttpStatus.BAD_REQUEST);
         }}
 
         Long taskId = saveToDB(taskContent);

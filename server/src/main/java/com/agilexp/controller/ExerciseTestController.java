@@ -24,7 +24,10 @@ public class ExerciseTestController {
 
     @PostMapping(value = "/exercise-tests/create")
     public ExerciseTest postExerciseTest(@RequestBody ExerciseTest exerciseTest) {
-        ExerciseTest _exerciseTest = repository.save(new ExerciseTest(exerciseTest.getFileName(), exerciseTest.getContent(), exerciseTest.getExerciseId()));
+        ExerciseTest _exerciseTest = repository.save(new ExerciseTest(
+                exerciseTest.getExerciseId(),
+                exerciseTest.getFileName(),
+                exerciseTest.getContent()));
 
 //        storageService.store(_exerciseTest);
 
@@ -36,7 +39,7 @@ public class ExerciseTestController {
     public List<ExerciseTest> getExerciseTestByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get exercise tests with exercise id " + exerciseId + "...");
 
-        List<ExerciseTest> exerciseTests = new ArrayList<>(repository.findByExerciseId(exerciseId));
+        List<ExerciseTest> exerciseTests = new ArrayList<>(repository.findExerciseTestsByExerciseId(exerciseId));
         return exerciseTests;
     }
 }

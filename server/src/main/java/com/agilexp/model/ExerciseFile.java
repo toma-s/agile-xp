@@ -21,8 +21,8 @@ public class ExerciseFile {
     public ExerciseFile() {
     }
 
-    public ExerciseFile(long solutionId, String fileName, String content) {
-        this.exerciseId = solutionId;
+    public ExerciseFile(long exerciseId, String fileName, String content) {
+        this.exerciseId = exerciseId;
         this.fileName = fileName;
         this.content = content;
     }

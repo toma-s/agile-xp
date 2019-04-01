@@ -20,10 +20,10 @@ public class ExerciseSource {
 
     public ExerciseSource() {}
 
-    public ExerciseSource(String fileName, String content, long exerciseId) {
+    public ExerciseSource(long exerciseId, String fileName, String content) {
+        this.exerciseId = exerciseId;
         this.fileName = fileName;
         this.content = content;
-        this.exerciseId = exerciseId;
     }
 
     public long getId() {

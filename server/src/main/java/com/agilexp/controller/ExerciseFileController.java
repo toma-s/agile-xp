@@ -1,7 +1,7 @@
 package com.agilexp.controller;
 
 import com.agilexp.model.ExerciseFile;
-import com.agilexp.repository.ExerciseConfigRepository;
+import com.agilexp.repository.ExerciseFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class ExerciseFileController {
     @Autowired
-    ExerciseConfigRepository repository;
+    ExerciseFileRepository repository;
 
     @PostMapping(value = "/exercise-files/create")
     public ExerciseFile postExerciseFile(@RequestBody ExerciseFile exerciseFile) {
@@ -30,7 +30,7 @@ public class ExerciseFileController {
     public List<ExerciseFile> getExerciseFilesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get exercise files with exercise id " + exerciseId + "...");
 
-        List<ExerciseFile> _exerciseFiles = new ArrayList<>(repository.findByExerciseId(exerciseId));
+        List<ExerciseFile> _exerciseFiles = new ArrayList<>(repository.findExerciseFilesByExerciseId(exerciseId));
         System.out.format("Found exercise files from exercise %s: %s\n", exerciseId, _exerciseFiles);
         return _exerciseFiles;
     }
