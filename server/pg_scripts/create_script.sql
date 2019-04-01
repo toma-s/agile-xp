@@ -30,7 +30,7 @@ create table exercises (
     description text,
 	index int,
     created timestamp,
-    typeId int references exercise_types on delete cascade,
+    type_id int references exercise_types on delete cascade,
 	lesson_id int references lessons on delete cascade,
 	constraint unique_index_lesson_id unique (index, lesson_id)
 );
@@ -57,6 +57,15 @@ create table exercise_configs (
     filename text,
     text text,
     exercise_id int references exercises on delete cascade
+);
+
+drop table if exists exercise_controllers cascade;
+create table exercise_controllers (
+    id serial primary key,
+    filename text,
+    code text,
+	exercise_id int references exercises on delete cascade
+    -- TODO unique constraint
 );
 
 drop table if exists solutions cascade;

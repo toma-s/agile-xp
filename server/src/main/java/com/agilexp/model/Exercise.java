@@ -19,7 +19,7 @@ public class Exercise {
     @Column(name="lesson_id")
     private long lessonId;
 
-    @Column(name="typeId")
+    @Column(name="type_id")
     private long typeId;
 
     @Column(name="created")

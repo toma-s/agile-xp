@@ -50,7 +50,6 @@ export class ExerciseSolveComponent implements OnInit {
     );
     exercise$.subscribe(
       data => {
-        console.log(data);
         this.exercise = data;
         this.getExerciseType();
       },
@@ -61,7 +60,6 @@ export class ExerciseSolveComponent implements OnInit {
   getExerciseType() {
     this.exerciseTypeService.getExerciseTypeById(this.exercise.typeId).subscribe(
       data => {
-        console.log(data);
         this.exerciseType = data;
         this.getSourceCodes();
       },
@@ -92,7 +90,6 @@ export class ExerciseSolveComponent implements OnInit {
   getSourceConfigs() {
     this.exerciseConfigService.getExerciseConfigsByExerciseId(this.exercise.id).subscribe(
       data => {
-        console.log(data);
         this.exerciseConfigs = data;
         this.createForm();
       },

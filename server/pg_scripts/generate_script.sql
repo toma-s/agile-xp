@@ -4,16 +4,18 @@ truncate table
     exercise_types,
     exercises,
     exercise_sources,
-    exercise_tests
-    restart identity cascade;
+    exercise_tests,
+    exercise_configs,
+    exercise_controllers
+restart identity cascade;
 
 -- general
 
 INSERT INTO exercise_types (id, name, value)
 VALUES (1, 'Interactive Exercise', 'source-test'),
-       (2, 'Interactive Exercise', 'source-test-file'),
-       (3, 'Black box', 'test'),
-       (4, 'Black box', 'test-file'),
+       (2, 'Interactive Exercise with Files', 'source-test-file'),
+       (3, 'Black Box', 'test'),
+       (4, 'Black Box with Files', 'test-file'),
        (5, 'Single-answer Quiz', 'single-quiz'),
        (6, 'Multiple-answer Quiz', 'multiple-quiz'),
        (7, 'Theory', 'theory');
@@ -27,7 +29,7 @@ INSERT INTO lessons (id, name, course_id, created, description)
 VALUES (1, 'Lesson one', 1, '2019-03-09 20:53:09.851', 'Different exercise types examples'),
        (2, 'Lesson two', 1, '2019-03-09 20:53:09.851', 'Exercises for debugging');
 
-INSERT INTO exercises (id, name, index, lesson_id, typeId, created, description)
+INSERT INTO exercises (id, name, index, lesson_id, type_id, created, description)
 VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
        (2, 'Exercise two', 1, 1, 2, '2019-03-09 20:53:09.851', '(source-test-file)'),
        (3, 'Exercise three', 2, 1, 3, '2019-03-09 20:53:09.851', '(test)'),
@@ -35,6 +37,8 @@ VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
        (5, 'Exercise five', 4, 1, 5, '2019-03-09 20:53:09.851', '(single-quiz)'),
        (6, 'Exercise six', 5, 1, 6, '2019-03-09 20:53:09.851', '(multiple-quiz)'),
        (7, 'Exercise seven', 6, 1, 7, '2019-03-09 20:53:09.851', '(theory)');
+
+-- exercise 1
 
 insert into exercise_sources (id, exercise_id, filename, code)
 values (1,
@@ -255,7 +259,6 @@ public class TestMorse {
 ');
 
 -- exercise 2
-
 
 insert into exercise_sources (id, exercise_id, filename, code)
 values (4,
@@ -1683,6 +1686,65 @@ values (10,
         'game_one_line.txt',
         'E4 D5
 ');
+
+-- exercise 3
+
+insert into exercise_sources (id, exercise_id, filename, code)
+values (9,
+        3,
+        'HelloWord.java',
+        'public class HelloWord {
+    int test(int a) {
+        if (BlackBoxController.BUG_1) {
+            if (a == 1) {
+                return -1;
+            }
+        }
+        return a;
+    }
+}');
+
+insert into exercise_tests (id, exercise_id, filename, code)
+values (3,
+        3,
+        'HelloWordTest.java',
+        'import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class HelloWordTest {
+
+    private HelloWord helloWord = new HelloWord();
+
+    @Test
+    public void test2() {
+        HelloWord hw = helloWord;
+        int result = hw.test(2);
+        assertEquals(2, result);
+    }
+
+    @Test
+    public void test1() {
+        HelloWord hw = helloWord;
+        int result = hw.test(1);
+        assertEquals(1, result);
+    }
+
+}');
+
+insert into exercise_controllers (id, exercise_id, filename, code)
+values (1,
+        3,
+        'BlackBoxController.java',
+        'public class BlackBoxController {
+
+    public static boolean BUG_1 = true;
+
+    public static void main(String[] args) {
+        boolean newBug1 = Boolean.getBoolean(args[0]);
+        BUG_1 = newBug1;
+    }
+}');
 
 -- sample
 
