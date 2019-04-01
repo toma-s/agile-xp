@@ -20,7 +20,7 @@ public class ExerciseConfigController {
         ExerciseConfig _exerciseConfig = repository.save(new ExerciseConfig(
                 exerciseConfig.getExerciseId(),
                 exerciseConfig.getFileName(),
-                exerciseConfig.getText()
+                exerciseConfig.getContent()
         ));
         System.out.format("Created exercise config %s\n", _exerciseConfig);
         return _exerciseConfig;

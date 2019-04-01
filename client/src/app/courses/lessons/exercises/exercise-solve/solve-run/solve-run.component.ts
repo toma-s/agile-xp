@@ -177,8 +177,8 @@ export class SolveRunComponent implements OnInit {
     return this.solutionConfigService.createSolutionConfig(solutionFile);
   }
 
-  getEstimation() {
-    this.solutionEstimationService.estimateSolution(this.solution.id)
+  getEstimation() { // TODO | refactor!
+    this.solutionEstimationService.estimateSourceTestSolution(this.solution.id)
       .subscribe(
         data => {
           console.log(data);

@@ -124,7 +124,7 @@ export class ExerciseCreateComponent implements OnInit {
     exerciseSources.value.forEach(es => {
       const exerciseSource = new ExerciseSource();
       exerciseSource.fileName = es.sourceFilename;
-      exerciseSource.code = es.sourceCode;
+      exerciseSource.content = es.sourceCode;
       exerciseSource.exerciseId = exerciseId;
       exerciseSourceObjects.push(exerciseSource);
     });
@@ -150,7 +150,7 @@ export class ExerciseCreateComponent implements OnInit {
     exerciseTests.value.forEach(et => {
       const exerciseTest = new ExerciseTest();
       exerciseTest.fileName = et.testFilename;
-      exerciseTest.code = et.testCode;
+      exerciseTest.content = et.testCode;
       exerciseTest.exerciseId = exerciseId;
       exerciseTestObjects.push(exerciseTest);
     });

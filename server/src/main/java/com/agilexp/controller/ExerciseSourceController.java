@@ -27,7 +27,7 @@ public class ExerciseSourceController {
 
         ExerciseSource _sourceCode = repository.save(new ExerciseSource(
                 sourceCode.getFileName(),
-                sourceCode.getCode(),
+                sourceCode.getContent(),
                 sourceCode.getExerciseId()
         ));
 

@@ -15,16 +15,16 @@ public class SolutionTest {
     @Column(name="filename")
     private String fileName;
 
-    @Column(name="code")
-    private String code;
+    @Column(name="content")
+    private String content;
 
     public SolutionTest() {
     }
 
-    public SolutionTest(long solutionId, String fileName, String code) {
+    public SolutionTest(long solutionId, String fileName, String content) {
         this.solutionId = solutionId;
         this.fileName = fileName;
-        this.code = code;
+        this.content = content;
     }
 
     public long getId() {
@@ -51,12 +51,12 @@ public class SolutionTest {
         this.fileName = fileName;
     }
 
-    public String getCode() {
-        return code;
+    public String getContent() {
+        return content;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class SolutionTest {
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +
-                ", code='" + code.substring(0, 10) + '\'' +
+//                ", content='" + content.substring(0, 10) + '\'' +
                 '}';
     }
 }

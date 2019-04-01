@@ -15,16 +15,16 @@ public class ExerciseConfig {
     @Column(name="filename")
     private String fileName;
 
-    @Column(name="text")
-    private String text;
+    @Column(name="content")
+    private String content;
 
     public ExerciseConfig() {
     }
 
-    public ExerciseConfig(long solutionId, String fileName, String text) {
+    public ExerciseConfig(long solutionId, String fileName, String content) {
         this.exerciseId = solutionId;
         this.fileName = fileName;
-        this.text = text;
+        this.content = content;
     }
 
     public long getId() {
@@ -51,12 +51,12 @@ public class ExerciseConfig {
         this.fileName = fileName;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ExerciseConfig {
                 "id=" + id +
                 ", exerciseId=" + exerciseId +
                 ", fileName='" + fileName + '\'' +
-//                ", text='" + text + '\'' +
+//                ", content='" + content + '\'' +
                 '}';
     }
 }

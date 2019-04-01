@@ -50,7 +50,7 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void store(SolutionSource solutionSource) {
         String fileName = solutionSource.getFileName();
-        String code = solutionSource.getCode();
+        String code = solutionSource.getContent();
         String directoryName = "solution_source" + solutionSource.getId();
 
         Path directoryLocation = createFolder(directoryName);
@@ -60,7 +60,7 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void store(SolutionTest solutionTest) {
         String fileName = solutionTest.getFileName();
-        String code = solutionTest.getCode();
+        String code = solutionTest.getContent();
         String directoryName = "solution_test" + solutionTest.getId();
 
         Path directoryLocation = createFolder(directoryName);
@@ -70,7 +70,7 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void store(ExerciseTest exerciseTest) {
         String fileName = exerciseTest.getFileName();
-        String code = exerciseTest.getCode();
+        String code = exerciseTest.getContent();
         String directoryName = "exercise_test" + exerciseTest.getId();
 
         Path directoryLocation = createFolder(directoryName);
@@ -80,7 +80,7 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void store(SolutionConfig solutionConfig) {
         String fileName = solutionConfig.getFileName();
-        String code = solutionConfig.getText();
+        String code = solutionConfig.getContent();
 
         Path directoryLocation = createFolder("game_config");
         storeFile(fileName, code, directoryLocation);

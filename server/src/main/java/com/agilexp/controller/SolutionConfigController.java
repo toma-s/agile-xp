@@ -17,7 +17,7 @@ public class SolutionConfigController {
         SolutionConfig _solutionConfig = repository.save(new SolutionConfig(
                 solutionConfig.getSolutionId(),
                 solutionConfig.getFileName(),
-                solutionConfig.getText()
+                solutionConfig.getContent()
         ));
         System.out.format("Created solution config %s\n", _solutionConfig);
         return _solutionConfig;

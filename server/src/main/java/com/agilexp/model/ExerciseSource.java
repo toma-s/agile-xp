@@ -12,17 +12,17 @@ public class ExerciseSource {
     @Column(name="filename")
     private String fileName;
 
-    @Column(name="code")
-    private String code;
+    @Column(name="content")
+    private String content;
 
     @Column(name="exercise_id")
     private long exerciseId;
 
     public ExerciseSource() {}
 
-    public ExerciseSource(String fileName, String code, long exerciseId) {
+    public ExerciseSource(String fileName, String content, long exerciseId) {
         this.fileName = fileName;
-        this.code = code;
+        this.content = content;
         this.exerciseId = exerciseId;
     }
 
@@ -42,12 +42,12 @@ public class ExerciseSource {
         this.fileName = fileName;
     }
 
-    public String getCode() {
-        return code;
+    public String getContent() {
+        return content;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public long getExerciseId() {
@@ -63,7 +63,7 @@ public class ExerciseSource {
         return "ExerciseSource{" +
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
-                ", code='" + code.substring(0, 10) + '\'' +
+//                ", content='" + content.substring(0, 10) + '\'' +
                 ", exerciseId=" + exerciseId +
                 '}';
     }

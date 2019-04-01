@@ -17,7 +17,7 @@ public class SolutionTestController {
         SolutionTest _solutionTest = repository.save(new SolutionTest(
                 solutionTest.getSolutionId(),
                 solutionTest.getFileName(),
-                solutionTest.getCode()
+                solutionTest.getContent()
         ));
         System.out.format("Created solution test %s\n", solutionTest);
         return _solutionTest;

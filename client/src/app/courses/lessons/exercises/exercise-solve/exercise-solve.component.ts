@@ -173,7 +173,7 @@ export class ExerciseSolveComponent implements OnInit {
       const fg = this.fb.group({
         id: [e.id],
         fileName: [e.fileName],
-        code: [e.code],
+        content: [e.content],
         exerciseId: [e.exerciseId]
       });
       fgs.push(fg);
@@ -182,13 +182,13 @@ export class ExerciseSolveComponent implements OnInit {
   }
 
   getGroupForFile(array: Array<any>) {
-    // TODO | refactor: remove when code->text
+    // TODO | refactor: remove when code->content
     const fgs = new Array<FormGroup>();
     array.forEach(e => {
       const fg = this.fb.group({
         id: [e.id],
         fileName: [e.fileName],
-        text: [e.text],
+        content: [e.content],
         exerciseId: [e.exerciseId]
       });
       fgs.push(fg);

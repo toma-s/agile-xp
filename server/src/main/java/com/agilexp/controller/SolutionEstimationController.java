@@ -49,10 +49,9 @@ public class SolutionEstimationController {
         this.storageService = storageService;
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/{solutionId}")
-    public SolutionEstimation getSolutionEstimation(@PathVariable long solutionId) {
-        SolutionEstimation solutionEstimation = new SolutionEstimation();
-        solutionEstimation.setSolutionId(solutionId);
+    @GetMapping(value = "/solution-estimations/estimate/source-test/{solutionId}")
+    public SolutionEstimation getSolutionSourceTestEstimation(@PathVariable long solutionId) {
+        SolutionEstimation solutionEstimation = createSolutionEstimation(solutionId);
 
         Solution solution = solutionRepository.findById(solutionId);
         List<ExerciseTest> exerciseTests = exerciseTestRepository.findByExerciseId(solution.getExerciseId());
@@ -68,6 +67,17 @@ public class SolutionEstimationController {
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
         return _solutionEstimation;
+    }
+
+//    @GetMapping(value = "/solution-estimations/estimate/source-test-file/{solutionId}")
+//    public SolutionEstimation getSolutionSourceTestFileEstimation(@PathVariable long solutionId) {
+//        SolutionEstimation solutionEstimation = createSolutionEstimation(solutionId);
+//    } // TODO: 01-Apr-19 continue
+
+    private SolutionEstimation createSolutionEstimation(long solutionId) {
+        SolutionEstimation solutionEstimation = new SolutionEstimation();
+        solutionEstimation.setSolutionId(solutionId);
+        return solutionEstimation;
     }
 
     private String getEstimation(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionConfig> solutionConfigs,

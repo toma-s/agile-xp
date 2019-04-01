@@ -154,7 +154,7 @@ export class SolveWhiteBoxComponent implements OnInit {
   }
 
   getEstimation() {
-    this.solutionEstimationService.estimateSolution(this.solution.id)
+    this.solutionEstimationService.estimateSourceTestSolution(this.solution.id)
       .subscribe(
         data => {
           console.log(data);

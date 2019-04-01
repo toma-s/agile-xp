@@ -24,7 +24,7 @@ public class ExerciseTestController {
 
     @PostMapping(value = "/exercise-tests/create")
     public ExerciseTest postExerciseTest(@RequestBody ExerciseTest exerciseTest) {
-        ExerciseTest _exerciseTest = repository.save(new ExerciseTest(exerciseTest.getFileName(), exerciseTest.getCode(), exerciseTest.getExerciseId()));
+        ExerciseTest _exerciseTest = repository.save(new ExerciseTest(exerciseTest.getFileName(), exerciseTest.getContent(), exerciseTest.getExerciseId()));
 
 //        storageService.store(_exerciseTest);
 
