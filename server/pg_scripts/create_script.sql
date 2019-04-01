@@ -35,37 +35,13 @@ create table exercises (
 	constraint unique_index_lesson_id unique (index, lesson_id)
 );
 
-drop table if exists exercise_sources CASCADE;
-create table exercise_sources (
-	id serial primary key,
-	filename text,
-	content text,
-	exercise_id int references exercises on delete cascade
-);
-
-drop table if exists exercise_tests CASCADE;
-create table exercise_tests (
-	id serial primary key,
-	filename text,
-	content text,
-	exercise_id int references exercises on delete cascade
-);
-
-drop table if exists exercise_files cascade;
-create table exercise_files (
+drop table if exists exercise_content cascade;
+create table exercise_content (
     id serial primary key,
     filename text,
-	content text,
-    exercise_id int references exercises on delete cascade
-);
-
-drop table if exists exercise_controllers cascade;
-create table exercise_controllers (
-    id serial primary key,
-    filename text,
-	content text,
-	exercise_id int references exercises on delete cascade
-    -- TODO unique constraint
+    content text,
+    exercise_id int references exercises on delete cascade,
+    content_type text
 );
 
 drop table if exists solutions cascade;

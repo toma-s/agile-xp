@@ -3,10 +3,7 @@ truncate table
     lessons,
     exercise_types,
     exercises,
-    exercise_sources,
-    exercise_tests,
-    exercise_files,
-    exercise_controllers
+    exercise_content
 restart identity cascade;
 
 -- general
@@ -40,9 +37,10 @@ VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
 
 -- exercise 1
 
-insert into exercise_sources (id, exercise_id, filename, content)
+insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (1,
         1,
+        'source',
         'Morse.java',
         'import java.util.ArrayList;
 import java.util.Arrays;
@@ -159,9 +157,10 @@ public class Morse {
 }
 ');
 
-insert into exercise_sources (id, exercise_id, filename, content)
+insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (2,
         1,
+        'source',
         'Player.java',
         'public enum Player {
   B(1), W(0), NONE(-1);
@@ -180,9 +179,10 @@ values (2,
 }
 ');
 
-insert into exercise_sources (id, exercise_id, filename, content)
+insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (3,
         1,
+        'source',
         'Alpha.java',
         'public enum Alpha {
   A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
@@ -199,9 +199,10 @@ values (3,
 }
 ');
 
-insert into exercise_tests (id, exercise_id, filename, content)
-values (1,
+insert into exercise_content (id, exercise_id, content_type, filename, content)
+values (4,
         1,
+        'test',
         'TestMorse.java',
         'import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -260,9 +261,10 @@ public class TestMorse {
 
 -- exercise 2
 
-insert into exercise_sources (id, exercise_id, filename, content)
-values (4,
+insert into exercise_content (id, exercise_id, content_type, filename, content)
+values (5,
         2,
+        'source',
         'Reversi.java',
         'import java.io.BufferedReader;
 import java.io.File;
@@ -595,9 +597,10 @@ public class Reversi {
 
 }'); -- ReversiMoveException
 
-insert into exercise_sources (id, exercise_id, filename, content) -- IncorrectGameConfigFileException
-values (5,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- IncorrectGameConfigFileException
+values (6,
         2,
+        'source',
         'IncorrectGameConfigFileException.java',
         'public class IncorrectGameConfigFileException extends Exception {
 
@@ -610,9 +613,10 @@ values (5,
   }
 }');
 
-insert into exercise_sources (id, exercise_id, filename, content) -- NotPermittedMoveException
-values (6,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- NotPermittedMoveException
+values (7,
         2,
+        'source',
         'NotPermittedMoveException.java',
         'public class NotPermittedMoveException extends Exception {
 
@@ -621,9 +625,10 @@ values (6,
   }
 }');
 
-insert into exercise_sources (id, exercise_id, filename, content) -- Alpha
-values (7,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- Alpha
+values (8,
         2,
+        'source',
         'Alpha.java',
         'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
@@ -639,9 +644,10 @@ values (7,
     }
 }');
 
-insert into exercise_sources (id, exercise_id, filename, content) -- Player
-values (8,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- Player
+values (9,
         2,
+        'source',
         'Player.java',
         'public enum Player {
     B(1), W(0), NONE(-1);
@@ -658,9 +664,10 @@ values (8,
 
 }');
 
-insert into exercise_tests (id, exercise_id, filename, content) -- ReversiRefactoredTest
-values (2,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- ReversiRefactoredTest
+values (10,
         2,
+        'test',
         'ReversiTest.java',
         'import javafx.util.Pair;
 import org.junit.Test;
@@ -1602,69 +1609,77 @@ public class ReversiTest {
 }
 ');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_init_b_starts
-values (1,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_init_b_starts
+values (11,
         2,
+        'file',
         'game_init_b_starts.txt',
         'B
 E4 D5
 D4 E5
 ');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_init_w_starts
-values (2,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_init_w_starts
+values (12,
         2,
+        'file',
         'game_init_w_starts.txt',
         'W
 E4 D5
 D4 E5
 ');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_all_alpha
-values (3,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_all_alpha
+values (13,
         2,
+        'file',
         'game_all_alpha.txt',
         'B
 EE DD
 DD EE
 ');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_all_num
-values (4,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_all_num
+values (14,
         2,
+        'file',
         'game_all_num.txt',
         'B
 EE DD
 DD EE
 ');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_almost_complete
-values (5,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_almost_complete
+values (15,
         2,
+        'file',
         'game_almost_complete.txt',
         'W
 A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
 H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
 ');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_complete
-values (6,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_complete
+values (16,
         2,
+        'file',
         'game_complete.txt',
         'W
 A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
 H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
 ');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_empty
-values (7,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_empty
+values (17,
         2,
+        'file',
         'game_empty.txt',
         '');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_four_lines
-values (8,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_four_lines
+values (18,
         2,
+        'file',
         'game_four_lines.txt',
         'B
 E4 D5
@@ -1672,26 +1687,29 @@ D4 E5
 E4 D5
 ');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_no_on_turn
-values (9,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_no_on_turn
+values (19,
         2,
+        'file',
         'game_no_on_turn.txt',
         'E4 D5
 D4 E5
 ');
 
-insert into exercise_files (id, exercise_id, filename, content) -- game_one_line
-values (10,
+insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_one_line
+values (20,
         2,
+        'file',
         'game_one_line.txt',
         'E4 D5
 ');
 
 -- exercise 3
 
-insert into exercise_sources (id, exercise_id, filename, content)
-values (9,
+insert into exercise_content (id, exercise_id, content_type, filename, content)
+values (21,
         3,
+        'source',
         'HelloWord.java',
         'public class HelloWord {
     int test(int a) {
@@ -1704,9 +1722,10 @@ values (9,
     }
 }');
 
-insert into exercise_tests (id, exercise_id, filename, content)
-values (3,
+insert into exercise_content (id, exercise_id, content_type, filename, content)
+values (22,
         3,
+        'test',
         'HelloWordTest.java',
         'import org.junit.Test;
 
@@ -1732,9 +1751,10 @@ public class HelloWordTest {
 
 }');
 
-insert into exercise_controllers (id, exercise_id, filename, content)
-values (1,
+insert into exercise_content (id, exercise_id, content_type, filename, content)
+values (23,
         3,
+        'controller',
         'BlackBoxController.java',
         'public class BlackBoxController {
 
