@@ -78,7 +78,7 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(SolutionConfig solutionConfig) {
+    public void store(SolutionFile solutionConfig) {
         String fileName = solutionConfig.getFileName();
         String code = solutionConfig.getContent();
 

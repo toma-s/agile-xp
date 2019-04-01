@@ -1,10 +1,10 @@
 package com.agilexp.repository;
 
-import com.agilexp.model.SolutionConfig;
+import com.agilexp.model.SolutionFile;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface SolutionConfigRepository extends CrudRepository<SolutionConfig, Long> {
-    List<SolutionConfig> findSolutionConfigBySolutionId(long solutionId);
+public interface SolutionConfigRepository extends CrudRepository<SolutionFile, Long> {
+    List<SolutionFile> findSolutionConfigBySolutionId(long solutionId);
 }

@@ -8,10 +8,10 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ExerciseType } from '../shared/exercise-type/exercise-type.model';
 import { ExerciseSource } from '../shared/exercise-source/exercise-source.model';
 import { ExerciseTest } from '../shared/exercise-test/exercise-test.model';
-import { ExerciseConfig } from '../shared/exercise-config/exercise-config.model';
+import { ExerciseFile } from '../shared/exercise-file/exercise-file.model';
 import { ExerciseSourceService } from '../shared/exercise-source/exercise-source.service';
 import { ExerciseTestService } from '../shared/exercise-test/exercise-test.service';
-import { ExerciseConfigService } from '../shared/exercise-config/exercise-config.service';
+import { ExerciseFileService } from '../shared/exercise-file/exercise-file.service';
 
 @Component({
   selector: 'exercise-solve',
@@ -23,7 +23,7 @@ export class ExerciseSolveComponent implements OnInit {
   exercise: Exercise;
   exerciseSources: Array<ExerciseSource> = new Array<ExerciseSource>();
   exerciseTests: Array<ExerciseTest> = new Array<ExerciseTest>();
-  exerciseConfigs: Array<ExerciseConfig> = new Array<ExerciseConfig>();
+  exerciseFiles: Array<ExerciseFile> = new Array<ExerciseFile>();
 
   exerciseType: ExerciseType;
   solutionFormGroup: FormGroup;
@@ -33,7 +33,7 @@ export class ExerciseSolveComponent implements OnInit {
     private exerciseService: ExerciseService,
     private exerciseSourceService: ExerciseSourceService,
     private exerciseTestService: ExerciseTestService,
-    private exerciseConfigService: ExerciseConfigService,
+    private exerciseFileService: ExerciseFileService,
     private exerciseTypeService: ExerciseTypeService,
     private fb: FormBuilder
   ) { }
@@ -82,15 +82,15 @@ export class ExerciseSolveComponent implements OnInit {
     this.exerciseTestService.getExerciseTestsByExerciseId(this.exercise.id).subscribe(
       data => {
         this.exerciseTests = data;
-        this.getSourceConfigs();
+        this.getSourceFiles();
       }
     );
   }
 
-  getSourceConfigs() {
-    this.exerciseConfigService.getExerciseConfigsByExerciseId(this.exercise.id).subscribe(
+  getSourceFiles() {
+    this.exerciseFileService.getExerciseFilesByExerciseId(this.exercise.id).subscribe(
       data => {
-        this.exerciseConfigs = data;
+        this.exerciseFiles = data;
         this.createForm();
       },
       error => console.log(error)
@@ -163,7 +163,7 @@ export class ExerciseSolveComponent implements OnInit {
 
   setExerciseFiles() {
     this.solutionFormGroup.addControl(
-      'exerciseFiles', this.fb.array(this.getGroup(this.exerciseConfigs))
+      'exerciseFiles', this.fb.array(this.getGroup(this.exerciseFiles))
     );
   }
 

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="solution_configs")
-public class SolutionConfig {
+public class SolutionFile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -18,10 +18,10 @@ public class SolutionConfig {
     @Column(name="content")
     private String content;
 
-    public SolutionConfig() {
+    public SolutionFile() {
     }
 
-    public SolutionConfig(long solutionId, String fileName, String content) {
+    public SolutionFile(long solutionId, String fileName, String content) {
         this.solutionId = solutionId;
         this.fileName = fileName;
         this.content = content;
@@ -61,7 +61,7 @@ public class SolutionConfig {
 
     @Override
     public String toString() {
-        return "SolutionConfig{" +
+        return "SolutionFile{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +

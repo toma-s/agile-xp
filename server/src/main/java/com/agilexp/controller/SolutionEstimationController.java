@@ -55,11 +55,11 @@ public class SolutionEstimationController {
 
         Solution solution = solutionRepository.findById(solutionId);
         List<ExerciseTest> exerciseTests = exerciseTestRepository.findByExerciseId(solution.getExerciseId());
-        List<ExerciseConfig> exerciseConfigs = exerciseConfigRepository.findByExerciseId(solution.getExerciseId());
+        List<ExerciseFile> exerciseConfigs = exerciseConfigRepository.findByExerciseId(solution.getExerciseId());
 
         List<SolutionSource> solutionSources = solutionSourceRepository.findSolutionSourcesBySolutionId(solutionId);
         List<SolutionTest> solutionTests = solutionTestRepository.findSolutionTestsBySolutionId(solutionId);
-        List<SolutionConfig> solutionConfigs = solutionConfigRepository.findSolutionConfigBySolutionId(solutionId);
+        List<SolutionFile> solutionConfigs = solutionConfigRepository.findSolutionConfigBySolutionId(solutionId);
 
         String estimation = getEstimation(solutionSources, solutionTests, solutionConfigs, exerciseTests, exerciseConfigs, solutionId);
         solutionEstimation.setEstimation(estimation);
@@ -80,8 +80,8 @@ public class SolutionEstimationController {
         return solutionEstimation;
     }
 
-    private String getEstimation(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionConfig> solutionConfigs,
-                                 List<ExerciseTest> exerciseTests, List<ExerciseConfig> exerciseConfigs, long solutionId) {
+    private String getEstimation(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionFile> solutionConfigs,
+                                 List<ExerciseTest> exerciseTests, List<ExerciseFile> exerciseConfigs, long solutionId) {
         try {
             String solutionEstimationResult = estimateWithPublicTests(solutionSources, solutionTests, solutionConfigs, solutionId);
 //            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests/*, exerciseConfigs*/, solutionId);
@@ -99,7 +99,7 @@ public class SolutionEstimationController {
         }
     }
 
-    private String estimateWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionConfig> solutionConfigs, long solutionId) throws CompilationFailedException, TestFailedException {
+    private String estimateWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionFile> solutionConfigs, long solutionId) throws CompilationFailedException, TestFailedException {
         try {
             storeFilesWithPublicTests(solutionSources, solutionTests);
         } catch (StorageException e) {

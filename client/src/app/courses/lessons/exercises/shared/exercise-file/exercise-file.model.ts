@@ -1,4 +1,4 @@
-export class SolutionConfig {
+export class ExerciseFile {
   id: number;
   solutionId: number;
   fileName: string;

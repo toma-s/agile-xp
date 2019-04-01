@@ -18,7 +18,7 @@ public interface StorageService {
 
     void store(ExerciseTest exerciseTest);
 
-    void store(SolutionConfig solutionConfig);
+    void store(SolutionFile solutionConfig);
 
     Stream<Path> loadAll();
 
