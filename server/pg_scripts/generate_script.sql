@@ -5,7 +5,7 @@ truncate table
     exercises,
     exercise_sources,
     exercise_tests,
-    exercise_configs,
+    exercise_files,
     exercise_controllers
 restart identity cascade;
 
@@ -1602,7 +1602,7 @@ public class ReversiTest {
 }
 ');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_init_b_starts
+insert into exercise_files (id, exercise_id, filename, content) -- game_init_b_starts
 values (1,
         2,
         'game_init_b_starts.txt',
@@ -1611,7 +1611,7 @@ E4 D5
 D4 E5
 ');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_init_w_starts
+insert into exercise_files (id, exercise_id, filename, content) -- game_init_w_starts
 values (2,
         2,
         'game_init_w_starts.txt',
@@ -1620,7 +1620,7 @@ E4 D5
 D4 E5
 ');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_all_alpha
+insert into exercise_files (id, exercise_id, filename, content) -- game_all_alpha
 values (3,
         2,
         'game_all_alpha.txt',
@@ -1629,7 +1629,7 @@ EE DD
 DD EE
 ');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_all_num
+insert into exercise_files (id, exercise_id, filename, content) -- game_all_num
 values (4,
         2,
         'game_all_num.txt',
@@ -1638,7 +1638,7 @@ EE DD
 DD EE
 ');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_almost_complete
+insert into exercise_files (id, exercise_id, filename, content) -- game_almost_complete
 values (5,
         2,
         'game_almost_complete.txt',
@@ -1647,7 +1647,7 @@ A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6
 H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
 ');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_complete
+insert into exercise_files (id, exercise_id, filename, content) -- game_complete
 values (6,
         2,
         'game_complete.txt',
@@ -1656,13 +1656,13 @@ A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6
 H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
 ');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_empty
+insert into exercise_files (id, exercise_id, filename, content) -- game_empty
 values (7,
         2,
         'game_empty.txt',
         '');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_four_lines
+insert into exercise_files (id, exercise_id, filename, content) -- game_four_lines
 values (8,
         2,
         'game_four_lines.txt',
@@ -1672,7 +1672,7 @@ D4 E5
 E4 D5
 ');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_no_on_turn
+insert into exercise_files (id, exercise_id, filename, content) -- game_no_on_turn
 values (9,
         2,
         'game_no_on_turn.txt',
@@ -1680,7 +1680,7 @@ values (9,
 D4 E5
 ');
 
-insert into exercise_configs (id, exercise_id, filename, content) -- game_one_line
+insert into exercise_files (id, exercise_id, filename, content) -- game_one_line
 values (10,
         2,
         'game_one_line.txt',
