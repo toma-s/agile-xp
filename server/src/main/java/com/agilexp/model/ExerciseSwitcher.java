@@ -2,7 +2,7 @@ package com.agilexp.model;
 
 import javax.persistence.Entity;
 
-@Entity(name="exercise_controller")
+@Entity(name="exercise_switcher")
 public class ExerciseSwitcher extends ExerciseContent {
 
     public ExerciseSwitcher() {

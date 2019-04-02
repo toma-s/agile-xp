@@ -1727,8 +1727,12 @@ insert into exercise_content (id, exercise_id, exercise_content_type, filename, 
 values (22,
         3,
         'exercise_test',
-        'HelloWordTest.java',
-        'public class HelloWorldTest {
+        'HelloWorldTest.java',
+        'import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class HelloWorldTest {
 
     private HelloWorld helloWord = new HelloWorld();
 
@@ -1752,15 +1756,34 @@ values (23,
         3,
         'exercise_switcher',
         'BlackBoxSwitcher.java',
-        'public class BlackBoxSwitcher {
+        'import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-    public static boolean BUG_1 = true;
+public class BlackBoxSwitcher {
+
+    public static boolean BUG_1;
 
     public static void main(String[] args) {
-        boolean newBug1 = Boolean.getBoolean(args[0]);
-        BUG_1 = newBug1;
+        try {
+            Path flagsPath = new File("./flags/flags.csv").toPath();
+//            Path flagsPath = new File("src/sample_black_box/flags.csv").toPath();
+            String[] flags = Files.readAllLines(flagsPath).toArray(new String[0]);
+
+            BUG_1 = Boolean.getBoolean(flags[0]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
+}');
+
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
+values (24,
+        3,
+        'exercise_flags',
+        'flags.txt',
+        'true
 ');
 
 -- sample

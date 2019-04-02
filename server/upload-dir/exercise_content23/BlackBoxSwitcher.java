@@ -1,5 +1,3 @@
-package sample_black_box;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,8 +9,8 @@ public class BlackBoxSwitcher {
 
     public static void main(String[] args) {
         try {
-            Path flagsPath = new File("./flags/flags.txt").toPath();
-//            Path flagsPath = new File("src/sample_black_box/flags.txt").toPath();
+            Path flagsPath = new File("./flags/flags.csv").toPath();
+//            Path flagsPath = new File("src/sample_black_box/flags.csv").toPath();
             String[] flags = Files.readAllLines(flagsPath).toArray(new String[0]);
 
             BUG_1 = Boolean.getBoolean(flags[0]);

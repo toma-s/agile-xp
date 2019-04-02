@@ -50,6 +50,9 @@ public class SolutionEstimationController {
     @Autowired
     private ExerciseSwitcherRepository exerciseSwitcherRepository;
 
+    @Autowired
+    private ExerciseFlagsRepository exerciseFlagsRepository;
+
     private final StorageService storageService;
 
     private final String PUBLIC = "Public";
@@ -110,33 +113,6 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/test/{solutionId}")
-    public SolutionEstimation getSolutionTestEstimation(@PathVariable long solutionId) {
-        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
-        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
-        Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
-        List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
-        List<ExerciseSwitcher> exerciseSwitchers = exerciseSwitcherRepository.findExerciseSwitcherByExerciseId(solution.getExerciseId());
-
-        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
-
-        String publicEstimation = estimatePublic(
-                List.of(solutionSources, solutionTests),
-                solutionId
-        );
-        String privateEstimation = estimatePrivate(
-                List.of(solutionSources, solutionTests),
-                List.of(exerciseTests, exerciseSwitchers),
-                solutionId
-        );
-        solutionEstimation.setEstimation(privateEstimation + publicEstimation);
-
-        removeTempFiles();
-
-        return solutionEstimation;
-    }
-
 
     private String estimatePublic(List<List<? extends SolutionContent>> solutionContents, long solutionId) {
         Path outDirPath = storageService.load("solution_public" + solutionId);
@@ -166,6 +142,51 @@ public class SolutionEstimationController {
             compileFiles(paths, outDirPath);
             List<Result> testResults = testPrivateFiles(exerciseContents, outDirPath);
             return getResult(testResults, PRIVATE);
+        } catch (StorageException e) {
+            e.printStackTrace();
+            return "File storing failed: " + e.getMessage();
+        } catch (CompilationFailedException e) {
+            e.printStackTrace();
+            return "Compilation failed: " + e.getMessage();
+        } catch (TestFailedException e) {
+            e.printStackTrace();
+            return "Tests run failed: " + e.getMessage();
+        }
+    }
+
+
+    @GetMapping(value = "/solution-estimations/estimate/test/{solutionId}")
+    public SolutionEstimation getSolutionTestEstimation(@PathVariable long solutionId) {
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
+
+        String privateEstimation = estimateBlackBox(solutionId);
+        solutionEstimation.setEstimation(privateEstimation);
+
+        removeTempFiles();
+
+        return solutionEstimation;
+    }
+
+
+    private String estimateBlackBox(long solutionId) {
+        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
+        Solution solution = solutionRepository.findById(solutionId);
+        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
+        List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
+        List<ExerciseSwitcher> exerciseSwitchers = exerciseSwitcherRepository.findExerciseSwitcherByExerciseId(solution.getExerciseId());
+        List<ExerciseFlags> exerciseFlags = exerciseFlagsRepository.findExerciseFlagsByExerciseId(solution.getExerciseId());
+        Path publicOutDirPath = storageService.load("solution_public_blackbox" + solutionId);
+        Path privateOutDirPath = storageService.load("solution_private_blackbox" + solutionId);
+
+        try {
+            storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseTests, exerciseSwitchers, exerciseFlags));
+            List<Path> publicPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources);
+            List<Path> privatePaths = getPrivateBlackBoxPaths(exerciseTests, exerciseSwitchers, exerciseSources);
+            compileFiles(publicPaths, publicOutDirPath);
+            compileFiles(privatePaths, privateOutDirPath);
+            List<Result> publicTestResults = testPublicFiles(List.of(solutionTests), publicOutDirPath);
+            List<Result> privateTestResults = testPrivateFiles(List.of(exerciseTests), privateOutDirPath);
+            return getResult(publicTestResults, PUBLIC) + getResult(privateTestResults, PRIVATE);
         } catch (StorageException e) {
             e.printStackTrace();
             return "File storing failed: " + e.getMessage();
@@ -214,6 +235,48 @@ public class SolutionEstimationController {
                         .resolve(e.getFileName()))
                 .collect(Collectors.toList());
         paths.addAll(exercisePaths);
+        return paths;
+    }
+
+    private List<Path> getPublicBlackBoxPaths(List<SolutionTest> solutionTests, List<ExerciseSwitcher> exerciseSwitchers, List<ExerciseSource> exerciseSources) {
+        List<Path> paths = new ArrayList<>();
+        solutionTests.forEach(solutionTest -> {
+            paths.add(storageService
+                    .load("solution_content" + solutionTest.getId())
+                    .resolve(solutionTest.getFileName()));
+        });
+        exerciseSwitchers.forEach(exerciseSwitcher -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseSwitcher.getId())
+                    .resolve(exerciseSwitcher.getFileName()));
+        });
+        exerciseSources.forEach(exerciseSource -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseSource.getId())
+                    .resolve(exerciseSource.getFileName()));
+        });
+
+        return paths;
+    }
+
+    private List<Path> getPrivateBlackBoxPaths(List<ExerciseTest> exerciseTests, List<ExerciseSwitcher> exerciseSwitchers, List<ExerciseSource> exerciseSources) {
+        List<Path> paths = new ArrayList<>();
+        exerciseTests.forEach(exerciseTest -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseTest.getId())
+                    .resolve(exerciseTest.getFileName()));
+        });
+        exerciseSwitchers.forEach(exerciseSwitcher -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseSwitcher.getId())
+                    .resolve(exerciseSwitcher.getFileName()));
+        });
+        exerciseSources.forEach(exerciseSource -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseSource.getId())
+                    .resolve(exerciseSource.getFileName()));
+        });
+
         return paths;
     }
 
