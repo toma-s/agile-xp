@@ -63,13 +63,13 @@ public class SolutionEstimationController {
         Path privateOutDirPath = storageService.load("solution_private" + solutionId);
         Path publicOutDirPath = storageService.load("solution_public" + solutionId);
 
-        SolutionEstimation solutionEstimation = createSolutionEstimation(solutionId);
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        String publicEstimation = estimate(List.of(solutionSources, solutionTests), List.of(), publicOutDirPath, PUBLIC);
-        String privateEstimation = estimate(List.of(solutionSources, solutionTests), List.of(exerciseTests), privateOutDirPath, PRIVATE);
+        String publicEstimation = estimatePublic(List.of(solutionSources, solutionTests), List.of(), publicOutDirPath);
+        String privateEstimation = estimatePrivate(List.of(solutionSources, solutionTests), List.of(exerciseTests), privateOutDirPath);
         solutionEstimation.setEstimation(privateEstimation + publicEstimation);
 
-//        removeTempFiles();
+        removeTempFiles();
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
@@ -88,10 +88,10 @@ public class SolutionEstimationController {
         Path privateOutDirPath = storageService.load("solution_private" + solutionId);
         Path publicOutDirPath = storageService.load("solution_public" + solutionId);
 
-        SolutionEstimation solutionEstimation = createSolutionEstimation(solutionId);
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        String publicEstimation = estimate(List.of(solutionSources, solutionTests, solutionFiles), List.of(), publicOutDirPath, PUBLIC);
-        String privateEstimation = estimate(List.of(solutionSources, solutionTests, solutionFiles), List.of(exerciseTests), privateOutDirPath, PRIVATE);
+        String publicEstimation = estimatePublic(List.of(solutionSources, solutionTests, solutionFiles), List.of(), publicOutDirPath);
+        String privateEstimation = estimatePrivate(List.of(solutionSources, solutionTests, solutionFiles), List.of(exerciseTests), privateOutDirPath);
         solutionEstimation.setEstimation(privateEstimation + publicEstimation);
 
         removeTempFiles();
@@ -102,24 +102,13 @@ public class SolutionEstimationController {
     }
 
 
-    private String estimate(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath, String type) {
-        List<Result> testResults = new ArrayList<>();
-        List<Path> paths;
-
+    private String estimatePublic(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath) {
         try {
             storeFiles(solutionContents, exerciseContents);
-
-            if (PUBLIC.equals(type)) {
-                paths = getPublicPaths(solutionContents);
-                compileFiles(paths, outDirPath);
-                testResults = testPublicFiles(solutionContents, outDirPath);
-            } else if (PRIVATE.equals(type)) {
-                paths = getPrivatePaths(solutionContents, exerciseContents);
-                compileFiles(paths, outDirPath);
-                testResults = testPrivateFiles(exerciseContents, outDirPath);
-            }
-
-            return getResult(testResults, type);
+            List<Path> paths = getPublicPaths(solutionContents);
+            compileFiles(paths, outDirPath);
+            List<Result> testResults = testPublicFiles(solutionContents, outDirPath);
+            return getResult(testResults, PUBLIC);
         } catch (StorageException e) {
             e.printStackTrace();
             return "File storing failed: " + e.getMessage();
@@ -132,10 +121,23 @@ public class SolutionEstimationController {
         }
     }
 
-    private SolutionEstimation createSolutionEstimation(long solutionId) {
-        SolutionEstimation solutionEstimation = new SolutionEstimation();
-        solutionEstimation.setSolutionId(solutionId);
-        return solutionEstimation;
+    private String estimatePrivate(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath) {
+        try {
+            storeFiles(solutionContents, exerciseContents);
+            List<Path> paths = getPrivatePaths(solutionContents, exerciseContents);
+            compileFiles(paths, outDirPath);
+            List<Result> testResults = testPrivateFiles(exerciseContents, outDirPath);
+            return getResult(testResults, PRIVATE);
+        } catch (StorageException e) {
+            e.printStackTrace();
+            return "File storing failed: " + e.getMessage();
+        } catch (CompilationFailedException e) {
+            e.printStackTrace();
+            return "Compilation failed: " + e.getMessage();
+        } catch (TestFailedException e) {
+            e.printStackTrace();
+            return "Tests run failed: " + e.getMessage();
+        }
     }
 
     private void storeFiles(List<List<? extends SolutionContent>> solutionContent, List<List<? extends ExerciseContent>> exerciseContent) {
