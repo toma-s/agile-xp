@@ -44,6 +44,9 @@ public class SolutionEstimationController {
     @Autowired
     private ExerciseFileRepository exerciseFileRepository;
 
+    @Autowired
+    private ExerciseSwitcherRepository exerciseSwitcherRepository;
+
     private final StorageService storageService;
 
     private final String PUBLIC = "Public";
@@ -56,17 +59,18 @@ public class SolutionEstimationController {
 
     @GetMapping(value = "/solution-estimations/estimate/source-test/{solutionId}")
     public SolutionEstimation getSolutionSourceTestEstimation(@PathVariable long solutionId) {
-        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
-        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
+        List<List<? extends SolutionContent>> solutionContents = List.of(
+                solutionSourceRepository.findBySolutionId(solutionId),
+                solutionTestRepository.findBySolutionId(solutionId));
+
         Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
-        Path privateOutDirPath = storageService.load("solution_private" + solutionId);
-        Path publicOutDirPath = storageService.load("solution_public" + solutionId);
+        List<List<? extends ExerciseContent>> exerciseContents = List.of(
+                exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId()));
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        String publicEstimation = estimatePublic(List.of(solutionSources, solutionTests), List.of(), publicOutDirPath);
-        String privateEstimation = estimatePrivate(List.of(solutionSources, solutionTests), List.of(exerciseTests), privateOutDirPath);
+        String publicEstimation = estimatePublic(solutionContents, solutionId);
+        String privateEstimation = estimatePrivate(solutionContents, exerciseContents, solutionId);
         solutionEstimation.setEstimation(privateEstimation + publicEstimation);
 
         removeTempFiles();
@@ -78,20 +82,22 @@ public class SolutionEstimationController {
 
     @GetMapping(value = "/solution-estimations/estimate/source-test-file/{solutionId}")
     public SolutionEstimation getSolutionSourceTestFileEstimation(@PathVariable long solutionId) {
-        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
-        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
-        List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
+        List<List<? extends SolutionContent>> solutionContents = List.of(
+                solutionSourceRepository.findBySolutionId(solutionId),
+                solutionTestRepository.findBySolutionId(solutionId),
+                solutionFileRepository.findBySolutionId(solutionId));
+
         Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
-        //        List<ExerciseFile> exerciseFiles = exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId());
-        // TODO: 02-Apr-19 exerciseFiles when solutionFiles work completely
-        Path privateOutDirPath = storageService.load("solution_private" + solutionId);
-        Path publicOutDirPath = storageService.load("solution_public" + solutionId);
+        List<List<? extends ExerciseContent>> exerciseContents = List.of(
+                exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId())
+//                 exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId())
+//                 TODO: 02-Apr-19 exerciseFiles when solutionFiles work completely
+        );
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        String publicEstimation = estimatePublic(List.of(solutionSources, solutionTests, solutionFiles), List.of(), publicOutDirPath);
-        String privateEstimation = estimatePrivate(List.of(solutionSources, solutionTests, solutionFiles), List.of(exerciseTests), privateOutDirPath);
+        String publicEstimation = estimatePublic(solutionContents, solutionId);
+        String privateEstimation = estimatePrivate(solutionContents, exerciseContents, solutionId);
         solutionEstimation.setEstimation(privateEstimation + publicEstimation);
 
         removeTempFiles();
@@ -101,18 +107,23 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-//    @GetMapping(value = "/solution-estimations/estimate/test/{solutionId}")
-//    public SolutionEstimation getSolutionTestEstimation(@PathVariable long solutionId) {
-//        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
-//        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
-//        Solution solution = solutionRepository.findById(solutionId);
-////        List<ExerciseController> exerciseControllers = ex.findExerciseTestsByExerciseId(solution.getExerciseId());
-//    }
+    @GetMapping(value = "/solution-estimations/estimate/test/{solutionId}")
+    public SolutionEstimation getSolutionTestEstimation(@PathVariable long solutionId) {
+        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
+        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
+        Solution solution = solutionRepository.findById(solutionId);
+        List<ExerciseSwitcher> exerciseSwitchers = exerciseSwitcherRepository.findExerciseSwitcherByExerciseId(solution.getExerciseId());
+
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
+
+        return solutionEstimation;
+    }
 
 
-    private String estimatePublic(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath) {
+    private String estimatePublic(List<List<? extends SolutionContent>> solutionContents, long solutionId) {
+        Path outDirPath = storageService.load("solution_public" + solutionId);
         try {
-            storeFiles(solutionContents, exerciseContents);
+            storeFiles(solutionContents, List.of());
             List<Path> paths = getPublicPaths(solutionContents);
             compileFiles(paths, outDirPath);
             List<Result> testResults = testPublicFiles(solutionContents, outDirPath);
@@ -129,7 +140,8 @@ public class SolutionEstimationController {
         }
     }
 
-    private String estimatePrivate(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath) {
+    private String estimatePrivate(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, long solutionId) {
+        Path outDirPath = storageService.load("solution_private" + solutionId);
         try {
             storeFiles(solutionContents, exerciseContents);
             List<Path> paths = getPrivatePaths(solutionContents, exerciseContents);

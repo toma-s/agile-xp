@@ -1754,7 +1754,7 @@ public class HelloWordTest {
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (23,
         3,
-        'exercise_controller',
+        'exercise_switcher',
         'BlackBoxController.java',
         'public class BlackBoxController {
 
