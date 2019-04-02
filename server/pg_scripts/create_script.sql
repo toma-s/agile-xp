@@ -51,28 +51,13 @@ create table solutions (
 	exercise_id int references exercises on delete cascade
 );
 
-drop table if exists solution_sources cascade;
-create table solution_sources (
-	id serial primary key,
-    filename text,
-	content text,
-    solution_id int references solutions on delete cascade
-);
-
-drop table if exists solution_tests cascade;
-create table solution_tests (
-	id serial primary key,
-	filename text,
-	content text,
-    solution_id int references solutions on delete cascade
-);
-
-drop table if exists solution_files cascade;
-create table solution_files (
+drop table if exists solution_content cascade;
+create table solution_content (
     id serial primary key,
     filename text,
-	content text,
-    solution_id int references solutions on delete cascade
+    content text,
+    solution_id int references solutions on delete cascade,
+    content_type text
 );
 
 drop table if exists solution_estimations cascade;
