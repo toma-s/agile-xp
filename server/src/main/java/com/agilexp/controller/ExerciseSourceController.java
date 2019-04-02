@@ -40,7 +40,7 @@ public class ExerciseSourceController {
     public List<ExerciseSource> getExerciseSourcesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get exercise sources with exercise id " + exerciseId + "...");
 
-        List<ExerciseSource> exerciseSources = new ArrayList<>(repository.findByExerciseId(exerciseId));
+        List<ExerciseSource> exerciseSources = new ArrayList<>(repository.findExerciseSourcesByExerciseId(exerciseId));
         return exerciseSources;
     }
 }
