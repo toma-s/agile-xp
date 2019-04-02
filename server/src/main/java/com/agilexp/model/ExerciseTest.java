@@ -2,7 +2,7 @@ package com.agilexp.model;
 
 import javax.persistence.*;
 
-@Entity(name="test")
+@Entity(name="exercise_test")
 public class ExerciseTest extends ExerciseContent {
 
     public ExerciseTest() {}

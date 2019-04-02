@@ -40,7 +40,7 @@ VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
 insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (1,
         1,
-        'source',
+        'exercise_soure',
         'Morse.java',
         'import java.util.ArrayList;
 import java.util.Arrays;
@@ -160,7 +160,7 @@ public class Morse {
 insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (2,
         1,
-        'source',
+        'exercise_soure',
         'Player.java',
         'public enum Player {
   B(1), W(0), NONE(-1);
@@ -182,7 +182,7 @@ values (2,
 insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (3,
         1,
-        'source',
+        'exercise_source',
         'Alpha.java',
         'public enum Alpha {
   A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
@@ -202,7 +202,7 @@ values (3,
 insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (4,
         1,
-        'test',
+        'exercise_test',
         'TestMorse.java',
         'import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -264,7 +264,7 @@ public class TestMorse {
 insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (5,
         2,
-        'source',
+        'exercise_source',
         'Reversi.java',
         'import java.io.BufferedReader;
 import java.io.File;
@@ -600,7 +600,7 @@ public class Reversi {
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- IncorrectGameConfigFileException
 values (6,
         2,
-        'source',
+        'exercise_source',
         'IncorrectGameConfigFileException.java',
         'public class IncorrectGameConfigFileException extends Exception {
 
@@ -616,7 +616,7 @@ values (6,
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- NotPermittedMoveException
 values (7,
         2,
-        'source',
+        'exercise_source',
         'NotPermittedMoveException.java',
         'public class NotPermittedMoveException extends Exception {
 
@@ -628,7 +628,7 @@ values (7,
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- Alpha
 values (8,
         2,
-        'source',
+        'exercise_source',
         'Alpha.java',
         'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
@@ -647,7 +647,7 @@ values (8,
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- Player
 values (9,
         2,
-        'source',
+        'exercise_source',
         'Player.java',
         'public enum Player {
     B(1), W(0), NONE(-1);
@@ -667,7 +667,7 @@ values (9,
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- ReversiRefactoredTest
 values (10,
         2,
-        'test',
+        'exercise_test',
         'ReversiTest.java',
         'import javafx.util.Pair;
 import org.junit.Test;
@@ -1612,7 +1612,7 @@ public class ReversiTest {
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_init_b_starts
 values (11,
         2,
-        'file',
+        'exercise_file',
         'game_init_b_starts.txt',
         'B
 E4 D5
@@ -1622,7 +1622,7 @@ D4 E5
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_init_w_starts
 values (12,
         2,
-        'file',
+        'exercise_file',
         'game_init_w_starts.txt',
         'W
 E4 D5
@@ -1632,7 +1632,7 @@ D4 E5
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_all_alpha
 values (13,
         2,
-        'file',
+        'exercise_file',
         'game_all_alpha.txt',
         'B
 EE DD
@@ -1642,7 +1642,7 @@ DD EE
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_all_num
 values (14,
         2,
-        'file',
+        'exercise_file',
         'game_all_num.txt',
         'B
 EE DD
@@ -1652,7 +1652,7 @@ DD EE
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_almost_complete
 values (15,
         2,
-        'file',
+        'exercise_file',
         'game_almost_complete.txt',
         'W
 A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
@@ -1662,7 +1662,7 @@ H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_complete
 values (16,
         2,
-        'file',
+        'exercise_file',
         'game_complete.txt',
         'W
 A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
@@ -1672,14 +1672,14 @@ H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_empty
 values (17,
         2,
-        'file',
+        'exercise_file',
         'game_empty.txt',
         '');
 
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_four_lines
 values (18,
         2,
-        'file',
+        'exercise_file',
         'game_four_lines.txt',
         'B
 E4 D5
@@ -1690,7 +1690,7 @@ E4 D5
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_no_on_turn
 values (19,
         2,
-        'file',
+        'exercise_file',
         'game_no_on_turn.txt',
         'E4 D5
 D4 E5
@@ -1699,7 +1699,7 @@ D4 E5
 insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_one_line
 values (20,
         2,
-        'file',
+        'exercise_file',
         'game_one_line.txt',
         'E4 D5
 ');
@@ -1709,7 +1709,7 @@ values (20,
 insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (21,
         3,
-        'source',
+        'exercise_source',
         'HelloWord.java',
         'public class HelloWord {
     int test(int a) {
@@ -1725,7 +1725,7 @@ values (21,
 insert into exercise_content (id, exercise_id, content_type, filename, content)
 values (22,
         3,
-        'test',
+        'exercise_test',
         'HelloWordTest.java',
         'import org.junit.Test;
 

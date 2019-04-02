@@ -2,7 +2,7 @@ package com.agilexp.model;
 
 import javax.persistence.*;
 
-@Entity(name="source")
+@Entity(name="exercise_source")
 public class ExerciseSource extends ExerciseContent {
 
     public ExerciseSource() {}
