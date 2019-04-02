@@ -14,11 +14,6 @@ public class ExerciseFile extends ExerciseContent {
 
     @Override
     public String toString() {
-        return "ExerciseFile{" +
-                "id=" + id +
-                ", exerciseId=" + exerciseId +
-                ", fileName='" + fileName + '\'' +
-//                ", content='" + content + '\'' +
-                '}';
+        return "ExerciseFile{} " + super.toString();
     }
 }

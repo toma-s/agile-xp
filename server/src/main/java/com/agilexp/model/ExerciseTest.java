@@ -13,11 +13,6 @@ public class ExerciseTest extends ExerciseContent {
 
     @Override
     public String toString() {
-        return "ExerciseTest{" +
-                "id=" + id +
-                ", fileName='" + fileName + '\'' +
-//                ", content='" + content.substring(0, 10) + '\'' +
-                ", exerciseId=" + exerciseId +
-                '}';
+        return "ExerciseTest{} " + super.toString();
     }
 }

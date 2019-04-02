@@ -61,4 +61,14 @@ public abstract class ExerciseContent {
     public void setExerciseId(long exerciseId) {
         this.exerciseId = exerciseId;
     }
+
+    @Override
+    public String toString() {
+        return "ExerciseContent{" +
+                "id=" + id +
+                ", fileName='" + fileName + '\'' +
+                ", content='" + content + '\'' +
+                ", exerciseId=" + exerciseId +
+                '}';
+    }
 }
