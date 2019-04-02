@@ -101,6 +101,14 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
+//    @GetMapping(value = "/solution-estimations/estimate/test/{solutionId}")
+//    public SolutionEstimation getSolutionTestEstimation(@PathVariable long solutionId) {
+//        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
+//        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
+//        Solution solution = solutionRepository.findById(solutionId);
+////        List<ExerciseController> exerciseControllers = ex.findExerciseTestsByExerciseId(solution.getExerciseId());
+//    }
+
 
     private String estimatePublic(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath) {
         try {
