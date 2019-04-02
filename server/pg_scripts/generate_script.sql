@@ -1710,53 +1710,49 @@ insert into exercise_content (id, exercise_id, exercise_content_type, filename, 
 values (21,
         3,
         'exercise_source',
-        'HelloWord.java',
-        'public class HelloWord {
+        'HelloWorld.java',
+        'public class HelloWorld {
     int test(int a) {
-        if (BlackBoxController.BUG_1) {
+        if (BlackBoxSwitcher.BUG_1) {
             if (a == 1) {
                 return -1;
             }
         }
         return a;
     }
-}');
+}
+');
 
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (22,
         3,
         'exercise_test',
         'HelloWordTest.java',
-        'import org.junit.Test;
+        'public class HelloWorldTest {
 
-import static org.junit.Assert.*;
-
-public class HelloWordTest {
-
-    private HelloWord helloWord = new HelloWord();
+    private HelloWorld helloWord = new HelloWorld();
 
     @Test
     public void test2() {
-        HelloWord hw = helloWord;
+        HelloWorld hw = helloWord;
         int result = hw.test(2);
         assertEquals(2, result);
     }
 
     @Test
     public void test1() {
-        HelloWord hw = helloWord;
+        HelloWorld hw = helloWord;
         int result = hw.test(1);
         assertEquals(1, result);
     }
-
 }');
 
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (23,
         3,
         'exercise_switcher',
-        'BlackBoxController.java',
-        'public class BlackBoxController {
+        'BlackBoxSwitcher.java',
+        'public class BlackBoxSwitcher {
 
     public static boolean BUG_1 = true;
 
@@ -1764,7 +1760,8 @@ values (23,
         boolean newBug1 = Boolean.getBoolean(args[0]);
         BUG_1 = newBug1;
     }
-}');
+}
+');
 
 -- sample
 

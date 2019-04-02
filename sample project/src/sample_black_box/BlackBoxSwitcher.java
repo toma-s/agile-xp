@@ -1,6 +1,6 @@
 package sample_black_box;
 
-public class BlackBoxController {
+public class BlackBoxSwitcher {
 
     public static boolean BUG_1 = true;
 

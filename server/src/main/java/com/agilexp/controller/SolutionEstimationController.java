@@ -39,6 +39,9 @@ public class SolutionEstimationController {
     private SolutionFileRepository solutionFileRepository;
 
     @Autowired
+    private ExerciseSourceRepository exerciseSourceRepository;
+
+    @Autowired
     private ExerciseTestRepository exerciseTestRepository;
 
     @Autowired
@@ -112,9 +115,24 @@ public class SolutionEstimationController {
         List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
+        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
+        List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
         List<ExerciseSwitcher> exerciseSwitchers = exerciseSwitcherRepository.findExerciseSwitcherByExerciseId(solution.getExerciseId());
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
+
+        String publicEstimation = estimatePublic(
+                List.of(solutionSources, solutionTests),
+                solutionId
+        );
+        String privateEstimation = estimatePrivate(
+                List.of(solutionSources, solutionTests),
+                List.of(exerciseTests, exerciseSwitchers),
+                solutionId
+        );
+        solutionEstimation.setEstimation(privateEstimation + publicEstimation);
+
+        removeTempFiles();
 
         return solutionEstimation;
     }
