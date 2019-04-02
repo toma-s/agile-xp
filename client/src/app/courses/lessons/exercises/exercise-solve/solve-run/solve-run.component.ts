@@ -10,6 +10,7 @@ import { SolutionSource } from '../../shared/solution-source/solution-source.mod
 import { forkJoin, Observable } from 'rxjs';
 import { SolutionTest } from '../../shared/solution-test/solution-test.model';
 import { SolutionFile } from '../../shared/solution-file/solution-file.model';
+import { ExerciseType } from '../../shared/exercise-type/exercise-type.model';
 
 @Component({
   selector: 'solve-run',
@@ -20,6 +21,7 @@ export class SolveRunComponent implements OnInit {
 
   @Input() solutionFormGroup: FormGroup;
   private solution: Solution;
+  private exerciseTypeValue: string;
 
   constructor(
     private fb: FormBuilder,
@@ -33,6 +35,7 @@ export class SolveRunComponent implements OnInit {
 
   ngOnInit() {
     this.updForm();
+    this.setExerciseType();
   }
 
   updForm() {
@@ -51,6 +54,10 @@ export class SolveRunComponent implements OnInit {
       solutionId: [''],
       estimation: ['']
     });
+  }
+
+  setExerciseType() {
+    this.exerciseTypeValue = this.solutionFormGroup.controls.intro.controls.exerciseType.value;
   }
 
 
@@ -82,19 +89,16 @@ export class SolveRunComponent implements OnInit {
   }
 
   async saveSolutionItems() {
-    const exerciseType = this.solutionFormGroup.controls.intro.controls.exerciseType.value;
-    switch (exerciseType) {
+    switch (this.exerciseTypeValue) {
       case 'source-test': {
         await this.saveSolutionSources();
+        await this.saveSolutionTests();
         break;
       }
       case 'source-test-file': {
-        const sc = await this.saveSolutionSources();
-        console.log(sc);
-        const st = await this.saveSolutionTests();
-        console.log(st);
-        const sf = await this.saveSolutionFiles();
-        console.log(sf);
+        await this.saveSolutionSources();
+        await this.saveSolutionTests();
+        await this.saveSolutionFiles();
         break;
       }
       case 'test': {
@@ -177,8 +181,8 @@ export class SolveRunComponent implements OnInit {
     return this.solutionFileService.createSolutionFile(solutionFile);
   }
 
-  getEstimation() { // TODO | refactor!
-    this.solutionEstimationService.estimateSourceTestSolution(this.solution.id)
+  getEstimation() {
+    this.solutionEstimationService.estimateSourceTestSolution(this.exerciseTypeValue, this.solution.id)
       .subscribe(
         data => {
           console.log(data);

@@ -12,13 +12,9 @@ public interface StorageService {
 
     void store(TaskContent taskContent, Long id);
 
-    void store(SolutionSource solutionSour);
+    void store(SolutionContent solutionContent);
 
-    void store(SolutionTest solutionTest);
-
-    void store(ExerciseTest exerciseTest);
-
-    void store(SolutionFile solutionConfig);
+    void store(ExerciseContent exerciseContent);
 
     Stream<Path> loadAll();
 

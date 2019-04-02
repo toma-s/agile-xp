@@ -41,7 +41,7 @@ create table exercise_content (
     filename text,
     content text,
     exercise_id int references exercises on delete cascade,
-    content_type text
+    exercise_content_type text
 );
 
 drop table if exists solutions cascade;
@@ -57,7 +57,7 @@ create table solution_content (
     filename text,
     content text,
     solution_id int references solutions on delete cascade,
-    content_type text
+    solution_content_type text
 );
 
 drop table if exists solution_estimations cascade;

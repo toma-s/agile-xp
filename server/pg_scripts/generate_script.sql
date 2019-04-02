@@ -37,10 +37,10 @@ VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
 
 -- exercise 1
 
-insert into exercise_content (id, exercise_id, content_type, filename, content)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (1,
         1,
-        'exercise_soure',
+        'exercise_source',
         'Morse.java',
         'import java.util.ArrayList;
 import java.util.Arrays;
@@ -157,10 +157,10 @@ public class Morse {
 }
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (2,
         1,
-        'exercise_soure',
+        'exercise_source',
         'Player.java',
         'public enum Player {
   B(1), W(0), NONE(-1);
@@ -179,7 +179,7 @@ values (2,
 }
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (3,
         1,
         'exercise_source',
@@ -199,7 +199,7 @@ values (3,
 }
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (4,
         1,
         'exercise_test',
@@ -261,7 +261,7 @@ public class TestMorse {
 
 -- exercise 2
 
-insert into exercise_content (id, exercise_id, content_type, filename, content)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (5,
         2,
         'exercise_source',
@@ -597,7 +597,7 @@ public class Reversi {
 
 }'); -- ReversiMoveException
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- IncorrectGameConfigFileException
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- IncorrectGameConfigFileException
 values (6,
         2,
         'exercise_source',
@@ -613,7 +613,7 @@ values (6,
   }
 }');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- NotPermittedMoveException
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- NotPermittedMoveException
 values (7,
         2,
         'exercise_source',
@@ -625,7 +625,7 @@ values (7,
   }
 }');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- Alpha
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- Alpha
 values (8,
         2,
         'exercise_source',
@@ -644,7 +644,7 @@ values (8,
     }
 }');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- Player
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- Player
 values (9,
         2,
         'exercise_source',
@@ -664,7 +664,7 @@ values (9,
 
 }');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- ReversiRefactoredTest
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- ReversiRefactoredTest
 values (10,
         2,
         'exercise_test',
@@ -1609,7 +1609,7 @@ public class ReversiTest {
 }
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_init_b_starts
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_init_b_starts
 values (11,
         2,
         'exercise_file',
@@ -1619,7 +1619,7 @@ E4 D5
 D4 E5
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_init_w_starts
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_init_w_starts
 values (12,
         2,
         'exercise_file',
@@ -1629,7 +1629,7 @@ E4 D5
 D4 E5
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_all_alpha
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_all_alpha
 values (13,
         2,
         'exercise_file',
@@ -1639,7 +1639,7 @@ EE DD
 DD EE
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_all_num
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_all_num
 values (14,
         2,
         'exercise_file',
@@ -1649,7 +1649,7 @@ EE DD
 DD EE
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_almost_complete
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_almost_complete
 values (15,
         2,
         'exercise_file',
@@ -1659,7 +1659,7 @@ A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6
 H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_complete
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_complete
 values (16,
         2,
         'exercise_file',
@@ -1669,14 +1669,14 @@ A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6
 H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_empty
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_empty
 values (17,
         2,
         'exercise_file',
         'game_empty.txt',
         '');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_four_lines
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_four_lines
 values (18,
         2,
         'exercise_file',
@@ -1687,7 +1687,7 @@ D4 E5
 E4 D5
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_no_on_turn
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_no_on_turn
 values (19,
         2,
         'exercise_file',
@@ -1696,7 +1696,7 @@ values (19,
 D4 E5
 ');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content) -- game_one_line
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_one_line
 values (20,
         2,
         'exercise_file',
@@ -1706,7 +1706,7 @@ values (20,
 
 -- exercise 3
 
-insert into exercise_content (id, exercise_id, content_type, filename, content)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (21,
         3,
         'exercise_source',
@@ -1722,7 +1722,7 @@ values (21,
     }
 }');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (22,
         3,
         'exercise_test',
@@ -1751,10 +1751,10 @@ public class HelloWordTest {
 
 }');
 
-insert into exercise_content (id, exercise_id, content_type, filename, content)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (23,
         3,
-        'controller',
+        'exercise_controller',
         'BlackBoxController.java',
         'public class BlackBoxController {
 

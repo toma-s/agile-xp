@@ -52,7 +52,7 @@ public class SolutionEstimation {
         return "SolutionEstimation{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
-                ", estimation='" + estimation.substring(0, 10) + '\'' +
+                ", estimation='" + estimation + '\'' +
                 '}';
     }
 }

@@ -3,7 +3,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "content_type")
+@DiscriminatorColumn(name = "solution_content_type")
 public abstract class SolutionContent {
 
     @Id
@@ -66,7 +66,7 @@ public abstract class SolutionContent {
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +
-                ", content='" + content + '\'' +
+//                ", content='" + content + '\'' +
                 '}';
     }
 }

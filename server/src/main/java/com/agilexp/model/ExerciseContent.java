@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "content_type")
+@DiscriminatorColumn(name = "exercise_content_type")
 public abstract class ExerciseContent {
 
     @Id
@@ -67,7 +67,7 @@ public abstract class ExerciseContent {
         return "ExerciseContent{" +
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
-                ", content='" + content + '\'' +
+//                ", content='" + content + '\'' +
                 ", exerciseId=" + exerciseId +
                 '}';
     }
