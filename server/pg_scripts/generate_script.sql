@@ -1711,15 +1711,24 @@ values (21,
         3,
         'exercise_source',
         'HelloWorld.java',
-        'public class HelloWorld {
+        'class HelloWorld {
+
+    private BlackBoxSwitcher switcher = new BlackBoxSwitcher();
+
     int test(int a) {
-        if (BlackBoxSwitcher.BUG_1) {
+        if (switcher.BUGS[0]) {
             if (a == 1) {
                 return -1;
             }
         }
+        if (switcher.BUGS[1]) {
+            if (a == 2) {
+                return -2;
+            }
+        }
         return a;
     }
+
 }
 ');
 
@@ -1734,57 +1743,38 @@ import static org.junit.Assert.*;
 
 public class HelloWorldTest {
 
-    private HelloWorld helloWord = new HelloWorld();
+    private HelloWorld helloWorld = new HelloWorld();
+
+    @Test
+    public void test1() {
+        HelloWorld hw = helloWorld;
+        int result = hw.test(1);
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void test11() {
+        HelloWorld hw = helloWorld;
+        int result = hw.test(1);
+        assertEquals(1, result);
+    }
+
 
     @Test
     public void test2() {
-        HelloWorld hw = helloWord;
+        HelloWorld hw = helloWorld;
         int result = hw.test(2);
         assertEquals(2, result);
     }
 
     @Test
-    public void test1() {
-        HelloWorld hw = helloWord;
-        int result = hw.test(1);
-        assertEquals(1, result);
+    public void test3() {
+        HelloWorld hw = helloWorld;
+        int result = hw.test(3);
+        assertEquals(3, result);
     }
+
 }');
-
-insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
-values (23,
-        3,
-        'exercise_switcher',
-        'BlackBoxSwitcher.java',
-        'import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-public class BlackBoxSwitcher {
-
-    public static boolean BUG_1;
-
-    public static void main(String[] args) {
-        try {
-            Path flagsPath = new File("./flags/flags.csv").toPath();
-//            Path flagsPath = new File("src/sample_black_box/flags.csv").toPath();
-            String[] flags = Files.readAllLines(flagsPath).toArray(new String[0]);
-
-            BUG_1 = Boolean.getBoolean(flags[0]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}');
-
-insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
-values (24,
-        3,
-        'exercise_flags',
-        'flags.txt',
-        'true
-');
 
 -- sample
 

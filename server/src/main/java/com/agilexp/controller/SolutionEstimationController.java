@@ -13,10 +13,12 @@ import org.junit.runner.notification.Failure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -171,22 +173,28 @@ public class SolutionEstimationController {
     private String estimateBlackBox(long solutionId) {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
+//        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
         List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
-        List<ExerciseSwitcher> exerciseSwitchers = exerciseSwitcherRepository.findExerciseSwitcherByExerciseId(solution.getExerciseId());
-        List<ExerciseFlags> exerciseFlags = exerciseFlagsRepository.findExerciseFlagsByExerciseId(solution.getExerciseId());
+//        List<ExerciseSwitcher> exerciseSwitchers = exerciseSwitcherRepository.findExerciseSwitcherByExerciseId(solution.getExerciseId());
+        List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
+        int bugsNum = 2; // TODO: 03-Apr-19 when bugsNum are saved
+        List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
         Path publicOutDirPath = storageService.load("solution_public_blackbox" + solutionId);
-        Path privateOutDirPath = storageService.load("solution_private_blackbox" + solutionId);
 
         try {
-            storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseTests, exerciseSwitchers, exerciseFlags));
-            List<Path> publicPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources);
-            List<Path> privatePaths = getPrivateBlackBoxPaths(exerciseTests, exerciseSwitchers, exerciseSources);
-            compileFiles(publicPaths, publicOutDirPath);
-            compileFiles(privatePaths, privateOutDirPath);
-            List<Result> publicTestResults = testPublicFiles(List.of(solutionTests), publicOutDirPath);
-            List<Result> privateTestResults = testPrivateFiles(List.of(exerciseTests), privateOutDirPath);
-            return getResult(publicTestResults, PUBLIC) + getResult(privateTestResults, PRIVATE);
+            int counter = 0;
+            for (int i = 0; i < bugsNum; i++) {
+                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(exerciseFlags.get(i))));
+                List<Path> publicPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources);
+                compileFiles(publicPaths, publicOutDirPath);
+                List<Result> publicTestResults = testPublicFiles(List.of(solutionTests), publicOutDirPath);
+                for (Result result : publicTestResults) {
+                    if (result.getFailureCount() >= 1) {
+                        counter++;
+                    }
+                }
+            }
+            return String.format("Bugs found: %s / %s", counter, bugsNum);
         } catch (StorageException e) {
             e.printStackTrace();
             return "File storing failed: " + e.getMessage();
@@ -197,6 +205,39 @@ public class SolutionEstimationController {
             e.printStackTrace();
             return "Tests run failed: " + e.getMessage();
         }
+    }
+
+    private List<ExerciseSwitcher> getExerciseSwitchers() {
+        List<ExerciseSwitcher> switchers = new ArrayList<>();
+        ExerciseSwitcher switcher = new ExerciseSwitcher();
+        Path here = Paths.get("").toAbsolutePath();
+        Path switcherFilePath = Paths.get("switcher/BlackBoxSwitcher.java");
+        String switcherContent = null;
+        boolean exists = switcherFilePath.toFile().exists();
+        try (Scanner scanner = new Scanner(switcherFilePath.toFile())) {
+            switcherContent = scanner.useDelimiter("\\A").next();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        switcher.setContent(switcherContent);
+        switcher.setFileName("BlackBoxSwitcher.java");
+        switchers.add(switcher);
+        return switchers;
+    }
+
+    private List<ExerciseFlags> getExerciseFlags(int bugsNum) {
+        List<ExerciseFlags> exerciseFlags = new ArrayList<>();
+        for (int i = 0; i < bugsNum; i++) {
+            String[] booleans = new String[bugsNum];
+            Arrays.fill(booleans, "false");
+            booleans[i] = "true";
+            ExerciseFlags flags = new ExerciseFlags();
+            String content = String.join("\n", booleans);
+            flags.setContent(content);
+            flags.setFileName("flags.txt");
+            exerciseFlags.add(flags);
+        }
+        return exerciseFlags;
     }
 
     private void storeFiles(List<List<? extends SolutionContent>> solutionContent, List<List<? extends ExerciseContent>> exerciseContent) {

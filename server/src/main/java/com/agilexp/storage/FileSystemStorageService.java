@@ -52,7 +52,7 @@ public class FileSystemStorageService implements StorageService {
         String fileName = solutionContent.getFileName();
         String code = solutionContent.getContent();
         String directoryName = "solution_content" + solutionContent.getId();
-        if (solutionContent.getClass().equals(SolutionFile.class)) {
+        if (solutionContent instanceof SolutionFile) {
             directoryName = "game_config";
             // FIXME: 02-Apr-19 when file storage issue is solved
         }
@@ -66,6 +66,9 @@ public class FileSystemStorageService implements StorageService {
         String fileName = exerciseContent.getFileName();
         String code = exerciseContent.getContent();
         String directoryName = "exercise_content" + exerciseContent.getId();
+        if (exerciseContent instanceof ExerciseFlags) {
+            directoryName = "flags";
+        }
 
         Path directoryLocation = createFolder(directoryName);
         storeSourceCode(fileName, code, directoryLocation);
