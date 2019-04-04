@@ -10,8 +10,6 @@ public interface StorageService {
 
     void init();
 
-    void store(TaskContent taskContent, Long id);
-
     void store(SolutionContent solutionContent);
 
     void store(ExerciseContent exerciseContent);

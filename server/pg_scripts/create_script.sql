@@ -31,8 +31,8 @@ create table exercises (
 	index int,
     created timestamp,
     type_id int references exercise_types on delete cascade,
-	lesson_id int references lessons on delete cascade,
-	constraint unique_index_lesson_id unique (index, lesson_id)
+	lesson_id int references lessons on delete cascade
+-- 	constraint unique_index_lesson_id unique (index, lesson_id)
 );
 
 drop table if exists exercise_content cascade;
