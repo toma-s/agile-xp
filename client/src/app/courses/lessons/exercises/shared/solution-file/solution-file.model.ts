@@ -1,6 +1,6 @@
-export class SolutionConfig {
+export class SolutionFile {
   id: number;
   solutionId: number;
   fileName: string;
-  text: string;
+  content: string;
 }

@@ -11,7 +11,7 @@ export class SolutionEstimationService {
 
   constructor(private http: HttpClient) { }
 
-  estimateSolution(solutionId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/estimate/${solutionId}`);
+  estimateSourceTestSolution(exerciseType: string, solutionId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/estimate/${exerciseType}/${solutionId}`);
   }
 }

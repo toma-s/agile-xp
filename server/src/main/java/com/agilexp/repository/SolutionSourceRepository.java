@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface SolutionSourceRepository extends CrudRepository<SolutionSource, Long> {
-    List<SolutionSource> findSolutionSourcesBySolutionId(long solutionId);
+    List<SolutionSource> findBySolutionId(long solutionId);
 }

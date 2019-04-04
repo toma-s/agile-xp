@@ -3,17 +3,16 @@ truncate table
     lessons,
     exercise_types,
     exercises,
-    exercise_sources,
-    exercise_tests
-    restart identity cascade;
+    exercise_content
+restart identity cascade;
 
 -- general
 
 INSERT INTO exercise_types (id, name, value)
 VALUES (1, 'Interactive Exercise', 'source-test'),
-       (2, 'Interactive Exercise', 'source-test-file'),
-       (3, 'Black box', 'test'),
-       (4, 'Black box', 'test-file'),
+       (2, 'Interactive Exercise with Files', 'source-test-file'),
+       (3, 'Black Box', 'test'),
+       (4, 'Black Box with Files', 'test-file'),
        (5, 'Single-answer Quiz', 'single-quiz'),
        (6, 'Multiple-answer Quiz', 'multiple-quiz'),
        (7, 'Theory', 'theory');
@@ -27,7 +26,7 @@ INSERT INTO lessons (id, name, course_id, created, description)
 VALUES (1, 'Lesson one', 1, '2019-03-09 20:53:09.851', 'Different exercise types examples'),
        (2, 'Lesson two', 1, '2019-03-09 20:53:09.851', 'Exercises for debugging');
 
-INSERT INTO exercises (id, name, index, lesson_id, typeId, created, description)
+INSERT INTO exercises (id, name, index, lesson_id, type_id, created, description)
 VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
        (2, 'Exercise two', 1, 1, 2, '2019-03-09 20:53:09.851', '(source-test-file)'),
        (3, 'Exercise three', 2, 1, 3, '2019-03-09 20:53:09.851', '(test)'),
@@ -36,9 +35,12 @@ VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
        (6, 'Exercise six', 5, 1, 6, '2019-03-09 20:53:09.851', '(multiple-quiz)'),
        (7, 'Exercise seven', 6, 1, 7, '2019-03-09 20:53:09.851', '(theory)');
 
-insert into exercise_sources (id, exercise_id, filename, code)
+-- exercise 1
+
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (1,
         1,
+        'exercise_source',
         'Morse.java',
         'import java.util.ArrayList;
 import java.util.Arrays;
@@ -155,9 +157,10 @@ public class Morse {
 }
 ');
 
-insert into exercise_sources (id, exercise_id, filename, code)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (2,
         1,
+        'exercise_source',
         'Player.java',
         'public enum Player {
   B(1), W(0), NONE(-1);
@@ -176,9 +179,10 @@ values (2,
 }
 ');
 
-insert into exercise_sources (id, exercise_id, filename, code)
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (3,
         1,
+        'exercise_source',
         'Alpha.java',
         'public enum Alpha {
   A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
@@ -195,9 +199,10 @@ values (3,
 }
 ');
 
-insert into exercise_tests (id, exercise_id, filename, code)
-values (1,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
+values (4,
         1,
+        'exercise_test',
         'TestMorse.java',
         'import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -256,10 +261,10 @@ public class TestMorse {
 
 -- exercise 2
 
-
-insert into exercise_sources (id, exercise_id, filename, code)
-values (4,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
+values (5,
         2,
+        'exercise_source',
         'Reversi.java',
         'import java.io.BufferedReader;
 import java.io.File;
@@ -592,9 +597,10 @@ public class Reversi {
 
 }'); -- ReversiMoveException
 
-insert into exercise_sources (id, exercise_id, filename, code) -- IncorrectGameConfigFileException
-values (5,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- IncorrectGameConfigFileException
+values (6,
         2,
+        'exercise_source',
         'IncorrectGameConfigFileException.java',
         'public class IncorrectGameConfigFileException extends Exception {
 
@@ -607,9 +613,10 @@ values (5,
   }
 }');
 
-insert into exercise_sources (id, exercise_id, filename, code) -- NotPermittedMoveException
-values (6,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- NotPermittedMoveException
+values (7,
         2,
+        'exercise_source',
         'NotPermittedMoveException.java',
         'public class NotPermittedMoveException extends Exception {
 
@@ -618,9 +625,10 @@ values (6,
   }
 }');
 
-insert into exercise_sources (id, exercise_id, filename, code) -- Alpha
-values (7,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- Alpha
+values (8,
         2,
+        'exercise_source',
         'Alpha.java',
         'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
@@ -636,9 +644,10 @@ values (7,
     }
 }');
 
-insert into exercise_sources (id, exercise_id, filename, code) -- Player
-values (8,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- Player
+values (9,
         2,
+        'exercise_source',
         'Player.java',
         'public enum Player {
     B(1), W(0), NONE(-1);
@@ -655,9 +664,10 @@ values (8,
 
 }');
 
-insert into exercise_tests (id, exercise_id, filename, code) -- ReversiRefactoredTest
-values (2,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- ReversiRefactoredTest
+values (10,
         2,
+        'exercise_test',
         'ReversiTest.java',
         'import javafx.util.Pair;
 import org.junit.Test;
@@ -1599,69 +1609,77 @@ public class ReversiTest {
 }
 ');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_init_b_starts
-values (1,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_init_b_starts
+values (11,
         2,
+        'exercise_file',
         'game_init_b_starts.txt',
         'B
 E4 D5
 D4 E5
 ');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_init_w_starts
-values (2,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_init_w_starts
+values (12,
         2,
+        'exercise_file',
         'game_init_w_starts.txt',
         'W
 E4 D5
 D4 E5
 ');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_all_alpha
-values (3,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_all_alpha
+values (13,
         2,
+        'exercise_file',
         'game_all_alpha.txt',
         'B
 EE DD
 DD EE
 ');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_all_num
-values (4,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_all_num
+values (14,
         2,
+        'exercise_file',
         'game_all_num.txt',
         'B
 EE DD
 DD EE
 ');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_almost_complete
-values (5,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_almost_complete
+values (15,
         2,
+        'exercise_file',
         'game_almost_complete.txt',
         'W
 A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
 H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
 ');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_complete
-values (6,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_complete
+values (16,
         2,
+        'exercise_file',
         'game_complete.txt',
         'W
 A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
 H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
 ');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_empty
-values (7,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_empty
+values (17,
         2,
+        'exercise_file',
         'game_empty.txt',
         '');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_four_lines
-values (8,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_four_lines
+values (18,
         2,
+        'exercise_file',
         'game_four_lines.txt',
         'B
 E4 D5
@@ -1669,35 +1687,119 @@ D4 E5
 E4 D5
 ');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_no_on_turn
-values (9,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_no_on_turn
+values (19,
         2,
+        'exercise_file',
         'game_no_on_turn.txt',
         'E4 D5
 D4 E5
 ');
 
-insert into exercise_configs (id, exercise_id, filename, text) -- game_one_line
-values (10,
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_one_line
+values (20,
         2,
+        'exercise_file',
         'game_one_line.txt',
         'E4 D5
 ');
+
+-- exercise 3
+
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
+values (21,
+        3,
+        'exercise_source',
+        'HelloWorld.java',
+        'class HelloWorld {
+
+    private BlackBoxSwitcher switcher = new BlackBoxSwitcher();
+
+    int returnTheSame(int input) {
+        if (switcher.BUGS[0]) {
+            if (input == 1) {
+                return -1;
+            }
+        }
+        if (switcher.BUGS[1]) {
+            if (input == 2) {
+                return -2;
+            }
+        }
+        return input;
+    }
+}');
+
+insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
+values (22,
+        3,
+        'exercise_test',
+        'HelloWorldTest.java',
+        'import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class HelloWorldTest {
+
+    private HelloWorld helloWord = new HelloWorld();
+
+    @Test
+    public void test1FindsBug() {
+        HelloWorld hw = helloWord;
+        int result = hw.returnTheSame(1);
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void test1FindsBugDuplicate() {
+        HelloWorld hw = helloWord;
+        int result = hw.returnTheSame(1);
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void test2FindsBug() {
+        HelloWorld hw = helloWord;
+        int result = hw.returnTheSame(2);
+        assertEquals(2, result);
+    }
+
+    @Test
+    public void test3Ok() {
+        HelloWorld hw = helloWord;
+        int result = hw.returnTheSame(3);
+        assertEquals(3, result);
+    }
+
+    @Test
+    public void test3FakeBug() {
+        HelloWorld hw = helloWord;
+        int result = hw.returnTheSame(3);
+        assertEquals(-3, result);
+    }
+
+    @Test
+    public void test3FakeBugDuplicate() {
+        HelloWorld hw = helloWord;
+        int result = hw.returnTheSame(3);
+        assertEquals(-3, result);
+    }
+
+}');
 
 -- sample
 
 INSERT INTO courses (id, name, created, description)
 VALUES (2, 'Sample course', '2019-03-28 11:08:09.851',
-        'Web application functionality overview. Use agile programming methods to build a game, based on a legacy code');
+        'Web application functionality overview. Use agile programming methods to build a game, based on a legacy content');
 
 INSERT INTO lessons (id, name, course_id, created, description)
 VALUES (3, 'Debugging the legacy program', 2, '2019-03-28 11:08:09.851',
-        'The aim is to find bugs in the legacy program and fix them, but keep the original structure of the code. The user should write his/her own tests to find the bugs and fix them');
+        'The aim is to find bugs in the legacy program and fix them, but keep the original structure of the content. The user should write his/her own tests to find the bugs and fix them');
 
 INSERT INTO lessons (id, name, course_id, created, description)
 VALUES (4, 'Adding new features to the legacy program', 2, '2019-03-28 11:08:09.851',
-        'The aim is to add some features to the legacy code');
+        'The aim is to add some features to the legacy content');
 
 INSERT INTO lessons (id, name, course_id, created, description)
 VALUES (5, 'Refactoring lesson', 2, '2019-03-28 11:08:09.851',
-        'The aim is to refactor the code of the legacy program so the program remains functional. Every exercise corresponds to a step of refactoring');
+        'The aim is to refactor the content of the legacy program so the program remains functional. Every exercise corresponds to a step of refactoring');

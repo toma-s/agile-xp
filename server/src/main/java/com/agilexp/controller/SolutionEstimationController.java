@@ -13,56 +13,42 @@ import org.junit.runner.notification.Failure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class SolutionEstimationController {
-    @Autowired
-    private SolutionEstimationRepository repository;
-
-    @Autowired
-    private SolutionRepository solutionRepository;
-
-    @Autowired
-    private SolutionSourceRepository solutionSourceRepository;
-
-    @Autowired
-    private SolutionTestRepository solutionTestRepository;
-
-    @Autowired
-    private SolutionConfigRepository solutionConfigRepository;
-
-    @Autowired
-    private ExerciseTestRepository exerciseTestRepository;
-
-    @Autowired
-    private ExerciseConfigRepository exerciseConfigRepository;
+    @Autowired private SolutionEstimationRepository repository;
+    @Autowired private SolutionRepository solutionRepository;
+    @Autowired private SolutionSourceRepository solutionSourceRepository;
+    @Autowired private SolutionTestRepository solutionTestRepository;
+    @Autowired private SolutionFileRepository solutionFileRepository;
+    @Autowired private ExerciseSourceRepository exerciseSourceRepository;
+    @Autowired private ExerciseTestRepository exerciseTestRepository;
+    @Autowired private ExerciseFileRepository exerciseFileRepository;
+    @Autowired private ExerciseSwitcherRepository exerciseSwitcherRepository;
+    @Autowired private ExerciseFlagsRepository exerciseFlagsRepository;
 
     private final StorageService storageService;
+
+    private final String PUBLIC = "Public";
+    private final String PRIVATE = "Private";
 
     @Autowired
     public SolutionEstimationController(StorageService storageService) {
         this.storageService = storageService;
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/{solutionId}")
-    public SolutionEstimation getSolutionEstimation(@PathVariable long solutionId) {
-        SolutionEstimation solutionEstimation = new SolutionEstimation();
-        solutionEstimation.setSolutionId(solutionId);
+    @GetMapping(value = "/solution-estimations/estimate/source-test/{solutionId}")
+    public SolutionEstimation getSolutionSourceTestEstimation(@PathVariable long solutionId) {
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseTest> exerciseTests = exerciseTestRepository.findByExerciseId(solution.getExerciseId());
-        List<ExerciseConfig> exerciseConfigs = exerciseConfigRepository.findByExerciseId(solution.getExerciseId());
-
-        List<SolutionSource> solutionSources = solutionSourceRepository.findSolutionSourcesBySolutionId(solutionId);
-        List<SolutionTest> solutionTests = solutionTestRepository.findSolutionTestsBySolutionId(solutionId);
-        List<SolutionConfig> solutionConfigs = solutionConfigRepository.findSolutionConfigBySolutionId(solutionId);
-
-        String estimation = getEstimation(solutionSources, solutionTests, solutionConfigs, exerciseTests, exerciseConfigs, solutionId);
+        String estimation = estimateSourceTest(solutionId);
         solutionEstimation.setEstimation(estimation);
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
@@ -70,13 +56,62 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-    private String getEstimation(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionConfig> solutionConfigs,
-                                 List<ExerciseTest> exerciseTests, List<ExerciseConfig> exerciseConfigs, long solutionId) {
+    @GetMapping(value = "/solution-estimations/estimate/source-test-file/{solutionId}")
+    public SolutionEstimation getSolutionSourceTestFileEstimation(@PathVariable long solutionId) {
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
+
+        String estimation = estimateSourceTestFile(solutionId);
+        solutionEstimation.setEstimation(estimation);
+
+        SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
+        System.out.format("Created solution estimation %s\n", _solutionEstimation);
+        return _solutionEstimation;
+    }
+
+    private String estimateSourceTest(long solutionId) {
+        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
+        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
+
+        Solution solution = solutionRepository.findById(solutionId);
+        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
+
+        List<List<? extends SolutionContent>> solutionContents = List.of(solutionSources, solutionTests);
+        List<List<? extends ExerciseContent>> exerciseContents = List.of(exerciseTests);
+
+        Path outDirPath = storageService.load("solution_public" + solutionId);
+        String publicEstimation = estimatePublic(solutionContents, outDirPath);
+        String privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath);
+        return publicEstimation + privateEstimation;
+    }
+
+    private String estimateSourceTestFile(long solutionId) {
+        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
+        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
+        List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
+
+        Solution solution = solutionRepository.findById(solutionId);
+        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
+//      exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId())
+//      TODO: 02-Apr-19 exerciseFiles when solutionFiles work completely
+
+        List<List<? extends SolutionContent>> solutionContents = List.of(solutionSources, solutionTests, solutionFiles);
+        List<List<? extends ExerciseContent>> exerciseContents = List.of(exerciseTests);
+
+        Path outDirPath = storageService.load("solution_private" + solutionId);
+        String publicEstimation = estimatePublic(solutionContents, outDirPath);
+        String privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath);
+        return publicEstimation + privateEstimation;
+    }
+
+
+    private String estimatePublic(List<List<? extends SolutionContent>> solutionContents, Path outDirPath) {
         try {
-            String solutionEstimationResult = estimateWithPublicTests(solutionSources, solutionTests, solutionConfigs, solutionId);
-//            String exerciseEstimationResult = estimateWithPrivateTests(solutionSources, exerciseTests/*, exerciseConfigs*/, solutionId);
-            String exerciseEstimationResult = "Exercise Estimation with files is not implemented yet";
-            return solutionEstimationResult + exerciseEstimationResult;
+            storeFiles(solutionContents, List.of());
+            List<Path> paths = getPublicPaths(solutionContents);
+            compileFiles(paths, outDirPath);
+            List<Result> testResults = testPublicFiles(solutionContents, outDirPath);
+            removeTempFiles();
+            return getResult(testResults, PUBLIC);
         } catch (StorageException e) {
             e.printStackTrace();
             return "File storing failed: " + e.getMessage();
@@ -89,115 +124,263 @@ public class SolutionEstimationController {
         }
     }
 
-    private String estimateWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests, List<SolutionConfig> solutionConfigs, long solutionId) throws CompilationFailedException, TestFailedException {
+    private String estimatePrivate(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath) {
         try {
-            storeFilesWithPublicTests(solutionSources, solutionTests);
+            storeFiles(solutionContents, exerciseContents);
+            List<Path> paths = getPrivatePaths(solutionContents, exerciseContents);
+            compileFiles(paths, outDirPath);
+            List<Result> testResults = testPrivateFiles(exerciseContents, outDirPath);
+            removeTempFiles();
+            return getResult(testResults, PRIVATE);
+        } catch (StorageException e) {
+            e.printStackTrace();
+            return "File storing failed: " + e.getMessage();
+        } catch (CompilationFailedException e) {
+            e.printStackTrace();
+            return "Compilation failed: " + e.getMessage();
+        } catch (TestFailedException e) {
+            e.printStackTrace();
+            return "Tests run failed: " + e.getMessage();
+        }
+    }
+
+
+    @GetMapping(value = "/solution-estimations/estimate/test/{solutionId}")
+    public SolutionEstimation getSolutionTestEstimation(@PathVariable long solutionId) {
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
+
+        String privateEstimation = estimateTest(solutionId);
+        solutionEstimation.setEstimation(privateEstimation);
+
+        SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
+        System.out.format("Created solution estimation %s\n", _solutionEstimation);
+        return _solutionEstimation;
+    }
+
+
+    private String estimateTest(long solutionId) {
+        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
+        Solution solution = solutionRepository.findById(solutionId);
+        List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
+        List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
+        int bugsNum = 2; // TODO: 03-Apr-19 when bugsNum are saved
+        List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
+        ExerciseFlags controllingFlags = getControllingFlags(bugsNum);
+        Path outDirPath = storageService.load("solution_public_blackbox" + solutionId);
+
+        try {
+            int bugsFound = 0;
+            for (int i = 0; i < bugsNum; i++) {
+                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(exerciseFlags.get(i))));
+                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources);
+                compileFiles(paths, outDirPath);
+                List<Result> testResults = testPublicFiles(List.of(solutionTests), outDirPath);
+                removeTempFiles();
+
+                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(controllingFlags)));
+                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources);
+                compileFiles(controllingPaths, outDirPath);
+                List<Result> controllingTestResults = testPublicFiles(List.of(solutionTests), outDirPath);
+                removeTempFiles();
+
+                if (bugWasFound(testResults, controllingTestResults)) {
+                    bugsFound++;
+                }
+            }
+            return String.format("Bugs found: %s / %s", bugsFound, bugsNum);
+        } catch (StorageException e) {
+            e.printStackTrace();
+            return "File storing failed: " + e.getMessage();
+        } catch (CompilationFailedException e) {
+            e.printStackTrace();
+            return "Compilation failed: " + e.getMessage();
+        } catch (TestFailedException e) {
+            e.printStackTrace();
+            return "Tests run failed: " + e.getMessage();
+        }
+    }
+
+    private boolean bugWasFound(List<Result> testResults, List<Result> controllingTestResults) {
+        for (int j = 0; j < testResults.size(); j++) {
+            Result result = testResults.get(j);
+            Result controllingResult = controllingTestResults.get(j);
+            if (result.getFailureCount() - controllingResult.getFailureCount() >= 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<ExerciseSwitcher> getExerciseSwitchers() {
+        List<ExerciseSwitcher> switchers = new ArrayList<>();
+        ExerciseSwitcher switcher = new ExerciseSwitcher();
+        Path here = Paths.get("").toAbsolutePath();
+        Path switcherFilePath = Paths.get("switcher/BlackBoxSwitcher.java");
+        String switcherContent = null;
+        boolean exists = switcherFilePath.toFile().exists();
+        try (Scanner scanner = new Scanner(switcherFilePath.toFile())) {
+            switcherContent = scanner.useDelimiter("\\A").next();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        switcher.setContent(switcherContent);
+        switcher.setFileName("BlackBoxSwitcher.java");
+        switchers.add(switcher);
+        return switchers;
+    }
+
+    private List<ExerciseFlags> getExerciseFlags(int bugsNum) {
+        List<ExerciseFlags> exerciseFlags = new ArrayList<>();
+        for (int i = 0; i < bugsNum; i++) {
+            String[] booleans = new String[bugsNum];
+            Arrays.fill(booleans, "false");
+            booleans[i] = "true";
+            ExerciseFlags flags = new ExerciseFlags();
+            String content = String.join("\n", booleans);
+            content += '\n';
+            flags.setContent(content);
+            flags.setFileName("flags.txt");
+            exerciseFlags.add(flags);
+        }
+        return exerciseFlags;
+    }
+
+    private ExerciseFlags getControllingFlags(int bugsNum) {
+        String[] booleans = new String[bugsNum];
+        Arrays.fill(booleans, "false");
+        ExerciseFlags flags = new ExerciseFlags();
+        String content = String.join("\n", booleans);
+        content += '\n';
+        flags.setContent(content);
+        flags.setFileName("flags.txt");
+        return flags;
+    }
+
+    private void storeFiles(List<List<? extends SolutionContent>> solutionContent, List<List<? extends ExerciseContent>> exerciseContent) {
+        try {
+            solutionContent.forEach(e -> e.forEach(storageService::store));
+            exerciseContent.forEach(e -> e.forEach(storageService::store));
         } catch (StorageException e) {
             throw new StorageException(e.getMessage());
         }
-        List<Path> filesPaths = getPathsWithPublicTests(solutionSources, solutionTests);
-        Path outDirPath = storageService.load("solution_public" + solutionId);
+    }
 
+    private List<Path> getPublicPaths(List<List<? extends SolutionContent>> solutionContent) {
+        return solutionContent.stream()
+                .flatMap(Collection::stream)
+                .filter(e -> e instanceof SolutionSource ||
+                        e instanceof SolutionTest)
+                .map(e -> storageService
+                        .load("solution_content" + e.getId())
+                        .resolve(e.getFileName()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Path> getPrivatePaths(List<List<? extends SolutionContent>> solutionContent, List<List<? extends ExerciseContent>> exerciseContent) {
+        List<Path> paths = solutionContent.stream()
+                .flatMap(Collection::stream)
+                .filter(e -> e instanceof SolutionSource)
+                .map(e -> storageService
+                        .load("solution_content" + e.getId())
+                        .resolve(e.getFileName()))
+                .collect(Collectors.toList());
+        List<Path> exercisePaths = exerciseContent.stream()
+                .flatMap(Collection::stream)
+                .filter(e -> e instanceof ExerciseTest)
+                .map(e -> storageService
+                        .load("exercise_content" + e.getId())
+                        .resolve(e.getFileName()))
+                .collect(Collectors.toList());
+        paths.addAll(exercisePaths);
+        return paths;
+    }
+
+    private List<Path> getPublicBlackBoxPaths(List<SolutionTest> solutionTests, List<ExerciseSwitcher> exerciseSwitchers, List<ExerciseSource> exerciseSources) {
+        List<Path> paths = new ArrayList<>();
+        solutionTests.forEach(solutionTest -> {
+            paths.add(storageService
+                    .load("solution_content" + solutionTest.getId())
+                    .resolve(solutionTest.getFileName()));
+        });
+        exerciseSwitchers.forEach(exerciseSwitcher -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseSwitcher.getId())
+                    .resolve(exerciseSwitcher.getFileName()));
+        });
+        exerciseSources.forEach(exerciseSource -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseSource.getId())
+                    .resolve(exerciseSource.getFileName()));
+        });
+
+        return paths;
+    }
+
+    private List<Path> getPrivateBlackBoxPaths(List<ExerciseTest> exerciseTests, List<ExerciseSwitcher> exerciseSwitchers, List<ExerciseSource> exerciseSources) {
+        List<Path> paths = new ArrayList<>();
+        exerciseTests.forEach(exerciseTest -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseTest.getId())
+                    .resolve(exerciseTest.getFileName()));
+        });
+        exerciseSwitchers.forEach(exerciseSwitcher -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseSwitcher.getId())
+                    .resolve(exerciseSwitcher.getFileName()));
+        });
+        exerciseSources.forEach(exerciseSource -> {
+            paths.add(storageService
+                    .load("exercise_content" + exerciseSource.getId())
+                    .resolve(exerciseSource.getFileName()));
+        });
+
+        return paths;
+    }
+
+    private void compileFiles(List<Path> filesPaths, Path outDirPath) throws CompilationFailedException {
         try {
             Compiler.compile(filesPaths, outDirPath);
         } catch (CompilationFailedException e) {
             throw new CompilationFailedException(e.getMessage());
         }
         System.out.println("compiled");
+    }
 
-        solutionConfigs.forEach(storageService::store);
-        System.out.println("stored configs");
-
+    private List<Result> testPublicFiles(List<List<? extends SolutionContent>> solutionContents, Path outDirPath) throws TestFailedException {
         List<Result> solutionTestsResults = new ArrayList<>();
-        for (SolutionTest solutionTest : solutionTests) {
-            try {
-                solutionTestsResults.add(Tester.test(outDirPath, solutionTest.getFileName()));
-            } catch (TestFailedException e) {
-                throw new TestFailedException(e.getMessage());
+        for (List<? extends SolutionContent> solutionContentList : solutionContents) {
+            for (SolutionContent solutionContent : solutionContentList){
+                if (!solutionContent.getClass().equals(SolutionTest.class)) continue;
+                try {
+                    solutionTestsResults.add(Tester.test(outDirPath, solutionContent.getFileName()));
+                } catch (TestFailedException e) {
+                    throw new TestFailedException(e.getMessage());
+                }
             }
         }
         System.out.println("tested");
-
-        storageService.deleteAll(); // clean upload-dir
-        storageService.init();
-
-        return getResult(solutionTestsResults, "Public");
+        return solutionTestsResults;
     }
 
-    private void storeFilesWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests) {
-        try {
-            solutionSources.forEach(storageService::store);
-            solutionTests.forEach(storageService::store);
-        } catch (StorageException e) {
-            throw new StorageException(e.getMessage());
-        }
-    }
-
-    private List<Path> getPathsWithPublicTests(List<SolutionSource> solutionSources, List<SolutionTest> solutionTests) {
-        List<Path> paths = new ArrayList<>();
-        solutionSources.forEach(solutionSource ->
-                paths.add(storageService
-                        .load("solution_source" + solutionSource.getId())
-                        .resolve(solutionSource.getFileName())));
-        solutionTests.forEach(solutionTest ->
-                paths.add(storageService
-                        .load("solution_test" + solutionTest.getId())
-                        .resolve(solutionTest.getFileName())));
-        return paths;
-    }
-
-    private String estimateWithPrivateTests(List<SolutionSource> solutionSources, List<ExerciseTest> exerciseTests, long solutionId) {
-        try {
-            storeFilesWithPrivateTests(solutionSources, exerciseTests);
-        } catch (StorageException e) {
-            e.printStackTrace();
-            return "File storing failed: " + e.getMessage();
-        }
-        List<Path> filesPaths = getPathsWithPrivateTests(solutionSources, exerciseTests);
-        Path outDirPath = storageService.load("solution_private" + solutionId);
-
-        try {
-            Compiler.compile(filesPaths, outDirPath);
-        } catch (CompilationFailedException e) {
-            return "Compilation failed: " + e.getMessage();
-        }
-        System.out.println("compiled");
-
-        List<Result> exerciseTestsResults = new ArrayList<>();
-        for (ExerciseTest exerciseTest : exerciseTests) {
-            try {
-                exerciseTestsResults.add(Tester.test(outDirPath, exerciseTest.getFileName()));
-                System.out.println("tested exerciseTest");
-            } catch (TestFailedException e) {
-                e.printStackTrace();
-                return "Tests run failed: " + e.getMessage();
+    private List<Result> testPrivateFiles(List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath) throws TestFailedException {
+        List<Result> solutionTestsResults = new ArrayList<>();
+        for (List<? extends ExerciseContent> exerciseContentList : exerciseContents) {
+            for (ExerciseContent exerciseContent : exerciseContentList){
+                if (!exerciseContent.getClass().equals(ExerciseTest.class)) continue;
+                try {
+                    solutionTestsResults.add(Tester.test(outDirPath, exerciseContent.getFileName()));
+                } catch (TestFailedException e) {
+                    throw new TestFailedException(e.getMessage());
+                }
             }
         }
-
-        return getResult(exerciseTestsResults, "Private");
+        System.out.println("tested");
+        return solutionTestsResults;
     }
 
-    private void storeFilesWithPrivateTests(List<SolutionSource> solutionSources, List<ExerciseTest> exerciseTests) {
-        try {
-            solutionSources.forEach(storageService::store);
-            exerciseTests.forEach(storageService::store);
-        } catch (StorageException e) {
-            throw new StorageException(e.getMessage());
-        }
-    }
-
-    private List<Path> getPathsWithPrivateTests(List<SolutionSource> solutionSources, List<ExerciseTest> exerciseTests) {
-        List<Path> paths = new ArrayList<>();
-        solutionSources.forEach(solutionSource ->
-                paths.add(storageService
-                    .load("solution_source" + solutionSource.getId())
-                    .resolve(solutionSource.getFileName())));
-        exerciseTests.forEach(exerciseTest ->
-            paths.add(storageService
-                        .load("exercise_test" + exerciseTest.getId())
-                        .resolve(exerciseTest.getFileName()))
-        );
-        return paths;
+    private void removeTempFiles() {
+        storageService.deleteAll(); // clean upload-dir
+        storageService.init();
     }
 
     private String getResult(List<Result> exerciseTestsResults, String type) {

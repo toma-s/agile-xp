@@ -18,6 +18,10 @@ public class SolutionEstimation {
     public SolutionEstimation() {
     }
 
+    public SolutionEstimation(long solutionId) {
+        this.solutionId = solutionId;
+    }
+
     public SolutionEstimation(long solutionId, String estimation) {
         this.solutionId = solutionId;
         this.estimation = estimation;
@@ -52,7 +56,7 @@ public class SolutionEstimation {
         return "SolutionEstimation{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
-                ", estimation='" + estimation.substring(0, 10) + '\'' +
+                ", estimation='" + estimation + '\'' +
                 '}';
     }
 }

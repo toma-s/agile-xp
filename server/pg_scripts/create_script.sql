@@ -30,33 +30,18 @@ create table exercises (
     description text,
 	index int,
     created timestamp,
-    typeId int references exercise_types on delete cascade,
+    type_id int references exercise_types on delete cascade,
 	lesson_id int references lessons on delete cascade,
 	constraint unique_index_lesson_id unique (index, lesson_id)
 );
 
-drop table if exists exercise_sources CASCADE;
-create table exercise_sources (
-	id serial primary key,
-	filename text,
-	code text,
-	exercise_id int references exercises on delete cascade
-);
-
-drop table if exists exercise_tests CASCADE;
-create table exercise_tests (
-	id serial primary key,
-	filename text,
-	code text,
-	exercise_id int references exercises on delete cascade
-);
-
-drop table if exists exercise_configs cascade;
-create table exercise_configs (
+drop table if exists exercise_content cascade;
+create table exercise_content (
     id serial primary key,
     filename text,
-    text text,
-    exercise_id int references exercises on delete cascade
+    content text,
+    exercise_id int references exercises on delete cascade,
+    exercise_content_type text
 );
 
 drop table if exists solutions cascade;
@@ -66,28 +51,13 @@ create table solutions (
 	exercise_id int references exercises on delete cascade
 );
 
-drop table if exists solution_sources cascade;
-create table solution_sources (
-	id serial primary key,
-    filename text,
-	code text,
-    solution_id int references solutions on delete cascade
-);
-
-drop table if exists solution_tests cascade;
-create table solution_tests (
-	id serial primary key,
-	filename text,
-	code text,
-    solution_id int references solutions on delete cascade
-);
-
-drop table if exists solution_configs cascade;
-create table solution_configs (
+drop table if exists solution_content cascade;
+create table solution_content (
     id serial primary key,
     filename text,
-    text text,
-    solution_id int references solutions on delete cascade
+    content text,
+    solution_id int references solutions on delete cascade,
+    solution_content_type text
 );
 
 drop table if exists solution_estimations cascade;

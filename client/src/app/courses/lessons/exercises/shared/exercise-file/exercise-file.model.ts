@@ -1,6 +1,6 @@
-export class ExerciseConfig {
+export class ExerciseFile {
   id: number;
   solutionId: number;
   fileName: string;
-  text: string;
+  content: string;
 }

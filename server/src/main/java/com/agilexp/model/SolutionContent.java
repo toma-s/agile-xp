@@ -1,10 +1,11 @@
 package com.agilexp.model;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name="solution_configs")
-public class SolutionConfig {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "solution_content_type")
+public abstract class SolutionContent {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -15,16 +16,16 @@ public class SolutionConfig {
     @Column(name="filename")
     private String fileName;
 
-    @Column(name="text")
-    private String text;
+    @Column(name="content")
+    private String content;
 
-    public SolutionConfig() {
+    public SolutionContent() {
     }
 
-    public SolutionConfig(long solutionId, String fileName, String text) {
+    public SolutionContent(long solutionId, String fileName, String content) {
         this.solutionId = solutionId;
         this.fileName = fileName;
-        this.text = text;
+        this.content = content;
     }
 
     public long getId() {
@@ -51,21 +52,21 @@ public class SolutionConfig {
         this.fileName = fileName;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override
     public String toString() {
-        return "SolutionConfig{" +
+        return "SolutionContent{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", fileName='" + fileName + '\'' +
-//                ", text='" + text + '\'' +
+//                ", content='" + content + '\'' +
                 '}';
     }
 }

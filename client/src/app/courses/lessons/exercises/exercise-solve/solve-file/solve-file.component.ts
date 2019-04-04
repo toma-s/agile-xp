@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ExerciseConfigService } from '../../shared/exercise-config/exercise-config.service';
-import { ExerciseConfig } from '../../shared/exercise-config/exercise-config.model';
+import { ExerciseFileService } from '../../shared/exercise-file/exercise-file.service';
+import { ExerciseFile } from '../../shared/exercise-file/exercise-file.model';
 
 @Component({
   selector: 'solve-file',
@@ -15,7 +15,7 @@ export class SolveFileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private exerciseConfigService: ExerciseConfigService
+    private exerciseFileService: ExerciseFileService
   ) { }
 
   ngOnInit() {

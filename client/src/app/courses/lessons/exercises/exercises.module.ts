@@ -16,7 +16,6 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 import { CreateWhiteBoxComponent,
   DialogOverviewExampleDialogComponent } from './exercise-create/create-white-box/create-white-box.component';
-import { SolveWhiteBoxComponent } from './exercise-solve/solve-white-box/solve-white-box.component';
 import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -35,7 +34,6 @@ import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.componen
   declarations: [
     ExerciseCreateComponent,
     CreateWhiteBoxComponent,
-    SolveWhiteBoxComponent,
     ExerciseSolveComponent,
     DialogOverviewExampleDialogComponent,
     ToolbarComponent,

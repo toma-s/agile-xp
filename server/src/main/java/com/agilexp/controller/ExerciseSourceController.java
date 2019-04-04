@@ -26,9 +26,10 @@ public class ExerciseSourceController {
     public ExerciseSource postExerciseSource(@RequestBody ExerciseSource sourceCode) {
 
         ExerciseSource _sourceCode = repository.save(new ExerciseSource(
+                sourceCode.getExerciseId(),
                 sourceCode.getFileName(),
-                sourceCode.getCode(),
-                sourceCode.getExerciseId()
+                sourceCode.getContent()
+
         ));
 
         System.out.format("Created source code %s for exercise #%s\n", sourceCode.getFileName(), sourceCode.getExerciseId());
@@ -39,7 +40,7 @@ public class ExerciseSourceController {
     public List<ExerciseSource> getExerciseSourcesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get exercise sources with exercise id " + exerciseId + "...");
 
-        List<ExerciseSource> exerciseSources = new ArrayList<>(repository.findByExerciseId(exerciseId));
+        List<ExerciseSource> exerciseSources = new ArrayList<>(repository.findExerciseSourcesByExerciseId(exerciseId));
         return exerciseSources;
     }
 }

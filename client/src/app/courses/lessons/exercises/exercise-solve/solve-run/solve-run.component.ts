@@ -5,11 +5,12 @@ import { SolutonService } from '../../shared/solution/soluton.service';
 import { SolutonSourceService } from '../../shared/solution-source/solution-source.service';
 import { SolutonTestService } from '../../shared/solution-test/solution-test.service';
 import { SolutionEstimationService } from '../../shared/solution-estimation/solution-estimation.service';
-import { SolutionConfigService } from '../../shared/solution-config/solution-config.service';
+import { SolutionFileService } from '../../shared/solution-file/solution-file.service';
 import { SolutionSource } from '../../shared/solution-source/solution-source.model';
 import { forkJoin, Observable } from 'rxjs';
 import { SolutionTest } from '../../shared/solution-test/solution-test.model';
-import { SolutionConfig } from '../../shared/solution-config/solution-config.model';
+import { SolutionFile } from '../../shared/solution-file/solution-file.model';
+import { ExerciseType } from '../../shared/exercise-type/exercise-type.model';
 
 @Component({
   selector: 'solve-run',
@@ -20,6 +21,7 @@ export class SolveRunComponent implements OnInit {
 
   @Input() solutionFormGroup: FormGroup;
   private solution: Solution;
+  private exerciseTypeValue: string;
 
   constructor(
     private fb: FormBuilder,
@@ -27,12 +29,13 @@ export class SolveRunComponent implements OnInit {
     private solutionService: SolutonService,
     private solutionSourceService: SolutonSourceService,
     private solutionTestService: SolutonTestService,
-    private solutionConfigService: SolutionConfigService,
+    private solutionFileService: SolutionFileService,
     private solutionEstimationService: SolutionEstimationService
   ) { }
 
   ngOnInit() {
     this.updForm();
+    this.setExerciseType();
   }
 
   updForm() {
@@ -51,6 +54,10 @@ export class SolveRunComponent implements OnInit {
       solutionId: [''],
       estimation: ['']
     });
+  }
+
+  setExerciseType() {
+    this.exerciseTypeValue = this.solutionFormGroup.controls.intro.controls.exerciseType.value;
   }
 
 
@@ -82,19 +89,16 @@ export class SolveRunComponent implements OnInit {
   }
 
   async saveSolutionItems() {
-    const exerciseType = this.solutionFormGroup.controls.intro.controls.exerciseType.value;
-    switch (exerciseType) {
+    switch (this.exerciseTypeValue) {
       case 'source-test': {
         await this.saveSolutionSources();
+        await this.saveSolutionTests();
         break;
       }
       case 'source-test-file': {
-        const sc = await this.saveSolutionSources();
-        console.log(sc);
-        const st = await this.saveSolutionTests();
-        console.log(st);
-        const sf = await this.saveSolutionFiles();
-        console.log(sf);
+        await this.saveSolutionSources();
+        await this.saveSolutionTests();
+        await this.saveSolutionFiles();
         break;
       }
       case 'test': {
@@ -159,7 +163,7 @@ export class SolveRunComponent implements OnInit {
   }
 
   saveSolutionFiles(): Promise<{}> {
-    const solutionFiles: Array<SolutionConfig> = this.solutionFormGroup.get('solutionFiles').value;
+    const solutionFiles: Array<SolutionFile> = this.solutionFormGroup.get('solutionFiles').value;
     const observables = [];
     solutionFiles.forEach(sf => {
       observables.push(this.saveSolutionFile(sf));
@@ -172,13 +176,13 @@ export class SolveRunComponent implements OnInit {
     });
   }
 
-  saveSolutionFile(solutionFile: SolutionConfig): Observable<{}> {
+  saveSolutionFile(solutionFile: SolutionFile): Observable<{}> {
     solutionFile.solutionId = this.solution.id;
-    return this.solutionConfigService.createSolutionConfig(solutionFile);
+    return this.solutionFileService.createSolutionFile(solutionFile);
   }
 
   getEstimation() {
-    this.solutionEstimationService.estimateSolution(this.solution.id)
+    this.solutionEstimationService.estimateSourceTestSolution(this.exerciseTypeValue, this.solution.id)
       .subscribe(
         data => {
           console.log(data);

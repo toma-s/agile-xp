@@ -48,42 +48,30 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(SolutionSource solutionSource) {
-        String fileName = solutionSource.getFileName();
-        String code = solutionSource.getCode();
-        String directoryName = "solution_source" + solutionSource.getId();
+    public void store(SolutionContent solutionContent) {
+        String fileName = solutionContent.getFileName();
+        String code = solutionContent.getContent();
+        String directoryName = "solution_content" + solutionContent.getId();
+        if (solutionContent instanceof SolutionFile) {
+            directoryName = "game_config";
+            // FIXME: 02-Apr-19 when file storage issue is solved
+        }
 
         Path directoryLocation = createFolder(directoryName);
         storeSourceCode(fileName, code, directoryLocation);
     }
 
     @Override
-    public void store(SolutionTest solutionTest) {
-        String fileName = solutionTest.getFileName();
-        String code = solutionTest.getCode();
-        String directoryName = "solution_test" + solutionTest.getId();
+    public void store(ExerciseContent exerciseContent) {
+        String fileName = exerciseContent.getFileName();
+        String code = exerciseContent.getContent();
+        String directoryName = "exercise_content" + exerciseContent.getId();
+        if (exerciseContent instanceof ExerciseFlags) {
+            directoryName = "flags";
+        }
 
         Path directoryLocation = createFolder(directoryName);
         storeSourceCode(fileName, code, directoryLocation);
-    }
-
-    @Override
-    public void store(ExerciseTest exerciseTest) {
-        String fileName = exerciseTest.getFileName();
-        String code = exerciseTest.getCode();
-        String directoryName = "exercise_test" + exerciseTest.getId();
-
-        Path directoryLocation = createFolder(directoryName);
-        storeSourceCode(fileName, code, directoryLocation);
-    }
-
-    @Override
-    public void store(SolutionConfig solutionConfig) {
-        String fileName = solutionConfig.getFileName();
-        String code = solutionConfig.getText();
-
-        Path directoryLocation = createFolder("game_config");
-        storeFile(fileName, code, directoryLocation);
     }
 
     private Path createFolder(String directoryName) {
@@ -106,22 +94,7 @@ public class FileSystemStorageService implements StorageService {
             if (fileName.isEmpty()) {
                 throw new StorageException("Failed to store file with empty name");
             }
-            if (code.isEmpty()) {
-                throw new StorageException("Failed to store empty file");
-            }
             Files.write(directoryLocation.resolve(fileName), code.getBytes(), StandardOpenOption.CREATE);
-        }
-        catch (IOException e) {
-            throw new StorageException("Failed to store file", e);
-        }
-    }
-
-    private void storeFile(String fileName, String text, Path directoryLocation) {
-        try {
-            if (fileName.isEmpty()) {
-                throw new StorageException("Failed to store file with empty name");
-            }
-            Files.write(directoryLocation.resolve(fileName), text.getBytes(), StandardOpenOption.CREATE);
         }
         catch (IOException e) {
             throw new StorageException("Failed to store file", e);
