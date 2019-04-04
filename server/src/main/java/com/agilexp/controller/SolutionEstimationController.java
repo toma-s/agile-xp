@@ -179,17 +179,27 @@ public class SolutionEstimationController {
         List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
         int bugsNum = 2; // TODO: 03-Apr-19 when bugsNum are saved
         List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
-        Path publicOutDirPath = storageService.load("solution_public_blackbox" + solutionId);
+        ExerciseFlags controllingFlags = getControllingFlags(bugsNum);
+        Path outDirPath = storageService.load("solution_public_blackbox" + solutionId);
 
         try {
             int counter = 0;
             for (int i = 0; i < bugsNum; i++) {
                 storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(exerciseFlags.get(i))));
-                List<Path> publicPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources);
-                compileFiles(publicPaths, publicOutDirPath);
-                List<Result> publicTestResults = testPublicFiles(List.of(solutionTests), publicOutDirPath);
-                for (Result result : publicTestResults) {
-                    if (result.getFailureCount() >= 1) {
+                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources);
+                compileFiles(paths, outDirPath);
+                List<Result> testResults = testPublicFiles(List.of(solutionTests), outDirPath);
+                removeTempFiles();
+
+                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(controllingFlags)));
+                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources);
+                compileFiles(controllingPaths, outDirPath);
+                List<Result> controllingTestResults = testPublicFiles(List.of(solutionTests), outDirPath);
+
+                for (int j = 0; j < testResults.size(); j++) {
+                    Result result = testResults.get(j);
+                    Result controllingResult = controllingTestResults.get(j);
+                    if (result.getFailureCount() - controllingResult.getFailureCount() >= 1) {
                         counter++;
                     }
                 }
@@ -233,11 +243,23 @@ public class SolutionEstimationController {
             booleans[i] = "true";
             ExerciseFlags flags = new ExerciseFlags();
             String content = String.join("\n", booleans);
+            content += '\n';
             flags.setContent(content);
             flags.setFileName("flags.txt");
             exerciseFlags.add(flags);
         }
         return exerciseFlags;
+    }
+
+    private ExerciseFlags getControllingFlags(int bugsNum) {
+        String[] booleans = new String[bugsNum];
+        Arrays.fill(booleans, "false");
+        ExerciseFlags flags = new ExerciseFlags();
+        String content = String.join("\n", booleans);
+        content += '\n';
+        flags.setContent(content);
+        flags.setFileName("flags.txt");
+        return flags;
     }
 
     private void storeFiles(List<List<? extends SolutionContent>> solutionContent, List<List<? extends ExerciseContent>> exerciseContent) {
