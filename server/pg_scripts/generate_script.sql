@@ -1715,22 +1715,20 @@ values (21,
 
     private BlackBoxSwitcher switcher = new BlackBoxSwitcher();
 
-    int test(int a) {
+    int returnTheSame(int input) {
         if (switcher.BUGS[0]) {
-            if (a == 1) {
+            if (input == 1) {
                 return -1;
             }
         }
         if (switcher.BUGS[1]) {
-            if (a == 2) {
+            if (input == 2) {
                 return -2;
             }
         }
-        return a;
+        return input;
     }
-
-}
-');
+}');
 
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (22,
@@ -1738,7 +1736,6 @@ values (22,
         'exercise_test',
         'HelloWorldTest.java',
         'import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 public class HelloWorldTest {
@@ -1748,42 +1745,42 @@ public class HelloWorldTest {
     @Test
     public void test1FindsBug() {
         HelloWorld hw = helloWord;
-        int result = hw.test(1);
+        int result = hw.returnTheSame(1);
         assertEquals(1, result);
     }
 
     @Test
     public void test1FindsBugDuplicate() {
         HelloWorld hw = helloWord;
-        int result = hw.test(1);
+        int result = hw.returnTheSame(1);
         assertEquals(1, result);
     }
 
     @Test
     public void test2FindsBug() {
         HelloWorld hw = helloWord;
-        int result = hw.test(2);
+        int result = hw.returnTheSame(2);
         assertEquals(2, result);
     }
 
     @Test
     public void test3Ok() {
         HelloWorld hw = helloWord;
-        int result = hw.test(3);
+        int result = hw.returnTheSame(3);
         assertEquals(3, result);
     }
 
     @Test
     public void test3FakeBug() {
         HelloWorld hw = helloWord;
-        int result = hw.test(3);
+        int result = hw.returnTheSame(3);
         assertEquals(-3, result);
     }
 
     @Test
     public void test3FakeBugDuplicate() {
         HelloWorld hw = helloWord;
-        int result = hw.test(3);
+        int result = hw.returnTheSame(3);
         assertEquals(-3, result);
     }
 

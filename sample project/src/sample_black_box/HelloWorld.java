@@ -4,18 +4,17 @@ class HelloWorld {
 
     private BlackBoxSwitcher switcher = new BlackBoxSwitcher();
 
-    int test(int a) {
+    int returnTheSame(int input) {
         if (switcher.BUGS[0]) {
-            if (a == 1) {
+            if (input == 1) {
                 return -1;
             }
         }
         if (switcher.BUGS[1]) {
-            if (a == 2) {
+            if (input == 2) {
                 return -2;
             }
         }
-        return a;
+        return input;
     }
-
 }
