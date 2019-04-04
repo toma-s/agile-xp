@@ -5,8 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SendTaskComponent } from './tasks/send-task/send-task.component';
-import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
 import { CdkColumnDef } from '@angular/cdk/table';
 
 import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatProgressSpinnerModule, MatIconModule,
@@ -28,9 +26,7 @@ import { CoursesModule } from './courses/courses.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SendTaskComponent,
-    TasksListComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
