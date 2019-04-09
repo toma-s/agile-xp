@@ -36,8 +36,8 @@
       <div *ngSwitchDefault>
         <p>default</p>
         <!-- TODO | remove when done -->
-        <create-editor [exerciseFormGroup]="exerciseFormGroup" [editorType]="'source'"></create-editor>
-        <create-editor [exerciseFormGroup]="exerciseFormGroup" [editorType]="'test'"></create-editor>
+        <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
+        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
       </div>
     </div>
 

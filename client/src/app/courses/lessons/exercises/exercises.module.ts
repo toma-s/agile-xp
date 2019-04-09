@@ -26,7 +26,7 @@ import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.compo
 import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
 import { CreateIntroComponent } from './exercise-create/create-intro/create-intro.component';
 import { CreateSourceComponent } from './exercise-create/create-source/create-source.component';
-import { DialogComponent } from './exercise-create/create-source/dialog/dialog.component';
+import { DialogComponent } from './exercise-create/dialog/dialog.component';
 import { CreateTestComponent } from './exercise-create/create-test/create-test.component';
 import { CreateEditorComponent } from './exercise-create/create-editor/create-editor.component';
 

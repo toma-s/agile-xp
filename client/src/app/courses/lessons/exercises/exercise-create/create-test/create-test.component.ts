@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material';
-import { DialogComponent } from '../create-source/dialog/dialog.component';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'create-test',
@@ -25,11 +25,11 @@ export class CreateTestComponent implements OnInit {
 
   setTests() {
     this.exerciseFormGroup.addControl(
-      'tests', this.fb.array([this.createTest()])
+      'tests', this.fb.array([this.create()])
     );
   }
 
-  createTest(): FormGroup {
+  create(): FormGroup {
     return this.fb.group({
       filename: ['TestFilename.java'],
       content: ['', Validators.compose([Validators.required])]
@@ -37,7 +37,7 @@ export class CreateTestComponent implements OnInit {
   }
 
 
-  removeTest(index: number) {
+  remove(index: number) {
     const tests = this.exerciseFormGroup.get('tests') as FormArray;
     tests.removeAt(index);
   }
@@ -52,9 +52,9 @@ export class CreateTestComponent implements OnInit {
     });
   }
 
-  addSource() {
-    const sources = this.exerciseFormGroup.get('sources') as FormArray;
-    sources.push(this.createTest());
+  add() {
+    const tests = this.exerciseFormGroup.get('tests') as FormArray;
+    tests.push(this.create());
   }
 
 }
