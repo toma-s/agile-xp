@@ -2,7 +2,7 @@
 
   <h2>Create new exercise</h2>
 
-  <div class="intro">
+  <div class="intro" *ngIf="exerciseFormGroup.controls.intro">
 
     <mat-form-field class="intro__field intro__field--name">
       <input matInput placeholder="Title" [formControl]="exerciseFormGroup.controls.intro.controls.name" maxlength="35">

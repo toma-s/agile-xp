@@ -33,6 +33,7 @@ export class CreateSubmitComponent implements OnInit {
   async submit() {
     this.exercise = await this.saveExercise();
     await this.saveExerciseItems();
+    this.setSuccess();
   }
 
   saveExercise(): Promise<Exercise> {
@@ -159,6 +160,11 @@ export class CreateSubmitComponent implements OnInit {
     file.exerciseId = this.exercise.id;
     console.log(file);
     return this.exerciseFileService.createExerciseFile(file);
+  }
+
+
+  setSuccess() {
+    this.exerciseFormGroup.get('params').get('success').setValue(true);
   }
 
 }

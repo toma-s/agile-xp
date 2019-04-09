@@ -1,49 +1,62 @@
 <a mat-button color="primary" routerLink="../../" routerLinkActive="active" mat-button>Back</a>
 
-<div>
-  <form [formGroup]="exerciseFormGroup">
+<form [formGroup]="exerciseFormGroup">
+
+  <div *ngIf="exerciseFormGroup.controls.params.controls.success.value; then success; else form"></div>
+
+  <ng-template #form>
 
     <create-intro [exerciseFormGroup]="exerciseFormGroup"></create-intro>
 
-    <div [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value">
-      <div *ngSwitchCase="'source-test'">
-        <p>source-test</p>
-        <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
-        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
-      </div>
-      <div *ngSwitchCase="'source-test-file'">
-        <p>source-test-file</p>
-        <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
-        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-        <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
-        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
-      </div>
-      <div *ngSwitchCase="'test'">
-        <p>test</p>
-        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
-      </div>
-      <div *ngSwitchCase="'test-file'">
-        <p>test-file</p>
-        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-        <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
-        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
-      </div>
-      <div *ngSwitchCase="'theory'">
-        <p>theory</p>
-      </div>
-      <div *ngSwitchDefault>
-        <p>default</p>
-        <!-- TODO | remove when done -->
-        <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
-        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-        <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
-        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+    <div *ngIf="exerciseFormGroup.controls.intro">
+      <div [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value.value">
+        <div *ngSwitchCase="'source-test'">
+          <p>source-test</p>
+          <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
+          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
+          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+        </div>
+        <div *ngSwitchCase="'source-test-file'">
+          <p>source-test-file</p>
+          <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
+          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
+          <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
+          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+        </div>
+        <div *ngSwitchCase="'test'">
+          <p>test</p>
+          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
+          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+        </div>
+        <div *ngSwitchCase="'test-file'">
+          <p>test-file</p>
+          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
+          <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
+          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+        </div>
+        <div *ngSwitchCase="'theory'">
+          <p>theory</p>
+        </div>
+        <div *ngSwitchDefault>
+          <p>default</p>
+          <!-- TODO | remove when done -->
+          <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
+          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
+          <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
+          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+        </div>
       </div>
     </div>
 
-  </form>
-</div>
+  </ng-template>
+
+  <ng-template #success>
+    <div class="mat-elevation-z2 card">
+      <p>Exercise was created successfully.</p>
+    </div>
+  </ng-template>
+
+
+</form>
 
 <pre>{{ exerciseFormGroup.value | json }}</pre>

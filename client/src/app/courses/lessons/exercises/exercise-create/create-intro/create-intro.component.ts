@@ -18,20 +18,18 @@ export class CreateIntroComponent implements OnInit {
     private fb: FormBuilder,
   ) { }
 
-  ngOnInit() {
-    this.getExerciseTypes();
+  async ngOnInit() {
+    this.types = await this.getExerciseTypes();
     this.setExerciseIntro();
   }
 
-  getExerciseTypes() {
-    this.exerciseTypeServise.getExericseTypesList()
-      .subscribe(
-        data => {
-          this.types = data;
-          console.log(data);
-        },
-        error => console.log(error)
+  getExerciseTypes(): any {
+    return new Promise((resolve, reject) => {
+      this.exerciseTypeServise.getExericseTypesList().subscribe(
+        data => resolve(data),
+        error => reject(error)
       );
+    });
   }
 
   setExerciseIntro() {
@@ -39,7 +37,7 @@ export class CreateIntroComponent implements OnInit {
       'intro', this.fb.group({
         name: [null, Validators.compose([Validators.required])],
         description: [null, Validators.compose([Validators.required])],
-        type: [null, Validators.compose([Validators.required])]
+        type: [this.types[0].value, Validators.compose([Validators.required])]
       })
     );
   }
