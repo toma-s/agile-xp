@@ -19,8 +19,8 @@ export class CreateIntroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.setExerciseIntro();
     this.getExerciseTypes();
+    this.setExerciseIntro();
   }
 
   getExerciseTypes() {
@@ -37,9 +37,9 @@ export class CreateIntroComponent implements OnInit {
   setExerciseIntro() {
     this.exerciseFormGroup.addControl(
       'intro', this.fb.group({
-        exerciseName: ['', Validators.compose([Validators.required])],
-        exerciseDescription: ['', Validators.compose([Validators.required])],
-        exerciseType: ['', Validators.compose([Validators.required])]
+        name: [null, Validators.compose([Validators.required])],
+        description: [null, Validators.compose([Validators.required])],
+        type: [null, Validators.compose([Validators.required])]
       })
     );
   }

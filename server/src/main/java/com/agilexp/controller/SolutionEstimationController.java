@@ -224,7 +224,7 @@ public class SolutionEstimationController {
             e.printStackTrace();
         }
         switcher.setContent(switcherContent);
-        switcher.setFileName("BlackBoxSwitcher.java");
+        switcher.setFilename("BlackBoxSwitcher.java");
         switchers.add(switcher);
         return switchers;
     }
@@ -239,7 +239,7 @@ public class SolutionEstimationController {
             String content = String.join("\n", booleans);
             content += '\n';
             flags.setContent(content);
-            flags.setFileName("flags.txt");
+            flags.setFilename("flags.txt");
             exerciseFlags.add(flags);
         }
         return exerciseFlags;
@@ -252,7 +252,7 @@ public class SolutionEstimationController {
         String content = String.join("\n", booleans);
         content += '\n';
         flags.setContent(content);
-        flags.setFileName("flags.txt");
+        flags.setFilename("flags.txt");
         return flags;
     }
 
@@ -289,7 +289,7 @@ public class SolutionEstimationController {
                 .filter(e -> e instanceof ExerciseTest)
                 .map(e -> storageService
                         .load("exercise_content" + e.getId())
-                        .resolve(e.getFileName()))
+                        .resolve(e.getFilename()))
                 .collect(Collectors.toList());
         paths.addAll(exercisePaths);
         return paths;
@@ -305,12 +305,12 @@ public class SolutionEstimationController {
         exerciseSwitchers.forEach(exerciseSwitcher -> {
             paths.add(storageService
                     .load("exercise_content" + exerciseSwitcher.getId())
-                    .resolve(exerciseSwitcher.getFileName()));
+                    .resolve(exerciseSwitcher.getFilename()));
         });
         exerciseSources.forEach(exerciseSource -> {
             paths.add(storageService
                     .load("exercise_content" + exerciseSource.getId())
-                    .resolve(exerciseSource.getFileName()));
+                    .resolve(exerciseSource.getFilename()));
         });
 
         return paths;
@@ -321,17 +321,17 @@ public class SolutionEstimationController {
         exerciseTests.forEach(exerciseTest -> {
             paths.add(storageService
                     .load("exercise_content" + exerciseTest.getId())
-                    .resolve(exerciseTest.getFileName()));
+                    .resolve(exerciseTest.getFilename()));
         });
         exerciseSwitchers.forEach(exerciseSwitcher -> {
             paths.add(storageService
                     .load("exercise_content" + exerciseSwitcher.getId())
-                    .resolve(exerciseSwitcher.getFileName()));
+                    .resolve(exerciseSwitcher.getFilename()));
         });
         exerciseSources.forEach(exerciseSource -> {
             paths.add(storageService
                     .load("exercise_content" + exerciseSource.getId())
-                    .resolve(exerciseSource.getFileName()));
+                    .resolve(exerciseSource.getFilename()));
         });
 
         return paths;
@@ -368,7 +368,7 @@ public class SolutionEstimationController {
             for (ExerciseContent exerciseContent : exerciseContentList){
                 if (!exerciseContent.getClass().equals(ExerciseTest.class)) continue;
                 try {
-                    solutionTestsResults.add(Tester.test(outDirPath, exerciseContent.getFileName()));
+                    solutionTestsResults.add(Tester.test(outDirPath, exerciseContent.getFilename()));
                 } catch (TestFailedException e) {
                     throw new TestFailedException(e.getMessage());
                 }

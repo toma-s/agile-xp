@@ -5,30 +5,30 @@
 
     <create-intro [exerciseFormGroup]="exerciseFormGroup"></create-intro>
 
-    <div [ngSwitch]="exerciseFormGroup.controls.intro.controls.exerciseType.value">
+    <div [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value">
       <div *ngSwitchCase="'source-test'">
         <p>source-test</p>
         <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
         <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run> -->
+        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
       </div>
       <div *ngSwitchCase="'source-test-file'">
         <p>source-test-file</p>
         <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
         <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
         <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
-        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run> -->
+        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
       </div>
       <div *ngSwitchCase="'test'">
         <p>test</p>
         <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run> -->
+        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
       </div>
       <div *ngSwitchCase="'test-file'">
         <p>test-file</p>
         <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
         <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
-        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run> -->
+        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
       </div>
       <div *ngSwitchCase="'theory'">
         <p>theory</p>
@@ -39,6 +39,7 @@
         <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
         <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
         <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
+        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
       </div>
     </div>
 

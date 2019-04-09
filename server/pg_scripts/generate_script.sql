@@ -29,7 +29,7 @@ VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
        (2, 'Exercise two', 1, 1, 2, '2019-03-09 20:53:09.851', '(source-test-file)'),
        (3, 'Exercise three', 2, 1, 3, '2019-03-09 20:53:09.851', '(test)'),
        (4, 'Exercise four', 3, 1, 4, '2019-03-09 20:53:09.851', '(test-file)'),
-       (5, 'Exercise seven', 6, 1, 5, '2019-03-09 20:53:09.851', '(theory)');
+       (5, 'Exercise seven', 4, 1, 5, '2019-03-09 20:53:09.851', '(theory)');
 
 -- exercise 1
 
@@ -571,14 +571,14 @@ public class Reversi {
 
 
   public static void main(String[] args) {
-      String fileName = "game_init_b_starts.txt";
-//        String fileName = "game_empty.txt";
-//        String fileName = "game_one_line.txt";
-//        String fileName = "game_three_lines.txt";
-//        String fileName = "game_all_num.txt";
-//        String fileName = "game_all_alpha.txt";
+      String filename = "game_init_b_starts.txt";
+//        String filename = "game_empty.txt";
+//        String filename = "game_one_line.txt";
+//        String filename = "game_three_lines.txt";
+//        String filename = "game_all_num.txt";
+//        String filename = "game_all_alpha.txt";
 
-      File gameFile = new File("upload-dir/game_config/" + fileName);
+      File gameFile = new File("upload-dir/game_config/" + filename);
       Path gameFilePath = gameFile.toPath();
 
       Reversi rev;

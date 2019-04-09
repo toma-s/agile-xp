@@ -5,19 +5,18 @@
   <div class="intro">
 
     <mat-form-field class="intro__field intro__field--name">
-      <input matInput placeholder="Title" required
-        [formControl]="exerciseFormGroup.controls.intro.controls.exerciseName" maxlength="35">
+      <input matInput placeholder="Title" [formControl]="exerciseFormGroup.controls.intro.controls.name" maxlength="35">
     </mat-form-field>
 
     <mat-form-field class="intro__field intro__field--descr">
-      <textarea matInput placeholder="Description" rows="10" required
-        [formControl]="exerciseFormGroup.controls.intro.controls.exerciseDescription">
+      <textarea matInput placeholder="Description" rows="10"
+        [formControl]="exerciseFormGroup.controls.intro.controls.description">
             </textarea>
     </mat-form-field>
 
     <mat-form-field class="intro__field intro__field--type">
-      <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.exerciseType">
-        <mat-option *ngFor="let type of types" [value]="type.value">
+      <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.type">
+        <mat-option *ngFor="let type of types" [value]="type">
           {{type.name}}
         </mat-option>
       </mat-select>

@@ -30,6 +30,7 @@ import { DialogComponent } from './exercise-create/dialog/dialog.component';
 import { CreateTestComponent } from './exercise-create/create-test/create-test.component';
 import { CreateEditorComponent } from './exercise-create/create-editor/create-editor.component';
 import { CreateFileComponent } from './exercise-create/create-file/create-file.component';
+import { CreateSubmitComponent } from './exercise-create/create-submit/create-submit.component';
 
 @NgModule({
   entryComponents: [
@@ -52,7 +53,8 @@ import { CreateFileComponent } from './exercise-create/create-file/create-file.c
     DialogComponent,
     CreateTestComponent,
     CreateEditorComponent,
-    CreateFileComponent
+    CreateFileComponent,
+    CreateSubmitComponent
   ],
   imports: [
     CommonModule,

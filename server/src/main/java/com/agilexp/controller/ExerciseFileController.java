@@ -19,7 +19,7 @@ public class ExerciseFileController {
     public ExerciseFile postExerciseFile(@RequestBody ExerciseFile exerciseFile) {
         ExerciseFile _exerciseFile = repository.save(new ExerciseFile(
                 exerciseFile.getExerciseId(),
-                exerciseFile.getFileName(),
+                exerciseFile.getFilename(),
                 exerciseFile.getContent()
         ));
         System.out.format("Created exercise file %s\n", _exerciseFile);

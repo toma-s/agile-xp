@@ -27,12 +27,12 @@ public class ExerciseSourceController {
 
         ExerciseSource _sourceCode = repository.save(new ExerciseSource(
                 sourceCode.getExerciseId(),
-                sourceCode.getFileName(),
+                sourceCode.getFilename(),
                 sourceCode.getContent()
 
         ));
 
-        System.out.format("Created source code %s for exercise #%s\n", sourceCode.getFileName(), sourceCode.getExerciseId());
+        System.out.format("Created source code %s for exercise #%s\n", sourceCode.getFilename(), sourceCode.getExerciseId());
         return _sourceCode;
     }
 

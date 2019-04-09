@@ -38,7 +38,7 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void store(ExerciseContent exerciseContent) {
-        String fileName = exerciseContent.getFileName();
+        String fileName = exerciseContent.getFilename();
         String code = exerciseContent.getContent();
         String directoryName = "exercise_content" + exerciseContent.getId();
         if (exerciseContent instanceof ExerciseFlags) {

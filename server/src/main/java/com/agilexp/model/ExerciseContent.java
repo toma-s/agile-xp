@@ -13,7 +13,7 @@ public abstract class ExerciseContent {
     long id;
 
     @Column(name = "filename")
-    String fileName;
+    String filename;
 
     @Column(name = "content")
     String content;
@@ -24,9 +24,9 @@ public abstract class ExerciseContent {
     public ExerciseContent() {
     }
 
-    public ExerciseContent(long exerciseId, String fileName, String content) {
+    public ExerciseContent(long exerciseId, String filename, String content) {
         this.exerciseId = exerciseId;
-        this.fileName = fileName;
+        this.filename = filename;
         this.content = content;
     }
 
@@ -38,12 +38,12 @@ public abstract class ExerciseContent {
         this.id = id;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getContent() {
@@ -66,7 +66,7 @@ public abstract class ExerciseContent {
     public String toString() {
         return "ExerciseContent{" +
                 "id=" + id +
-                ", fileName='" + fileName + '\'' +
+                ", filename='" + filename + '\'' +
 //                ", content='" + content + '\'' +
                 ", exerciseId=" + exerciseId +
                 '}';

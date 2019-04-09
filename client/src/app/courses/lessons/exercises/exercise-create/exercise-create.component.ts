@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ExerciseType } from '../shared/exercise-type/exercise-type.model';
 import { Exercise } from '../shared/exercise/exercise.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
@@ -29,24 +29,21 @@ export class ExerciseCreateComponent implements OnInit {
     console.log(this.exerciseFormGroup);
   }
 
-
-  getIndex() {
-    const index$ = this.route.paramMap.pipe(
-      switchMap(((params: ParamMap) =>
-        params.get('index')
-      ))
-    );
-    index$.subscribe(
-      data => {
-        console.log(data);
-        this.index = Number(data);
-      },
-      error => console.log(error)
-    );
+  createForm() {
+    this.exerciseFormGroup = this.fb.group({
+      'params': this.fb.group({
+        index: [this.getIndex(), Validators.compose([Validators.required])],
+        lessonId: [this.getLessonId(), Validators.compose([Validators.required])]
+      })
+    });
   }
 
-  createForm() {
-    this.exerciseFormGroup = this.fb.group({});
+  getIndex() {
+    return Number(this.route.snapshot.params['index']);
+  }
+
+  getLessonId() {
+    return this.route.snapshot.params['lessonId'];
   }
 
   // submit() {
