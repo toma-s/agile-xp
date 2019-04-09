@@ -8,14 +8,14 @@
     <div [ngSwitch]="exerciseFormGroup.controls.intro.controls.exerciseType.value">
       <div *ngSwitchCase="'source-test'">
         <p>source-test</p>
+        <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
         <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-          <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
           <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test> -->
       </div>
       <div *ngSwitchCase="'source-test-file'">
         <p>source-test-file</p>
+        <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
         <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
             <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
             <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file> -->
       </div>
@@ -35,6 +35,7 @@
       </div>
       <div *ngSwitchDefault>
         <p>default</p>
+        <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
       </div>
     </div>
 

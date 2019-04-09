@@ -8,8 +8,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-exercise-create',
   templateUrl: './exercise-create.component.html',
-  styleUrls: ['./exercise-create.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./exercise-create.component.scss']
 })
 export class ExerciseCreateComponent implements OnInit {
 
@@ -27,6 +26,7 @@ export class ExerciseCreateComponent implements OnInit {
   ngOnInit() {
     this.getIndex();
     this.createForm();
+    console.log(this.exerciseFormGroup);
   }
 
 

@@ -1,0 +1,10 @@
+<div>
+  <p mat-dialog-title>Enter new file name:</p>
+  <mat-form-field>
+    <input autofocus matInput [(ngModel)]="fileName">
+  </mat-form-field>.java
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="fileName">Save</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ExerciseTypeService } from '../../shared/exercise-type/exercise-type.service';
 import { ExerciseType } from '../../shared/exercise-type/exercise-type.model';
 
@@ -12,7 +12,6 @@ export class CreateIntroComponent implements OnInit {
 
   @Input() exerciseFormGroup: FormGroup;
   types = new Array<ExerciseType>();
-  exerciseDescription: string;
 
   constructor(
     private exerciseTypeServise: ExerciseTypeService,
@@ -22,7 +21,6 @@ export class CreateIntroComponent implements OnInit {
   ngOnInit() {
     this.setExerciseIntro();
     this.getExerciseTypes();
-    console.log(this.exerciseFormGroup);
   }
 
   getExerciseTypes() {
@@ -39,9 +37,9 @@ export class CreateIntroComponent implements OnInit {
   setExerciseIntro() {
     this.exerciseFormGroup.addControl(
       'intro', this.fb.group({
-        exerciseName: [''],
-        exerciseDescription: [''],
-        exerciseType: ['']
+        exerciseName: ['', Validators.compose([Validators.required])],
+        exerciseDescription: ['', Validators.compose([Validators.required])],
+        exerciseType: ['', Validators.compose([Validators.required])]
       })
     );
   }

@@ -25,10 +25,13 @@ import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.compo
 import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.component';
 import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
 import { CreateIntroComponent } from './exercise-create/create-intro/create-intro.component';
+import { CreateSourceComponent } from './exercise-create/create-source/create-source.component';
+import { DialogComponent } from './exercise-create/create-source/dialog/dialog.component';
 
 @NgModule({
   entryComponents: [
-    DialogOverviewExampleDialogComponent
+    DialogOverviewExampleDialogComponent,
+    DialogComponent
   ],
   declarations: [
     ExerciseCreateComponent,
@@ -41,7 +44,9 @@ import { CreateIntroComponent } from './exercise-create/create-intro/create-intr
     SolveTestComponent,
     SolveFileComponent,
     SolveRunComponent,
-    CreateIntroComponent
+    CreateIntroComponent,
+    CreateSourceComponent,
+    DialogComponent
   ],
   imports: [
     CommonModule,

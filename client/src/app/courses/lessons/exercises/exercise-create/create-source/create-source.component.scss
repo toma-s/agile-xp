@@ -1,0 +1,18 @@
+.card {
+  padding: 20px;
+
+  .env {
+    padding: 10px;
+    background-color: #ebebeb;
+  
+    .env__container {
+      overflow: hidden;
+      
+      .env__editor {
+        border: 1px solid #dadada;
+        height: 80vh;
+        width: 100%;
+      }
+    }
+  }
+}
