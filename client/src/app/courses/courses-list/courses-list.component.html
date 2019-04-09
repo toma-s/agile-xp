@@ -4,7 +4,7 @@
 
 <div *ngIf="dataSource !== undefined">
   <mat-table [dataSource]="dataSource" class="mat-elevation-z2">
-    
+
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>
@@ -35,18 +35,6 @@
       </mat-cell>
     </ng-container>
 
-    <!-- View Column -->
-    <ng-container matColumnDef="view">
-        <mat-header-cell *matHeaderCellDef>
-          View details
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary">
-            <mat-icon [routerLink]="['../courseDetail', row.id]" routerLinkActive="active">remove_red_eye</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
     <!-- Delete Column -->
     <ng-container matColumnDef="delete">
       <mat-header-cell *matHeaderCellDef>
@@ -54,13 +42,14 @@
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
         <button mat-icon-button color="warn">
-            <mat-icon (click)="delete(row)">delete</mat-icon>
+          <mat-icon (click)="delete(row)">delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['../courseDetail', row.id]"
+      routerLinkActive="active"></mat-row>
 
   </mat-table>
 </div>
