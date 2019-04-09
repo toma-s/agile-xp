@@ -1,0 +1,38 @@
+<div [formGroup]="exerciseFormGroup" class="mat-elevation-z2 card" *ngIf="editorType">
+
+  <h3>Source code</h3>
+
+    <div formArrayName="controlArray" class="env">
+      <p>eeeee</p>
+      <mat-tab-group>
+        <mat-tab *ngFor="let item of controlArray.controls; index as i">
+          <div [formGroupName]="i">
+            <ng-template mat-tab-label>
+              ppppp
+              <!-- {{ control.value.filename }}
+              <button mat-icon-button type="button">
+                <mat-icon (click)="editFilename(control.filename)">edit</mat-icon>
+              </button>
+              <button mat-icon-button type="button">
+                <mat-icon (click)="remove(i)">clear</mat-icon>
+              </button> -->
+            </ng-template>
+            <ng-template matTabContent>
+              ddddd
+              <!-- <div class="env__container">
+                <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="env__editor">
+                </ngx-monaco-editor>
+              </div> -->
+            </ng-template>
+          </div>
+        </mat-tab>
+        <!-- <mat-tab>
+          <ng-template mat-tab-label>
+            <button mat-icon-button type="button">
+              <mat-icon (click)="add()">add</mat-icon>
+            </button>
+          </ng-template>
+        </mat-tab> -->
+      </mat-tab-group>
+    </div>
+</div>

@@ -65,7 +65,7 @@ public abstract class SolutionContent {
         return "SolutionContent{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
-                ", fileName='" + fileName + '\'' +
+                ", filename='" + fileName + '\'' +
 //                ", content='" + content + '\'' +
                 '}';
     }

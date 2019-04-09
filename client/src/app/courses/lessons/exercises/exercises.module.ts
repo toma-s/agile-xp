@@ -23,13 +23,19 @@ import { SolveIntroComponent } from './exercise-solve/solve-intro/solve-intro.co
 import { SolveSourceComponent } from './exercise-solve/solve-source/solve-source.component';
 import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.component';
 import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.component';
-import { SolveSingleQuizComponent } from './exercise-solve/solve-single-quiz/solve-single-quiz.component';
-import { SolveMultipleQuizComponent } from './exercise-solve/solve-multiple-quiz/solve-multiple-quiz.component';
 import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
+import { CreateIntroComponent } from './exercise-create/create-intro/create-intro.component';
+import { CreateSourceComponent } from './exercise-create/create-source/create-source.component';
+import { DialogComponent } from './exercise-create/dialog/dialog.component';
+import { CreateTestComponent } from './exercise-create/create-test/create-test.component';
+import { CreateEditorComponent } from './exercise-create/create-editor/create-editor.component';
+import { CreateFileComponent } from './exercise-create/create-file/create-file.component';
+import { CreateSubmitComponent } from './exercise-create/create-submit/create-submit.component';
 
 @NgModule({
   entryComponents: [
-    DialogOverviewExampleDialogComponent
+    DialogOverviewExampleDialogComponent,
+    DialogComponent
   ],
   declarations: [
     ExerciseCreateComponent,
@@ -41,9 +47,14 @@ import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.componen
     SolveSourceComponent,
     SolveTestComponent,
     SolveFileComponent,
-    SolveSingleQuizComponent,
-    SolveMultipleQuizComponent,
-    SolveRunComponent
+    SolveRunComponent,
+    CreateIntroComponent,
+    CreateSourceComponent,
+    DialogComponent,
+    CreateTestComponent,
+    CreateEditorComponent,
+    CreateFileComponent,
+    CreateSubmitComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,6 @@
 export class ExerciseFile {
   id: number;
-  solutionId: number;
-  fileName: string;
+  exerciseId: number;
+  filename: string;
   content: string;
 }

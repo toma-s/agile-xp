@@ -1,0 +1,17 @@
+.card {
+  padding: 20px;
+
+  .intro__field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .intro__field--name, .intro__field--type {
+    width: 50%;
+  }
+
+  .intro__field--descr {
+    // height: 300px;
+  }
+}

@@ -7,8 +7,8 @@ public class ExerciseTest extends ExerciseContent {
 
     public ExerciseTest() {}
 
-    public ExerciseTest(long exerciseId, String fileName, String content) {
-        super(exerciseId, fileName, content);
+    public ExerciseTest(long exerciseId, String filename, String content) {
+        super(exerciseId, filename, content);
     }
 
     @Override

@@ -8,8 +8,8 @@ public class ExerciseFile extends ExerciseContent {
     public ExerciseFile() {
     }
 
-    public ExerciseFile(long exerciseId, String fileName, String content) {
-        super(exerciseId, fileName, content);
+    public ExerciseFile(long exerciseId, String filename, String content) {
+        super(exerciseId, filename, content);
     }
 
     @Override

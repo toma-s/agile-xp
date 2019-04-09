@@ -1,0 +1,35 @@
+<div [formGroup]="exerciseFormGroup" class="mat-elevation-z2 card">
+
+  <h3>Tests</h3>
+
+  <div formArrayName="tests" class="env">
+    <mat-tab-group>
+      <mat-tab *ngFor="let test of exerciseFormGroup.controls.tests.controls; let i = index;">
+        <div [formGroupName]="i">
+          <ng-template mat-tab-label>
+            {{ test.value.filename }}
+            <button mat-icon-button type="button">
+              <mat-icon (click)="editFilename(test.controls.filename)">edit</mat-icon>
+            </button>
+            <button mat-icon-button type="button">
+              <mat-icon (click)="remove(i)">clear</mat-icon>
+            </button>
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="env__container">
+              <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="env__editor">
+              </ngx-monaco-editor>
+            </div>
+          </ng-template>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <button mat-icon-button type="button">
+            <mat-icon (click)="add()">add</mat-icon>
+          </button>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
