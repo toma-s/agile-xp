@@ -16,8 +16,8 @@
         <p>source-test-file</p>
         <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
         <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file> -->
+        <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
+        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run> -->
       </div>
       <div *ngSwitchCase="'test'">
         <p>test</p>
@@ -27,8 +27,8 @@
       <div *ngSwitchCase="'test-file'">
         <p>test-file</p>
         <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file> -->
+        <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
+        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run> -->
       </div>
       <div *ngSwitchCase="'theory'">
         <p>theory</p>
@@ -38,6 +38,7 @@
         <!-- TODO | remove when done -->
         <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
         <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
+        <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
       </div>
     </div>
 
