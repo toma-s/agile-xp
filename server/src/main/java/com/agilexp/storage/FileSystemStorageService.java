@@ -23,31 +23,6 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(TaskContent taskContent, Long id) {
-        String sourceFilename = taskContent.getSourceFilename();
-        String testFilename = taskContent.getTestFilename();
-        String taskDirectoryName = "task" + id;
-        Path directoryLocation;
-
-        createFolder(taskDirectoryName);
-        directoryLocation = this.rootLocation.resolve(taskDirectoryName);
-
-        try {
-            if (taskContent.getSourceFilename().isEmpty() || taskContent.getTestFilename().isEmpty()) {
-                throw new StorageException("Failed to store files with empty names");
-            }
-            if (taskContent.getSourceCode().isEmpty() || taskContent.getTestCode().isEmpty()) {
-                throw new StorageException("Failed to store empty files");
-            }
-            Files.write(directoryLocation.resolve(sourceFilename), taskContent.getSourceCode().getBytes(), StandardOpenOption.CREATE);
-            Files.write(directoryLocation.resolve(testFilename), taskContent.getTestCode().getBytes(), StandardOpenOption.CREATE);
-        }
-        catch (IOException e) {
-            throw new StorageException("Failed to store files", e);
-        }
-    }
-
-    @Override
     public void store(SolutionContent solutionContent) {
         String fileName = solutionContent.getFileName();
         String code = solutionContent.getContent();

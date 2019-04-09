@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class CoursesListComponent implements OnInit {
 
-  displayedColumns = ['id', 'name', 'created', 'view', 'delete'];
+  displayedColumns = ['id', 'name', 'created', 'delete'];
   dataSource: any;
   data: any;
   selection = new SelectionModel<Element>(true, []);
