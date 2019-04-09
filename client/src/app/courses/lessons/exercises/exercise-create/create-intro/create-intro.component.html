@@ -1,0 +1,28 @@
+<div [formGroup]="exerciseFormGroup" class="mat-elevation-z2 card">
+
+  <h2>Create new exercise</h2>
+
+  <div class="intro">
+
+    <mat-form-field class="intro__field intro__field--name">
+      <input matInput placeholder="Title" required
+        [formControl]="exerciseFormGroup.controls.intro.controls.exerciseName" maxlength="35">
+    </mat-form-field>
+
+    <mat-form-field class="intro__field intro__field--descr">
+      <textarea matInput placeholder="Description" rows="10" required
+        [formControl]="exerciseFormGroup.controls.intro.controls.exerciseDescription">
+            </textarea>
+    </mat-form-field>
+
+    <mat-form-field class="intro__field intro__field--type">
+      <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.exerciseType">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+</div>
