@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { DialogComponent } from './dialog/dialog.component';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { DialogComponent } from '../create-source/dialog/dialog.component';
 
 @Component({
-  selector: 'create-source',
-  templateUrl: './create-source.component.html',
-  styleUrls: ['./create-source.component.scss']
+  selector: 'create-test',
+  templateUrl: './create-test.component.html',
+  styleUrls: ['./create-test.component.scss']
 })
-export class CreateSourceComponent implements OnInit {
+export class CreateTestComponent implements OnInit {
 
   @Input() exerciseFormGroup: FormGroup;
   editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
@@ -20,26 +20,26 @@ export class CreateSourceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.setSources();
+    this.setTests();
   }
 
-  setSources() {
+  setTests() {
     this.exerciseFormGroup.addControl(
-      'sources', this.fb.array([this.createSource()])
+      'tests', this.fb.array([this.createTest()])
     );
   }
 
-  createSource(): FormGroup {
+  createTest(): FormGroup {
     return this.fb.group({
-      filename: ['SourceCodeFilename.java'],
+      filename: ['TestFilename.java'],
       content: ['', Validators.compose([Validators.required])]
     });
   }
 
 
-  removeSource(index: number) {
-    const sources = this.exerciseFormGroup.get('sources') as FormArray;
-    sources.removeAt(index);
+  removeTest(index: number) {
+    const tests = this.exerciseFormGroup.get('tests') as FormArray;
+    tests.removeAt(index);
   }
 
   editFilename(formControl: FormControl) {
@@ -54,7 +54,7 @@ export class CreateSourceComponent implements OnInit {
 
   addSource() {
     const sources = this.exerciseFormGroup.get('sources') as FormArray;
-    sources.push(this.createSource());
+    sources.push(this.createTest());
   }
 
 }

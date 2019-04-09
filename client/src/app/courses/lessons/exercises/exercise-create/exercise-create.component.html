@@ -9,25 +9,25 @@
       <div *ngSwitchCase="'source-test'">
         <p>source-test</p>
         <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
-        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-          <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test> -->
+        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
+        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run> -->
       </div>
       <div *ngSwitchCase="'source-test-file'">
         <p>source-test-file</p>
         <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
+        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
         <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
             <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file> -->
       </div>
       <div *ngSwitchCase="'test'">
         <p>test</p>
-        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test> -->
+        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
+        <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run> -->
       </div>
       <div *ngSwitchCase="'test-file'">
         <p>test-file</p>
+        <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
         <!--<solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
             <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file> -->
       </div>
       <div *ngSwitchCase="'theory'">
@@ -35,7 +35,9 @@
       </div>
       <div *ngSwitchDefault>
         <p>default</p>
-        <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
+        <!-- TODO | remove when done -->
+        <create-editor [exerciseFormGroup]="exerciseFormGroup" [editorType]="'source'"></create-editor>
+        <create-editor [exerciseFormGroup]="exerciseFormGroup" [editorType]="'test'"></create-editor>
       </div>
     </div>
 
