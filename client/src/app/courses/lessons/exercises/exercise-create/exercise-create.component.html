@@ -23,26 +23,45 @@
       </mat-form-field>
 
       <div [ngSwitch]="exerciseFormGroup.value.selectedTypeValue">
-        <div *ngSwitchCase="'black-box'">
-          <p>black box</p>
+        <div *ngSwitchCase="'source-test'">
+          <p>source-test</p>
+          <!-- <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
+          <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
+          <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
+          <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test> -->
         </div>
-        <div *ngSwitchCase="'white-box'">
+        <!-- <div *ngSwitchCase="'white-box'">
           <p>white box</p>
-          <create-white-box [exerciseFormGroup]="exerciseFormGroup"></create-white-box><!--todo-->
-        </div>
-        <div *ngSwitchCase="'quiz'">
-          <p>quiz</p>
-        </div>
-        <div *ngSwitchCase="'theory'">
-          <p>theory</p>
-        </div>
-        <div *ngSwitchCase="'self-eval'">
-          <p>self eval</p>
-        </div>
-        <div *ngSwitchDefault>
-          <p>default</p>
-          <create-white-box [exerciseFormGroup]="exerciseFormGroup"></create-white-box><!---temp-->
-        </div>
+          <create-white-box [exerciseFormGroup]="exerciseFormGroup"></create-white-box>
+        </div> -->
+        <div *ngSwitchCase="'source-test-file'">
+          <p>source-test-file</p>
+            <!-- <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro >
+            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
+            <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
+            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
+            <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file> -->
+          </div>
+          <div *ngSwitchCase="'test'">
+            <p>test</p>
+            <!-- <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
+            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
+            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test> -->
+          </div>
+          <div *ngSwitchCase="'test-file'">
+            <p>test-file</p>
+            <!-- <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
+            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
+            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
+            <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file> -->
+          </div>
+          <div *ngSwitchCase="'theory'">
+            <p>theory</p>
+            <!-- <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro> -->
+          </div>
+          <div *ngSwitchDefault>
+            <p>default</p>
+          </div>
       </div>
 
       <div class="submit">

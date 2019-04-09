@@ -13,9 +13,7 @@ VALUES (1, 'Interactive Exercise', 'source-test'),
        (2, 'Interactive Exercise with Files', 'source-test-file'),
        (3, 'Black Box', 'test'),
        (4, 'Black Box with Files', 'test-file'),
-       (5, 'Single-answer Quiz', 'single-quiz'),
-       (6, 'Multiple-answer Quiz', 'multiple-quiz'),
-       (7, 'Theory', 'theory');
+       (5, 'Theory', 'theory');
 
 -- Custom course
 
@@ -31,9 +29,7 @@ VALUES (1, 'Exercise one', 0, 1, 1, '2019-03-09 20:53:09.851', '(source-test)'),
        (2, 'Exercise two', 1, 1, 2, '2019-03-09 20:53:09.851', '(source-test-file)'),
        (3, 'Exercise three', 2, 1, 3, '2019-03-09 20:53:09.851', '(test)'),
        (4, 'Exercise four', 3, 1, 4, '2019-03-09 20:53:09.851', '(test-file)'),
-       (5, 'Exercise five', 4, 1, 5, '2019-03-09 20:53:09.851', '(single-quiz)'),
-       (6, 'Exercise six', 5, 1, 6, '2019-03-09 20:53:09.851', '(multiple-quiz)'),
-       (7, 'Exercise seven', 6, 1, 7, '2019-03-09 20:53:09.851', '(theory)');
+       (5, 'Exercise seven', 6, 1, 5, '2019-03-09 20:53:09.851', '(theory)');
 
 -- exercise 1
 
