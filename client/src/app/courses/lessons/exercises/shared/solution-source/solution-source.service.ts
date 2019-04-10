@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class SolutonSourceService {
 
-  private baseUrl = 'http://localhost:8080/api/solution-sources';
+  private baseUrl = 'http://www.st.fmph.uniba.sk:8080/~savkova3/agile-xp/api/solution-sources';
 
   constructor(private http: HttpClient) { }
 

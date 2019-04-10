@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CourseService {
 
-  private baseUrl = 'http://localhost:8080/api/courses';
+  private baseUrl = 'http://www.st.fmph.uniba.sk:8080/~savkova3/agile-xp/api/courses';
 
   constructor(private http: HttpClient) { }
 

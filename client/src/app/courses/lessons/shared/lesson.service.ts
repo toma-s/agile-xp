@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LessonService {
 
-  private baseUrl = 'http://localhost:8080/api/lessons';
+  private baseUrl = 'http://www.st.fmph.uniba.sk:8080/~savkova3/agile-xp/api/lessons';
 
   constructor(private http: HttpClient) { }
 

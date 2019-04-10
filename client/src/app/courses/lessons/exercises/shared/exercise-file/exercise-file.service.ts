@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ExerciseFileService {
 
-  private baseUrl = 'http://localhost:8080/api/exercise-files';
+  private baseUrl = 'http://www.st.fmph.uniba.sk:8080/~savkova3/agile-xp/api/exercise-files';
 
   constructor(private http: HttpClient) { }
 
