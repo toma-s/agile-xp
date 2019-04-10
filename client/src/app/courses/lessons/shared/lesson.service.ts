@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LessonService {
 
-  private baseUrl = 'http://www.st.fmph.uniba.sk:8080/~savkova3/agile-xp/api/lessons';
+  private baseUrl = `${environment.production}lessons`;
 
   constructor(private http: HttpClient) { }
 
