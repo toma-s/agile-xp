@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // baseUrl: 'http://www.st.fmph.uniba.sk:8080/~savkova3/agile-xp/api/'
+  baseUrl: 'http://localhost:8080/api/'
 };
 
 /*
