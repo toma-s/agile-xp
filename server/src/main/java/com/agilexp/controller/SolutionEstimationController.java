@@ -3,7 +3,6 @@ package com.agilexp.controller;
 import com.agilexp.compiler.Compiler;
 import com.agilexp.compiler.exception.CompilationFailedException;
 import com.agilexp.dbmodel.*;
-import com.agilexp.model.EstimationData;
 import com.agilexp.model.ExerciseFlags;
 import com.agilexp.model.ExerciseSwitcher;
 import com.agilexp.repository.*;
@@ -14,13 +13,14 @@ import com.agilexp.tester.exception.TestFailedException;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,8 +43,6 @@ public class SolutionEstimationController {
     private final String PUBLIC = "Public";
     private final String PRIVATE = "Private";
 
-//    private final String testerUrl = "http://localhost:8081/tester";
-
     @Autowired
     public SolutionEstimationController(StorageService storageService) {
         this.storageService = storageService;
@@ -55,14 +53,6 @@ public class SolutionEstimationController {
         Date date = new Date();
         String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
 
-//        EstimationData estimationData = new EstimationData();
-//        estimationData.solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
-//
-//
-//        ResponseEntity<String> response = new RestTemplate().postForEntity(testerUrl + "/sup", "world", String.class);
-//        System.out.println(response.getBody());
-
-        //----
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
         String estimation = estimateSourceTest(solutionId, created);
@@ -127,6 +117,9 @@ public class SolutionEstimationController {
     private String estimatePublic(List<List<? extends SolutionContent>> solutionContents, Path outDirPath, String created) {
         try {
             storeFiles(solutionContents, List.of(), created);
+
+            copyDefault(created);
+
             List<Path> paths = getPublicPaths(solutionContents, created);
             compileFiles(paths, outDirPath);
             List<Result> testResults = testPublicFiles(solutionContents, outDirPath);
@@ -161,6 +154,35 @@ public class SolutionEstimationController {
         } catch (TestFailedException e) {
             e.printStackTrace();
             return "Tests run failed: " + e.getMessage();
+        }
+    }
+
+    private void copyDefault(String created) {
+        try {
+            File sourceFolder = new File("start-vagrant");
+            File destinationFolder = storageService.load(created).toFile();
+            copyFolder(sourceFolder, destinationFolder);
+
+        } catch (StorageException | IOException e) {
+            throw new StorageException("Failed to copy files");
+        }
+    }
+
+    private static void copyFolder(File sourceFolder, File destinationFolder) throws IOException {
+        if (sourceFolder.isDirectory()) {
+            if (!destinationFolder.exists()){
+                destinationFolder.mkdir();
+            }
+            String files[] = sourceFolder.list();
+            for (String file : files)
+            {
+                File srcFile = new File(sourceFolder, file);
+                File destFile = new File(destinationFolder, file);
+                copyFolder(srcFile, destFile);
+            }
+        }
+        else  {
+            Files.copy(sourceFolder.toPath(), destinationFolder.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
     }
 
