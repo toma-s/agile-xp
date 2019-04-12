@@ -31,7 +31,6 @@ public class SolutionEstimationController {
     @Autowired private ExerciseSourceRepository exerciseSourceRepository;
     @Autowired private ExerciseTestRepository exerciseTestRepository;
     @Autowired private ExerciseFileRepository exerciseFileRepository;
-    @Autowired private ExerciseSwitcherRepository exerciseSwitcherRepository;
     @Autowired private ExerciseFlagsRepository exerciseFlagsRepository;
 
     private final StorageService storageService;
@@ -272,7 +271,7 @@ public class SolutionEstimationController {
                         e instanceof SolutionTest)
                 .map(e -> storageService
                         .load("solution_content" + e.getId())
-                        .resolve(e.getFileName()))
+                        .resolve(e.getFilename()))
                 .collect(Collectors.toList());
     }
 
@@ -282,7 +281,7 @@ public class SolutionEstimationController {
                 .filter(e -> e instanceof SolutionSource)
                 .map(e -> storageService
                         .load("solution_content" + e.getId())
-                        .resolve(e.getFileName()))
+                        .resolve(e.getFilename()))
                 .collect(Collectors.toList());
         List<Path> exercisePaths = exerciseContent.stream()
                 .flatMap(Collection::stream)
@@ -300,7 +299,7 @@ public class SolutionEstimationController {
         solutionTests.forEach(solutionTest -> {
             paths.add(storageService
                     .load("solution_content" + solutionTest.getId())
-                    .resolve(solutionTest.getFileName()));
+                    .resolve(solutionTest.getFilename()));
         });
         exerciseSwitchers.forEach(exerciseSwitcher -> {
             paths.add(storageService
@@ -352,7 +351,7 @@ public class SolutionEstimationController {
             for (SolutionContent solutionContent : solutionContentList){
                 if (!solutionContent.getClass().equals(SolutionTest.class)) continue;
                 try {
-                    solutionTestsResults.add(Tester.test(outDirPath, solutionContent.getFileName()));
+                    solutionTestsResults.add(Tester.test(outDirPath, solutionContent.getFilename()));
                 } catch (TestFailedException e) {
                     throw new TestFailedException(e.getMessage());
                 }
