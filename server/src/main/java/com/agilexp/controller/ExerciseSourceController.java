@@ -1,6 +1,6 @@
 package com.agilexp.controller;
 
-import com.agilexp.model.ExerciseSource;
+import com.agilexp.dbmodel.ExerciseSource;
 import com.agilexp.repository.ExerciseSourceRepository;
 import com.agilexp.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,7 +5,8 @@ import java.net.MalformedURLException;
 import java.nio.file.*;
 import java.util.stream.Stream;
 
-import com.agilexp.model.*;
+import com.agilexp.dbmodel.*;
+import com.agilexp.model.ExerciseFlags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -23,7 +24,7 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(SolutionContent solutionContent) {
+    public void store(SolutionContent solutionContent, String created) {
         String filename = solutionContent.getFilename();
         String code = solutionContent.getContent();
         String directoryName = "solution_content" + solutionContent.getId();
@@ -32,12 +33,13 @@ public class FileSystemStorageService implements StorageService {
             // FIXME: 02-Apr-19 when file storage issue is solved
         }
 
-        Path directoryLocation = createFolder(directoryName);
+        createFolder(created, null);
+        Path directoryLocation = createFolder(directoryName, created);
         storeSourceCode(filename, code, directoryLocation);
     }
 
     @Override
-    public void store(ExerciseContent exerciseContent) {
+    public void store(ExerciseContent exerciseContent, String created) {
         String filename = exerciseContent.getFilename();
         String code = exerciseContent.getContent();
         String directoryName = "exercise_content" + exerciseContent.getId();
@@ -45,19 +47,30 @@ public class FileSystemStorageService implements StorageService {
             directoryName = "flags";
         }
 
-        Path directoryLocation = createFolder(directoryName);
+        createFolder(created, null);
+        Path directoryLocation = createFolder(directoryName, created);
         storeSourceCode(filename, code, directoryLocation);
     }
 
-    private Path createFolder(String directoryName) {
-        if (Paths.get(this.rootLocation.toString(), directoryName).toFile().isDirectory()) {
-            return this.rootLocation.resolve(directoryName);
-        }
+    private Path createFolder(String directoryName, String created) {
+
 
         Path directoryLocation;
         try {
-            Files.createDirectory(Paths.get(this.rootLocation.resolve(directoryName).toString()));
-            directoryLocation = this.rootLocation.resolve(directoryName);
+            if (created != null) {
+                if (Paths.get(this.rootLocation.resolve(created).toString(), directoryName).toFile().isDirectory()) {
+                    return this.rootLocation.resolve(created).resolve(directoryName);
+                }
+                Files.createDirectory(Paths.get(this.rootLocation.resolve(created).resolve(directoryName).toString()));
+                directoryLocation = this.rootLocation.resolve(created).resolve(directoryName);
+            } else {
+                if (Paths.get(this.rootLocation.toString(), directoryName).toFile().isDirectory()) {
+                    return this.rootLocation.resolve(directoryName);
+                }
+                Files.createDirectory(Paths.get(this.rootLocation.resolve(directoryName).toString()));
+                directoryLocation = this.rootLocation.resolve(directoryName);
+            }
+
         } catch (IOException e) {
             throw new StorageException("Failed to create folder for task");
         }

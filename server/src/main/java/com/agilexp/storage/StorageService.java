@@ -1,6 +1,6 @@
 package com.agilexp.storage;
 
-import com.agilexp.model.*;
+import com.agilexp.dbmodel.*;
 import org.springframework.core.io.Resource;
 
 import java.nio.file.Path;
@@ -10,9 +10,9 @@ public interface StorageService {
 
     void init();
 
-    void store(SolutionContent solutionContent);
+    void store(SolutionContent solutionContent, String created);
 
-    void store(ExerciseContent exerciseContent);
+    void store(ExerciseContent exerciseContent, String created);
 
     Stream<Path> loadAll();
 

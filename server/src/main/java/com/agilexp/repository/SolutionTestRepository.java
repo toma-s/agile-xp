@@ -1,6 +1,6 @@
 package com.agilexp.repository;
 
-import com.agilexp.model.SolutionTest;
+import com.agilexp.dbmodel.SolutionTest;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

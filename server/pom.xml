@@ -74,11 +74,6 @@
             <version>2.0.6.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.23.1-GA</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -93,8 +88,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <executable>true</executable>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>10</source>
+                    <target>10</target>
                 </configuration>
             </plugin>
 
@@ -116,7 +111,7 @@
 
     <properties>
         <start-class>com.agilexp.Application</start-class>
-        <java.version>11</java.version>
+        <java.version>10</java.version>
     </properties>
 
 </project>

@@ -1,6 +1,6 @@
 package com.agilexp.controller;
 
-import com.agilexp.model.ExerciseFile;
+import com.agilexp.dbmodel.ExerciseFile;
 import com.agilexp.repository.ExerciseFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
