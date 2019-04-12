@@ -172,7 +172,7 @@ export class ExerciseSolveComponent implements OnInit {
     array.forEach(e => {
       const fg = this.fb.group({
         id: [e.id],
-        fileName: [e.fileName],
+        filename: [e.filename],
         content: [e.content],
         exerciseId: [e.exerciseId]
       });

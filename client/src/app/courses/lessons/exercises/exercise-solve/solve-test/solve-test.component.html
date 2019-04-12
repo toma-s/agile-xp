@@ -6,7 +6,7 @@
         <mat-tab *ngFor="let test of solutionFormGroup.controls.solutionTests.controls; let i = index;">
           <div [formGroupName]="i">
             <ng-template mat-tab-label>
-              {{ test.value.fileName }}
+              {{ test.value.filename }}
             </ng-template>
             <ng-template matTabContent>
               <div class="test__editor">

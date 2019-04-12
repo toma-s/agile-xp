@@ -93,13 +93,14 @@ export class CourseDetailComponent implements OnInit {
   }
 
   getExercisesByLessonId(lessonId: number) {
-    const x = new Array<Exercise>();
+    const exercises = new Array<Exercise>();
     this.exercises.forEach(ex => {
       if (ex.lessonId === lessonId) {
-        x.push(ex);
+        exercises.push(ex);
       }
     });
-    return x;
+    console.log(exercises);
+    return exercises;
   }
 
   getExerciseTypeName(typeId: number) {

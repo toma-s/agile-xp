@@ -11,7 +11,9 @@ import com.agilexp.tester.exception.TestFailedException;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -38,6 +40,8 @@ public class SolutionEstimationController {
     private final String PUBLIC = "Public";
     private final String PRIVATE = "Private";
 
+    private final String testerUrl = "http://localhost:8081/tester";
+
     @Autowired
     public SolutionEstimationController(StorageService storageService) {
         this.storageService = storageService;
@@ -45,6 +49,10 @@ public class SolutionEstimationController {
 
     @GetMapping(value = "/solution-estimations/estimate/source-test/{solutionId}")
     public SolutionEstimation getSolutionSourceTestEstimation(@PathVariable long solutionId) {
+        ResponseEntity<String> response = new RestTemplate().getForEntity(testerUrl + "/sup", String.class);
+        System.out.println(response.getBody());
+
+        //----
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
         String estimation = estimateSourceTest(solutionId);
