@@ -14,7 +14,7 @@ public abstract class SolutionContent {
     private long solutionId;
 
     @Column(name="filename")
-    private String fileName;
+    private String filename;
 
     @Column(name="content")
     private String content;
@@ -22,9 +22,9 @@ public abstract class SolutionContent {
     public SolutionContent() {
     }
 
-    public SolutionContent(long solutionId, String fileName, String content) {
+    public SolutionContent(long solutionId, String filename, String content) {
         this.solutionId = solutionId;
-        this.fileName = fileName;
+        this.filename = filename;
         this.content = content;
     }
 
@@ -44,12 +44,12 @@ public abstract class SolutionContent {
         this.solutionId = solutionId;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getContent() {
@@ -65,7 +65,7 @@ public abstract class SolutionContent {
         return "SolutionContent{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
-                ", filename='" + fileName + '\'' +
+                ", filename='" + filename + '\'' +
 //                ", content='" + content + '\'' +
                 '}';
     }

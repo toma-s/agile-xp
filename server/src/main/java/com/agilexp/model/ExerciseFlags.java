@@ -8,8 +8,8 @@ public class ExerciseFlags extends ExerciseContent {
     public ExerciseFlags() {
     }
 
-    public ExerciseFlags(long exerciseId, String fileName, String content) {
-        super(exerciseId, fileName, content);
+    public ExerciseFlags(long exerciseId, String filename, String content) {
+        super(exerciseId, filename, content);
     }
 
     @Override

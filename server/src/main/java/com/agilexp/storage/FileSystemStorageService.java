@@ -24,7 +24,7 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void store(SolutionContent solutionContent) {
-        String fileName = solutionContent.getFileName();
+        String filename = solutionContent.getFilename();
         String code = solutionContent.getContent();
         String directoryName = "solution_content" + solutionContent.getId();
         if (solutionContent instanceof SolutionFile) {
@@ -33,12 +33,12 @@ public class FileSystemStorageService implements StorageService {
         }
 
         Path directoryLocation = createFolder(directoryName);
-        storeSourceCode(fileName, code, directoryLocation);
+        storeSourceCode(filename, code, directoryLocation);
     }
 
     @Override
     public void store(ExerciseContent exerciseContent) {
-        String fileName = exerciseContent.getFilename();
+        String filename = exerciseContent.getFilename();
         String code = exerciseContent.getContent();
         String directoryName = "exercise_content" + exerciseContent.getId();
         if (exerciseContent instanceof ExerciseFlags) {
@@ -46,7 +46,7 @@ public class FileSystemStorageService implements StorageService {
         }
 
         Path directoryLocation = createFolder(directoryName);
-        storeSourceCode(fileName, code, directoryLocation);
+        storeSourceCode(filename, code, directoryLocation);
     }
 
     private Path createFolder(String directoryName) {
@@ -64,12 +64,12 @@ public class FileSystemStorageService implements StorageService {
         return directoryLocation;
     }
 
-    private void storeSourceCode(String fileName, String code, Path directoryLocation) throws StorageException {
+    private void storeSourceCode(String filename, String code, Path directoryLocation) throws StorageException {
         try {
-            if (fileName.isEmpty()) {
+            if (filename.isEmpty()) {
                 throw new StorageException("Failed to store file with empty name");
             }
-            Files.write(directoryLocation.resolve(fileName), code.getBytes(), StandardOpenOption.CREATE);
+            Files.write(directoryLocation.resolve(filename), code.getBytes(), StandardOpenOption.CREATE);
         }
         catch (IOException e) {
             throw new StorageException("Failed to store file", e);
