@@ -1,16 +1,4 @@
-# Use an official Python runtime as a parent image
-FROM python:3.4
+FROM java:10
 
-# Set the working directory to /app
-WORKDIR /app
-
-# Copy the current directory contents into the container at /app
-#ADD . /app
-
-# Install any needed packages specified in requirements.txt
-
-
-# Define environment variable
-ENV NAME World
-
-CMD ["bash"]
+# run application with this command line 
+CMD ["/usr/bin/java", "-jar", "/tester.jar"]

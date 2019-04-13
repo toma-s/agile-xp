@@ -120,6 +120,8 @@ public class SolutionEstimationController {
 
             copyDefault(created);
 
+            run(created);
+
             List<Path> paths = getPublicPaths(solutionContents, created);
             compileFiles(paths, outDirPath);
             List<Result> testResults = testPublicFiles(solutionContents, outDirPath);
@@ -134,6 +136,24 @@ public class SolutionEstimationController {
         } catch (TestFailedException e) {
             e.printStackTrace();
             return "Tests run failed: " + e.getMessage();
+        }
+    }
+
+    private void run(String created) {
+        String path = storageService.load(created).toString();
+        ProcessBuilder processBuilder = new ProcessBuilder();
+//        processBuilder.command("sh", "vagrant.sh");
+        processBuilder.command("C:\\Windows\\system32\\cmd.exe", "vagrant.sh");
+        processBuilder.directory(new File(path + File.separator));
+        try {
+            System.out.println("start");
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                throw new RuntimeException("vagrant error");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -162,7 +182,6 @@ public class SolutionEstimationController {
             File sourceFolder = new File("start-vagrant");
             File destinationFolder = storageService.load(created).toFile();
             copyFolder(sourceFolder, destinationFolder);
-
         } catch (StorageException | IOException e) {
             throw new StorageException("Failed to copy files");
         }
