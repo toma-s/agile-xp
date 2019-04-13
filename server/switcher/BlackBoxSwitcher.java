@@ -14,7 +14,7 @@ class BlackBoxSwitcher {
 
     BlackBoxSwitcher() {
         try {
-            Path flagsPath = new File("upload-dir/flags/flags.txt").toPath();
+            Path flagsPath = new File("upload-dir/12345/flags/flags.txt").toPath();
             List<String> flags = Files.readAllLines(flagsPath);
             BUGS = new boolean[flags.size()];
             for (int i = 0; i < flags.size(); i++) {

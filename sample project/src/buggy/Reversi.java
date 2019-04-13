@@ -1,5 +1,8 @@
 package buggy;
 
+
+import sample_black_box.BlackBoxSwitcher;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +13,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReversiBuggy {
+public class Reversi {
 
     int[][] playground;
     int leftB = 0;
@@ -20,10 +23,12 @@ public class ReversiBuggy {
     int winner = -1;
     boolean ended = false;
 
-    ReversiBuggy() {
+    private BlackBoxSwitcher switcher = new BlackBoxSwitcher();
+
+    Reversi() {
     }
 
-    ReversiBuggy(Path gameFilePath) {
+    Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
@@ -44,10 +49,10 @@ public class ReversiBuggy {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
-//                if (!(line.length() == 2 && line.substring(1, 2).matches("[0-7]") &&  line.substring(0, 1).matches("[0-7]"))) {
-//                    System.out.println("Incorrect tile input");
-//                    return;
-//                }
+                if (!(line.length() == 2 && line.substring(1, 2).matches("[0-7]") &&  line.substring(0, 1).matches("[0-7]"))) {
+                    System.out.println("Incorrect tile input");
+                    return;
+                }
                 int r = Integer.parseInt(line.substring(0, 1));
                 int c = Integer.parseInt(line.substring(1, 2));
                 move(r, c);
@@ -164,13 +169,17 @@ public class ReversiBuggy {
         int r = r0;
         int c = c0;
 
-        if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
-            System.out.println("Move out of bounds is not permitted");
-            return;
+        if (! switcher.BUGS[0]) {
+            if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
+                System.out.println("Move out of bounds is not permitted");
+                return;
+            }
         }
-        if (playground[r][c] != -1) {
-            System.out.println("Move on not empty tile is not permitted");
-            return;
+        if (! switcher.BUGS[1]) {
+            if (playground[r][c] != -1) {
+                System.out.println("Move on not empty tile is not permitted");
+                return;
+            }
         }
         if (winner != -1) {
             System.out.println("The game is over. No moves are permitted");
@@ -192,7 +201,9 @@ public class ReversiBuggy {
             if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
-            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
+            if (! switcher.BUGS[2]) {
+                if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
+            }
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];
@@ -307,7 +318,7 @@ public class ReversiBuggy {
         File gameFile = new File("./game_config_num/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
-        ReversiBuggy rev = new ReversiBuggy(gameFilePath);
+        Reversi rev = new Reversi(gameFilePath);
         rev.run();
 
     }

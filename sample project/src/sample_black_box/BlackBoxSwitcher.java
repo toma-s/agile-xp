@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class BlackBoxSwitcher {
+public class BlackBoxSwitcher {
 
-    boolean[] BUGS;
+    public boolean[] BUGS;
 
-    BlackBoxSwitcher() {
+    public BlackBoxSwitcher() {
         try {
-//            Path flagsPath = new File("src/sample_black_box/flags.txt").toPath();
-            Path flagsPath = new File("upload-dir/flags/flags.txt").toPath();
+            Path flagsPath = new File("src/sample_black_box/flags.txt").toPath();
+//            Path flagsPath = new File("upload-dir/flags/flags.txt").toPath();
             List<String> flags = Files.readAllLines(flagsPath);
             BUGS = new boolean[flags.size()];
             for (int i = 0; i < flags.size(); i++) {

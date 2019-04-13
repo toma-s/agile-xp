@@ -37,6 +37,7 @@ public class SolutionEstimationController {
     @Autowired private ExerciseSourceRepository exerciseSourceRepository;
     @Autowired private ExerciseTestRepository exerciseTestRepository;
     @Autowired private ExerciseFileRepository exerciseFileRepository;
+    @Autowired private BugsNumberRepository bugsNumberRepository;
 
     private final StorageService storageService;
 
@@ -50,8 +51,9 @@ public class SolutionEstimationController {
 
     @GetMapping(value = "/solution-estimations/estimate/source-test/{solutionId}")
     public SolutionEstimation getSolutionSourceTestEstimation(@PathVariable long solutionId) {
-        Date date = new Date();
-        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
+//        Date date = new Date();
+//        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
+        String created = "12345";
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
@@ -65,8 +67,9 @@ public class SolutionEstimationController {
 
     @GetMapping(value = "/solution-estimations/estimate/source-test-file/{solutionId}")
     public SolutionEstimation getSolutionSourceTestFileEstimation(@PathVariable long solutionId) {
-        Date date = new Date();
-        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
+//        Date date = new Date();
+//        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
+        String created = "12345";
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
@@ -125,7 +128,7 @@ public class SolutionEstimationController {
             List<Path> paths = getPublicPaths(solutionContents, created);
             compileFiles(paths, outDirPath);
             List<Result> testResults = testPublicFiles(solutionContents, outDirPath);
-//            removeTempFiles();
+            removeTempFiles();
             return getResult(testResults, PUBLIC);
         } catch (StorageException e) {
             e.printStackTrace();
@@ -163,7 +166,7 @@ public class SolutionEstimationController {
             List<Path> paths = getPrivatePaths(solutionContents, exerciseContents, created);
             compileFiles(paths, outDirPath);
             List<Result> testResults = testPrivateFiles(exerciseContents, outDirPath);
-//            removeTempFiles();
+            removeTempFiles();
             return getResult(testResults, PRIVATE);
         } catch (StorageException e) {
             e.printStackTrace();
@@ -205,11 +208,11 @@ public class SolutionEstimationController {
         }
     }
 
-
     @GetMapping(value = "/solution-estimations/estimate/test/{solutionId}")
     public SolutionEstimation getSolutionTestEstimation(@PathVariable long solutionId) {
-        Date date = new Date();
-        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
+//        Date date = new Date();
+//        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
+        String created = "12345";
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
@@ -221,13 +224,12 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-
     private String estimateTest(long solutionId, String created) {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
         List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
         List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
-        int bugsNum = 2; // TODO: 03-Apr-19 when bugsNum are saved
+        int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(solution.getExerciseId()).getNumber();
         List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
         ExerciseFlags controllingFlags = getControllingFlags(bugsNum);
         Path outDirPath = storageService.load(created + "/solution_public_blackbox" + solutionId);
@@ -236,6 +238,65 @@ public class SolutionEstimationController {
             int bugsFound = 0;
             for (int i = 0; i < bugsNum; i++) {
                 storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), created);
+                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources, created);
+                compileFiles(paths, outDirPath);
+                List<Result> testResults = testPublicFiles(List.of(solutionTests), outDirPath);
+                removeTempFiles();
+
+                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(controllingFlags)), created);
+                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources, created);
+                compileFiles(controllingPaths, outDirPath);
+                List<Result> controllingTestResults = testPublicFiles(List.of(solutionTests), outDirPath);
+                removeTempFiles();
+
+                if (bugWasFound(testResults, controllingTestResults)) {
+                    bugsFound++;
+                }
+            }
+            return String.format("Bugs found: %s / %s", bugsFound, bugsNum);
+        } catch (StorageException e) {
+            e.printStackTrace();
+            return "File storing failed: " + e.getMessage();
+        } catch (CompilationFailedException e) {
+            e.printStackTrace();
+            return "Compilation failed: " + e.getMessage();
+        } catch (TestFailedException e) {
+            e.printStackTrace();
+            return "Tests run failed: " + e.getMessage();
+        }
+    }
+
+    @GetMapping(value = "/solution-estimations/estimate/test-file/{solutionId}")
+    public SolutionEstimation getSolutionTestFileEstimation(@PathVariable long solutionId) {
+//        Date date = new Date();
+//        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
+        String created = "12345";
+
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
+
+        String privateEstimation = estimateTestFile(solutionId, created);
+        solutionEstimation.setEstimation(privateEstimation);
+
+        SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
+        System.out.format("Created solution estimation %s\n", _solutionEstimation);
+        return _solutionEstimation;
+    }
+
+    private String estimateTestFile(long solutionId, String created) {
+        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
+        Solution solution = solutionRepository.findById(solutionId);
+        List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
+        List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
+        List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
+        int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(solution.getExerciseId()).getNumber();
+        List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
+        ExerciseFlags controllingFlags = getControllingFlags(bugsNum);
+        Path outDirPath = storageService.load(created + "/solution_public_blackbox" + solutionId);
+
+        try {
+            int bugsFound = 0;
+            for (int i = 0; i < bugsNum; i++) {
+                storeFiles(List.of(solutionTests, solutionFiles), List.of(exerciseSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), created);
                 List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources, created);
                 compileFiles(paths, outDirPath);
                 List<Result> testResults = testPublicFiles(List.of(solutionTests), outDirPath);
@@ -278,10 +339,8 @@ public class SolutionEstimationController {
     private List<ExerciseSwitcher> getExerciseSwitchers() {
         List<ExerciseSwitcher> switchers = new ArrayList<>();
         ExerciseSwitcher switcher = new ExerciseSwitcher();
-        Path here = Paths.get("").toAbsolutePath();
         Path switcherFilePath = Paths.get("switcher/BlackBoxSwitcher.java");
         String switcherContent = null;
-        boolean exists = switcherFilePath.toFile().exists();
         try (Scanner scanner = new Scanner(switcherFilePath.toFile())) {
             switcherContent = scanner.useDelimiter("\\A").next();
         } catch (IOException e) {

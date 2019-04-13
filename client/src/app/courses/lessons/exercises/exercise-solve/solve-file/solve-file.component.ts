@@ -11,7 +11,7 @@ import { ExerciseFile } from '../../shared/exercise-file/exercise-file.model';
 export class SolveFileComponent implements OnInit {
 
   @Input() solutionFormGroup: FormGroup;
-  editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
+  editorOptions = { theme: 'vs', /*, minimap: {'enabled': false}*/ };
 
   constructor(
     private fb: FormBuilder,

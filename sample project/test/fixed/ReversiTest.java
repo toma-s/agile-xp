@@ -1,4 +1,4 @@
-package buggy;
+package fixed;
 
 import javafx.util.Pair;
 import org.junit.Test;
@@ -10,15 +10,13 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
-public class ReversiBuggyTest {
+public class ReversiTest {
 
-    private ReversiBuggy rev = new ReversiBuggy();
+    private Reversi rev = new Reversi();
 
     private String gameConfigDir = "./game_config_num/";
-    private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
-    private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
-    private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
     private Path gameComplete = new File(gameConfigDir + "game_complete.txt").toPath();
+    private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
     private Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
     private Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
     private Path gameInitBStarts = new File(gameConfigDir + "game_init_b_starts.txt").toPath();
@@ -32,7 +30,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testReadGameConfigInit() {
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         String[] gameConfig = game.readGameConfig(gameInitBStarts);
 
         assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
@@ -43,7 +41,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testReadGameConfigInitW() {
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         String[] gameConfig = game.readGameConfig(gameInitWStarts);
 
         assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
@@ -54,7 +52,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testReadGameConfigEmpty() {
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         String[] gameConfig = game.readGameConfig(gameEmpty);
 
         assertEquals("lines number of empty config file", 0, gameConfig.length);
@@ -62,7 +60,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testReadGameConfigOneLine() {
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         String[] gameConfig = game.readGameConfig(gameOneLine);
 
         assertEquals("lines number of 1-line config file", 1, gameConfig.length);
@@ -71,7 +69,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testReadGameConfigFourLines() {
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         String[] gameConfig = game.readGameConfig(gameFourLines);
 
         assertEquals(4, gameConfig.length);
@@ -83,7 +81,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testReadGameConfigNotExisting() {
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         String[] gameConfig = game.readGameConfig(gameNotExisting);
 
         String[] expectedGameConfig = new String[]{};
@@ -95,7 +93,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testCreatePlayground() {
-        ReversiBuggy game = getRevWithPlayground();
+        Reversi game = getRevWithPlayground();
 
         assertArrayEquals("create empty playground", getEmptyPlayground(), game.playground);
     }
@@ -106,7 +104,7 @@ public class ReversiBuggyTest {
     @Test
     public void testInitGameInit() {
         String[] gameConfig = new String[] {"B", "34 43", "33 44"};
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         game.initGame(gameConfig);
 
         assertEquals("init playground on initial game config", 1, game.onTurn);
@@ -119,7 +117,7 @@ public class ReversiBuggyTest {
     @Test
     public void testInitGameNoLines() {
         String[] gameConfig = new String[] {};
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         game.initGame(gameConfig);
 
         assertArrayEquals(null, game.playground);
@@ -128,7 +126,7 @@ public class ReversiBuggyTest {
     @Test
     public void testInitGameOneLine() {
         String[] gameConfig = new String[] {"E4 D5"};
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         game.initGame(gameConfig);
 
         assertArrayEquals(null, game.playground);
@@ -137,7 +135,7 @@ public class ReversiBuggyTest {
     @Test
     public void testInitGameFourLines() {
         String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5", "E4 D5"};
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         game.initGame(gameConfig);
 
         assertArrayEquals(null, game.playground);
@@ -145,7 +143,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testInitGameNull() {
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         game.initGame(null);
 
         assertArrayEquals(null, game.playground);
@@ -154,7 +152,7 @@ public class ReversiBuggyTest {
     @Test
     public void testInitGameOnlyB() {
         String[] gameConfig = new String[] {"B", "E4 D5"};
-        ReversiBuggy game = rev;
+        Reversi game = rev;
         game.initGame(gameConfig);
 
         assertArrayEquals(null, game.playground);
@@ -166,7 +164,7 @@ public class ReversiBuggyTest {
     @Test
     public void testInitTilesCountInit() {
         String[] gameConfig = new String[] {"B", "34 43", "33 44"};
-        ReversiBuggy game = initReversi(gameConfig);
+        Reversi game = initReversi(gameConfig);
         game.initTilesCount();
 
         assertEquals("init tiles count on initial game config", 2, game.getLeftB());
@@ -175,7 +173,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testInitTilesCountEmpty() {
-        ReversiBuggy game = getRevWithPlayground();
+        Reversi game = getRevWithPlayground();
 
         assertEquals("init tiles count on empty game config", 0, game.getLeftB());
         assertEquals("init tiles count on empty game config", 0, game.getLeftW());
@@ -186,7 +184,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testGetLeftB() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
 
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
     }
@@ -195,17 +193,17 @@ public class ReversiBuggyTest {
 
     @Test
     public void testGetLeftW() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
 
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
 
 
-    // ReversiBuggy
+    // Reversi
 
     @Test
     public void testInit() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
 
         assertEquals("on turn player on initial game config", 1, game.onTurn);
         assertEquals("playground on initial game config", 0, getTile(game, 3, 3));
@@ -218,7 +216,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testEmpty() {
-        ReversiBuggy game = new ReversiBuggy(gameEmpty);
+        Reversi game = new Reversi(gameEmpty);
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
@@ -228,7 +226,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testOneLine() {
-        ReversiBuggy game = new ReversiBuggy(gameOneLine);
+        Reversi game = new Reversi(gameOneLine);
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
@@ -238,7 +236,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testFourLines() {
-        ReversiBuggy game = new ReversiBuggy(gameFourLines);
+        Reversi game = new Reversi(gameFourLines);
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
@@ -247,18 +245,8 @@ public class ReversiBuggyTest {
     }
 
     @Test
-    public void testAllAlpha() {
-        ReversiBuggy game = new ReversiBuggy(gameAllAlpha);
-
-        assertArrayEquals(getEmptyPlayground(), game.playground);
-        assertEquals(1, game.onTurn);
-        assertFalse(game.ended);
-        assertEquals(-1, game.winner);
-    }
-
-    @Test
     public void testNoOnTurn() {
-        ReversiBuggy game = new ReversiBuggy(gameNoOnTurn);
+        Reversi game = new Reversi(gameNoOnTurn);
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
@@ -271,16 +259,16 @@ public class ReversiBuggyTest {
 
     @Test
     public void testAreValidMovesInit() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
 
-        assertTrue("...", game.areValidMoves());
+        assertTrue(game.areValidMoves());
     }
 
     @Test
     public void testAreValidMovesOnEnd() {
-        ReversiBuggy game = new ReversiBuggy(gameComplete);
+        Reversi game = new Reversi(gameComplete);
 
-        assertFalse("...", game.areValidMoves());
+        assertFalse(game.areValidMoves());
     }
 
 
@@ -288,7 +276,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testMoveOnNotEmpty() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
         game.move(4, 4);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -296,7 +284,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testMoveOutOfBoundsBelow() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
         game.move(8, 0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -304,7 +292,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testMoveOutOfBoundsAbove() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
         game.move(-1, 0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -312,7 +300,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testMoveOnNotAdjacent() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
         game.move(0, 0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -320,7 +308,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testMoveFlipRight() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
         game.move(3, 2);
 
         assertEquals("check if flipped", 1, getTile(game, 3, 3));
@@ -332,7 +320,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testMoveFlipUp() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
         game.move(5, 4);
 
         assertEquals("check if flipped", 1, getTile(game,4, 4));
@@ -344,7 +332,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testMoveFlipLeft() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
         game.move(4, 5);
 
         assertEquals("check if flipped", 1, getTile(game, 4, 4));
@@ -356,7 +344,7 @@ public class ReversiBuggyTest {
 
     @Test
     public void testMoveFlipDown() {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+        Reversi game = new Reversi(gameInitBStarts);
         game.move(2, 3);
 
         assertEquals("check if flipped", 1, getTile(game, 3, 3));
@@ -372,7 +360,7 @@ public class ReversiBuggyTest {
         moves.add(new Pair<>(5, 4));
         moves.add(new Pair<>(5, 3));
         moves.add(new Pair<>(6, 2));
-        ReversiBuggy game = setMoves(moves);
+        Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", 1, getTile(game, 5, 3));
         assertEquals("check if flipped", 1, getTile(game, 6, 2));
@@ -386,7 +374,7 @@ public class ReversiBuggyTest {
         ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(5, 4));
         moves.add(new Pair<>(5, 5));
-        ReversiBuggy game = setMoves(moves);
+        Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", 0, getTile(game, 4, 4));
         assertEquals("check if flipped", 0, getTile(game, 5, 5));
@@ -401,7 +389,7 @@ public class ReversiBuggyTest {
         moves.add(new Pair<>(2, 3));
         moves.add(new Pair<>(2, 4));
         moves.add(new Pair<>(1, 5));
-        ReversiBuggy game = setMoves(moves);
+        Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", 1, getTile(game, 2, 4));
         assertEquals("check if flipped", 1, getTile(game, 1, 5));
@@ -415,7 +403,7 @@ public class ReversiBuggyTest {
         ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
         moves.add(new Pair<>(2, 3));
         moves.add(new Pair<>(2, 2));
-        ReversiBuggy game = setMoves(moves);
+        Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", 0, getTile(game, 3, 3));
         assertEquals("check if flipped", 0, getTile(game, 2, 2));
@@ -431,12 +419,23 @@ public class ReversiBuggyTest {
         moves.add(new Pair<>(2, 2));
         moves.add(new Pair<>(3, 2));
         moves.add(new Pair<>(2, 4));
-        ReversiBuggy game = setMoves(moves);
+        Reversi game = setMoves(moves);
 
         assertEquals("check if flipped (D,3) correctly", 0, getTile(game, 2, 3));
         assertEquals("check if flipped (E,4) correctly", 0, getTile(game, 3, 4));
         assertEquals("W left", 5, game.getLeftW());
         assertEquals("B left", 3, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFinishGame() {
+        Reversi game = new Reversi(gameAlmostComplete);
+        game.move(3, 4);
+
+        assertFalse("if the are valid moves", game.areValidMoves());
+        assertEquals("W left", 39, game.getLeftW());
+        assertEquals("B left", 25, game.getLeftB());
+        assertEquals("winner", 0, game.winner);
     }
 
     @Test
@@ -472,7 +471,7 @@ public class ReversiBuggyTest {
         moves.add(new Pair<>(4, 0)); moves.add(new Pair<>(1, 7));
         moves.add(new Pair<>(0, 0)); moves.add(new Pair<>(1, 1));
         moves.add(new Pair<>(6, 7)); moves.add(new Pair<>(6, 6));
-        ReversiBuggy game = setMoves(moves);
+        Reversi game = setMoves(moves);
 
         assertFalse("if the are valid moves", game.areValidMoves());
         assertEquals("W left", 28, game.getLeftW());
@@ -483,13 +482,13 @@ public class ReversiBuggyTest {
 
     // utility functions
 
-    private int getTile(ReversiBuggy game, int r0, int c0) {
+    private int getTile(Reversi game, int r0, int c0) {
         return game.playground[r0][c0];
     }
 
 
-    private ReversiBuggy setMoves(ArrayList<Pair<Integer, Integer>> moves) {
-        ReversiBuggy game = new ReversiBuggy(gameInitBStarts);
+    private Reversi setMoves(ArrayList<Pair<Integer, Integer>> moves) {
+        Reversi game = new Reversi(gameInitBStarts);
         for (Pair<Integer, Integer> move  : moves) {
             Integer r = move.getKey();
             Integer c = move.getValue();
@@ -498,14 +497,14 @@ public class ReversiBuggyTest {
         return game;
     }
 
-    private ReversiBuggy initReversi(String[] gameConfig) {
-        ReversiBuggy rev = new ReversiBuggy();
+    private Reversi initReversi(String[] gameConfig) {
+        Reversi rev = new Reversi();
         rev.initGame(gameConfig);
         return rev;
     }
 
-    private ReversiBuggy getRevWithPlayground() {
-        ReversiBuggy rev = new ReversiBuggy();
+    private Reversi getRevWithPlayground() {
+        Reversi rev = new Reversi();
         rev.playground = getEmptyPlayground();
         return rev;
     }

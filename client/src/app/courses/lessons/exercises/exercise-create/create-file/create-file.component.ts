@@ -11,7 +11,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class CreateFileComponent implements OnInit {
 
   @Input() exerciseFormGroup: FormGroup;
-  editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
+  editorOptions = { theme: 'vs', /*, minimap: {'enabled': false}*/ };
   dialogRef: MatDialogRef<DialogComponent>;
   files = 'files';
 
