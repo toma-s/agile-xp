@@ -1,6 +1,6 @@
 package com.agilexp.controller;
 
-import com.agilexp.model.Exercise;
+import com.agilexp.dbmodel.Exercise;
 import com.agilexp.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

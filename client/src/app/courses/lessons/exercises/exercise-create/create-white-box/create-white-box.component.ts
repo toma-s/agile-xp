@@ -88,10 +88,10 @@ export class CreateWhiteBoxComponent implements OnInit {
     <div>
       <p mat-dialog-title>Enter new file name:</p>
       <mat-form-field>
-        <input autofocus matInput [(ngModel)]="fileName">
+        <input autofocus matInput [(ngModel)]="filename">
       </mat-form-field>.java
       <div mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="fileName">Save</button>
+        <button mat-button [mat-dialog-close]="filename">Save</button>
         <button mat-button (click)="onNoClick()">Cancel</button>
       </div>
     </div>`,

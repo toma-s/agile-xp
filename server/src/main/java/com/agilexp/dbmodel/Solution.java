@@ -1,4 +1,4 @@
-package com.agilexp.model;
+package com.agilexp.dbmodel;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

@@ -1,6 +1,6 @@
 package com.agilexp.controller;
 
-import com.agilexp.model.Course;
+import com.agilexp.dbmodel.Course;
 import com.agilexp.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

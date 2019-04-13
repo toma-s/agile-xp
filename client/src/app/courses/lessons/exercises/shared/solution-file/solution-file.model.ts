@@ -1,6 +1,6 @@
 export class SolutionFile {
   id: number;
   solutionId: number;
-  fileName: string;
+  filename: string;
   content: string;
 }

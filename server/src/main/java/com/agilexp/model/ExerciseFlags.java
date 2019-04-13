@@ -1,15 +1,33 @@
 package com.agilexp.model;
 
-import javax.persistence.*;
+import com.agilexp.dbmodel.ExerciseContent;
 
-@Entity(name="exercise_flags")
 public class ExerciseFlags extends ExerciseContent {
+
+    private String filename;
+    private String content;
 
     public ExerciseFlags() {
     }
 
-    public ExerciseFlags(long exerciseId, String filename, String content) {
-        super(exerciseId, filename, content);
+    @Override
+    public String getFilename() {
+        return filename;
+    }
+
+    @Override
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    @Override
+    public String getContent() {
+        return content;
+    }
+
+    @Override
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.agilexp.controller;
 
-import com.agilexp.model.SolutionSource;
+import com.agilexp.dbmodel.SolutionSource;
 import com.agilexp.repository.SolutionSourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

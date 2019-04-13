@@ -1,31 +1,29 @@
-package com.agilexp.model;
-
+package com.agilexp.dbmodel;
 import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "exercise_content_type")
-public abstract class ExerciseContent {
+@DiscriminatorColumn(name = "solution_content_type")
+public abstract class SolutionContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    long id;
+    private long id;
 
-    @Column(name = "filename")
-    String filename;
+    @Column(name="solution_id")
+    private long solutionId;
 
-    @Column(name = "content")
-    String content;
+    @Column(name="filename")
+    private String filename;
 
-    @Column(name = "exercise_id")
-    long exerciseId;
+    @Column(name="content")
+    private String content;
 
-    public ExerciseContent() {
+    SolutionContent() {
     }
 
-    public ExerciseContent(long exerciseId, String filename, String content) {
-        this.exerciseId = exerciseId;
+    SolutionContent(long solutionId, String filename, String content) {
+        this.solutionId = solutionId;
         this.filename = filename;
         this.content = content;
     }
@@ -36,6 +34,14 @@ public abstract class ExerciseContent {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getSolutionId() {
+        return solutionId;
+    }
+
+    public void setSolutionId(long solutionId) {
+        this.solutionId = solutionId;
     }
 
     public String getFilename() {
@@ -54,21 +60,13 @@ public abstract class ExerciseContent {
         this.content = content;
     }
 
-    public long getExerciseId() {
-        return exerciseId;
-    }
-
-    public void setExerciseId(long exerciseId) {
-        this.exerciseId = exerciseId;
-    }
-
     @Override
     public String toString() {
-        return "ExerciseContent{" +
+        return "SolutionContent{" +
                 "id=" + id +
+                ", solutionId=" + solutionId +
                 ", filename='" + filename + '\'' +
 //                ", content='" + content + '\'' +
-                ", exerciseId=" + exerciseId +
                 '}';
     }
 }

@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ExerciseTypeService {
 
-  private baseUrl = `${environment.baseUrl}solution-types`;
+  private baseUrl = `${environment.baseUrl}exercise-types`;
 
   constructor(private http: HttpClient) { }
 

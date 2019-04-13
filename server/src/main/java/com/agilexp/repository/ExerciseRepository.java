@@ -1,6 +1,6 @@
 package com.agilexp.repository;
 
-import com.agilexp.model.Exercise;
+import com.agilexp.dbmodel.Exercise;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

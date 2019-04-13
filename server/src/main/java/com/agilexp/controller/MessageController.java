@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.agilexp.model.Message;
+import com.agilexp.dbmodel.Message;
 import com.agilexp.repository.MessageRepository;
 
 @CrossOrigin(origins = "http://localhost:4200")
