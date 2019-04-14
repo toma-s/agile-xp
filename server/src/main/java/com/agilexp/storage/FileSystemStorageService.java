@@ -5,7 +5,9 @@ import java.net.MalformedURLException;
 import java.nio.file.*;
 import java.util.stream.Stream;
 
-import com.agilexp.dbmodel.*;
+import com.agilexp.dbmodel.exercise.ExerciseContent;
+import com.agilexp.dbmodel.solution.SolutionContent;
+import com.agilexp.dbmodel.solution.SolutionFile;
 import com.agilexp.model.ExerciseFlags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
