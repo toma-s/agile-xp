@@ -1,8 +1,5 @@
 package com.agilexp.dbmodel.exercise;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -31,28 +28,15 @@ public class Exercise {
     @Column(name="description")
     private String description;
 
-    @Column(name="load_solution_sources")
-    @Value("$")
-    private Long loadSolutionSources;
-
-    @Column(name="load_solution_tests")
-    private Long loadSolutionTests;
-
-    @Column(name="load_solution_files")
-    private Long loadSolutionFiles;
-
     public Exercise() {}
 
-    public Exercise(String name, long index, long lessonId, long typeId, Timestamp created, String description, long loadSolutionSources, long loadSolutionTests, long loadSolutionFiles) {
+    public Exercise(String name, long index, long lessonId, long typeId, Timestamp created, String description) {
         this.name = name;
         this.index = index;
         this.lessonId = lessonId;
         this.typeId = typeId;
         this.created = created;
         this.description = description;
-        this.loadSolutionSources = loadSolutionSources;
-        this.loadSolutionTests = loadSolutionTests;
-        this.loadSolutionFiles = loadSolutionFiles;
     }
 
     public long getId() {
@@ -111,30 +95,6 @@ public class Exercise {
         this.description = description;
     }
 
-    public long getLoadSolutionSources() {
-        return loadSolutionSources;
-    }
-
-    public void setLoadSolutionSources(long loadSolutionSources) {
-        this.loadSolutionSources = loadSolutionSources;
-    }
-
-    public long getLoadSolutionTests() {
-        return loadSolutionTests;
-    }
-
-    public void setLoadSolutionTests(long loadSolutionTests) {
-        this.loadSolutionTests = loadSolutionTests;
-    }
-
-    public long getLoadSolutionFiles() {
-        return loadSolutionFiles;
-    }
-
-    public void setLoadSolutionFiles(long loadSolutionFiles) {
-        this.loadSolutionFiles = loadSolutionFiles;
-    }
-
     @Override
     public String toString() {
         return "Exercise{" +
@@ -145,9 +105,6 @@ public class Exercise {
                 ", typeId=" + typeId +
                 ", created=" + created +
                 ", description='" + description + '\'' +
-                ", loadSolutionSources=" + loadSolutionSources +
-                ", loadSolutionTests=" + loadSolutionTests +
-                ", loadSolutionFiles=" + loadSolutionFiles +
                 '}';
     }
 }

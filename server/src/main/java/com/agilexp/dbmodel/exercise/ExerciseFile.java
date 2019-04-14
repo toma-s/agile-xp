@@ -1,6 +1,6 @@
 package com.agilexp.dbmodel.exercise;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity(name="exercise_file")
 public class ExerciseFile extends ExerciseContent {

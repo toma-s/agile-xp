@@ -25,11 +25,13 @@
         </div>
         <div *ngSwitchCase="'test'">
           <p>test</p>
+          <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
           <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
           <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
         </div>
         <div *ngSwitchCase="'test-file'">
           <p>test-file</p>
+          <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
           <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
           <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
           <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
@@ -39,6 +41,7 @@
         </div>
         <div *ngSwitchDefault>
           <p>default</p>
+          <!-- <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test> -->
         </div>
       </div>
     </div>

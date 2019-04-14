@@ -2,9 +2,9 @@
 
   <h3>Tests</h3>
 
-  <div formArrayName="tests" class="env">
+  <div formArrayName="exerciseTests" class="env">
     <mat-tab-group>
-      <mat-tab *ngFor="let test of exerciseFormGroup.controls.tests.controls; let i = index;">
+      <mat-tab *ngFor="let test of exerciseFormGroup.controls.exerciseTests.controls; let i = index;">
         <div [formGroupName]="i">
           <ng-template mat-tab-label>
             {{ test.value.filename }}
@@ -33,28 +33,46 @@
     </mat-tab-group>
   </div>
 
-  <div *ngIf="lessons">
-    <mat-checkbox [formControl]="exerciseFormGroup.controls.loadTests.controls.checked">Load student's initial
-      solution from exercise
-    </mat-checkbox>
+  <div>
+    <h4>Shown source code</h4>
 
-    <div *ngIf="exerciseFormGroup.controls.loadTests.controls.checked.value">
-      <mat-form-field>
-        <mat-select [formControl]="exerciseFormGroup.controls.loadTests.controls.lessonId">
-          <mat-option *ngFor="let lesson of lessons" [value]="lesson.id">
-            {{lesson.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field>
+      <mat-select [formControl]="exerciseFormGroup.controls.shownTestsType.controls.chosen">
+        <mat-option value="same">The same</mat-option>
+        <mat-option value="custom">Custom</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <div *ngIf="exercises">
-        <mat-form-field>
-          <mat-select [formControl]="exerciseFormGroup.controls.loadTests.controls.exerciseId">
-            <mat-option *ngFor="let exercise of exercises" [value]="exercise.id">
-              {{exercise.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+    <div *ngIf="exerciseFormGroup.controls.shownTestsType.controls.chosen.value === 'custom'">
+      <div formArrayName="shownTests" class="env">
+        <mat-tab-group>
+          <mat-tab *ngFor="let test of this.exerciseFormGroup.controls.shownTests.controls; let i = index;">
+            <div [formGroupName]="i">
+              <ng-template mat-tab-label>
+                {{ test.value.filename }}
+                <button mat-icon-button type="button">
+                  <mat-icon (click)="editFilename(test.controls.filename)">edit</mat-icon>
+                </button>
+                <button mat-icon-button type="button">
+                  <mat-icon (click)="remove(i)">clear</mat-icon>
+                </button>
+              </ng-template>
+              <ng-template matTabContent>
+                <div class="env__container">
+                  <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="env__editor">
+                  </ngx-monaco-editor>
+                </div>
+              </ng-template>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <button mat-icon-button type="button">
+                <mat-icon (click)="add()">add</mat-icon>
+              </button>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
       </div>
     </div>
   </div>

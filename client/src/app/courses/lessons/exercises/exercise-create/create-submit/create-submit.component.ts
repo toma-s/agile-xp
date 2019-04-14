@@ -10,6 +10,8 @@ import { ExerciseFileService } from '../../shared/exercise-file/exercise-file.se
 import { ExerciseTest } from '../../shared/exercise-test/exercise-test.model';
 import { ExerciseFile } from '../../shared/exercise-file/exercise-file.model';
 import { ActivatedRoute } from '@angular/router';
+import { ShownTest } from '../../shared/shown-test/shown-test.model';
+import { ShownTestService } from '../../shared/shown-test/shown-test.service';
 
 @Component({
   selector: 'create-submit',
@@ -26,6 +28,7 @@ export class CreateSubmitComponent implements OnInit {
     private exerciseSourceService: ExerciseSourceService,
     private exerciseTestService: ExerciseTestService,
     private exerciseFileService: ExerciseFileService,
+    private shownTestService: ShownTestService,
     private route: ActivatedRoute
   ) { }
 
@@ -62,21 +65,6 @@ export class CreateSubmitComponent implements OnInit {
     exercise.typeId = this.exerciseFormGroup.get('intro').get('type').value['id'];
     exercise.index = Number(this.route.snapshot.params['index']);
     exercise.lessonId = Number(this.route.snapshot.params['lessonId']);
-    if (this.exerciseFormGroup.get('loadSources').get('checked').value && this.exerciseFormGroup.get('loadSources').get('exerciseId')) {
-      exercise.loadSolutionSources = this.exerciseFormGroup.get('loadSources').get('exerciseId').value;
-    } else {
-      exercise.loadSolutionSources = -1;
-    }
-    if (this.exerciseFormGroup.get('loadTests').get('checked').value && this.exerciseFormGroup.get('loadTests').get('exerciseId')) {
-      exercise.loadSolutionTests = this.exerciseFormGroup.get('loadTests').get('exerciseId').value;
-    } else {
-      exercise.loadSolutionTests = -1;
-    }
-    if (this.exerciseFormGroup.get('loadFiles').get('checked').value && this.exerciseFormGroup.get('loadFiles').get('exerciseId')) {
-      exercise.loadSolutionFiles = this.exerciseFormGroup.get('loadFiles').get('exerciseId').value;
-    } else {
-      exercise.loadSolutionFiles = -1;
-    }
     console.log(exercise);
     return exercise;
   }
@@ -96,10 +84,12 @@ export class CreateSubmitComponent implements OnInit {
         break;
       }
       case 'test': {
+        await this.saveSources();
         await this.saveTests();
         break;
       }
       case 'test-file': {
+        await this.saveSources();
         await this.saveTests();
         await this.saveFiles();
         break;
@@ -133,11 +123,16 @@ export class CreateSubmitComponent implements OnInit {
     return this.exerciseSourceService.createExerciseSource(source);
   }
 
-  saveTests(): Promise<{}> {
-    const tests: Array<ExerciseTest> = this.exerciseFormGroup.get('tests').value;
+  saveTests() {
+    this.saveExerciseTests();
+    this.saveShownTests();
+  }
+
+  saveExerciseTests(): Promise<{}> {
+    const exerciseTests: Array<ExerciseTest> = this.exerciseFormGroup.get('exerciseTests').value;
     const observables = [];
-    tests.forEach(s => {
-      observables.push(this.saveTest(s));
+    exerciseTests.forEach(s => {
+      observables.push(this.saveExerciseTest(s));
     });
     return new Promise((resolve, reject) => {
       forkJoin(observables).subscribe(
@@ -150,10 +145,63 @@ export class CreateSubmitComponent implements OnInit {
     });
   }
 
-  saveTest(test: ExerciseTest): Observable<{}> {
+  saveShownTests() {
+    const shownTestsType: string = this.exerciseFormGroup.get('shownTestsType').get('chosen').value;
+    console.log(shownTestsType);
+    if (shownTestsType === 'same') {
+      console.log('same run');
+      this.saveSameShownTests();
+    } else if (shownTestsType === 'custom') {
+      this.saveCustomShownTests();
+    }
+  }
+
+  saveSameShownTests(): Promise<{}> {
+    const shownTests: Array<ShownTest> = this.exerciseFormGroup.get('exerciseTests').value;
+    console.log(this.exerciseFormGroup.get('exerciseTests').value);
+    const observables = [];
+    shownTests.forEach(s => {
+      observables.push(this.saveShownTest(s));
+    });
+    return new Promise((resolve, reject) => {
+      forkJoin(observables).subscribe(
+        data => {
+          resolve(data);
+          console.log(data);
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+  saveCustomShownTests() {
+    const shownTests: Array<ShownTest> = this.exerciseFormGroup.get('shownTests').value;
+    console.log(shownTests);
+    const observables = [];
+    shownTests.forEach(s => {
+      observables.push(this.saveShownTest(s));
+    });
+    return new Promise((resolve, reject) => {
+      forkJoin(observables).subscribe(
+        data => {
+          resolve(data);
+          console.log(data);
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+  saveExerciseTest(test: ExerciseTest): Observable<{}> {
     test.exerciseId = this.exercise.id;
     console.log(test);
     return this.exerciseTestService.createExerciseTest(test);
+  }
+
+  saveShownTest(test: ShownTest): Observable<{}> {
+    test.exerciseId = this.exercise.id;
+    console.log(test);
+    return this.shownTestService.createShownTest(test);
   }
 
   saveFiles(): Promise<{}> {
