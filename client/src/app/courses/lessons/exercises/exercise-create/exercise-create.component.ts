@@ -1,9 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ExerciseType } from '../shared/exercise-type/exercise-type.model';
 import { Exercise } from '../shared/exercise/exercise.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-exercise-create',
@@ -33,6 +31,9 @@ export class ExerciseCreateComponent implements OnInit {
         success: [false]
       })
     });
+    this.exerciseFormGroup.addControl(
+      'testControl', new FormGroup({})
+    );
   }
 
 }

@@ -14,8 +14,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
-import { CreateWhiteBoxComponent,
-  DialogOverviewExampleDialogComponent } from './exercise-create/create-white-box/create-white-box.component';
 import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -34,14 +32,11 @@ import { CreateSubmitComponent } from './exercise-create/create-submit/create-su
 
 @NgModule({
   entryComponents: [
-    DialogOverviewExampleDialogComponent,
     DialogComponent
   ],
   declarations: [
     ExerciseCreateComponent,
-    CreateWhiteBoxComponent,
     ExerciseSolveComponent,
-    DialogOverviewExampleDialogComponent,
     ToolbarComponent,
     SolveIntroComponent,
     SolveSourceComponent,
