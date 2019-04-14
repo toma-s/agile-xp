@@ -19,7 +19,6 @@ export class SolveTestComponent implements OnInit {
 
   async ngOnInit() {
     await this.updForm();
-    console.log(this.solutionFormGroup.get('solutionTests'));
   }
 
   async updForm() {

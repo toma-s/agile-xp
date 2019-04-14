@@ -18,39 +18,42 @@ export class SolveSourceComponent implements OnInit {
     private solutionSourceService: SolutonSourceService
   ) { }
 
-  ngOnInit() {
-    this.updForm();
+  async ngOnInit() {
+    await this.updForm();
   }
 
-  updForm() {
-    this.setSolutionSources();
-  }
-
-  async setSolutionSources() {
-    let exerciseSources;
+  async updForm() {
     const exerciseId = this.solutionFormGroup.get('intro').get('exerciseLoadSolutionSources').value;
     if (exerciseId === -1) {
-      console.log('load from exercise');
-      exerciseSources = this.solutionFormGroup.controls.exerciseSources.controls;
-      // this.solutionFormGroup.addControl(
-      //   'solutionSources', this.fb.array(exerciseSources)
-      // );
+      this.setControl(this.solutionFormGroup.controls.exerciseSources.controls);
     } else {
-      console.log('log from solution');
-      exerciseSources = await this.getLoadedSolutionSources(exerciseId);
+      this.solutionSourceService.getSolutionSourcesByExerciseId(exerciseId).subscribe(
+        data => {
+          this.setControl(this.getGroup(data));
+        },
+        error => console.log(error)
+      );
     }
+  }
+
+  setControl(control) {
     this.solutionFormGroup.addControl(
-      'solutionSources', this.fb.array(exerciseSources)
+      'solutionSources', this.fb.array(control)
     );
   }
 
-  getLoadedSolutionSources(exerciseId: number) {
-    return new Promise<Array<SolutionSource>>((resolve, reject) => {
-      this.solutionSourceService.getSolutionSourceByExerciseId(exerciseId).subscribe(
-        data => resolve(data),
-        error => reject(error)
-      );
+  getGroup(array: Array<any>) {
+    const fgs = new Array<FormGroup>();
+    array.forEach(e => {
+      const fg = this.fb.group({
+        id: [e.id],
+        filename: [e.filename],
+        content: [e.content],
+        exerciseId: [e.exerciseId]
+      });
+      fgs.push(fg);
     });
+    return fgs;
   }
 
 }

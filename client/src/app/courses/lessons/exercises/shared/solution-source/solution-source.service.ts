@@ -16,7 +16,7 @@ export class SolutonSourceService {
     return this.http.post(`${this.baseUrl}/create`, solutionSource);
   }
 
-  getSolutionSourceByExerciseId(exerciseId: number): Observable<any> {
+  getSolutionSourcesByExerciseId(exerciseId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
   }
 }
