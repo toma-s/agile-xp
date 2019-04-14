@@ -1,8 +1,8 @@
 <div [formGroup]="solutionFormGroup" class="mat-elevation-z2 card">
-  <div class="test">
+  <div class="test" *ngIf="solutionFormGroup.controls.solutionTests">
     <div formArrayName="solutionTests">
 
-      <mat-tab-group>
+      <mat-tab-group *ngIf="solutionFormGroup.controls.solutionTests.controls">
         <mat-tab *ngFor="let test of solutionFormGroup.controls.solutionTests.controls; let i = index;">
           <div [formGroupName]="i">
             <ng-template mat-tab-label>

@@ -43,12 +43,8 @@ export class ExerciseSolveComponent implements OnInit {
   }
 
   getExercise() {
-    const exercise$ = this.route.paramMap.pipe(
-      switchMap(((params: ParamMap) =>
-        this.exerciseService.getExerciseById(Number(params.get('exerciseId')))
-      ))
-    );
-    exercise$.subscribe(
+    const exerciseId = Number(this.route.snapshot.params['exerciseId']);
+    this.exerciseService.getExerciseById(exerciseId).subscribe(
       data => {
         this.exercise = data;
         this.getExerciseType();
@@ -144,7 +140,10 @@ export class ExerciseSolveComponent implements OnInit {
         exerciseId: [this.exercise.id],
         exerciseName: [this.exercise.name],
         exerciseDescription: [this.exercise.description],
-        exerciseType: [this.exerciseType.value]
+        exerciseType: [this.exerciseType.value],
+        exerciseLoadSolutionSources: [this.exercise.loadSolutionSources],
+        exerciseLoadSolutionTests: [this.exercise.loadSolutionTests],
+        exerciseLoadSolutionFiles: [this.exercise.loadSolutionFiles]
       })
     );
   }
