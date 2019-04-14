@@ -19,12 +19,10 @@ export class ExerciseCreateComponent implements OnInit {
   index: number;
 
   constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.getIndex();
     this.createForm();
     console.log(this.exerciseFormGroup);
   }
@@ -32,19 +30,9 @@ export class ExerciseCreateComponent implements OnInit {
   createForm() {
     this.exerciseFormGroup = this.fb.group({
       'params': this.fb.group({
-        index: [this.getIndex(), Validators.compose([Validators.required])],
-        lessonId: [this.getLessonId(), Validators.compose([Validators.required])],
         success: [false]
       })
     });
-  }
-
-  getIndex() {
-    return Number(this.route.snapshot.params['index']);
-  }
-
-  getLessonId() {
-    return this.route.snapshot.params['lessonId'];
   }
 
 }

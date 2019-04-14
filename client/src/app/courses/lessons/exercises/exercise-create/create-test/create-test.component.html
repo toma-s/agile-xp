@@ -32,4 +32,31 @@
       </mat-tab>
     </mat-tab-group>
   </div>
+
+  <div *ngIf="lessons">
+    <mat-checkbox [formControl]="exerciseFormGroup.controls.loadTests.controls.checked">Load student's initial
+      solution from exercise
+    </mat-checkbox>
+
+    <div *ngIf="exerciseFormGroup.controls.loadTests.controls.checked.value">
+      <mat-form-field>
+        <mat-select [formControl]="exerciseFormGroup.controls.loadTests.controls.lessonId">
+          <mat-option *ngFor="let lesson of lessons" [value]="lesson.id">
+            {{lesson.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="exercises">
+        <mat-form-field>
+          <mat-select [formControl]="exerciseFormGroup.controls.loadTests.controls.exerciseId">
+            <mat-option *ngFor="let exercise of exercises" [value]="exercise.id">
+              {{exercise.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
 </div>

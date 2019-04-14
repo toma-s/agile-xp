@@ -30,7 +30,10 @@ public class ExerciseController {
                 exercise.getLessonId(),
                 exercise.getTypeId(),
                 created,
-                exercise.getDescription()));
+                exercise.getDescription(),
+                exercise.getLoadSolutionSources(),
+                exercise.getLoadSolutionTests(),
+                exercise.getLoadSolutionFiles()));
         System.out.format("Created exercise with id %s named %s at %s for lesson #%s", _exercise.getId(), exercise.getName(), created, exercise.getLessonId());
         return _exercise;
     }
@@ -74,6 +77,7 @@ public class ExerciseController {
             _exercise.setIndex(exercise.getIndex());
             _exercise.setLessonId(exercise.getLessonId());
             _exercise.setDescription(exercise.getDescription());
+            // TODO: 14-Apr-19 load 
             _exercise.setCreated(exercise.getCreated());
             _exercise.setTypeId(exercise.getTypeId());
             return new ResponseEntity<>(repository.save(_exercise), HttpStatus.OK);

@@ -9,6 +9,7 @@ import { ExerciseTestService } from '../../shared/exercise-test/exercise-test.se
 import { ExerciseFileService } from '../../shared/exercise-file/exercise-file.service';
 import { ExerciseTest } from '../../shared/exercise-test/exercise-test.model';
 import { ExerciseFile } from '../../shared/exercise-file/exercise-file.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'create-submit',
@@ -24,7 +25,8 @@ export class CreateSubmitComponent implements OnInit {
     private exerciseService: ExerciseService,
     private exerciseSourceService: ExerciseSourceService,
     private exerciseTestService: ExerciseTestService,
-    private exerciseFileService: ExerciseFileService
+    private exerciseFileService: ExerciseFileService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -58,8 +60,23 @@ export class CreateSubmitComponent implements OnInit {
     exercise.name = this.exerciseFormGroup.get('intro').get('name').value;
     exercise.description = this.exerciseFormGroup.get('intro').get('description').value;
     exercise.typeId = this.exerciseFormGroup.get('intro').get('type').value['id'];
-    exercise.index = this.exerciseFormGroup.get('params').get('index').value;
-    exercise.lessonId = this.exerciseFormGroup.get('params').get('lessonId').value;
+    exercise.index = Number(this.route.snapshot.params['index']);
+    exercise.lessonId = Number(this.route.snapshot.params['lessonId']);
+    if (this.exerciseFormGroup.get('loadSources').get('checked').value && this.exerciseFormGroup.get('loadSources').get('exerciseId')) {
+      exercise.loadSolutionSources = this.exerciseFormGroup.get('loadSources').get('exerciseId').value;
+    } else {
+      exercise.loadSolutionSources = -1;
+    }
+    if (this.exerciseFormGroup.get('loadTests').get('checked').value && this.exerciseFormGroup.get('loadTests').get('exerciseId')) {
+      exercise.loadSolutionTests = this.exerciseFormGroup.get('loadTests').get('exerciseId').value;
+    } else {
+      exercise.loadSolutionTests = -1;
+    }
+    if (this.exerciseFormGroup.get('loadFiles').get('checked').value && this.exerciseFormGroup.get('loadFiles').get('exerciseId')) {
+      exercise.loadSolutionFiles = this.exerciseFormGroup.get('loadFiles').get('exerciseId').value;
+    } else {
+      exercise.loadSolutionFiles = -1;
+    }
     console.log(exercise);
     return exercise;
   }

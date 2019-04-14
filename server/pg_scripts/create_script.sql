@@ -31,9 +31,16 @@ create table exercises (
 	index int,
     created timestamp,
     type_id int references exercise_types on delete cascade,
-	lesson_id int references lessons on delete cascade
+	lesson_id int references lessons on delete cascade,
+	load_solution_sources int,
+	load_solution_tests int,
+    load_solution_files int
 -- 	constraint unique_index_lesson_id unique (index, lesson_id)
 );
+
+alter table exercises alter column load_solution_sources set default -1;
+alter table exercises alter column load_solution_tests set default -1;
+alter table exercises alter column load_solution_files set default -1;
 
 drop table if exists exercise_content cascade;
 create table exercise_content (
