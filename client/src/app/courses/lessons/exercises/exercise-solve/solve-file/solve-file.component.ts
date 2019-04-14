@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ExerciseFileService } from '../../shared/exercise-file/exercise-file.service';
 import { ExerciseFile } from '../../shared/exercise-file/exercise-file.model';
+import { SolutionFileService } from '../../shared/solution-file/solution-file.service';
 
 @Component({
   selector: 'solve-file',
@@ -15,23 +16,46 @@ export class SolveFileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private exerciseFileService: ExerciseFileService
+    private solutionFileService: SolutionFileService
   ) { }
 
-  ngOnInit() {
-    this.updForm();
+  async ngOnInit() {
+    await this.updForm();
   }
 
 
-  updForm() {
-    this.setSolutionFiles();
+  async updForm() {
+    const exerciseId = this.solutionFormGroup.get('intro').get('exerciseLoadSolutionFiles').value;
+    if (exerciseId === -1) {
+      this.setControl(this.solutionFormGroup.controls.exerciseFiles.controls);
+    } else {
+      this.solutionFileService.getSolutionFilesByExerciseId(exerciseId).subscribe(
+        data => {
+          this.setControl(this.getGroup(data));
+        },
+        error => console.log(error)
+      );
+    }
   }
 
-  setSolutionFiles() {
-    const exerciseFiles = this.solutionFormGroup.controls.exerciseFiles.controls;
+  setControl(control) {
     this.solutionFormGroup.addControl(
-      'solutionFiles', this.fb.array(exerciseFiles)
+      'solutionFiles', this.fb.array(control)
     );
+  }
+
+  getGroup(array: Array<any>) {
+    const fgs = new Array<FormGroup>();
+    array.forEach(e => {
+      const fg = this.fb.group({
+        id: [e.id],
+        filename: [e.filename],
+        content: [e.content],
+        exerciseId: [e.exerciseId]
+      });
+      fgs.push(fg);
+    });
+    return fgs;
   }
 
 }
