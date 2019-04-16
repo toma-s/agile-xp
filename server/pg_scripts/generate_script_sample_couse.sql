@@ -100,7 +100,6 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        System.out.println(gameConfig);
         if (gameConfig == null) {
             System.out.println("Game configuration is null");
             return;
@@ -191,10 +190,6 @@ public class Reversi {
     }
 
     void move(int r0, int c0) {
-        System.out.println(switcher.BUGS[0]);
-        System.out.println(switcher.BUGS[1]);
-        System.out.println(switcher.BUGS[2]);
-        this.printPlayground();
         int r = r0;
         int c = c0;
 
@@ -737,6 +732,7 @@ public class Reversi {
             if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
+            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];
@@ -967,8 +963,8 @@ public class Reversi {
                             System.out.println("Incorrect tile input");
                             return;
                         }
-                        int r = Integer.parseInt(tile.substring(1, 2));
-                        int c = Integer.parseInt(tile.substring(0, 1));
+                        int r = Integer.parseInt(tile.substring(0, 1));
+                        int c = Integer.parseInt(tile.substring(1, 2));
                         playground[r][c] = players[i - 1];
                     }
                 }
@@ -1221,8 +1217,8 @@ public class ReversiTest {
 
         assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
         assertEquals("1st line of initial config file", "W", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "E4 D5", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "D4 E5", gameConfig[2]);
+        assertEquals("2nd line of initial config file", "34 43", gameConfig[1]);
+        assertEquals("3rd line of initial config file", "33 44", gameConfig[2]);
     }
 
     @Test
@@ -1239,7 +1235,7 @@ public class ReversiTest {
         String[] gameConfig = game.readGameConfig(gameOneLine);
 
         assertEquals("lines number of 1-line config file", 1, gameConfig.length);
-        assertEquals("1st line of 1-line config file", "E4 D5", gameConfig[0]);
+        assertEquals("1st line of 1-line config file", "34 43", gameConfig[0]);
     }
 
     @Test
@@ -1249,9 +1245,9 @@ public class ReversiTest {
 
         assertEquals(4, gameConfig.length);
         assertEquals("B", gameConfig[0]);
-        assertEquals("E4 D5", gameConfig[1]);
-        assertEquals("D4 E5", gameConfig[2]);
-        assertEquals("E4 D5", gameConfig[3]);
+        assertEquals("34 43", gameConfig[1]);
+        assertEquals("33 44", gameConfig[2]);
+        assertEquals("33 44", gameConfig[3]);
     }
 
     @Test
@@ -1300,7 +1296,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameOneLine() {
-        String[] gameConfig = new String[] {"E4 D5"};
+        String[] gameConfig = new String[] {"34 43"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -1309,7 +1305,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameFourLines() {
-        String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5", "E4 D5"};
+        String[] gameConfig = new String[] {"B", "34 43", "33 44", "33 44"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -1326,7 +1322,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameOnlyB() {
-        String[] gameConfig = new String[] {"B", "E4 D5"};
+        String[] gameConfig = new String[] {"B", "34 43"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -1787,8 +1783,7 @@ insert into exercise_content (exercise_id, exercise_content_type, filename, cont
 values (7,
         'exercise_file',
         'game_empty.txt',
-        '
-');
+        '');
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_four_lines
 values (7,
@@ -1855,8 +1850,7 @@ insert into exercise_content (exercise_id, exercise_content_type, filename, cont
 values (7,
         'public_file',
         'game_empty.txt',
-        '
-');
+        '');
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_four_lines
 values (7,

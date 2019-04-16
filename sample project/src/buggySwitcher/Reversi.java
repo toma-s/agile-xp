@@ -167,10 +167,6 @@ public class Reversi {
     }
 
     void move(int r0, int c0) {
-        System.out.println(switcher.BUGS[0]);
-        System.out.println(switcher.BUGS[1]);
-        System.out.println(switcher.BUGS[2]);
-        this.printPlayground();
         int r = r0;
         int c = c0;
 
