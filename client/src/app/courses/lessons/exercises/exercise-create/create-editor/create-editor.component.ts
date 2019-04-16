@@ -51,7 +51,7 @@ export class CreateEditorComponent implements OnInit {
     this.form.addControl(
       'shown', this.fb.array([this.createShownTests()])
     );
-    // this.setupValidators();
+    this.setupValidators();
   }
 
   createExerciseTests(): FormGroup {
@@ -68,34 +68,35 @@ export class CreateEditorComponent implements OnInit {
     });
   }
 
-  // setupValidators() {
-  //   this.exerciseFormGroup.get('intro').get('type').valueChanges.subscribe(typeValue => {
-  //     if (typeValue.value.search('test') !== -1) {
-  //       this.exerciseFormGroup.get('exerciseTests').controls.forEach(control => {
-  //         control.get('content').setValidators(Validators.required);
-  //         control.get('content').updateValueAndValidity();
-  //       });
-  //     } else {
-  //       this.exerciseFormGroup.get('exerciseTests').controls.forEach(control => {
-  //         control.get('content').clearValidators();
-  //         control.get('content').updateValueAndValidity();
-  //       });
-  //     }
-  //   });
-  //   this.form.get('shownTestsType').get('chosen').valueChanges.subscribe(chosenValue => {
-  //     if (chosenValue === 'custom') {
-  //       this.form.get('shownTests').controls.forEach(control => {
-  //         control.get('content').setValidators(Validators.required);
-  //         control.get('content').updateValueAndValidity();
-  //       });
-  //     } else if (chosenValue === 'same') {
-  //       this.form.get('shownTests').controls.forEach(control => {
-  //         control.get('content').clearValidators();
-  //         control.get('content').updateValueAndValidity();
-  //       });
-  //     }
-  //   });
-  // }
+  setupValidators() {
+    console.log(this.exerciseFormGroup);
+    this.exerciseFormGroup.get('intro').get('type').valueChanges.subscribe(typeValue => {
+      if (typeValue.value.search(this.exerciseType) !== -1) {
+        this.form.get('exercise').controls.forEach(control => {
+          control.get('content').setValidators(Validators.required);
+          control.get('content').updateValueAndValidity();
+        });
+      } else {
+        this.form.get('exercise').controls.forEach(control => {
+          control.get('content').clearValidators();
+          control.get('content').updateValueAndValidity();
+        });
+      }
+    });
+    this.form.get('shownType').get('chosen').valueChanges.subscribe(chosenValue => {
+      if (chosenValue === 'custom') {
+        this.form.get('shown').controls.forEach(control => {
+          control.get('content').setValidators(Validators.required);
+          control.get('content').updateValueAndValidity();
+        });
+      } else if (chosenValue === 'same') {
+        this.form.get('shown').controls.forEach(control => {
+          control.get('content').clearValidators();
+          control.get('content').updateValueAndValidity();
+        });
+      }
+    });
+  }
 
 
   remove(index: number) {
