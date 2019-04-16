@@ -13,24 +13,24 @@
         [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value.value">
         <div *ngSwitchCase="'source-test'">
           <p>source-test</p>
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editor>
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editor>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
         </div>
         <div *ngSwitchCase="'source-test-file'">
           <p>source-test-file</p>
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editor>
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editor>
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editor>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editors>
         </div>
         <div *ngSwitchCase="'test'">
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editor>
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editor>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
         </div>
         <div *ngSwitchCase="'test-file'">
           <p>test-file</p>
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editor>
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editor>
-          <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editor>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editors>
         </div>
         <div *ngSwitchCase="'theory'">
           <p>theory</p>

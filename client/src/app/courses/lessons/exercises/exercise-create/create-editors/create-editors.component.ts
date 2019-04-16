@@ -6,11 +6,11 @@ import { Lesson } from '../../../shared/lesson.model';
 import { Exercise } from '../../shared/exercise/exercise.model';
 
 @Component({
-  selector: 'create-editor',
-  templateUrl: './create-editor.component.html',
-  styleUrls: ['./create-editor.component.scss']
+  selector: 'create-editors',
+  templateUrl: './create-editors.component.html',
+  styleUrls: ['./create-editors.component.scss']
 })
-export class CreateEditorComponent implements OnInit {
+export class CreateEditorsComponent implements OnInit {
 
   @Input() exerciseFormGroup: FormGroup;
   exerciseType: string;

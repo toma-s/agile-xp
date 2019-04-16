@@ -24,7 +24,7 @@ import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.compo
 import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
 import { CreateIntroComponent } from './exercise-create/create-intro/create-intro.component';
 import { DialogComponent } from './exercise-create/dialog/dialog.component';
-import { CreateEditorComponent } from './exercise-create/create-editor/create-editor.component';
+import { CreateEditorsComponent } from './exercise-create/create-editors/create-editors.component';
 import { CreateSubmitComponent } from './exercise-create/create-submit/create-submit.component';
 
 @NgModule({
@@ -42,7 +42,7 @@ import { CreateSubmitComponent } from './exercise-create/create-submit/create-su
     SolveRunComponent,
     CreateIntroComponent,
     DialogComponent,
-    CreateEditorComponent,
+    CreateEditorsComponent,
     CreateSubmitComponent
   ],
   imports: [
