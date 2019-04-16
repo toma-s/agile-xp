@@ -1,4 +1,4 @@
-export class ShownTest {
+export class PublicSource {
   id: number;
   filename: string;
   content: string;

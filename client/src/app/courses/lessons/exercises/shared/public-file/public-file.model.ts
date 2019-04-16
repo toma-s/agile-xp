@@ -1,4 +1,4 @@
-export class ShownSource {
+export class PublicFile {
   id: number;
   filename: string;
   content: string;

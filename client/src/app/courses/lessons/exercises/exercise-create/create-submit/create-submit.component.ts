@@ -10,10 +10,11 @@ import { ExerciseFileService } from '../../shared/exercise-file/exercise-file.se
 import { ExerciseTest } from '../../shared/exercise-test/exercise-test.model';
 import { ExerciseFile } from '../../shared/exercise-file/exercise-file.model';
 import { ActivatedRoute } from '@angular/router';
-import { ShownTest } from '../../shared/shown-test/shown-test.model';
-import { ShownTestService } from '../../shared/shown-test/shown-test.service';
-import { ShownSourceService } from '../../shared/shown-source/shown-source.service';
-import { ShownSource } from '../../shared/shown-source/shown-source.model';
+import { PublicTest } from '../../shared/public-test/public-test.model';
+import { PublicTestService } from '../../shared/public-test/public-test.service';
+import { PublicSourceService } from '../../shared/public-source/public-source.service';
+import { PublicSource } from '../../shared/public-source/public-source.model';
+import { PublicFileService } from '../../shared/public-file/public-file.service';
 
 @Component({
   selector: 'create-submit',
@@ -30,8 +31,9 @@ export class CreateSubmitComponent implements OnInit {
     private exerciseSourceService: ExerciseSourceService,
     private exerciseTestService: ExerciseTestService,
     private exerciseFileService: ExerciseFileService,
-    private shownSourceService: ShownSourceService,
-    private shownTestService: ShownTestService,
+    private publicSourceService: PublicSourceService,
+    private publicTestService: PublicTestService,
+    private publicFileService: PublicFileService,
     private route: ActivatedRoute
   ) { }
 
@@ -137,7 +139,7 @@ export class CreateSubmitComponent implements OnInit {
     console.log(shownSourcesType);
     if (shownSourcesType === 'same') {
       console.log('same run');
-      const shownSources: Array<ShownSource> = this.exerciseFormGroup.get('sourceControl').get('privateControl').get('tabContent').value;
+      const shownSources: Array<PublicSource> = this.exerciseFormGroup.get('sourceControl').get('privateControl').get('tabContent').value;
       this.saveShownSources(shownSources);
     } else if (shownSourcesType === 'custom') {
       const shownSources: Array<ExerciseSource> = this.exerciseFormGroup.get('sourceControl').get('publicControl').get('tabContent').value;
@@ -145,7 +147,7 @@ export class CreateSubmitComponent implements OnInit {
     }
   }
 
-  saveShownSources(shownSources: Array<ShownSource>): Promise<{}> {
+  saveShownSources(shownSources: Array<PublicSource>): Promise<{}> {
     const observables = [];
     shownSources.forEach(s => {
       observables.push(this.saveShownSource(s));
@@ -164,7 +166,7 @@ export class CreateSubmitComponent implements OnInit {
   saveShownSource(source: ExerciseSource): Observable<{}> {
     source.exerciseId = this.exercise.id;
     console.log(source);
-    return this.shownSourceService.createShownSource(source);
+    return this.publicSourceService.createPublicSource(source);
   }
 
 
@@ -195,16 +197,16 @@ export class CreateSubmitComponent implements OnInit {
     const shownTestsType: string = this.exerciseFormGroup.get('testControl').get('publicType').get('chosen').value;
     console.log(shownTestsType);
     if (shownTestsType === 'same') {
-      const shownTests: Array<ShownTest> = this.exerciseFormGroup.get('testControl').get('privateControl').get('tabContent').value;
+      const shownTests: Array<PublicTest> = this.exerciseFormGroup.get('testControl').get('privateControl').get('tabContent').value;
       console.log('same run');
       this.saveShownTests(shownTests);
     } else if (shownTestsType === 'custom') {
-      const shownTests: Array<ShownTest> = this.exerciseFormGroup.get('testControl').get('publicControl').get('tabContent').value;
+      const shownTests: Array<PublicTest> = this.exerciseFormGroup.get('testControl').get('publicControl').get('tabContent').value;
       this.saveShownTests(shownTests);
     }
   }
 
-  saveShownTests(shownTests: Array<ShownTest>): Promise<{}> {
+  saveShownTests(shownTests: Array<PublicTest>): Promise<{}> {
     const observables = [];
     shownTests.forEach(s => {
       observables.push(this.saveShownTest(s));
@@ -220,10 +222,10 @@ export class CreateSubmitComponent implements OnInit {
     });
   }
 
-  saveShownTest(test: ShownTest): Observable<{}> {
+  saveShownTest(test: PublicTest): Observable<{}> {
     test.exerciseId = this.exercise.id;
     console.log(test);
-    return this.shownTestService.createShownTest(test);
+    return this.publicTestService.createPublicTest(test);
   }
 
   savePrivateFiles(): Promise<{}> {
@@ -253,16 +255,16 @@ export class CreateSubmitComponent implements OnInit {
     const shownFilesType: string = this.exerciseFormGroup.get('fileControl').get('publicType').get('chosen').value;
     console.log(shownFilesType);
     if (shownFilesType === 'same') {
-      const shownFiles: Array<ShownTest> = this.exerciseFormGroup.get('fileControl').get('publicControl').get('tabContent').value;
+      const shownFiles: Array<PublicTest> = this.exerciseFormGroup.get('fileControl').get('publicControl').get('tabContent').value;
       console.log('same run');
       this.saveShownFiles(shownFiles);
     } else if (shownFilesType === 'custom') {
-      const shownFiles: Array<ShownTest> = this.exerciseFormGroup.get('fileControl').get('publicControl').get('tabContent').value;
+      const shownFiles: Array<PublicTest> = this.exerciseFormGroup.get('fileControl').get('publicControl').get('tabContent').value;
       this.saveShownFiles(shownFiles);
     }
   }
 
-  saveShownFiles(shownFiles: Array<ShownTest>): Promise<{}> {
+  saveShownFiles(shownFiles: Array<PublicTest>): Promise<{}> {
     const observables = [];
     shownFiles.forEach(s => {
       observables.push(this.saveFile(s));
@@ -281,7 +283,7 @@ export class CreateSubmitComponent implements OnInit {
   saveShownFile(file: ExerciseFile): Observable<{}> {
     file.exerciseId = this.exercise.id;
     console.log(file);
-    return this.exerciseFileService.createExerciseFile(file);
+    return this.publicFileService.createPublicFile(file);
   }
 
 

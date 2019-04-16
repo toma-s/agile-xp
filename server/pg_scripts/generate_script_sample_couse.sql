@@ -352,7 +352,7 @@ public class Reversi {
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (24,
         6,
-        'shown_content',
+        'public_test',
         'ReversiTest.java',
         'import org.junit.Test;
 
@@ -465,7 +465,7 @@ values (34,
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_init_b_starts
 values (35,
         6,
-        'shown_content',
+        'public_file',
         'game_init_b_starts.txt',
         'B
 34 43
@@ -475,7 +475,7 @@ values (35,
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_init_w_starts
 values (36,
         6,
-        'shown_content',
+        'public_file',
         'game_init_w_starts.txt',
         'W
 34 43
@@ -485,7 +485,7 @@ values (36,
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_almost_complete
 values (37,
         6,
-        'shown_content',
+        'public_file',
         'game_almost_complete.txt',
         'W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
@@ -495,7 +495,7 @@ values (37,
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_complete
 values (38,
         6,
-        'shown_content',
+        'public_file',
         'game_complete.txt',
         'B
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
@@ -505,7 +505,7 @@ values (38,
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_empty
 values (39,
         6,
-        'shown_content',
+        'public_file',
         'game_empty.txt',
         '
 ');
@@ -513,7 +513,7 @@ values (39,
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_four_lines
 values (40,
         6,
-        'shown_content',
+        'public_file',
         'game_four_lines.txt',
         'B
 34 43
@@ -524,7 +524,7 @@ values (40,
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_no_on_turn
 values (41,
         6,
-        'shown_content',
+        'public_file',
         'game_no_on_turn.txt',
         '34 43
 33 44
@@ -533,7 +533,7 @@ values (41,
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content) -- game_one_line
 values (42,
         6,
-        'shown_content',
+        'public_file',
         'game_one_line.txt',
         '34 43
 ');
@@ -857,7 +857,7 @@ public class Reversi {
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (44,
         7,
-        'shown_content',
+        'public_source',
         'Reversi.java',
         'import java.io.BufferedReader;
 import java.io.File;
@@ -1708,7 +1708,7 @@ public class ReversiTest {
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (46,
         6,
-        'shown_content',
+        'public_test',
         'ReversiTest.java',
         'import org.junit.Test;
 
@@ -1812,7 +1812,7 @@ values (7,
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_init_b_starts
 values (7,
-        'shown_content',
+        'public_file',
         'game_init_b_starts.txt',
         'B
 34 43
@@ -1821,7 +1821,7 @@ values (7,
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_init_w_starts
 values (7,
-        'shown_content',
+        'public_file',
         'game_init_w_starts.txt',
         'W
 34 43
@@ -1830,7 +1830,7 @@ values (7,
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_almost_complete
 values (7,
-        'shown_content',
+        'public_file',
         'game_almost_complete.txt',
         'W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
@@ -1839,7 +1839,7 @@ values (7,
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_complete
 values (7,
-        'shown_content',
+        'public_file',
         'game_complete.txt',
         'B
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
@@ -1848,14 +1848,14 @@ values (7,
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_empty
 values (7,
-        'shown_content',
+        'public_file',
         'game_empty.txt',
         '
 ');
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_four_lines
 values (7,
-        'shown_content',
+        'public_file',
         'game_four_lines.txt',
         'B
 34 43
@@ -1865,7 +1865,7 @@ values (7,
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_no_on_turn
 values (7,
-        'shown_content',
+        'public_file',
         'game_no_on_turn.txt',
         '34 43
 33 44
@@ -1873,7 +1873,7 @@ values (7,
 
 insert into exercise_content (exercise_id, exercise_content_type, filename, content) -- game_one_line
 values (7,
-        'shown_content',
+        'public_file',
         'game_one_line.txt',
         '34 43
 ');
