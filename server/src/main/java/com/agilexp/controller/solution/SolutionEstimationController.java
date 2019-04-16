@@ -57,7 +57,7 @@ public class SolutionEstimationController {
     }
 
     @GetMapping(value = "/solution-estimations/estimate/whitebox/{solutionId}")
-    public SolutionEstimation getSolutionSourceTestEstimation(@PathVariable long solutionId) {
+    public SolutionEstimation getWhiteboxEstimation(@PathVariable long solutionId) {
 //        Date date = new Date();
 //        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
         String created = "12345";
@@ -73,7 +73,7 @@ public class SolutionEstimationController {
     }
 
     @GetMapping(value = "/solution-estimations/estimate/whitebox-file/{solutionId}")
-    public SolutionEstimation getSolutionSourceTestFileEstimation(@PathVariable long solutionId) {
+    public SolutionEstimation getWhiteboxFileEstimation(@PathVariable long solutionId) {
 //        Date date = new Date();
 //        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
         String created = "12345";
@@ -216,14 +216,14 @@ public class SolutionEstimationController {
     }
 
     @GetMapping(value = "/solution-estimations/estimate/blackbox/{solutionId}")
-    public SolutionEstimation getSolutionTestEstimation(@PathVariable long solutionId) {
+    public SolutionEstimation getBlackboxEstimation(@PathVariable long solutionId) {
 //        Date date = new Date();
 //        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
         String created = "12345";
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        String privateEstimation = estimateTest(solutionId, created);
+        String privateEstimation = estimateBlackBox(solutionId, created);
         solutionEstimation.setEstimation(privateEstimation);
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
@@ -231,7 +231,7 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-    private String estimateTest(long solutionId, String created) {
+    private String estimateBlackBox(long solutionId, String created) {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
         List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
