@@ -1,0 +1,19 @@
+<div [formGroup]="form" class="mat-elevation-z2 card">
+  <div formArrayName="solutionControl" class="editor">
+    <mat-tab-group>
+      <mat-tab *ngFor="let file of form.controls.solutionControl.controls; let i = index;">
+        <div [formGroupName]="i">
+          <ng-template mat-tab-label>
+            {{ file.value.filename }}
+          </ng-template>
+          <ng-template matTabContent>
+            <div class="editor__container">
+              <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="editor__monaco">
+              </ngx-monaco-editor>
+            </div>
+          </ng-template>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

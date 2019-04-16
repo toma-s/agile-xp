@@ -117,7 +117,7 @@ export class SolveRunComponent implements OnInit {
   }
 
   saveSolutionSources(): Promise<{}> {
-    const solutionSources: Array<SolutionSource> = this.solutionFormGroup.get('solutionSources').value;
+    const solutionSources: Array<SolutionSource> = this.solutionFormGroup.get('sourceControl').get('solutionControl').value;
     const observables = [];
     solutionSources.forEach(sc => {
       observables.push(this.saveSolutionSource(sc));
@@ -136,7 +136,7 @@ export class SolveRunComponent implements OnInit {
   }
 
   saveSolutionTests(): Promise<{}> {
-    const solutionTests: Array<SolutionTest> = this.solutionFormGroup.get('solutionTests').value;
+    const solutionTests: Array<SolutionTest> = this.solutionFormGroup.get('testControl').get('solutionControl').value;
     const observables = [];
     solutionTests.forEach(st => {
       observables.push(this.saveSolutionTest(st));
@@ -155,7 +155,7 @@ export class SolveRunComponent implements OnInit {
   }
 
   saveSolutionFiles(): Promise<{}> {
-    const solutionFiles: Array<SolutionFile> = this.solutionFormGroup.get('solutionFiles').value;
+    const solutionFiles: Array<SolutionFile> = this.solutionFormGroup.get('fileControl').get('solutionControl').value;
     const observables = [];
     solutionFiles.forEach(sf => {
       observables.push(this.saveSolutionFile(sf));

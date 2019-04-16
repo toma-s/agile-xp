@@ -37,8 +37,6 @@ export class CreateEditorsComponent implements OnInit {
     this.viewPrivateInput = this.exerciseFormGroup.get('params').get('viewInput').get(privateType).value;
     const publicType = `public-${this.exerciseType}`;
     this.viewPublicInput = this.exerciseFormGroup.get('params').get('viewInput').get(publicType).value;
-    console.log(`this.viewPrivateInput: ${this.viewPrivateInput} for ${this.exerciseType}`);
-    console.log(`this.viewPublicInput: ${this.viewPublicInput} for ${this.exerciseType}`);
   }
 
   setupValidators() {

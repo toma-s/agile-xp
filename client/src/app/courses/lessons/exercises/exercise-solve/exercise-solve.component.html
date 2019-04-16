@@ -12,23 +12,23 @@
         <div [ngSwitch]="exerciseType.value">
           <div *ngSwitchCase="'whitebox'">
             <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
-            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
+            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=sourceControl></solve-editor>
+            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=testControl></solve-editor>
           </div>
           <div *ngSwitchCase="'whitebox-file'">
             <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
-            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
-            <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file>
+            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=sourceControl></solve-editor>
+            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=testControl></solve-editor>
+            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=fileControl></solve-editor>
           </div>
           <div *ngSwitchCase="'blackbox'">
             <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
+            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=testControl></solve-editor>
           </div>
           <div *ngSwitchCase="'blackbox-file'">
             <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
-            <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file>
+            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=testControl></solve-editor>
+            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=fileControl></solve-editor>
           </div>
           <div *ngSwitchDefault>
             <p>default</p>
