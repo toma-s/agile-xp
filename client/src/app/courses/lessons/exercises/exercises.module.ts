@@ -23,11 +23,8 @@ import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.compo
 import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.component';
 import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
 import { CreateIntroComponent } from './exercise-create/create-intro/create-intro.component';
-import { CreateSourceComponent } from './exercise-create/create-source/create-source.component';
 import { DialogComponent } from './exercise-create/dialog/dialog.component';
-import { CreateTestComponent } from './exercise-create/create-test/create-test.component';
 import { CreateEditorComponent } from './exercise-create/create-editor/create-editor.component';
-import { CreateFileComponent } from './exercise-create/create-file/create-file.component';
 import { CreateSubmitComponent } from './exercise-create/create-submit/create-submit.component';
 
 @NgModule({
@@ -44,11 +41,8 @@ import { CreateSubmitComponent } from './exercise-create/create-submit/create-su
     SolveFileComponent,
     SolveRunComponent,
     CreateIntroComponent,
-    CreateSourceComponent,
     DialogComponent,
-    CreateTestComponent,
     CreateEditorComponent,
-    CreateFileComponent,
     CreateSubmitComponent
   ],
   imports: [
