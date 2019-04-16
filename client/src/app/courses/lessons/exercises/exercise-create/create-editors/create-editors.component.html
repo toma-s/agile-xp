@@ -2,36 +2,7 @@
 
   <h3 class="capitalize">{{exerciseTypePlural}}</h3>
 
-  <div formArrayName="exercise" class="env">
-    <mat-tab-group>
-      <mat-tab *ngFor="let test of form.controls.exercise.controls; let i = index;">
-        <div [formGroupName]="i">
-          <ng-template mat-tab-label>
-            {{ test.value.filename }}
-            <button mat-icon-button type="button">
-              <mat-icon (click)="editFilename(test.controls.filename)">edit</mat-icon>
-            </button>
-            <button mat-icon-button type="button">
-              <mat-icon (click)="remove(i)">clear</mat-icon>
-            </button>
-          </ng-template>
-          <ng-template matTabContent>
-            <div class="env__container">
-              <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="env__editor">
-              </ngx-monaco-editor>
-            </div>
-          </ng-template>
-        </div>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <button mat-icon-button type="button">
-            <mat-icon (click)="add()">add</mat-icon>
-          </button>
-        </ng-template>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
+  <editor formGroupName="hiddenControl" [type]="hidden"></editor>
 
   <div>
     <h4>Shown {{exerciseTypePlural}}</h4>
@@ -44,36 +15,7 @@
     </mat-form-field>
 
     <div *ngIf="form.controls.shownType.controls.chosen.value === 'custom'">
-      <div formArrayName="shown" class="env">
-        <mat-tab-group>
-          <mat-tab *ngFor="let test of form.controls.shown.controls; let i = index;">
-            <div [formGroupName]="i">
-              <ng-template mat-tab-label>
-                {{ test.value.filename }}
-                <button mat-icon-button type="button">
-                  <mat-icon (click)="editFilename(test.controls.filename)">edit</mat-icon>
-                </button>
-                <button mat-icon-button type="button">
-                  <mat-icon (click)="remove(i)">clear</mat-icon>
-                </button>
-              </ng-template>
-              <ng-template matTabContent>
-                <div class="env__container">
-                  <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="env__editor">
-                  </ngx-monaco-editor>
-                </div>
-              </ng-template>
-            </div>
-          </mat-tab>
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <button mat-icon-button type="button">
-                <mat-icon (click)="add()">add</mat-icon>
-              </button>
-            </ng-template>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
+      <editor formGroupName="shownControl" [type]="shown"></editor>
     </div>
   </div>
 

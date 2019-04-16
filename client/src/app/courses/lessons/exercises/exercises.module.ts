@@ -26,6 +26,7 @@ import { CreateIntroComponent } from './exercise-create/create-intro/create-intr
 import { DialogComponent } from './exercise-create/dialog/dialog.component';
 import { CreateEditorsComponent } from './exercise-create/create-editors/create-editors.component';
 import { CreateSubmitComponent } from './exercise-create/create-submit/create-submit.component';
+import { EditorComponent } from './exercise-create/create-editors/editor/editor.component';
 
 @NgModule({
   entryComponents: [
@@ -43,7 +44,8 @@ import { CreateSubmitComponent } from './exercise-create/create-submit/create-su
     CreateIntroComponent,
     DialogComponent,
     CreateEditorsComponent,
-    CreateSubmitComponent
+    CreateSubmitComponent,
+    EditorComponent
   ],
   imports: [
     CommonModule,
