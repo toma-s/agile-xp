@@ -9,35 +9,25 @@
     <create-intro [exerciseFormGroup]="exerciseFormGroup"></create-intro>
 
     <div *ngIf="exerciseFormGroup.controls.intro">
-      <div [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value.value">
+      <div *ngIf="exerciseFormGroup.controls.intro.controls.type.value"
+        [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value.value">
         <div *ngSwitchCase="'source-test'">
           <p>source-test</p>
-          <!-- <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source> -->
-          <!-- <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test> -->
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editor>
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editor>
         </div>
         <div *ngSwitchCase="'source-test-file'">
           <p>source-test-file</p>
-          <!-- <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source> -->
-          <!-- <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test> -->
-          <!-- <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file> -->
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editor>
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editor>
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editor>
         </div>
         <div *ngSwitchCase="'test'">
-          <p>test</p>
-          <!-- <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source> -->
-          <!-- <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test> -->
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editor>
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editor>
         </div>
         <div *ngSwitchCase="'test-file'">
           <p>test-file</p>
-          <!-- <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source> -->
-          <!-- <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test> -->
-          <!-- <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file> -->
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editor>
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editor>
           <create-editor [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editor>
@@ -51,7 +41,7 @@
       </div>
 
       <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
-      
+
     </div>
 
   </ng-template>

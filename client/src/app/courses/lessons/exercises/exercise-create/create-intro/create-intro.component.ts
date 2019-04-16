@@ -37,7 +37,7 @@ export class CreateIntroComponent implements OnInit {
       'intro', this.fb.group({
         name: [null, Validators.compose([Validators.required])],
         description: [null, Validators.compose([Validators.required])],
-        type: [this.types[0].value, Validators.compose([Validators.required])]
+        type: [null, Validators.compose([Validators.required])]
       })
     );
   }
