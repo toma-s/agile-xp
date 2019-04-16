@@ -2,20 +2,20 @@
 
   <h3 class="capitalize">{{exerciseTypePlural}}</h3>
 
-  <editor formGroupName="hiddenControl" [type]="hidden"></editor>
+  <editor formGroupName="privateControl" [type]="private"></editor>
 
   <div>
     <h4>Shown {{exerciseTypePlural}}</h4>
 
     <mat-form-field>
-      <mat-select [formControl]="form.controls.shownType.controls.chosen">
+      <mat-select [formControl]="form.controls.publicType.controls.chosen">
         <mat-option value="same">The same</mat-option>
         <mat-option value="custom">Custom</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <div *ngIf="form.controls.shownType.controls.chosen.value === 'custom'">
-      <editor formGroupName="shownControl" [type]="shown"></editor>
+    <div *ngIf="form.controls.publicType.controls.chosen.value === 'custom'">
+      <editor formGroupName="publicControl" [type]="public"></editor>
     </div>
   </div>
 

@@ -38,17 +38,17 @@ export class CreateEditorsComponent implements OnInit {
 
   setFormControls() {
     this.form.addControl(
-      'hiddenControl', this.fb.group({
+      'privateControl', this.fb.group({
         tabContent: this.fb.array([this.create()])
       })
     );
     this.form.addControl(
-      'shownType', this.fb.group({
+      'publicType', this.fb.group({
         chosen: ['same', Validators.compose([Validators.required])]
       })
     );
     this.form.addControl(
-      'shownControl', this.fb.group({
+      'publicControl', this.fb.group({
         tabContent: this.fb.array([this.create()])
       })
     );
