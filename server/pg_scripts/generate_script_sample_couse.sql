@@ -100,6 +100,7 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
+        System.out.println(gameConfig);
         if (gameConfig == null) {
             System.out.println("Game configuration is null");
             return;
@@ -190,6 +191,10 @@ public class Reversi {
     }
 
     void move(int r0, int c0) {
+        System.out.println(switcher.BUGS[0]);
+        System.out.println(switcher.BUGS[1]);
+        System.out.println(switcher.BUGS[2]);
+        this.printPlayground();
         int r = r0;
         int c = c0;
 
@@ -843,7 +848,7 @@ public class Reversi {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config_num/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -1154,7 +1159,7 @@ public class Reversi {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config_num/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -1184,7 +1189,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config_num/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameComplete = new File(gameConfigDir + "game_complete.txt").toPath();
     private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
     private Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
@@ -1707,7 +1712,7 @@ public class ReversiTest {
 
 insert into exercise_content (id, exercise_id, exercise_content_type, filename, content)
 values (46,
-        6,
+        7,
         'public_test',
         'ReversiTest.java',
         'import org.junit.Test;

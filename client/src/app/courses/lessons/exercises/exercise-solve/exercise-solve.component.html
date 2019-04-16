@@ -5,36 +5,34 @@
   <div *ngIf="solutionFormGroup">
     <div [formGroup]="solutionFormGroup">
 
-      <div *ngIf="exerciseType" [ngSwitch]="exerciseType.value">
-        <div *ngSwitchCase="'source-test'">
-          <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
-          <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-          <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
-          <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
-        </div>
-        <div *ngSwitchCase="'source-test-file'">
-          <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro >
-          <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-          <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
-          <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
-          <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file>
-        </div>
-        <div *ngSwitchCase="'test'">
-          <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
-          <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-          <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
-        </div>
-        <div *ngSwitchCase="'test-file'">
-          <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
-          <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-          <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
-          <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file>
-        </div>
-        <div *ngSwitchCase="'theory'">
-          <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
-        </div>
-        <div *ngSwitchDefault>
-          <p>default</p>
+      <div *ngIf="exerciseType">
+
+        <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
+
+        <div [ngSwitch]="exerciseType.value">
+          <div *ngSwitchCase="'whitebox'">
+            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
+            <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
+            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
+          </div>
+          <div *ngSwitchCase="'whitebox-file'">
+            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
+            <solve-source [solutionFormGroup]="solutionFormGroup"></solve-source>
+            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
+            <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file>
+          </div>
+          <div *ngSwitchCase="'blackbox'">
+            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
+            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
+          </div>
+          <div *ngSwitchCase="'blackbox-file'">
+            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
+            <solve-test [solutionFormGroup]="solutionFormGroup"></solve-test>
+            <solve-file [solutionFormGroup]="solutionFormGroup"></solve-file>
+          </div>
+          <div *ngSwitchDefault>
+            <p>default</p>
+          </div>
         </div>
       </div>
 

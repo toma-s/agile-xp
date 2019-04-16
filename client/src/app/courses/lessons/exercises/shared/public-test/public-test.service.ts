@@ -15,4 +15,8 @@ export class PublicTestService {
   createPublicTest(publicTest: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}` + `/create`, publicTest);
   }
+
+  getPublicTestsByExerciseId(exerciseId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
+  }
 }

@@ -5,6 +5,9 @@ import com.agilexp.repository.exercise.PublicFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
@@ -25,4 +28,12 @@ public class PublicFileController {
         System.out.format("Created public file %s for exercise #%s\n", publicFile.getFilename(), publicFile.getExerciseId());
         return _publicFile;
     }
+    @GetMapping(value="/public-file/exercise/{exerciseId}")
+    public List<PublicFile> getPublicFilesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+        System.out.println("Get public files with exercise id " + exerciseId + "...");
+
+        List<PublicFile> publicFiles = new ArrayList<>(repository.findPublicFilesByExerciseId(exerciseId));
+        return publicFiles;
+    }
+
 }

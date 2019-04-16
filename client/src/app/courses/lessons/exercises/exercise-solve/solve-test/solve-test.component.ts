@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SolutonTestService } from '../../shared/solution-test/solution-test.service';
+import { PublicTestService } from '../../shared/public-test/public-test.service';
 
 @Component({
   selector: 'solve-test',
@@ -14,7 +14,7 @@ export class SolveTestComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private solutionTestService: SolutonTestService
+    private publicTestService: PublicTestService
   ) { }
 
   async ngOnInit() {
@@ -22,17 +22,14 @@ export class SolveTestComponent implements OnInit {
   }
 
   async updForm() {
-    const exerciseId = this.solutionFormGroup.get('intro').get('exerciseLoadSolutionTests').value;
-    if (exerciseId === -1) {
-      this.setControl(this.solutionFormGroup.controls.exerciseTests.controls);
-    } else {
-      this.solutionTestService.getSolutionTestsByExerciseId(exerciseId).subscribe(
-        data => {
-          this.setControl(this.getGroup(data));
-        },
-        error => console.log(error)
-      );
-    }
+    const exerciseId = Number(this.solutionFormGroup.get('intro').get('exerciseId').value);
+    this.publicTestService.getPublicTestsByExerciseId(exerciseId).subscribe(
+      data => {
+        console.log(data);
+        this.setControl(this.getGroup(data));
+      },
+      error => console.log(error)
+    );
   }
 
   setControl(control) {

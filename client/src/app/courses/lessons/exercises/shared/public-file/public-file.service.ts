@@ -15,4 +15,8 @@ export class PublicFileService {
   createPublicFile(publicFile: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}` + `/create`, publicFile);
   }
+
+  getPublicFilesByExerciseId(exerciseId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
+  }
 }

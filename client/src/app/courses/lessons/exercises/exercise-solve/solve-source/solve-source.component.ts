@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SolutonSourceService } from '../../shared/solution-source/solution-source.service';
-import { SolutionSource } from '../../shared/solution-source/solution-source.model';
+import { PublicSourceService } from '../../shared/public-source/public-source.service';
 
 @Component({
   selector: 'solve-source',
@@ -15,7 +14,7 @@ export class SolveSourceComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private solutionSourceService: SolutonSourceService
+    private publicSourceService: PublicSourceService
   ) { }
 
   async ngOnInit() {
@@ -23,17 +22,14 @@ export class SolveSourceComponent implements OnInit {
   }
 
   async updForm() {
-    const exerciseId = this.solutionFormGroup.get('intro').get('exerciseLoadSolutionSources').value;
-    if (exerciseId === -1) {
-      this.setControl(this.solutionFormGroup.controls.exerciseSources.controls);
-    } else {
-      this.solutionSourceService.getSolutionSourcesByExerciseId(exerciseId).subscribe(
-        data => {
-          this.setControl(this.getGroup(data));
-        },
-        error => console.log(error)
-      );
-    }
+    const exerciseId = Number(this.solutionFormGroup.get('intro').get('exerciseId').value);
+    this.publicSourceService.getPublicSourcesByExerciseId(exerciseId).subscribe(
+      data => {
+        console.log(data);
+        this.setControl(this.getGroup(data));
+      },
+      error => console.log(error)
+    );
   }
 
   setControl(control) {

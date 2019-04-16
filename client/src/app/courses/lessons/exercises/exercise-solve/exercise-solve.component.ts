@@ -57,6 +57,7 @@ export class ExerciseSolveComponent implements OnInit {
     this.exerciseTypeService.getExerciseTypeById(this.exercise.typeId).subscribe(
       data => {
         this.exerciseType = data;
+        console.log(data);
         this.getSourceContent();
       },
       error => console.log(error)
@@ -99,32 +100,24 @@ export class ExerciseSolveComponent implements OnInit {
     });
     this.setExerciseIntro();
     switch (this.exerciseType.value) {
-      case 'source-test': {
+      case 'whitebox': {
         this.setExerciseSources();
         this.setExerciseTests();
         break;
       }
-      case 'source-test-file': {
+      case 'whitebox-file': {
         this.setExerciseSources();
         this.setExerciseTests();
         this.setExerciseFiles();
         break;
       }
-      case 'test': {
+      case 'blackbox': {
         this.setExerciseTests();
         break;
       }
-      case 'test-file': {
+      case 'blackbox-file': {
         this.setExerciseTests();
         this.setExerciseFiles();
-        break;
-      }
-      case 'single-quiz': {
-        // TODO | single-quiz case
-        break;
-      }
-      case 'multiple-quiz': {
-        // TODO | multiple-quiz case
         break;
       }
       default: {

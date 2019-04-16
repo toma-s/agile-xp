@@ -90,32 +90,24 @@ export class SolveRunComponent implements OnInit {
 
   async saveSolutionItems() {
     switch (this.exerciseTypeValue) {
-      case 'source-test': {
+      case 'whitebox': {
         await this.saveSolutionSources();
         await this.saveSolutionTests();
         break;
       }
-      case 'source-test-file': {
+      case 'whitebox-file': {
         await this.saveSolutionSources();
         await this.saveSolutionTests();
         await this.saveSolutionFiles();
         break;
       }
-      case 'test': {
+      case 'blackbox': {
         await this.saveSolutionTests();
         break;
       }
-      case 'test-file': {
+      case 'blackbox-file': {
         await this.saveSolutionTests();
         await this.saveSolutionFiles();
-        break;
-      }
-      case 'single-quiz': {
-        // TODO | single-quiz case
-        break;
-      }
-      case 'multiple-quiz': {
-        // TODO | multiple-quiz case
         break;
       }
       default: {

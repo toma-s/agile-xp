@@ -3,6 +3,7 @@ package com.agilexp.controller.solution;
 import com.agilexp.compiler.Compiler;
 import com.agilexp.compiler.exception.CompilationFailedException;
 import com.agilexp.dbmodel.exercise.ExerciseContent;
+import com.agilexp.dbmodel.exercise.ExerciseFile;
 import com.agilexp.dbmodel.exercise.ExerciseSource;
 import com.agilexp.dbmodel.exercise.ExerciseTest;
 import com.agilexp.dbmodel.solution.*;
@@ -55,7 +56,7 @@ public class SolutionEstimationController {
         this.storageService = storageService;
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/source-test/{solutionId}")
+    @GetMapping(value = "/solution-estimations/estimate/whitebox/{solutionId}")
     public SolutionEstimation getSolutionSourceTestEstimation(@PathVariable long solutionId) {
 //        Date date = new Date();
 //        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
@@ -71,7 +72,7 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/source-test-file/{solutionId}")
+    @GetMapping(value = "/solution-estimations/estimate/whitebox-file/{solutionId}")
     public SolutionEstimation getSolutionSourceTestFileEstimation(@PathVariable long solutionId) {
 //        Date date = new Date();
 //        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
@@ -127,9 +128,9 @@ public class SolutionEstimationController {
         try {
             storeFiles(solutionContents, List.of(), created);
 
-            copyDefault(created);
+//            copyDefault(created);
 
-            run(created);
+//            run(created);
 
             List<Path> paths = getPublicPaths(solutionContents, created);
             compileFiles(paths, outDirPath);
@@ -214,7 +215,7 @@ public class SolutionEstimationController {
         }
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/test/{solutionId}")
+    @GetMapping(value = "/solution-estimations/estimate/blackbox/{solutionId}")
     public SolutionEstimation getSolutionTestEstimation(@PathVariable long solutionId) {
 //        Date date = new Date();
 //        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
@@ -272,7 +273,7 @@ public class SolutionEstimationController {
         }
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/test-file/{solutionId}")
+    @GetMapping(value = "/solution-estimations/estimate/blackbox-file/{solutionId}")
     public SolutionEstimation getSolutionTestFileEstimation(@PathVariable long solutionId) {
 //        Date date = new Date();
 //        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
@@ -293,6 +294,7 @@ public class SolutionEstimationController {
         Solution solution = solutionRepository.findById(solutionId);
         List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
         List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
+        List<ExerciseFile> exerciseFiles = exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId());
         List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
         int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(solution.getExerciseId()).getNumber();
         List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
@@ -308,7 +310,7 @@ public class SolutionEstimationController {
                 List<Result> testResults = testPublicFiles(List.of(solutionTests), outDirPath);
                 removeTempFiles();
 
-                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(controllingFlags)), created);
+                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseFiles, exerciseSwitchers, List.of(controllingFlags)), created);
                 List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources, created);
                 compileFiles(controllingPaths, outDirPath);
                 List<Result> controllingTestResults = testPublicFiles(List.of(solutionTests), outDirPath);
@@ -332,12 +334,16 @@ public class SolutionEstimationController {
     }
 
     private boolean bugWasFound(List<Result> testResults, List<Result> controllingTestResults) {
+        int resultFailures = 0;
+        int controllingResultFailures = 0;
         for (int j = 0; j < testResults.size(); j++) {
             Result result = testResults.get(j);
             Result controllingResult = controllingTestResults.get(j);
-            if (result.getFailureCount() - controllingResult.getFailureCount() >= 1) {
-                return true;
-            }
+            resultFailures += result.getFailureCount();
+            controllingResultFailures += controllingResult.getFailureCount();
+        }
+        if (resultFailures - controllingResultFailures >= 1) {
+            return true;
         }
         return false;
     }
@@ -439,27 +445,6 @@ public class SolutionEstimationController {
         exerciseSources.forEach(exerciseSource -> {
             paths.add(storageService
                     .load(created + "/exercise_content" + exerciseSource.getId())
-                    .resolve(exerciseSource.getFilename()));
-        });
-
-        return paths;
-    }
-
-    private List<Path> getPrivateBlackBoxPaths(List<ExerciseTest> exerciseTests, List<ExerciseSwitcher> exerciseSwitchers, List<ExerciseSource> exerciseSources) {
-        List<Path> paths = new ArrayList<>();
-        exerciseTests.forEach(exerciseTest -> {
-            paths.add(storageService
-                    .load("exercise_content" + exerciseTest.getId())
-                    .resolve(exerciseTest.getFilename()));
-        });
-        exerciseSwitchers.forEach(exerciseSwitcher -> {
-            paths.add(storageService
-                    .load("exercise_content" + exerciseSwitcher.getId())
-                    .resolve(exerciseSwitcher.getFilename()));
-        });
-        exerciseSources.forEach(exerciseSource -> {
-            paths.add(storageService
-                    .load("exercise_content" + exerciseSource.getId())
                     .resolve(exerciseSource.getFilename()));
         });
 
