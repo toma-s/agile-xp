@@ -1,16 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Solution } from '../../shared/solution/solution.model';
-import { SolutonService } from '../../shared/solution/soluton.service';
-import { SolutonSourceService } from '../../shared/solution-source/solution-source.service';
-import { SolutonTestService } from '../../shared/solution-test/solution-test.service';
-import { SolutionEstimationService } from '../../shared/solution-estimation/solution-estimation.service';
-import { SolutionFileService } from '../../shared/solution-file/solution-file.service';
-import { SolutionSource } from '../../shared/solution-source/solution-source.model';
+import { Solution } from '../../shared/solution/solution/solution.model';
+import { SolutonService } from '../../shared/solution/solution/soluton.service';
+import { SolutonSourceService } from '../../shared/solution/solution-source/solution-source.service';
+import { SolutonTestService } from '../../shared/solution/solution-test/solution-test.service';
+import { SolutionEstimationService } from '../../shared/solution/solution-estimation/solution-estimation.service';
+import { SolutionFileService } from '../../shared/solution/solution-file/solution-file.service';
+import { SolutionSource } from '../../shared/solution/solution-source/solution-source.model';
 import { forkJoin, Observable } from 'rxjs';
-import { SolutionTest } from '../../shared/solution-test/solution-test.model';
-import { SolutionFile } from '../../shared/solution-file/solution-file.model';
-import { ExerciseType } from '../../shared/exercise-type/exercise-type.model';
+import { SolutionTest } from '../../shared/solution/solution-test/solution-test.model';
+import { SolutionFile } from '../../shared/solution/solution-file/solution-file.model';
 
 @Component({
   selector: 'solve-run',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ExerciseTypeService } from '../../shared/exercise-type/exercise-type.service';
-import { ExerciseType } from '../../shared/exercise-type/exercise-type.model';
+import { ExerciseTypeService } from '../../shared/exercise/exercise-type/exercise-type.service';
+import { ExerciseType } from '../../shared/exercise/exercise-type/exercise-type.model';
 
 @Component({
   selector: 'create-intro',

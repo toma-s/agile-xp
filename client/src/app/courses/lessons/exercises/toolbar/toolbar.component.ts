@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Exercise } from '../shared/exercise/exercise.model';
-import { ExerciseService } from '../shared/exercise/exercise.service';
+import { Exercise } from '../shared/exercise/exercise/exercise.model';
+import { ExerciseService } from '../shared/exercise/exercise/exercise.service';
 
 @Component({
   selector: 'toolbar',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, Validators, ControlContainer } from '@angular/forms';
 import { Lesson } from '../../../shared/lesson.model';
-import { Exercise } from '../../shared/exercise/exercise.model';
+import { Exercise } from '../../shared/exercise/exercise/exercise.model';
 
 @Component({
   selector: 'create-editors',
