@@ -14,8 +14,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
-import { CreateWhiteBoxComponent,
-  DialogOverviewExampleDialogComponent } from './exercise-create/create-white-box/create-white-box.component';
 import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -25,23 +23,18 @@ import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.compo
 import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.component';
 import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
 import { CreateIntroComponent } from './exercise-create/create-intro/create-intro.component';
-import { CreateSourceComponent } from './exercise-create/create-source/create-source.component';
 import { DialogComponent } from './exercise-create/dialog/dialog.component';
-import { CreateTestComponent } from './exercise-create/create-test/create-test.component';
-import { CreateEditorComponent } from './exercise-create/create-editor/create-editor.component';
-import { CreateFileComponent } from './exercise-create/create-file/create-file.component';
+import { CreateEditorsComponent } from './exercise-create/create-editors/create-editors.component';
 import { CreateSubmitComponent } from './exercise-create/create-submit/create-submit.component';
+import { EditorComponent } from './exercise-create/create-editors/editor/editor.component';
 
 @NgModule({
   entryComponents: [
-    DialogOverviewExampleDialogComponent,
     DialogComponent
   ],
   declarations: [
     ExerciseCreateComponent,
-    CreateWhiteBoxComponent,
     ExerciseSolveComponent,
-    DialogOverviewExampleDialogComponent,
     ToolbarComponent,
     SolveIntroComponent,
     SolveSourceComponent,
@@ -49,12 +42,10 @@ import { CreateSubmitComponent } from './exercise-create/create-submit/create-su
     SolveFileComponent,
     SolveRunComponent,
     CreateIntroComponent,
-    CreateSourceComponent,
     DialogComponent,
-    CreateTestComponent,
-    CreateEditorComponent,
-    CreateFileComponent,
-    CreateSubmitComponent
+    CreateEditorsComponent,
+    CreateSubmitComponent,
+    EditorComponent
   ],
   imports: [
     CommonModule,

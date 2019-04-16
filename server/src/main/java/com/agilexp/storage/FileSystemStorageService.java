@@ -5,7 +5,10 @@ import java.net.MalformedURLException;
 import java.nio.file.*;
 import java.util.stream.Stream;
 
-import com.agilexp.dbmodel.*;
+import com.agilexp.dbmodel.exercise.ExerciseContent;
+import com.agilexp.dbmodel.exercise.ExerciseFile;
+import com.agilexp.dbmodel.solution.SolutionContent;
+import com.agilexp.dbmodel.solution.SolutionFile;
 import com.agilexp.model.ExerciseFlags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -45,6 +48,10 @@ public class FileSystemStorageService implements StorageService {
         String directoryName = "exercise_content" + exerciseContent.getId();
         if (exerciseContent instanceof ExerciseFlags) {
             directoryName = "flags";
+        }
+        if (exerciseContent instanceof ExerciseFile) {
+            directoryName = "game_config";
+            // FIXME: 02-Apr-19 when file storage issue is solved
         }
 
         createFolder(created, null);

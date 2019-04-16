@@ -44,6 +44,13 @@ create table exercise_content (
     exercise_content_type text
 );
 
+drop table if exists bugs_number cascade;
+create table bugs_number (
+    id serial primary key,
+    exercise_id int references exercises on delete cascade,
+    number int
+);
+
 drop table if exists solutions cascade;
 create table solutions (
 	id serial primary key,

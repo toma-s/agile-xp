@@ -985,7 +985,7 @@ public class ReversiLeftTest {
     }
 
     @Test
-    public void testFinishGame() {
+    public void testExecuteFinishGame() {
         ReversiLeft game = new ReversiLeft(gameAlmostComplete);
         game.execute("G7");
 

@@ -22,7 +22,7 @@ export class CourseDetailComponent implements OnInit {
 
   course: Course;
   lessons: Array<Lesson>;
-  exercises: Array<Exercise>;
+  exercises: Map<number, Array<Exercise>>;
   exerciseTypes: Array<ExerciseType>;
 
   constructor(
@@ -33,53 +33,70 @@ export class CourseDetailComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
-    this.getCourse();
-    this.getLessons();
+  async ngOnInit() {
+    await this.setCourse();
+    await this.setLessons();
     this.getExercises();
     this.getExerciseTypes();
   }
 
-  getCourse() {
+  async setCourse() {
     const course$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.courseService.getCourseById(Number(params.get('id')))
       )
     );
-    course$.subscribe(
-      data => {
-        this.course = data;
-        console.log(this.course);
-      },
-      error => console.log(error)
-    );
+    this.course = await this.getCourse(course$);
   }
 
-  getLessons() {
+  getCourse(course$): Promise<Course> {
+    return new Promise<Course>((resolve, reject) => {
+      course$.subscribe(
+        data => {
+          resolve(data);
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+
+  async setLessons() {
     const lessons$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.lessonService.getLessonsByCourseId(Number(params.get('id')))
       )
     );
-    lessons$.subscribe(
-      data => {
-        this.lessons = data;
-        console.log(this.lessons);
-      },
-      error => console.log(error)
-    );
+    this.lessons = await this.getLessons(lessons$);
   }
 
-  getExercises() {
-    this.exerciseService.getExercisesList()
-      .subscribe(
-        data => {
-          this.exercises = data;
-          console.log(data);
-        },
-        error => console.log(error)
+  getLessons(lessons$) {
+    return new Promise<Array<Lesson>>((resolve, reject) => {
+      lessons$.subscribe(
+        data => resolve(data),
+        error => reject(error)
       );
+    });
   }
+
+
+  getExercises() {
+    this.exercises = new Map();
+    this.lessons.forEach(async lesson => {
+      const exercises = await this.getExercisesArrayByLessonId(lesson.id);
+      this.exercises.set(lesson.id, exercises);
+    });
+  }
+
+  getExercisesArrayByLessonId(lessonId: number): Promise<Array<Exercise>> {
+    return new Promise<Array<Exercise>>((resolve, reject) => {
+      this.exerciseService.getExercisesByLessonId(lessonId).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
+  }
+
 
   getExerciseTypes() {
     this.exerciseTypeService.getExericseTypesList()
@@ -92,15 +109,8 @@ export class CourseDetailComponent implements OnInit {
       );
   }
 
-  getExercisesByLessonId(lessonId: number) {
-    const exercises = new Array<Exercise>();
-    this.exercises.forEach(ex => {
-      if (ex.lessonId === lessonId) {
-        exercises.push(ex);
-      }
-    });
-    console.log(exercises);
-    return exercises;
+  getExercisesByLessonId(lessonId: number): Array<Exercise> {
+    return this.exercises.get(lessonId);
   }
 
   getExerciseTypeName(typeId: number) {
@@ -111,7 +121,7 @@ export class CourseDetailComponent implements OnInit {
     this.lessonService.deleteLesson(lesson.id).subscribe(
       data => {
         console.log(data);
-        this.getLessons();
+        this.setLessons();
       },
       error => console.log(error)
     );

@@ -15,4 +15,8 @@ export class SolutonTestService {
   createSolutionTest(solutionTest: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}/create`, solutionTest);
   }
+
+  getSolutionTestsByExerciseId(exerciseId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
+  }
 }

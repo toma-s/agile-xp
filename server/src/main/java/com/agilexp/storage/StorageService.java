@@ -1,6 +1,7 @@
 package com.agilexp.storage;
 
-import com.agilexp.dbmodel.*;
+import com.agilexp.dbmodel.exercise.ExerciseContent;
+import com.agilexp.dbmodel.solution.SolutionContent;
 import org.springframework.core.io.Resource;
 
 import java.nio.file.Path;

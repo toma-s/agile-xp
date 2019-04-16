@@ -9,43 +9,39 @@
     <create-intro [exerciseFormGroup]="exerciseFormGroup"></create-intro>
 
     <div *ngIf="exerciseFormGroup.controls.intro">
-      <div [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value.value">
-        <div *ngSwitchCase="'source-test'">
+      <div *ngIf="exerciseFormGroup.controls.intro.controls.type.value"
+        [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value.value">
+        <div *ngSwitchCase="'whitebox'">
           <p>source-test</p>
-          <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
-          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
         </div>
-        <div *ngSwitchCase="'source-test-file'">
+        <div *ngSwitchCase="'whitebox-file'">
           <p>source-test-file</p>
-          <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
-          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-          <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
-          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editors>
         </div>
-        <div *ngSwitchCase="'test'">
-          <p>test</p>
-          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+        <div *ngSwitchCase="'blackbox'">
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
         </div>
-        <div *ngSwitchCase="'test-file'">
+        <div *ngSwitchCase="'blackbox-file'">
           <p>test-file</p>
-          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-          <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
-          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+          <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editors>
         </div>
         <div *ngSwitchCase="'theory'">
           <p>theory</p>
         </div>
         <div *ngSwitchDefault>
           <p>default</p>
-          <!-- TODO | remove when done -->
-          <create-source [exerciseFormGroup]="exerciseFormGroup"></create-source>
-          <create-test [exerciseFormGroup]="exerciseFormGroup"></create-test>
-          <create-file [exerciseFormGroup]="exerciseFormGroup"></create-file>
-          <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
         </div>
       </div>
+
+      <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+
     </div>
 
   </ng-template>

@@ -15,4 +15,8 @@ export class SolutionFileService {
   createSolutionFile(solutionFile: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}/create`, solutionFile);
   }
+
+  getSolutionFilesByExerciseId(exerciseId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
+  }
 }

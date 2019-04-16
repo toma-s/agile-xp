@@ -9,6 +9,12 @@ import { ExerciseTestService } from '../../shared/exercise-test/exercise-test.se
 import { ExerciseFileService } from '../../shared/exercise-file/exercise-file.service';
 import { ExerciseTest } from '../../shared/exercise-test/exercise-test.model';
 import { ExerciseFile } from '../../shared/exercise-file/exercise-file.model';
+import { ActivatedRoute } from '@angular/router';
+import { PublicTest } from '../../shared/public-test/public-test.model';
+import { PublicTestService } from '../../shared/public-test/public-test.service';
+import { PublicSourceService } from '../../shared/public-source/public-source.service';
+import { PublicSource } from '../../shared/public-source/public-source.model';
+import { PublicFileService } from '../../shared/public-file/public-file.service';
 
 @Component({
   selector: 'create-submit',
@@ -24,7 +30,11 @@ export class CreateSubmitComponent implements OnInit {
     private exerciseService: ExerciseService,
     private exerciseSourceService: ExerciseSourceService,
     private exerciseTestService: ExerciseTestService,
-    private exerciseFileService: ExerciseFileService
+    private exerciseFileService: ExerciseFileService,
+    private publicSourceService: PublicSourceService,
+    private publicTestService: PublicTestService,
+    private publicFileService: PublicFileService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -58,8 +68,8 @@ export class CreateSubmitComponent implements OnInit {
     exercise.name = this.exerciseFormGroup.get('intro').get('name').value;
     exercise.description = this.exerciseFormGroup.get('intro').get('description').value;
     exercise.typeId = this.exerciseFormGroup.get('intro').get('type').value['id'];
-    exercise.index = this.exerciseFormGroup.get('params').get('index').value;
-    exercise.lessonId = this.exerciseFormGroup.get('params').get('lessonId').value;
+    exercise.index = Number(this.route.snapshot.params['index']);
+    exercise.lessonId = Number(this.route.snapshot.params['lessonId']);
     console.log(exercise);
     return exercise;
   }
@@ -67,24 +77,32 @@ export class CreateSubmitComponent implements OnInit {
   async saveExerciseItems() {
     const exerciseTypeValue = this.exerciseFormGroup.get('intro').get('type').value['value'];
     switch (exerciseTypeValue) {
-      case 'source-test': {
-        await this.saveSources();
-        await this.saveTests();
+      case 'whitebox': {
+        await this.savePrivateSources();
+        await this.savePublicSourcesByType();
+        await this.savePrivateTests();
+        await this.savePublicTestsByType();
         break;
       }
-      case 'source-test-file': {
-        await this.saveSources();
-        await this.saveTests();
-        await this.saveFiles();
+      case 'whitebox-file': {
+        await this.savePrivateSources();
+        await this.savePublicSourcesByType();
+        await this.savePrivateTests();
+        await this.savePublicTestsByType();
+        await this.savePrivateFiles();
+        await this.savePublicFilesByType();
         break;
       }
-      case 'test': {
-        await this.saveTests();
+      case 'blackbox': {
+        await this.savePrivateSources();
+        await this.savePublicTestsByType();
         break;
       }
-      case 'test-file': {
-        await this.saveTests();
-        await this.saveFiles();
+      case 'blackbox-file': {
+        await this.savePrivateSources();
+        await this.savePublicTestsByType();
+        await this.savePrivateFiles();
+        await this.savePublicFilesByType();
         break;
       }
       default: {
@@ -93,11 +111,11 @@ export class CreateSubmitComponent implements OnInit {
     }
   }
 
-  saveSources(): Promise<{}> {
-    const sources: Array<ExerciseSource> = this.exerciseFormGroup.get('sources').value;
+  savePrivateSources(): Promise<{}> {
+    const sources: Array<ExerciseSource> = this.exerciseFormGroup.get('sourceControl').get('privateControl').get('tabContent').value;
     const observables = [];
     sources.forEach(s => {
-      observables.push(this.saveSource(s));
+      observables.push(this.savePrivateSource(s));
     });
     return new Promise((resolve, reject) => {
       forkJoin(observables).subscribe(
@@ -110,17 +128,29 @@ export class CreateSubmitComponent implements OnInit {
     });
   }
 
-  saveSource(source: ExerciseSource): Observable<{}> {
+  savePrivateSource(source: ExerciseSource): Observable<{}> {
     source.exerciseId = this.exercise.id;
     console.log(source);
     return this.exerciseSourceService.createExerciseSource(source);
   }
 
-  saveTests(): Promise<{}> {
-    const tests: Array<ExerciseTest> = this.exerciseFormGroup.get('tests').value;
+  savePublicSourcesByType() {
+    const shownSourcesType: string = this.exerciseFormGroup.get('sourceControl').get('publicType').get('chosen').value;
+    console.log(shownSourcesType);
+    if (shownSourcesType === 'same') {
+      console.log('same run');
+      const shownSources: Array<PublicSource> = this.exerciseFormGroup.get('sourceControl').get('privateControl').get('tabContent').value;
+      this.saveShownSources(shownSources);
+    } else if (shownSourcesType === 'custom') {
+      const shownSources: Array<ExerciseSource> = this.exerciseFormGroup.get('sourceControl').get('publicControl').get('tabContent').value;
+      this.saveShownSources(shownSources);
+    }
+  }
+
+  saveShownSources(shownSources: Array<PublicSource>): Promise<{}> {
     const observables = [];
-    tests.forEach(s => {
-      observables.push(this.saveTest(s));
+    shownSources.forEach(s => {
+      observables.push(this.saveShownSource(s));
     });
     return new Promise((resolve, reject) => {
       forkJoin(observables).subscribe(
@@ -133,14 +163,73 @@ export class CreateSubmitComponent implements OnInit {
     });
   }
 
-  saveTest(test: ExerciseTest): Observable<{}> {
+  saveShownSource(source: ExerciseSource): Observable<{}> {
+    source.exerciseId = this.exercise.id;
+    console.log(source);
+    return this.publicSourceService.createPublicSource(source);
+  }
+
+
+  savePrivateTests(): Promise<{}> {
+    const exerciseTests: Array<ExerciseTest> = this.exerciseFormGroup.get('testControl').get('privateControl').get('tabContent').value;
+    const observables = [];
+    exerciseTests.forEach(s => {
+      observables.push(this.saveExerciseTest(s));
+    });
+    return new Promise((resolve, reject) => {
+      forkJoin(observables).subscribe(
+        data => {
+          resolve(data);
+          console.log(data);
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+  saveExerciseTest(test: ExerciseTest): Observable<{}> {
     test.exerciseId = this.exercise.id;
     console.log(test);
     return this.exerciseTestService.createExerciseTest(test);
   }
 
-  saveFiles(): Promise<{}> {
-    const files: Array<ExerciseTest> = this.exerciseFormGroup.get('files').value;
+  savePublicTestsByType() {
+    const shownTestsType: string = this.exerciseFormGroup.get('testControl').get('publicType').get('chosen').value;
+    console.log(shownTestsType);
+    if (shownTestsType === 'same') {
+      const shownTests: Array<PublicTest> = this.exerciseFormGroup.get('testControl').get('privateControl').get('tabContent').value;
+      console.log('same run');
+      this.saveShownTests(shownTests);
+    } else if (shownTestsType === 'custom') {
+      const shownTests: Array<PublicTest> = this.exerciseFormGroup.get('testControl').get('publicControl').get('tabContent').value;
+      this.saveShownTests(shownTests);
+    }
+  }
+
+  saveShownTests(shownTests: Array<PublicTest>): Promise<{}> {
+    const observables = [];
+    shownTests.forEach(s => {
+      observables.push(this.saveShownTest(s));
+    });
+    return new Promise((resolve, reject) => {
+      forkJoin(observables).subscribe(
+        data => {
+          resolve(data);
+          console.log(data);
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+  saveShownTest(test: PublicTest): Observable<{}> {
+    test.exerciseId = this.exercise.id;
+    console.log(test);
+    return this.publicTestService.createPublicTest(test);
+  }
+
+  savePrivateFiles(): Promise<{}> {
+    const files: Array<ExerciseTest> = this.exerciseFormGroup.get('fileControl').get('privateControl').get('tabContent').value;
     const observables = [];
     files.forEach(s => {
       observables.push(this.saveFile(s));
@@ -160,6 +249,41 @@ export class CreateSubmitComponent implements OnInit {
     file.exerciseId = this.exercise.id;
     console.log(file);
     return this.exerciseFileService.createExerciseFile(file);
+  }
+
+  savePublicFilesByType() {
+    const shownFilesType: string = this.exerciseFormGroup.get('fileControl').get('publicType').get('chosen').value;
+    console.log(shownFilesType);
+    if (shownFilesType === 'same') {
+      const shownFiles: Array<PublicTest> = this.exerciseFormGroup.get('fileControl').get('publicControl').get('tabContent').value;
+      console.log('same run');
+      this.saveShownFiles(shownFiles);
+    } else if (shownFilesType === 'custom') {
+      const shownFiles: Array<PublicTest> = this.exerciseFormGroup.get('fileControl').get('publicControl').get('tabContent').value;
+      this.saveShownFiles(shownFiles);
+    }
+  }
+
+  saveShownFiles(shownFiles: Array<PublicTest>): Promise<{}> {
+    const observables = [];
+    shownFiles.forEach(s => {
+      observables.push(this.saveFile(s));
+    });
+    return new Promise((resolve, reject) => {
+      forkJoin(observables).subscribe(
+        data => {
+          resolve(data);
+          console.log(data);
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+  saveShownFile(file: ExerciseFile): Observable<{}> {
+    file.exerciseId = this.exercise.id;
+    console.log(file);
+    return this.publicFileService.createPublicFile(file);
   }
 
 

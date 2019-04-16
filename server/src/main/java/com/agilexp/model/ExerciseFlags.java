@@ -1,6 +1,6 @@
 package com.agilexp.model;
 
-import com.agilexp.dbmodel.ExerciseContent;
+import com.agilexp.dbmodel.exercise.ExerciseContent;
 
 public class ExerciseFlags extends ExerciseContent {
 
