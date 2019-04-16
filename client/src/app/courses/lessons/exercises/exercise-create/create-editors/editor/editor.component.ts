@@ -22,7 +22,6 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     this.form = <FormGroup>this.controlContainer.control;
-    console.log(this.form);
   }
 
   remove(index: number) {

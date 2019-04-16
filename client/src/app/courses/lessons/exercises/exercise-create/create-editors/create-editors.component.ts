@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl, ControlContainer } from '@angular/forms';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { DialogComponent } from '../dialog/dialog.component';
+import { FormGroup, Validators, ControlContainer } from '@angular/forms';
 import { Lesson } from '../../../shared/lesson.model';
 import { Exercise } from '../../shared/exercise/exercise.model';
 
@@ -19,77 +17,44 @@ export class CreateEditorsComponent implements OnInit {
   lessons: Array<Lesson>;
   exercises: Array<Exercise>;
   form: FormGroup;
+  viewPrivateInput: boolean;
+  viewPublicInput: boolean;
 
   constructor(
-    private fb: FormBuilder,
     public controlContainer: ControlContainer
   ) { }
 
   ngOnInit() {
     this.form = <FormGroup>this.controlContainer.control;
-    this.setExerciseType();
-    this.setFormControls();
-  }
-
-  setExerciseType() {
     this.exerciseType = this.form.get('exerciseType').value;
-    this.exerciseTypePlural = this.form.get('exerciseTypePlural').value;
-  }
-
-  setFormControls() {
-    this.form.addControl(
-      'privateControl', this.fb.group({
-        tabContent: this.fb.array([this.create()])
-      })
-    );
-    this.form.addControl(
-      'publicType', this.fb.group({
-        chosen: ['same', Validators.compose([Validators.required])]
-      })
-    );
-    this.form.addControl(
-      'publicControl', this.fb.group({
-        tabContent: this.fb.array([this.create()])
-      })
-    );
+    console.log(this.form);
     this.setupValidators();
+    this.setViewInput();
   }
 
-  create(): FormGroup {
-    return this.fb.group({
-      filename: ['TestFilename.java'],
-      content: ['', Validators.compose([Validators.required])]
-    });
+  setViewInput() {
+    const privateType = `private-${this.exerciseType}`;
+    this.viewPrivateInput = this.exerciseFormGroup.get('params').get('viewInput').get(privateType).value;
+    const publicType = `public-${this.exerciseType}`;
+    this.viewPublicInput = this.exerciseFormGroup.get('params').get('viewInput').get(publicType).value;
+    console.log(`this.viewPrivateInput: ${this.viewPrivateInput} for ${this.exerciseType}`);
+    console.log(`this.viewPublicInput: ${this.viewPublicInput} for ${this.exerciseType}`);
   }
-
 
   setupValidators() {
-    this.exerciseFormGroup.get('intro').get('type').valueChanges.subscribe(typeValue => {
-      if (typeValue.value.search(this.exerciseType) !== -1) {
-        this.form.get('exercise').controls.forEach(control => {
+    this.form.get('publicType').get('chosen').valueChanges.subscribe(chosenValue => {
+      if (chosenValue === 'custom') {
+        this.form.get('publicControl').get('tabContent').controls.forEach(control => {
           control.get('content').setValidators(Validators.required);
           control.get('content').updateValueAndValidity();
         });
-      } else {
-        this.form.get('exercise').controls.forEach(control => {
+      } else if (chosenValue === 'same') {
+        this.form.get('publicControl').get('tabContent').controls.forEach(control => {
           control.get('content').clearValidators();
           control.get('content').updateValueAndValidity();
         });
       }
     });
-    // this.form.get('shownType').get('chosen').valueChanges.subscribe(chosenValue => {
-    //   if (chosenValue === 'custom') {
-    //     this.form.get('shown').controls.forEach(control => {
-    //       control.get('content').setValidators(Validators.required);
-    //       control.get('content').updateValueAndValidity();
-    //     });
-    //   } else if (chosenValue === 'same') {
-    //     this.form.get('shown').controls.forEach(control => {
-    //       control.get('content').clearValidators();
-    //       control.get('content').updateValueAndValidity();
-    //     });
-    //   }
-    // });
   }
 
 }

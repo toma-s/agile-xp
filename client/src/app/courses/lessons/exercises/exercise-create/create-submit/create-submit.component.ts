@@ -75,14 +75,14 @@ export class CreateSubmitComponent implements OnInit {
   async saveExerciseItems() {
     const exerciseTypeValue = this.exerciseFormGroup.get('intro').get('type').value['value'];
     switch (exerciseTypeValue) {
-      case 'source-test': {
+      case 'whitebox': {
         await this.savePrivateSources();
         await this.savePublicSourcesByType();
         await this.savePrivateTests();
         await this.savePublicTestsByType();
         break;
       }
-      case 'source-test-file': {
+      case 'whitebox-file': {
         await this.savePrivateSources();
         await this.savePublicSourcesByType();
         await this.savePrivateTests();
@@ -91,12 +91,12 @@ export class CreateSubmitComponent implements OnInit {
         await this.savePublicFilesByType();
         break;
       }
-      case 'test': {
+      case 'blackbox': {
         await this.savePrivateSources();
         await this.savePublicTestsByType();
         break;
       }
-      case 'test-file': {
+      case 'blackbox-file': {
         await this.savePrivateSources();
         await this.savePublicTestsByType();
         await this.savePrivateFiles();

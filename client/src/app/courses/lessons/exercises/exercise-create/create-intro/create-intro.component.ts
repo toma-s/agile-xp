@@ -20,7 +20,7 @@ export class CreateIntroComponent implements OnInit {
 
   async ngOnInit() {
     this.types = await this.getExerciseTypes();
-    this.setExerciseIntro();
+    // this.setExerciseIntro();
   }
 
   getExerciseTypes(): any {
@@ -32,14 +32,14 @@ export class CreateIntroComponent implements OnInit {
     });
   }
 
-  setExerciseIntro() {
-    this.exerciseFormGroup.addControl(
-      'intro', this.fb.group({
-        name: [null, Validators.compose([Validators.required])],
-        description: [null, Validators.compose([Validators.required])],
-        type: [null, Validators.compose([Validators.required])]
-      })
-    );
-  }
+  // setExerciseIntro() {
+  //   this.exerciseFormGroup.addControl(
+  //     'intro', this.fb.group({
+  //       name: [null, Validators.compose([Validators.required])],
+  //       description: [null, Validators.compose([Validators.required])],
+  //       type: [null, Validators.compose([Validators.required])]
+  //     })
+  //   );
+  // }
 
 }

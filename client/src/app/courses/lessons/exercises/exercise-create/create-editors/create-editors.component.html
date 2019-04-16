@@ -1,22 +1,39 @@
 <div [formGroup]="controlContainer.control" class="mat-elevation-z2 card">
 
-  <h3 class="capitalize">{{exerciseTypePlural}}</h3>
+  <h3 class="capitalize">{{exerciseType}}</h3>
 
-  <editor formGroupName="privateControl" [type]="private"></editor>
+  <div *ngIf="viewPrivateInput; then privateInput; else noPrivateInput"></div>
 
-  <div>
-    <h4>Shown {{exerciseTypePlural}}</h4>
-
-    <mat-form-field>
-      <mat-select [formControl]="form.controls.publicType.controls.chosen">
-        <mat-option value="same">The same</mat-option>
-        <mat-option value="custom">Custom</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div *ngIf="form.controls.publicType.controls.chosen.value === 'custom'">
-      <editor formGroupName="publicControl" [type]="public"></editor>
+  <ng-template #privateInput>
+    <h4>Hidden {{exerciseType}}</h4>
+    
+    <div>
+      <editor formGroupName="privateControl" [type]="private"></editor>
     </div>
-  </div>
+
+    <div *ngIf="viewPublicInput">
+      <h4>Shown {{exerciseType}}</h4>
+
+      <mat-form-field>
+        <mat-select [formControl]="form.controls.publicType.controls.chosen">
+          <mat-option value="same">The same</mat-option>
+          <mat-option value="custom">Custom</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="form.controls.publicType.controls.chosen.value === 'custom'">
+        <editor formGroupName="publicControl" [type]="public"></editor>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #noPrivateInput>
+    <div *ngIf="viewPublicInput">
+      <h4>Shown {{exerciseType}}</h4>
+      <div>
+        <editor formGroupName="publicControl" [type]="public"></editor>
+      </div>
+    </div>
+  </ng-template>
 
 </div>
