@@ -5,12 +5,12 @@ import { Exercise } from '../shared/exercise/exercise/exercise.model';
 import { ExerciseTypeService } from '../shared/exercise/exercise-type/exercise-type.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ExerciseType } from '../shared/exercise/exercise-type/exercise-type.model';
-import { ExerciseSource } from '../shared/exercise/exercise-source/exercise-source.model';
-import { ExerciseTest } from '../shared/exercise/exercise-test/exercise-test.model';
-import { ExerciseFile } from '../shared/exercise/exercise-file/exercise-file.model';
 import { PublicSourceService } from '../shared/public/public-source/public-source.service';
 import { PublicTestService } from '../shared/public/public-test/public-test.service';
 import { PublicFileService } from '../shared/public/public-file/public-file.service';
+import { PublicSource } from '../shared/public/public-source/public-source.model';
+import { PublicFile } from '../shared/public/public-file/public-file.model';
+import { PublicTest } from '../shared/public/public-test/public-test.model';
 
 @Component({
   selector: 'exercise-solve',
@@ -20,12 +20,11 @@ import { PublicFileService } from '../shared/public/public-file/public-file.serv
 export class ExerciseSolveComponent implements OnInit {
 
   exercise: Exercise;
-  solutionSources: Array<ExerciseSource> = new Array<ExerciseSource>();
-  solutionTests: Array<ExerciseTest> = new Array<ExerciseTest>();
-  solutionFiles: Array<ExerciseFile> = new Array<ExerciseFile>();
-
   exerciseType: ExerciseType;
   solutionFormGroup: FormGroup;
+  solutionSources: Array<PublicSource> = new Array<PublicSource>();
+  solutionTests: Array<PublicTest> = new Array<PublicTest>();
+  solutionFiles: Array<PublicFile> = new Array<PublicFile>();
 
   constructor(
     private route: ActivatedRoute,
