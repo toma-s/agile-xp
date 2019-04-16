@@ -32,7 +32,22 @@ export class ExerciseCreateComponent implements OnInit {
       })
     });
     this.exerciseFormGroup.addControl(
-      'testControl', new FormGroup({})
+      'sourceControl', this.fb.group({
+        exerciseType: ['source'],
+        exerciseTypePlural: ['sources']
+      })
+    );
+    this.exerciseFormGroup.addControl(
+      'testControl', this.fb.group({
+        exerciseType: ['test'],
+        exerciseTypePlural: ['tests']
+      })
+    );
+    this.exerciseFormGroup.addControl(
+      'fileControl', this.fb.group({
+        exerciseType: ['file'],
+        exerciseTypePlural: ['files']
+      })
     );
   }
 

@@ -13,6 +13,8 @@ import { Exercise } from '../../shared/exercise/exercise.model';
 export class CreateEditorComponent implements OnInit {
 
   @Input() exerciseFormGroup: FormGroup;
+  exerciseType: string;
+  exerciseTypePlural: string;
   editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
   dialogRef: MatDialogRef<DialogComponent>;
   lessons: Array<Lesson>;
@@ -27,23 +29,29 @@ export class CreateEditorComponent implements OnInit {
 
   ngOnInit() {
     this.form = <FormGroup>this.controlContainer.control;
+    this.setExerciseType();
     console.log(this.controlContainer);
     this.setFormControls();
   }
 
+  setExerciseType() {
+    this.exerciseType = this.form.get('exerciseType').value;
+    this.exerciseTypePlural = this.form.get('exerciseTypePlural').value;
+  }
+
   setFormControls() {
     this.form.addControl(
-      'exerciseTests', this.fb.array([this.createExerciseTests()])
+      'exercise', this.fb.array([this.createExerciseTests()])
     );
     this.form.addControl(
-      'shownTestsType', this.fb.group({
+      'shownType', this.fb.group({
         chosen: ['same', Validators.compose([Validators.required])]
       })
     );
     this.form.addControl(
-      'shownTests', this.fb.array([this.createShownTests()])
+      'shown', this.fb.array([this.createShownTests()])
     );
-    this.setupValidators();
+    // this.setupValidators();
   }
 
   createExerciseTests(): FormGroup {
@@ -60,34 +68,34 @@ export class CreateEditorComponent implements OnInit {
     });
   }
 
-  setupValidators() {
-    this.exerciseFormGroup.get('intro').get('type').valueChanges.subscribe(typeValue => {
-      if (typeValue.value.search('test') !== -1) {
-        this.exerciseFormGroup.get('exerciseTests').controls.forEach(control => {
-          control.get('content').setValidators(Validators.required);
-          control.get('content').updateValueAndValidity();
-        });
-      } else {
-        this.exerciseFormGroup.get('exerciseTests').controls.forEach(control => {
-          control.get('content').clearValidators();
-          control.get('content').updateValueAndValidity();
-        });
-      }
-    });
-    this.form.get('shownTestsType').get('chosen').valueChanges.subscribe(chosenValue => {
-      if (chosenValue === 'custom') {
-        this.form.get('shownTests').controls.forEach(control => {
-          control.get('content').setValidators(Validators.required);
-          control.get('content').updateValueAndValidity();
-        });
-      } else if (chosenValue === 'same') {
-        this.form.get('shownTests').controls.forEach(control => {
-          control.get('content').clearValidators();
-          control.get('content').updateValueAndValidity();
-        });
-      }
-    });
-  }
+  // setupValidators() {
+  //   this.exerciseFormGroup.get('intro').get('type').valueChanges.subscribe(typeValue => {
+  //     if (typeValue.value.search('test') !== -1) {
+  //       this.exerciseFormGroup.get('exerciseTests').controls.forEach(control => {
+  //         control.get('content').setValidators(Validators.required);
+  //         control.get('content').updateValueAndValidity();
+  //       });
+  //     } else {
+  //       this.exerciseFormGroup.get('exerciseTests').controls.forEach(control => {
+  //         control.get('content').clearValidators();
+  //         control.get('content').updateValueAndValidity();
+  //       });
+  //     }
+  //   });
+  //   this.form.get('shownTestsType').get('chosen').valueChanges.subscribe(chosenValue => {
+  //     if (chosenValue === 'custom') {
+  //       this.form.get('shownTests').controls.forEach(control => {
+  //         control.get('content').setValidators(Validators.required);
+  //         control.get('content').updateValueAndValidity();
+  //       });
+  //     } else if (chosenValue === 'same') {
+  //       this.form.get('shownTests').controls.forEach(control => {
+  //         control.get('content').clearValidators();
+  //         control.get('content').updateValueAndValidity();
+  //       });
+  //     }
+  //   });
+  // }
 
 
   remove(index: number) {

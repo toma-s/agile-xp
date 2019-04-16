@@ -1,10 +1,10 @@
 <div [formGroup]="controlContainer.control" class="mat-elevation-z2 card">
 
-  <h3>Source code</h3>
+  <h3 class="capitalize">{{exerciseTypePlural}}</h3>
 
-  <div formArrayName="exerciseTests" class="env">
+  <div formArrayName="exercise" class="env">
     <mat-tab-group>
-      <mat-tab *ngFor="let test of form.controls.exerciseTests.controls; let i = index;">
+      <mat-tab *ngFor="let test of form.controls.exercise.controls; let i = index;">
         <div [formGroupName]="i">
           <ng-template mat-tab-label>
             {{ test.value.filename }}
@@ -34,19 +34,19 @@
   </div>
 
   <div>
-    <h4>Shown source code</h4>
+    <h4>Shown {{exerciseTypePlural}}</h4>
 
     <mat-form-field>
-      <mat-select [formControl]="form.controls.shownTestsType.controls.chosen">
+      <mat-select [formControl]="form.controls.shownType.controls.chosen">
         <mat-option value="same">The same</mat-option>
         <mat-option value="custom">Custom</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <div *ngIf="form.controls.shownTestsType.controls.chosen.value === 'custom'">
-      <div formArrayName="shownTests" class="env">
+    <div *ngIf="form.controls.shownType.controls.chosen.value === 'custom'">
+      <div formArrayName="shown" class="env">
         <mat-tab-group>
-          <mat-tab *ngFor="let test of form.controls.shownTests.controls; let i = index;">
+          <mat-tab *ngFor="let test of form.controls.shown.controls; let i = index;">
             <div [formGroupName]="i">
               <ng-template mat-tab-label>
                 {{ test.value.filename }}
