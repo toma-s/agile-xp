@@ -3,11 +3,9 @@
     <a mat-button color="primary" routerLink="../../../../">Back</a>
 
     <div class="nav">
-      <a mat-button color="primary" [routerLink]="['../', previousExerciseId]" [disabled]="0 > previousIndex"
-        (click)="update()">Previous</a>
+      <a mat-button color="primary" [routerLink]="['../', previousExerciseId]" [disabled]="0 > previousIndex">Previous</a>
 
-      <a mat-button color="primary" [routerLink]="['../', nextExerciseId]" [disabled]="nextIndex >= maxIndex"
-        (click)="update()">Next</a>
+      <a mat-button color="primary" [routerLink]="['../', nextExerciseId]" [disabled]="nextIndex >= maxIndex">Next</a>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
