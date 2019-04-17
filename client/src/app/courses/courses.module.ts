@@ -10,7 +10,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 
 import { CoursesRoutingModule } from './courses-routing.module';
-import { CoursesComponent } from './courses.component';
 import { CourseCreateComponent } from './course-create/course-create.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
@@ -20,7 +19,6 @@ import { LessonsModule } from './lessons/lessons.module';
   declarations: [
     CourseCreateComponent,
     CoursesListComponent,
-    CoursesComponent,
     CourseDetailComponent
   ],
   imports: [
