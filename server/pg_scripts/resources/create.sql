@@ -73,3 +73,4 @@ create table solution_estimations (
 	estimation text,
     solution_id int references solutions on delete cascade
 );
+

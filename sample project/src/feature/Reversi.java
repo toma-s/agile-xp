@@ -1,5 +1,4 @@
-package buggy;
-
+package feature;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -173,7 +172,6 @@ public class Reversi {
             System.out.println("Move on not empty tile is not permitted");
             return;
         }
-
         if (winner != -1) {
             System.out.println("The game is over. No moves are permitted");
             return;
@@ -194,6 +192,7 @@ public class Reversi {
             if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
+            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];

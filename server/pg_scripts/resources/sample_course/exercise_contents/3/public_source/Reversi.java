@@ -1,5 +1,3 @@
-package feature;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReversiAlpha {
+public class Reversi {
 
     int[][] playground;
     int leftB = 0;
@@ -20,10 +18,10 @@ public class ReversiAlpha {
     int winner = -1;
     boolean ended = false;
 
-    ReversiAlpha() {
+    Reversi() {
     }
 
-    ReversiAlpha(Path gameFilePath) {
+    Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
@@ -103,8 +101,8 @@ public class ReversiAlpha {
                             System.out.println("Incorrect tile input");
                             return;
                         }
-                        int r = Integer.parseInt(tile.substring(1, 2));
-                        int c = Integer.parseInt(tile.substring(0, 1));
+                        int r = Integer.parseInt(tile.substring(0, 1));
+                        int c = Integer.parseInt(tile.substring(1, 2));
                         playground[r][c] = players[i - 1];
                     }
                 }
@@ -304,10 +302,10 @@ public class ReversiAlpha {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config_num/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
-        ReversiAlpha rev = new ReversiAlpha(gameFilePath);
+        Reversi rev = new Reversi(gameFilePath);
         rev.run();
 
     }

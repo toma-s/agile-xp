@@ -10,7 +10,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config_num/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
     private Path gameComplete = new File(gameConfigDir + "game_complete.txt").toPath();
     private Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
