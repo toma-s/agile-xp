@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Exercise } from '../shared/exercise/exercise/exercise.model';
 import { ExerciseService } from '../shared/exercise/exercise/exercise.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'toolbar',
@@ -9,7 +10,7 @@ import { ExerciseService } from '../shared/exercise/exercise/exercise.service';
 })
 export class ToolbarComponent implements OnInit {
 
-  @Input() exercise: Exercise;
+  exercise: Exercise;
   exercises: Array<Exercise>;
   maxIndex: number;
   previousIndex: number;
@@ -18,21 +19,39 @@ export class ToolbarComponent implements OnInit {
   nextExerciseId: number;
 
   constructor(
+    private route: ActivatedRoute,
     private exerciseService: ExerciseService
   ) { }
 
-  ngOnInit() {
-    this.getExercisesCount();
+  async ngOnInit() {
+    this.exercises = await this.getExercises();
+    this.route.params.subscribe(() => this.reload());
   }
 
-  getExercisesCount() {
-    this.exerciseService.getExercisesByLessonId(this.exercise.lessonId).subscribe(
-      data => {
-        this.exercises = data;
-        console.log(data);
-        this.getIndexes();
-      }
-    );
+  async reload() {
+    this.exercise = await this.getExercise();
+    this.getIndexes();
+  }
+
+  getExercise(): Promise<Exercise> {
+    return new Promise<Exercise>((resolve, reject) => {
+      this.route.params.subscribe(params =>
+        this.exerciseService.getExerciseById(params['exerciseId']).subscribe(
+          data => resolve(data),
+          error => reject(error)
+        )
+      );
+    });
+  }
+
+  getExercises() {
+    const lessonId = Number(this.route.snapshot.params['lessonId']);
+    return new Promise<Array<Exercise>>((resolve, reject) => {
+      this.exerciseService.getExercisesByLessonId(lessonId).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
   }
 
   getIndexes() {
@@ -44,10 +63,6 @@ export class ToolbarComponent implements OnInit {
 
     this.nextIndex = currentIndex + 1;
     this.nextExerciseId = this.nextIndex < this.maxIndex ? this.exercises[this.nextIndex].id : this.exercises[currentIndex].id;
-    console.log(`prev index: ${this.previousIndex}`);
-    console.log(`prev ex id: ${this.previousExerciseId}`);
-    console.log(`next index: ${this.nextIndex}`);
-    console.log(`next ex id: ${this.nextExerciseId}`);
   }
 
 }
