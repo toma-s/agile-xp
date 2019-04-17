@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ExerciseType } from '../shared/exercise-type/exercise-type.model';
-import { Exercise } from '../shared/exercise/exercise.model';
+import { ExerciseType } from '../shared/exercise/exercise-type/exercise-type.model';
+import { Exercise } from '../shared/exercise/exercise/exercise.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

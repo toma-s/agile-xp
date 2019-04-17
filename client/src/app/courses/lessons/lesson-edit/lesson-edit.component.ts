@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LessonService } from '../shared/lesson.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { ExerciseService } from '../exercises/shared/exercise/exercise.service';
+import { ExerciseService } from '../exercises/shared/exercise/exercise/exercise.service';
 import { Lesson } from '../shared/lesson.model';
-import { Exercise } from '../exercises/shared/exercise/exercise.model';
+import { Exercise } from '../exercises/shared/exercise/exercise/exercise.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { forkJoin, of, Observable } from 'rxjs';
 

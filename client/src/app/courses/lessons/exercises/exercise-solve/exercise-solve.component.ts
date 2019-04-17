@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { ExerciseService } from '../shared/exercise/exercise.service';
-import { Exercise } from '../shared/exercise/exercise.model';
-import { ExerciseTypeService } from '../shared/exercise-type/exercise-type.service';
+import { ActivatedRoute } from '@angular/router';
+import { ExerciseService } from '../shared/exercise/exercise/exercise.service';
+import { Exercise } from '../shared/exercise/exercise/exercise.model';
+import { ExerciseTypeService } from '../shared/exercise/exercise-type/exercise-type.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ExerciseType } from '../shared/exercise-type/exercise-type.model';
-import { ExerciseSource } from '../shared/exercise-source/exercise-source.model';
-import { ExerciseTest } from '../shared/exercise-test/exercise-test.model';
-import { ExerciseFile } from '../shared/exercise-file/exercise-file.model';
-import { ExerciseSourceService } from '../shared/exercise-source/exercise-source.service';
-import { ExerciseTestService } from '../shared/exercise-test/exercise-test.service';
-import { ExerciseFileService } from '../shared/exercise-file/exercise-file.service';
+import { ExerciseType } from '../shared/exercise/exercise-type/exercise-type.model';
+import { PublicSourceService } from '../shared/public/public-source/public-source.service';
+import { PublicTestService } from '../shared/public/public-test/public-test.service';
+import { PublicFileService } from '../shared/public/public-file/public-file.service';
+import { SolutionSource } from '../shared/solution/solution-source/solution-source.model';
+import { SolutionTest } from '../shared/solution/solution-test/solution-test.model';
+import { SolutionFile } from '../shared/solution/solution-file/solution-file.model';
 
 @Component({
   selector: 'exercise-solve',
@@ -21,77 +20,112 @@ import { ExerciseFileService } from '../shared/exercise-file/exercise-file.servi
 export class ExerciseSolveComponent implements OnInit {
 
   exercise: Exercise;
-  exerciseSources: Array<ExerciseSource> = new Array<ExerciseSource>();
-  exerciseTests: Array<ExerciseTest> = new Array<ExerciseTest>();
-  exerciseFiles: Array<ExerciseFile> = new Array<ExerciseFile>();
-
   exerciseType: ExerciseType;
   solutionFormGroup: FormGroup;
+  solutionSources: Array<SolutionSource> = new Array<SolutionSource>();
+  solutionTests: Array<SolutionTest> = new Array<SolutionTest>();
+  solutionFiles: Array<SolutionFile> = new Array<SolutionFile>();
 
   constructor(
     private route: ActivatedRoute,
     private exerciseService: ExerciseService,
-    private exerciseSourceService: ExerciseSourceService,
-    private exerciseTestService: ExerciseTestService,
-    private exerciseFileService: ExerciseFileService,
+    private publicSourceService: PublicSourceService,
+    private publicTestService: PublicTestService,
+    private publicFileService: PublicFileService,
     private exerciseTypeService: ExerciseTypeService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.getExercise();
+    this.route.params.subscribe(() => this.reload());
   }
 
-  getExercise() {
-    const exerciseId = Number(this.route.snapshot.params['exerciseId']);
-    this.exerciseService.getExerciseById(exerciseId).subscribe(
-      data => {
-        this.exercise = data;
-        this.getExerciseType();
-      },
-      error => console.log(error)
-    );
+  async reload() {
+    this.resetFormGroup();
+    this.exercise = await this.getExercise();
+    this.exerciseType =  await this.getExerciseType();
+    await this.getSolutionItems();
+    this.createForm();
+    console.log(this.solutionFormGroup);
   }
 
-  getExerciseType() {
-    this.exerciseTypeService.getExerciseTypeById(this.exercise.typeId).subscribe(
-      data => {
-        this.exerciseType = data;
-        console.log(data);
-        this.getSourceContent();
-      },
-      error => console.log(error)
-    );
+  resetFormGroup() {
+    this.solutionFormGroup = null;
   }
 
-  getSourceContent() {
-    this.exerciseSourceService.getExerciseSourcesByExerciseId(this.exercise.id)
-      .subscribe(
-        data => {
-          this.exerciseSources = data;
-          this.getSourceTests();
-        },
-        error => console.log(error)
+  getExercise(): Promise<Exercise> {
+    return new Promise<Exercise>((resolve, reject) => {
+      this.route.params.subscribe(params =>
+        this.exerciseService.getExerciseById(params['exerciseId']).subscribe(
+          data => resolve(data),
+          error => reject(error)
+        )
       );
+    });
   }
 
-  getSourceTests() {
-    this.exerciseTestService.getExerciseTestsByExerciseId(this.exercise.id).subscribe(
-      data => {
-        this.exerciseTests = data;
-        this.getSourceFiles();
+  getExerciseType(): Promise<ExerciseType> {
+    return new Promise<ExerciseType>((resolve, reject) => {
+      this.exerciseTypeService.getExerciseTypeById(this.exercise.typeId).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
+  }
+
+  async getSolutionItems() {
+    switch (this.exerciseType.value) {
+      case 'whitebox': {
+        this.solutionSources = await this.getSolutionSources();
+        this.solutionTests = await this.getSolutionTests();
+        break;
       }
-    );
+      case 'whitebox-file': {
+        this.solutionSources = await this.getSolutionSources();
+        this.solutionTests = await this.getSolutionTests();
+        this.solutionFiles = await this.getSolutionFiles();
+        break;
+      }
+      case 'blackbox': {
+        this.solutionTests = await this.getSolutionTests();
+        break;
+      }
+      case 'blackbox-file': {
+        this.solutionTests = await this.getSolutionTests();
+        this.solutionFiles = await this.getSolutionFiles();
+        break;
+      }
+      default: {
+        console.log('defaut: exercise type was not found');
+      }
+    }
   }
 
-  getSourceFiles() {
-    this.exerciseFileService.getExerciseFilesByExerciseId(this.exercise.id).subscribe(
-      data => {
-        this.exerciseFiles = data;
-        this.createForm();
-      },
-      error => console.log(error)
-    );
+  getSolutionSources(): Promise<Array<SolutionSource>> {
+    return new Promise<Array<SolutionSource>>((resolve, reject) => {
+      this.publicSourceService.getPublicSourcesByExerciseId(this.exercise.id).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
+  }
+
+  getSolutionTests(): Promise<Array<SolutionTest>> {
+    return new Promise<Array<SolutionTest>>((resolve, reject) => {
+      this.publicTestService.getPublicTestsByExerciseId(this.exercise.id).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
+  }
+
+  getSolutionFiles(): Promise<Array<SolutionFile>> {
+    return new Promise<Array<SolutionFile>>((resolve, reject) => {
+      this.publicFileService.getPublicFilesByExerciseId(this.exercise.id).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
   }
 
 
@@ -99,32 +133,9 @@ export class ExerciseSolveComponent implements OnInit {
     this.solutionFormGroup = this.fb.group({
     });
     this.setExerciseIntro();
-    switch (this.exerciseType.value) {
-      case 'whitebox': {
-        this.setExerciseSources();
-        this.setExerciseTests();
-        break;
-      }
-      case 'whitebox-file': {
-        this.setExerciseSources();
-        this.setExerciseTests();
-        this.setExerciseFiles();
-        break;
-      }
-      case 'blackbox': {
-        this.setExerciseTests();
-        break;
-      }
-      case 'blackbox-file': {
-        this.setExerciseTests();
-        this.setExerciseFiles();
-        break;
-      }
-      default: {
-        console.log('defaut: exercise type was not found');
-      }
-    }
-    console.log(this.solutionFormGroup);
+    this.setSolutionControl('source', this.solutionSources);
+    this.setSolutionControl('test', this.solutionTests);
+    this.setSolutionControl('file', this.solutionFiles);
   }
 
   setExerciseIntro() {
@@ -133,29 +144,17 @@ export class ExerciseSolveComponent implements OnInit {
         exerciseId: [this.exercise.id],
         exerciseName: [this.exercise.name],
         exerciseDescription: [this.exercise.description],
-        exerciseType: [this.exerciseType.value],
-        exerciseLoadSolutionSources: [this.exercise.loadSolutionSources],
-        exerciseLoadSolutionTests: [this.exercise.loadSolutionTests],
-        exerciseLoadSolutionFiles: [this.exercise.loadSolutionFiles]
+        exerciseType: [this.exerciseType.value]
       })
     );
   }
 
-  setExerciseSources() {
+  setSolutionControl(solutionType: string, intialSolution) {
     this.solutionFormGroup.addControl(
-      'exerciseSources', this.fb.array(this.getGroup(this.exerciseSources))
-    );
-  }
-
-  setExerciseTests() {
-    this.solutionFormGroup.addControl(
-      'exerciseTests', this.fb.array(this.getGroup(this.exerciseTests))
-    );
-  }
-
-  setExerciseFiles() {
-    this.solutionFormGroup.addControl(
-      'exerciseFiles', this.fb.array(this.getGroup(this.exerciseFiles))
+      `${solutionType}Control`, this.fb.group({
+        solutionType: solutionType,
+        solutionControl: this.fb.array(this.getGroup(intialSolution))
+      })
     );
   }
 

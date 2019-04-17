@@ -18,15 +18,13 @@ import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.componen
 import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SolveIntroComponent } from './exercise-solve/solve-intro/solve-intro.component';
-import { SolveSourceComponent } from './exercise-solve/solve-source/solve-source.component';
-import { SolveTestComponent } from './exercise-solve/solve-test/solve-test.component';
-import { SolveFileComponent } from './exercise-solve/solve-file/solve-file.component';
 import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
 import { CreateIntroComponent } from './exercise-create/create-intro/create-intro.component';
 import { DialogComponent } from './exercise-create/dialog/dialog.component';
 import { CreateEditorsComponent } from './exercise-create/create-editors/create-editors.component';
 import { CreateSubmitComponent } from './exercise-create/create-submit/create-submit.component';
-import { EditorComponent } from './exercise-create/create-editors/editor/editor.component';
+import { EditorComponent } from './exercise-create/editor/editor.component';
+import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor.component';
 
 @NgModule({
   entryComponents: [
@@ -37,15 +35,13 @@ import { EditorComponent } from './exercise-create/create-editors/editor/editor.
     ExerciseSolveComponent,
     ToolbarComponent,
     SolveIntroComponent,
-    SolveSourceComponent,
-    SolveTestComponent,
-    SolveFileComponent,
     SolveRunComponent,
     CreateIntroComponent,
     DialogComponent,
     CreateEditorsComponent,
     CreateSubmitComponent,
-    EditorComponent
+    EditorComponent,
+    SolveEditorComponent
   ],
   imports: [
     CommonModule,

@@ -1,14 +1,14 @@
 .card {
   margin: 15px 0;
 
-  .source {
+  .editor {
     height: 80vh;
 
-    .source__editor {
+    .editor__container {
       height: calc(80vh - 48px);
       border: 1px solid #ebebeb;
 
-      .source__monaco {
+      .editor__monaco {
         height: 100%;
         overflow: hidden;
       }

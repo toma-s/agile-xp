@@ -1,20 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Exercise } from '../../shared/exercise/exercise.model';
-import { ExerciseService } from '../../shared/exercise/exercise.service';
+import { Exercise } from '../../shared/exercise/exercise/exercise.model';
+import { ExerciseService } from '../../shared/exercise/exercise/exercise.service';
 import { forkJoin, Observable } from 'rxjs';
-import { ExerciseSource } from '../../shared/exercise-source/exercise-source.model';
-import { ExerciseSourceService } from '../../shared/exercise-source/exercise-source.service';
-import { ExerciseTestService } from '../../shared/exercise-test/exercise-test.service';
-import { ExerciseFileService } from '../../shared/exercise-file/exercise-file.service';
-import { ExerciseTest } from '../../shared/exercise-test/exercise-test.model';
-import { ExerciseFile } from '../../shared/exercise-file/exercise-file.model';
+import { ExerciseSource } from '../../shared/exercise/exercise-source/exercise-source.model';
+import { ExerciseSourceService } from '../../shared/exercise/exercise-source/exercise-source.service';
+import { ExerciseTestService } from '../../shared/exercise/exercise-test/exercise-test.service';
+import { ExerciseFileService } from '../../shared/exercise/exercise-file/exercise-file.service';
+import { ExerciseTest } from '../../shared/exercise/exercise-test/exercise-test.model';
+import { ExerciseFile } from '../../shared/exercise/exercise-file/exercise-file.model';
 import { ActivatedRoute } from '@angular/router';
-import { PublicTest } from '../../shared/public-test/public-test.model';
-import { PublicTestService } from '../../shared/public-test/public-test.service';
-import { PublicSourceService } from '../../shared/public-source/public-source.service';
-import { PublicSource } from '../../shared/public-source/public-source.model';
-import { PublicFileService } from '../../shared/public-file/public-file.service';
+import { PublicTest } from '../../shared/public/public-test/public-test.model';
+import { PublicTestService } from '../../shared/public/public-test/public-test.service';
+import { PublicSourceService } from '../../shared/public/public-source/public-source.service';
+import { PublicSource } from '../../shared/public/public-source/public-source.model';
+import { PublicFileService } from '../../shared/public/public-file/public-file.service';
 
 @Component({
   selector: 'create-submit',
