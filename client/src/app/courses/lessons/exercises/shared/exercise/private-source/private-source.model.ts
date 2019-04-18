@@ -1,4 +1,4 @@
-export class ExerciseSource {
+export class PrivateSource {
   id: number;
   filename: string;
   content: string;
