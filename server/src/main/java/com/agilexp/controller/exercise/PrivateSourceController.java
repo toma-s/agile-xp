@@ -34,7 +34,7 @@ public class PrivateSourceController {
     public List<PrivateSource> getExerciseSourcesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get exercise sources with exercise id " + exerciseId + "...");
 
-        List<PrivateSource> exerciseSources = new ArrayList<>(repository.findExerciseSourcesByExerciseId(exerciseId));
+        List<PrivateSource> exerciseSources = new ArrayList<>(repository.findPrivateSourcesByExerciseId(exerciseId));
         return exerciseSources;
     }
 }

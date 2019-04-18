@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface PrivateFileRepository extends CrudRepository<PrivateFile, Long> {
-    List<PrivateFile> findExerciseFilesByExerciseId(long exerciseId);
+    List<PrivateFile> findPrivateFilesByExerciseId(long exerciseId);
 }

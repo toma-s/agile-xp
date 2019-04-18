@@ -30,7 +30,7 @@ public class PrivateFileController {
     public List<PrivateFile> getExerciseFilesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get exercise files with exercise id " + exerciseId + "...");
 
-        List<PrivateFile> _exerciseFiles = new ArrayList<>(repository.findExerciseFilesByExerciseId(exerciseId));
+        List<PrivateFile> _exerciseFiles = new ArrayList<>(repository.findPrivateFilesByExerciseId(exerciseId));
         System.out.format("Found exercise files from exercise %s: %s\n", exerciseId, _exerciseFiles);
         return _exerciseFiles;
     }

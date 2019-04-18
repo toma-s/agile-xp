@@ -19,10 +19,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { QuillModule } from 'ngx-quill';
 
 import { CoursesModule } from './courses/courses.module';
 
-
+const quillConfig = {
+};
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { CoursesModule } from './courses/courses.module';
     MatDividerModule,
     CoursesModule,
     MonacoEditorModule.forRoot(),
+    QuillModule.forRoot(quillConfig),
     DragDropModule
   ],
   providers: [CdkColumnDef],

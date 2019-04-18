@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { QuillModule } from 'ngx-quill';
 
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
@@ -64,7 +65,8 @@ import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor
     MatDialogModule,
     MatDividerModule,
     ExercisesRoutingModule,
-    MonacoEditorModule
+    MonacoEditorModule,
+    QuillModule
   ]
 })
 export class ExercisesModule { }

@@ -4,23 +4,22 @@
 
   <div class="intro" *ngIf="exerciseFormGroup.controls.intro">
 
-    <mat-form-field class="intro__field intro__field--name">
+    <mat-form-field class="intro__field intro__name">
       <input matInput placeholder="Title" [formControl]="exerciseFormGroup.controls.intro.controls.name" maxlength="35">
     </mat-form-field>
 
-    <mat-form-field class="intro__field intro__field--descr">
-      <textarea matInput placeholder="Description" rows="10"
-        [formControl]="exerciseFormGroup.controls.intro.controls.description">
-            </textarea>
-    </mat-form-field>
+    <mat-form-field class="intro__field intro__type">
+        <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.type">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{type.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field class="intro__field intro__field--type">
-      <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.type">
-        <mat-option *ngFor="let type of types" [value]="type">
-          {{type.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div>
+      <h4>Description</h4>
+      <quill-editor [formControl]="exerciseFormGroup.controls.intro.controls.description" [style]="{height: '250px'}"></quill-editor>
+    </div>
 
   </div>
 

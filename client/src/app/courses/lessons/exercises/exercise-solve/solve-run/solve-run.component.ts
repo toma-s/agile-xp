@@ -56,12 +56,12 @@ export class SolveRunComponent implements OnInit {
   }
 
   setExerciseType() {
-    this.exerciseTypeValue = this.solutionFormGroup.controls.intro.controls.exerciseType.value;
+    this.exerciseTypeValue = this.solutionFormGroup.get('intro').get('exerciseType').value;
   }
 
 
   async run() {
-    this.solutionFormGroup.controls.solutionEstimation.controls.estimation.value = 'Running...';
+    this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue('Running...');
 
     await this.setSolution();
     await this.saveSolutionItems();

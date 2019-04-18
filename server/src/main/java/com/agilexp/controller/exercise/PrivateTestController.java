@@ -31,7 +31,7 @@ public class PrivateTestController {
     public List<PrivateTest> getExerciseTestByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get exercise tests with exercise id " + exerciseId + "...");
 
-        List<PrivateTest> exerciseTests = new ArrayList<>(repository.findExerciseTestsByExerciseId(exerciseId));
+        List<PrivateTest> exerciseTests = new ArrayList<>(repository.findPrivateTestsByExerciseId(exerciseId));
         return exerciseTests;
     }
 }
