@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, Validators, ControlContainer } from '@angular/forms';
+import { FormGroup, Validators, ControlContainer, FormArray } from '@angular/forms';
 import { Lesson } from '../../../shared/lesson.model';
 import { Exercise } from '../../shared/exercise/exercise/exercise.model';
 
@@ -42,12 +42,14 @@ export class CreateEditorsComponent implements OnInit {
   setupValidators() {
     this.form.get('publicType').get('chosen').valueChanges.subscribe(chosenValue => {
       if (chosenValue === 'custom') {
-        this.form.get('publicControl').get('tabContent').controls.forEach(control => {
+        const array = this.form.get('publicControl').get('tabContent') as FormArray;
+        array.controls.forEach(control => {
           control.get('content').setValidators(Validators.required);
           control.get('content').updateValueAndValidity();
         });
       } else if (chosenValue === 'same') {
-        this.form.get('publicControl').get('tabContent').controls.forEach(control => {
+        const array = this.form.get('publicControl').get('tabContent') as FormArray;
+        array.controls.forEach(control => {
           control.get('content').clearValidators();
           control.get('content').updateValueAndValidity();
         });

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExerciseType } from '../shared/exercise/exercise-type/exercise-type.model';
 import { Exercise } from '../shared/exercise/exercise/exercise.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-exercise-create',
@@ -122,14 +122,16 @@ export class ExerciseCreateComponent implements OnInit {
   }
 
   setValidators(controlType: string, publicitypControl: string) {
-    this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent').controls.forEach(control => {
+    const array = this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent') as FormArray;
+    array.controls.forEach(control => {
       control.get('content').setValidators(Validators.required);
       control.get('content').updateValueAndValidity();
     });
   }
 
   clearValidators(controlType: string, publicitypControl: string) {
-    this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent').controls.forEach(control => {
+    const array = this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent') as FormArray;
+    array.controls.forEach(control => {
       control.get('content').clearValidators();
       control.get('content').updateValueAndValidity();
     });

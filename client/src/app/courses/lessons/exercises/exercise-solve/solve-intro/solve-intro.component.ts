@@ -20,8 +20,8 @@ export class SolveIntroComponent implements OnInit {
   }
 
   getValues() {
-    this.exerciseName = this.solutionFormGroup.controls.intro.controls.exerciseName.value;
-    this.exerciseDescription = this.solutionFormGroup.controls.intro.controls.exerciseDescription.value;
+    this.exerciseName = this.solutionFormGroup.get('intro').get('exerciseName').value;
+    this.exerciseDescription = this.solutionFormGroup.get('intro').get('exerciseName').value;
   }
 
 }

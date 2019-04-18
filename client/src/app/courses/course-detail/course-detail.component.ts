@@ -103,7 +103,6 @@ export class CourseDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.exerciseTypes = data;
-          console.log(data);
         },
         error => console.log(error)
       );
@@ -120,7 +119,6 @@ export class CourseDetailComponent implements OnInit {
   delete(lesson: Lesson) {
     this.lessonService.deleteLesson(lesson.id).subscribe(
       data => {
-        console.log(data);
         this.setLessons();
       },
       error => console.log(error)
