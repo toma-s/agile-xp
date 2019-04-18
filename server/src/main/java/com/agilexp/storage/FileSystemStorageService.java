@@ -6,7 +6,7 @@ import java.nio.file.*;
 import java.util.stream.Stream;
 
 import com.agilexp.dbmodel.exercise.ExerciseContent;
-import com.agilexp.dbmodel.exercise.ExerciseFile;
+import com.agilexp.dbmodel.exercise.PrivateFile;
 import com.agilexp.dbmodel.solution.SolutionContent;
 import com.agilexp.dbmodel.solution.SolutionFile;
 import com.agilexp.model.ExerciseFlags;
@@ -49,7 +49,7 @@ public class FileSystemStorageService implements StorageService {
         if (exerciseContent instanceof ExerciseFlags) {
             directoryName = "flags";
         }
-        if (exerciseContent instanceof ExerciseFile) {
+        if (exerciseContent instanceof PrivateFile) {
             directoryName = "game_config";
             // FIXME: 02-Apr-19 when file storage issue is solved
         }

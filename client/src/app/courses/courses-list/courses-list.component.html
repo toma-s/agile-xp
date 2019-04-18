@@ -1,5 +1,3 @@
-<a mat-button color="primary" routerLink="../" routerLinkActive="active" mat-button>Back</a>
-
 <h2>Courses overview</h2>
 
 <div *ngIf="dataSource !== undefined">
@@ -52,4 +50,15 @@
       routerLinkActive="active"></mat-row>
 
   </mat-table>
+</div>
+
+<div class="link">
+  <a routerLink="../courseCreate" routerLinkActive="active">
+    <div class="link__content">
+      <button mat-button type="button" mat-stroked-button color="primary">
+        <!-- <mat-icon class="link__icon">add</mat-icon> -->
+        Create course
+      </button>
+    </div>
+  </a>
 </div>

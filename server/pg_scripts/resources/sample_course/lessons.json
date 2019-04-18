@@ -1,0 +1,19 @@
+{
+  "1": [
+    {
+      "name": "'Debugging the legacy program'",
+      "created": "'2019-03-28 11:08:09.851'",
+      "description": "'The aim is to find bugs in the legacy program and fix them, but keep the original structure of the content. The user should write his/her own tests to find the bugs and fix them'"
+    },
+    {
+      "name": "'Adding new features to the legacy program'",
+      "created": "'2019-03-28 11:08:09.851'",
+      "description": "'The aim is to add some features to the legacy content'"
+    },
+    {
+      "name": "'Refactoring lesson'",
+      "created": "'2019-03-28 11:08:09.851'",
+      "description": "'The aim is to refactor the content of the legacy program so the program remains functional. Every exercise corresponds to a step of refactoring'"
+    }
+  ]
+}
