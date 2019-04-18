@@ -165,14 +165,18 @@ public class Reversi {
         int r = r0;
         int c = c0;
 
-        if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
-            System.out.println("Move out of bounds is not permitted");
-            return;
-        }
-        if (playground[r][c] != -1) {
-            System.out.println("Move on not empty tile is not permitted");
-            return;
-        }
+//        if (! switcher.BUGS[0]) {
+            if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
+                System.out.println("Move out of bounds is not permitted");
+                return;
+            }
+//        }
+//        if (! switcher.BUGS[1]) {
+            if (playground[r][c] != -1) {
+                System.out.println("Move on not empty tile is not permitted");
+                return;
+            }
+//        }
 
         if (winner != -1) {
             System.out.println("The game is over. No moves are permitted");

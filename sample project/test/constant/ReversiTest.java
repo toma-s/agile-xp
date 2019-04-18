@@ -1,4 +1,4 @@
-package feature;
+package constant;
 
 import javafx.util.Pair;
 import org.junit.Test;
@@ -570,3 +570,4 @@ public class ReversiTest {
         return init;
     }
 }
+
