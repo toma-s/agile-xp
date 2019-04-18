@@ -41,9 +41,9 @@ public class SolutionEstimationController {
     @Autowired private SolutionSourceRepository solutionSourceRepository;
     @Autowired private SolutionTestRepository solutionTestRepository;
     @Autowired private SolutionFileRepository solutionFileRepository;
-    @Autowired private PrivateSourceRepository exerciseSourceRepository;
-    @Autowired private PrivateTestRepository exerciseTestRepository;
-    @Autowired private PrivateFileRepository exerciseFileRepository;
+    @Autowired private PrivateSourceRepository privateSourceRepository;
+    @Autowired private PrivateTestRepository privateTestRepository;
+    @Autowired private PrivateFileRepository privateFileRepository;
     @Autowired private BugsNumberRepository bugsNumberRepository;
 
     private final StorageService storageService;
@@ -93,10 +93,10 @@ public class SolutionEstimationController {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
 
         Solution solution = solutionRepository.findById(solutionId);
-        List<PrivateTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
+        List<PrivateTest> privateTests = privateTestRepository.findPrivateTestsByExerciseId(solution.getExerciseId());
 
         List<List<? extends SolutionContent>> solutionContents = List.of(solutionSources, solutionTests);
-        List<List<? extends ExerciseContent>> exerciseContents = List.of(exerciseTests);
+        List<List<? extends ExerciseContent>> exerciseContents = List.of(privateTests);
 
         Path outDirPath = storageService.load(created + "/solution_public" + solutionId);
         String publicEstimation = estimatePublic(solutionContents, outDirPath, created);
@@ -110,12 +110,12 @@ public class SolutionEstimationController {
         List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
 
         Solution solution = solutionRepository.findById(solutionId);
-        List<PrivateTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
-//      exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId())
+        List<PrivateTest> privateTests = privateTestRepository.findPrivateTestsByExerciseId(solution.getExerciseId());
+//      privateFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId())
 //      TODO: 02-Apr-19 exerciseFiles when solutionFiles work completely
 
         List<List<? extends SolutionContent>> solutionContents = List.of(solutionSources, solutionTests, solutionFiles);
-        List<List<? extends ExerciseContent>> exerciseContents = List.of(exerciseTests);
+        List<List<? extends ExerciseContent>> exerciseContents = List.of(privateTests);
 
         Path outDirPath = storageService.load(created + "/solution_private" + solutionId);
         String publicEstimation = estimatePublic(solutionContents, outDirPath, created);
@@ -234,7 +234,7 @@ public class SolutionEstimationController {
     private String estimateBlackBox(long solutionId, String created) {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
-        List<PrivateSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
+        List<PrivateSource> privateSources = privateSourceRepository.findPrivateSourcesByExerciseId(solution.getExerciseId());
         List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
         int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(solution.getExerciseId()).getNumber();
         List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
@@ -244,14 +244,14 @@ public class SolutionEstimationController {
         try {
             int bugsFound = 0;
             for (int i = 0; i < bugsNum; i++) {
-                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), created);
-                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources, created);
+                storeFiles(List.of(solutionTests), List.of(privateSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), created);
+                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, created);
                 compileFiles(paths, outDirPath);
                 List<Result> testResults = testPublicFiles(List.of(solutionTests), outDirPath);
                 removeTempFiles();
 
-                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseSwitchers, List.of(controllingFlags)), created);
-                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources, created);
+                storeFiles(List.of(solutionTests), List.of(privateSources, exerciseSwitchers, List.of(controllingFlags)), created);
+                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, created);
                 compileFiles(controllingPaths, outDirPath);
                 List<Result> controllingTestResults = testPublicFiles(List.of(solutionTests), outDirPath);
                 removeTempFiles();
@@ -292,9 +292,9 @@ public class SolutionEstimationController {
     private String estimateTestFile(long solutionId, String created) {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
-        List<PrivateSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
+        List<PrivateSource> privateSources = privateSourceRepository.findPrivateSourcesByExerciseId(solution.getExerciseId());
         List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
-        List<PrivateFile> exerciseFiles = exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId());
+        List<PrivateFile> privateFiles = privateFileRepository.findPrivateFilesByExerciseId(solution.getExerciseId());
         List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
         int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(solution.getExerciseId()).getNumber();
         List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
@@ -304,14 +304,14 @@ public class SolutionEstimationController {
         try {
             int bugsFound = 0;
             for (int i = 0; i < bugsNum; i++) {
-                storeFiles(List.of(solutionTests, solutionFiles), List.of(exerciseSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), created);
-                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources, created);
+                storeFiles(List.of(solutionTests, solutionFiles), List.of(privateSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), created);
+                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, created);
                 compileFiles(paths, outDirPath);
                 List<Result> testResults = testPublicFiles(List.of(solutionTests), outDirPath);
                 removeTempFiles();
 
-                storeFiles(List.of(solutionTests), List.of(exerciseSources, exerciseFiles, exerciseSwitchers, List.of(controllingFlags)), created);
-                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, exerciseSources, created);
+                storeFiles(List.of(solutionTests), List.of(privateSources, privateFiles, exerciseSwitchers, List.of(controllingFlags)), created);
+                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, created);
                 compileFiles(controllingPaths, outDirPath);
                 List<Result> controllingTestResults = testPublicFiles(List.of(solutionTests), outDirPath);
                 removeTempFiles();

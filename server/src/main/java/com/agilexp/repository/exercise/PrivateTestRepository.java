@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface PrivateTestRepository extends CrudRepository<PrivateTest, Long> {
-    List<PrivateTest> findExerciseTestsByExerciseId(long exerciseId);
+    List<PrivateTest> findPrivateTestsByExerciseId(long exerciseId);
 }
