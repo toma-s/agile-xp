@@ -23,7 +23,8 @@ import { QuillModule } from 'ngx-quill';
 
 import { CoursesModule } from './courses/courses.module';
 
-
+const quillConfig = {
+};
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { CoursesModule } from './courses/courses.module';
     MatDividerModule,
     CoursesModule,
     MonacoEditorModule.forRoot(),
-    QuillModule,
+    QuillModule.forRoot(quillConfig),
     DragDropModule
   ],
   providers: [CdkColumnDef],
