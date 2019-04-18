@@ -6,17 +6,17 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ExerciseFileService {
+export class PrivateTestService {
 
-  private baseUrl = `${environment.baseUrl}private-files`;
+  private baseUrl = `${environment.baseUrl}private-tests`;
 
   constructor(private http: HttpClient) { }
 
-  createExerciseFile(exerciseFile: Object): Observable<any> {
-    return this.http.post(`${this.baseUrl}/create`, exerciseFile);
+  createPrivateTest(exerciseTest: Object): Observable<any> {
+    return this.http.post(`${this.baseUrl}` + `/create`, exerciseTest);
   }
 
-  getExerciseFilesByExerciseId(exerciseId: number): Observable<any> {
+  getPrivateTestsByExerciseId(exerciseId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
   }
 }

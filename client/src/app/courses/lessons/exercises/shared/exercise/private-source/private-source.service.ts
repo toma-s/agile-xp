@@ -6,17 +6,17 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ExerciseSourceService {
+export class PrivateSourceService {
 
   private baseUrl = `${environment.baseUrl}private-sources`;
 
   constructor(private http: HttpClient) { }
 
-  createExerciseSource(exerciseSource: Object): Observable<any> {
+  createPrivateSource(exerciseSource: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}/create`, exerciseSource);
   }
 
-  getExerciseSourcesByExerciseId(exerciseId: number): Observable<any> {
+  getPrivateSourcesByExerciseId(exerciseId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
   }
 }

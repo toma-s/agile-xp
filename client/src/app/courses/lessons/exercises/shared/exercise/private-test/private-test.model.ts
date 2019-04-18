@@ -1,6 +1,6 @@
-export class ExerciseFile {
+export class PrivateTest {
   id: number;
-  exerciseId: number;
   filename: string;
   content: string;
+  exerciseId: number;
 }
