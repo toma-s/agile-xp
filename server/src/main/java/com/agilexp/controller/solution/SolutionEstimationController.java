@@ -3,16 +3,16 @@ package com.agilexp.controller.solution;
 import com.agilexp.compiler.Compiler;
 import com.agilexp.compiler.exception.CompilationFailedException;
 import com.agilexp.dbmodel.exercise.ExerciseContent;
-import com.agilexp.dbmodel.exercise.ExerciseFile;
-import com.agilexp.dbmodel.exercise.ExerciseSource;
-import com.agilexp.dbmodel.exercise.ExerciseTest;
+import com.agilexp.dbmodel.exercise.PrivateFile;
+import com.agilexp.dbmodel.exercise.PrivateSource;
+import com.agilexp.dbmodel.exercise.PrivateTest;
 import com.agilexp.dbmodel.solution.*;
 import com.agilexp.model.ExerciseFlags;
 import com.agilexp.model.ExerciseSwitcher;
 import com.agilexp.repository.exercise.BugsNumberRepository;
-import com.agilexp.repository.exercise.ExerciseFileRepository;
-import com.agilexp.repository.exercise.ExerciseSourceRepository;
-import com.agilexp.repository.exercise.ExerciseTestRepository;
+import com.agilexp.repository.exercise.PrivateFileRepository;
+import com.agilexp.repository.exercise.PrivateSourceRepository;
+import com.agilexp.repository.exercise.PrivateTestRepository;
 import com.agilexp.repository.solution.*;
 import com.agilexp.storage.StorageException;
 import com.agilexp.storage.StorageService;
@@ -41,9 +41,9 @@ public class SolutionEstimationController {
     @Autowired private SolutionSourceRepository solutionSourceRepository;
     @Autowired private SolutionTestRepository solutionTestRepository;
     @Autowired private SolutionFileRepository solutionFileRepository;
-    @Autowired private ExerciseSourceRepository exerciseSourceRepository;
-    @Autowired private ExerciseTestRepository exerciseTestRepository;
-    @Autowired private ExerciseFileRepository exerciseFileRepository;
+    @Autowired private PrivateSourceRepository exerciseSourceRepository;
+    @Autowired private PrivateTestRepository exerciseTestRepository;
+    @Autowired private PrivateFileRepository exerciseFileRepository;
     @Autowired private BugsNumberRepository bugsNumberRepository;
 
     private final StorageService storageService;
@@ -93,7 +93,7 @@ public class SolutionEstimationController {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
 
         Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
+        List<PrivateTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
 
         List<List<? extends SolutionContent>> solutionContents = List.of(solutionSources, solutionTests);
         List<List<? extends ExerciseContent>> exerciseContents = List.of(exerciseTests);
@@ -110,7 +110,7 @@ public class SolutionEstimationController {
         List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
 
         Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
+        List<PrivateTest> exerciseTests = exerciseTestRepository.findExerciseTestsByExerciseId(solution.getExerciseId());
 //      exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId())
 //      TODO: 02-Apr-19 exerciseFiles when solutionFiles work completely
 
@@ -234,7 +234,7 @@ public class SolutionEstimationController {
     private String estimateBlackBox(long solutionId, String created) {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
+        List<PrivateSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
         List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
         int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(solution.getExerciseId()).getNumber();
         List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
@@ -292,9 +292,9 @@ public class SolutionEstimationController {
     private String estimateTestFile(long solutionId, String created) {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
-        List<ExerciseSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
+        List<PrivateSource> exerciseSources = exerciseSourceRepository.findExerciseSourcesByExerciseId(solution.getExerciseId());
         List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
-        List<ExerciseFile> exerciseFiles = exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId());
+        List<PrivateFile> exerciseFiles = exerciseFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId());
         List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
         int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(solution.getExerciseId()).getNumber();
         List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
@@ -421,7 +421,7 @@ public class SolutionEstimationController {
                 .collect(Collectors.toList());
         List<Path> exercisePaths = exerciseContent.stream()
                 .flatMap(Collection::stream)
-                .filter(e -> e instanceof ExerciseTest)
+                .filter(e -> e instanceof PrivateTest)
                 .map(e -> storageService
                         .load(created + "/exercise_content" + e.getId())
                         .resolve(e.getFilename()))
@@ -430,7 +430,7 @@ public class SolutionEstimationController {
         return paths;
     }
 
-    private List<Path> getPublicBlackBoxPaths(List<SolutionTest> solutionTests, List<ExerciseSwitcher> exerciseSwitchers, List<ExerciseSource> exerciseSources, String created) {
+    private List<Path> getPublicBlackBoxPaths(List<SolutionTest> solutionTests, List<ExerciseSwitcher> exerciseSwitchers, List<PrivateSource> exerciseSources, String created) {
         List<Path> paths = new ArrayList<>();
         solutionTests.forEach(solutionTest -> {
             paths.add(storageService
@@ -480,7 +480,7 @@ public class SolutionEstimationController {
         List<Result> solutionTestsResults = new ArrayList<>();
         for (List<? extends ExerciseContent> exerciseContentList : exerciseContents) {
             for (ExerciseContent exerciseContent : exerciseContentList){
-                if (!exerciseContent.getClass().equals(ExerciseTest.class)) continue;
+                if (!exerciseContent.getClass().equals(PrivateTest.class)) continue;
                 try {
                     solutionTestsResults.add(Tester.test(outDirPath, exerciseContent.getFilename()));
                 } catch (TestFailedException e) {

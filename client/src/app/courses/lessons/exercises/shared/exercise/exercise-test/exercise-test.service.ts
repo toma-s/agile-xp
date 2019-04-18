@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ExerciseTestService {
 
-  private baseUrl = `${environment.baseUrl}exercise-tests`;
+  private baseUrl = `${environment.baseUrl}private-tests`;
 
   constructor(private http: HttpClient) { }
 

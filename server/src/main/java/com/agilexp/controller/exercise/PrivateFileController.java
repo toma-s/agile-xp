@@ -1,7 +1,7 @@
 package com.agilexp.controller.exercise;
 
-import com.agilexp.dbmodel.exercise.ExerciseFile;
-import com.agilexp.repository.exercise.ExerciseFileRepository;
+import com.agilexp.dbmodel.exercise.PrivateFile;
+import com.agilexp.repository.exercise.PrivateFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +11,13 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
-public class ExerciseFileController {
+public class PrivateFileController {
     @Autowired
-    ExerciseFileRepository repository;
+    PrivateFileRepository repository;
 
-    @PostMapping(value = "/exercise-files/create")
-    public ExerciseFile postExerciseFile(@RequestBody ExerciseFile exerciseFile) {
-        ExerciseFile _exerciseFile = repository.save(new ExerciseFile(
+    @PostMapping(value = "/private-files/create")
+    public PrivateFile postExerciseFile(@RequestBody PrivateFile exerciseFile) {
+        PrivateFile _exerciseFile = repository.save(new PrivateFile(
                 exerciseFile.getExerciseId(),
                 exerciseFile.getFilename(),
                 exerciseFile.getContent()
@@ -26,11 +26,11 @@ public class ExerciseFileController {
         return _exerciseFile;
     }
 
-    @GetMapping(value="/exercise-files/exercise/{exerciseId}")
-    public List<ExerciseFile> getExerciseFilesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+    @GetMapping(value="/private-files/exercise/{exerciseId}")
+    public List<PrivateFile> getExerciseFilesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get exercise files with exercise id " + exerciseId + "...");
 
-        List<ExerciseFile> _exerciseFiles = new ArrayList<>(repository.findExerciseFilesByExerciseId(exerciseId));
+        List<PrivateFile> _exerciseFiles = new ArrayList<>(repository.findExerciseFilesByExerciseId(exerciseId));
         System.out.format("Found exercise files from exercise %s: %s\n", exerciseId, _exerciseFiles);
         return _exerciseFiles;
     }

@@ -1,4 +1,3 @@
-import json
 import os
 
 from pg_scripts.script_generator import ScriptGenerator
@@ -76,7 +75,7 @@ class SampleCourseGenerator(ScriptGenerator):
 
     def handle_files(self, exercise_id, files):
         for file in files:
-            for exercise_content_type in ['\'exercise_file\'', '\'public_file\'']:
+            for exercise_content_type in ['\'private_file\'', '\'public_file\'']:
                 file['exercise_id'] = int(exercise_id)
                 file['exercise_content_type'] = exercise_content_type
                 self.append_to_script(self.get_insert('exercise_content', **file))

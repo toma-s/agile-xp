@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ExerciseFileService {
 
-  private baseUrl = `${environment.baseUrl}exercise-files`;
+  private baseUrl = `${environment.baseUrl}private-files`;
 
   constructor(private http: HttpClient) { }
 
