@@ -1,11 +1,10 @@
 {
   "1": [
     {
-      "name": "'Buggy'",
+      "name": "'Debugging the legacy program'",
       "index": 0,
       "type_id": 4,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     },
     {
       "name": "'Fix buggy'",

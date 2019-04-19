@@ -101,8 +101,8 @@ VALUES ('Adding new features to the legacy program', '2019-03-28 11:08:09.851', 
 INSERT INTO lessons (name, created, description, id, course_id)
 VALUES ('Refactoring lesson', '2019-03-28 11:08:09.851', 'The aim is to refactor the content of the legacy program so the program remains functional. Every exercise corresponds to a step of refactoring', 3, 1);
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Buggy', 0, 4, '2019-03-28 11:08:09.851', 'todo', 1, 1);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Debugging the legacy program', 0, 4, '2019-03-28 11:08:09.851', 1, 1, '<h2>Objective</h2><p>You need to find bugs in the legacy program, but the source code is not available.</p><p>Write own tests to find the bugs.</p><p><br></p><h3><strong>User stories</strong></h3><ul><li>find <strong>three </strong>bugs.</li></ul><p><br></p><h2>Code structure</h2><pre class=\"ql-syntax\" spellcheck=\"false\">public class Reversi {<br><br>    int[][] playground;<br>    int leftB = 0;<br>    int leftW = 0;<br>    private int[] players = new int[] { 1, 0 };<br>    int onTurn = -1;<br>    int winner = -1;<br>    boolean ended = false;<br><br>    Reversi() {<br>    }<br><br>    Reversi(Path gameFilePath) {<br>        ...<br>    }<br><br>    private void run() {<br>        ...<br>    }<br><br>    String[] readGameConfig(Path gameFilePath) {<br>        ...<br>    }<br><br>    void initGame(String[] gameConfig) {<br>        ...<br>    }<br><br>    void initTilesCount() {<br>        ...<br>    }<br><br>    int getLeftB() {<br>        ...<br>    }<br><br>    int getLeftW() {<br>        ...<br>    }<br><br>    void move(int r0, int c0) {<br>        ...<br>    }<br><br>    boolean areValidMoves() {<br><br><br>        ...<br>    }<br><br>    public static void main(String[] args) {<br>        ...<br>    }<br><br>}<br></pre><p><br></p>');
 
 INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
 VALUES ('Fix buggy', 1, 2, '2019-03-28 11:08:09.851', 'todo', 2, 1);

@@ -11,8 +11,13 @@
     }
 
     .intro__description {
-      white-space: pre-line;
-      padding: 40px;
+      padding: 30px 60px;
+
+      pre {
+        background-color: #ebebeb;
+        white-space: pre-wrap;
+        padding: 10px;
+      }
     }
   }
 }
