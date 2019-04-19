@@ -22,18 +22,19 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { QuillModule } from 'ngx-quill';
 
 import { CoursesModule } from './courses/courses.module';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const quillConfig = {
 };
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -56,7 +57,8 @@ const quillConfig = {
     CoursesModule,
     MonacoEditorModule.forRoot(),
     QuillModule.forRoot(quillConfig),
-    DragDropModule
+    DragDropModule,
+    AppRoutingModule
   ],
   providers: [CdkColumnDef],
   bootstrap: [AppComponent]
