@@ -20,13 +20,15 @@ public class Compiler {
             StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
             Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(getFiles(filePaths));
             final Iterable<String> options = Arrays.asList("-d", outDir.resolve("out").toString());
-            compiler.getTask(null, fileManager, null, options, null, compilationUnits).call();
-            if (! diagnostics.getDiagnostics().isEmpty()) {
+            compiler.getTask(null, fileManager, diagnostics, options, null, compilationUnits).call();
+            if (!diagnostics.getDiagnostics().isEmpty()) {
                 StringBuilder message = new StringBuilder();
-                for (Diagnostic diagnostic: diagnostics.getDiagnostics()) {
-                    message.append(String.format("Error on line %d in %s",
+                for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
+                    String error = String.format("Error on line %d in %s",
                             diagnostic.getLineNumber(),
-                            diagnostic.getSource().toString()));
+                            diagnostic.getSource().toString()
+                    );
+                    message.append(error);
                 }
                 throw new CompilationFailedException(message.toString());
             }

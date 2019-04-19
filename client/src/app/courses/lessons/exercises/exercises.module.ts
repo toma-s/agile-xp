@@ -10,6 +10,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { QuillModule } from 'ngx-quill';
@@ -64,6 +65,7 @@ import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor
     MatTabsModule,
     MatDialogModule,
     MatDividerModule,
+    MatListModule,
     ExercisesRoutingModule,
     MonacoEditorModule,
     QuillModule

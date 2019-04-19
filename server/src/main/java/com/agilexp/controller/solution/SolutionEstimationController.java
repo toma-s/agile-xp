@@ -139,13 +139,13 @@ public class SolutionEstimationController {
             return getResult(testResults, PUBLIC);
         } catch (StorageException e) {
             e.printStackTrace();
-            return "File storing failed: " + e.getMessage();
+            return "File storing failed: " + e.getMessage() + "\n\n";
         } catch (CompilationFailedException e) {
             e.printStackTrace();
-            return "Compilation failed: " + e.getMessage();
+            return "Compilation failed: " + e.getMessage() + "\n\n";
         } catch (TestFailedException e) {
             e.printStackTrace();
-            return "Tests run failed: " + e.getMessage();
+            return "Tests run failed: " + e.getMessage() + "\n\n";
         }
     }
 
@@ -177,13 +177,13 @@ public class SolutionEstimationController {
             return getResult(testResults, PRIVATE);
         } catch (StorageException e) {
             e.printStackTrace();
-            return "File storing failed: " + e.getMessage();
+            return "File storing failed: " + e.getMessage() + "\n\n";
         } catch (CompilationFailedException e) {
             e.printStackTrace();
-            return "Compilation failed: " + e.getMessage();
+            return "Compilation failed: " + e.getMessage() + "\n\n";
         } catch (TestFailedException e) {
             e.printStackTrace();
-            return "Tests run failed: " + e.getMessage();
+            return "Tests run failed: " + e.getMessage() + "\n\n";
         }
     }
 
