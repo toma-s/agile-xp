@@ -2842,7 +2842,7 @@ public class Reversi {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -2883,7 +2883,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
     private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
     private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
@@ -3888,7 +3888,7 @@ public class Reversi {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -3929,7 +3929,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
     private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
     private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
@@ -5088,7 +5088,7 @@ public class Reversi {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -5136,7 +5136,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
     private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
     private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
@@ -6513,7 +6513,7 @@ public class Reversi {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -6573,7 +6573,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
     private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
     private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
@@ -8090,7 +8090,7 @@ public class Reversi {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -8150,7 +8150,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
     private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
     private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
@@ -9728,7 +9728,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
     private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
     private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
@@ -11232,7 +11232,7 @@ class Reversi {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -11302,7 +11302,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
     private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
     private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
@@ -12748,7 +12748,7 @@ public class Reversi {
 //        String fileName = "game_all_num.txt";
 //        String fileName = "game_all_alpha.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev;
@@ -12831,7 +12831,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path gameAllAlpha = new File(gameConfigDir + "game_all_alpha.txt").toPath();
     private Path gameAllNum = new File(gameConfigDir + "game_all_num.txt").toPath();
     private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
