@@ -12,11 +12,17 @@
 
     .intro__description {
       padding: 30px 60px;
+      line-height: 1.5em;
 
       pre {
         background-color: #ebebeb;
         white-space: pre-wrap;
         padding: 10px;
+      }
+
+      blockquote{
+        border-left: 5px solid #ebebeb;
+        padding-left: 10px;
       }
     }
   }

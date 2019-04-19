@@ -77,7 +77,7 @@ class SampleCourseGenerator(ScriptGenerator):
     def read_description(self, exercise_id):
         try:
             filename = '%s/exercise_contents/%s/description/description.txt' % (self.root, exercise_id)
-            return self.quotify(self.read_text_file(filename).replace('\\n', '<br>'))
+            return self.quotify(self.read_text_file(filename).replace('\\n', '<br>').replace("'", "''"))
         except FileNotFoundError:
             return "'todo'"
         # todo when descriptions are ready!!!

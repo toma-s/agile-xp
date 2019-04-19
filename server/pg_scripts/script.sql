@@ -93,46 +93,47 @@ INSERT INTO courses (name, created, description, id)
 VALUES ('Sample course', '2019-03-28 11:08:09.851', 'Web application functionality overview. Use agile programming methods to build a game, based on a legacy content', 1);
 
 INSERT INTO lessons (name, created, description, id, course_id)
-VALUES ('Debugging the legacy program', '2019-03-28 11:08:09.851', 'The aim is to find bugs in the legacy program and fix them, but keep the original structure of the content. The user should write his/her own tests to find the bugs and fix them', 1, 1);
+VALUES ('Debugging a legacy program', '2019-03-28 11:08:09.851', 'The aim is to find bugs in a legacy program and fix them, but keep original structure of program. The user should write own tests to find the bugs and fix them', 1, 1);
 
 INSERT INTO lessons (name, created, description, id, course_id)
-VALUES ('Adding new features to the legacy program', '2019-03-28 11:08:09.851', 'The aim is to add some features to the legacy content', 2, 1);
+VALUES ('Adding new features to the legacy program', '2019-03-28 11:08:09.851', 'The aim is to add some new features to the legacy program', 2, 1);
 
 INSERT INTO lessons (name, created, description, id, course_id)
-VALUES ('Refactoring lesson', '2019-03-28 11:08:09.851', 'The aim is to refactor the content of the legacy program so the program remains functional. Every exercise corresponds to a step of refactoring', 3, 1);
+VALUES ('Refactoring the legacy program', '2019-03-28 11:08:09.851', 'The aim is to refactor the content of the legacy program with keeping its functionality', 3, 1);
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Debugging the legacy program', 0, 4, '2019-03-28 11:08:09.851', 1, 1, '<h2>Objective</h2><p>You need to find bugs in the legacy program, but the source code is not available.</p><p>Write own tests to find the bugs.</p><p><br></p><h3><strong>User stories</strong></h3><ul><li>find <strong>three </strong>bugs.</li></ul><p><br></p><h2>Code structure</h2><pre class=\"ql-syntax\" spellcheck=\"false\">public class Reversi {<br><br>    int[][] playground;<br>    int leftB = 0;<br>    int leftW = 0;<br>    private int[] players = new int[] { 1, 0 };<br>    int onTurn = -1;<br>    int winner = -1;<br>    boolean ended = false;<br><br>    Reversi() {<br>    }<br><br>    Reversi(Path gameFilePath) {<br>        ...<br>    }<br><br>    private void run() {<br>        ...<br>    }<br><br>    String[] readGameConfig(Path gameFilePath) {<br>        ...<br>    }<br><br>    void initGame(String[] gameConfig) {<br>        ...<br>    }<br><br>    void initTilesCount() {<br>        ...<br>    }<br><br>    int getLeftB() {<br>        ...<br>    }<br><br>    int getLeftW() {<br>        ...<br>    }<br><br>    void move(int r0, int c0) {<br>        ...<br>    }<br><br>    boolean areValidMoves() {<br><br><br>        ...<br>    }<br><br>    public static void main(String[] args) {<br>        ...<br>    }<br><br>}<br></pre><p><br></p>');
+VALUES ('Finding the Bugs in Legacy Program', 0, 4, '2019-03-28 11:08:09.851', 1, 1, '<h2>Objective</h2><p>You need to find bugs in the legacy program, but the source code is not available.</p><p>Write own tests to find the bugs.</p><p></p><h3><strong>User stories</strong></h3><ul><li>find <strong>three </strong>bugs.</li></ul><p><br></p><h2>Code structure</h2><pre class=\"ql-syntax\" spellcheck=\"false\">public class Reversi {<br><br>    int[][] playground;<br>    int leftB = 0;<br>    int leftW = 0;<br>    private int[] players = new int[] { 1, 0 };<br>    int onTurn = -1;<br>    int winner = -1;<br>    boolean ended = false;<br><br>    Reversi() {<br>    }<br><br>    Reversi(Path gameFilePath) {<br>        ...<br>    }<br><br>    private void run() {<br>        ...<br>    }<br><br>    String[] readGameConfig(Path gameFilePath) {<br>        ...<br>    }<br><br>    void initGame(String[] gameConfig) {<br>        ...<br>    }<br><br>    void initTilesCount() {<br>        ...<br>    }<br><br>    int getLeftB() {<br>        ...<br>    }<br><br>    int getLeftW() {<br>        ...<br>    }<br><br>    void move(int r0, int c0) {<br>        ...<br>    }<br><br>    boolean areValidMoves() {<br><br><br>        ...<br>    }<br><br>    public static void main(String[] args) {<br>        ...<br>    }<br><br>}<br></pre><p><br></p>');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Fix buggy', 1, 2, '2019-03-28 11:08:09.851', 'todo', 2, 1);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Debugging the Legacy Program', 1, 2, '2019-03-28 11:08:09.851', 2, 1, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">Fix bugs in the legacy program from previous exercise. You can use tests you wrote to find the bugs.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">When fixing the legacy program, you should keep the original core structure of the code. The program should pass all your and hidden tests.</span></p><p></p><h3><strong>User stories</strong></h3><ul><li>fix <strong>three </strong>bugs</li><li>do not make more.</li></ul><h2><br></h2>');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Feature Alpha', 0, 2, '2019-03-28 11:08:09.851', 'todo', 3, 2);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Adding New Feature', 0, 2, '2019-03-28 11:08:09.851', 3, 2, '<h2>Objective</h2><p>Add a new feature to the legacy code:&nbsp;<strong>conventional board enumeration</strong> for Reversi.</p><p>Use Alpha&nbsp;<em>enum</em>&nbsp;to represent the values of the grid indexes: <em>Alpha.A</em>&nbsp;for 0,&nbsp;<em>Alpha.B</em>&nbsp;for 1 etc.</p><p>Function<em> move</em> would get conventional input like (Alpha.E, 4).</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>The board <span style=\"background-color: rgb(255, 255, 255); color: rgb(34, 34, 34);\">should </span>be enumerated A-H horizontally and 1-8 vertically</li><li><span style=\"background-color: rgb(255, 255, 255); color: rgb(34, 34, 34);\">Each move of a piece should be indicated by the coordinate of the destination square (e.g. E4)</span></li><li>New board enumeration should be used on printed out playground</li></ul><h2><br></h2>');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Size constant', 0, 2, '2019-03-28 11:08:09.851', 'todo', 4, 3);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Magic Numbers', 0, 2, '2019-03-28 11:08:09.851', 4, 3, '<h2>Objective</h2><p>Replace&nbsp;<strong>Magic Numbers</strong>&nbsp;with&nbsp;<strong>Named Constants</strong>. <span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">As a result, such variables get a name, which describes its meaning. It becomes easier to read, maintain and change the code.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p><br></p><p></p><h3><strong>User stories</strong></h3><ul><li>Replace numbers representing the board size with private constant&nbsp;<em>SIZE</em>.</li></ul>');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Player enum', 1, 2, '2019-03-28 11:08:09.851', 'todo', 5, 3);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Constants versus Enums', 1, 2, '2019-03-28 11:08:09.851', 5, 3, '<h2>Objective</h2><blockquote>Now that enums have been added to the language (Java 5), use them! Don’t keep using the old trick of <em>public static final int</em>s. The meaning of <em>int</em>s can get lost. The meaning of <em>enum</em>s cannot, because they belong to an enumeration that is named. What’s more, study the syntax for <em>enum</em>s carefully. They can have methods and fields. This makes them very powerful tools that allow much more expression and flexibility than <em>int</em>s.&nbsp;<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values:</p><ul><li><em>Player.W</em>&nbsp;for ''W'' instead of 0;</li><li><em>Player.B</em>&nbsp;for ''B'' instead of 1;</li><li><em>Player.NONE</em>&nbsp;for no player instead of -1.</li></ul><p>Use new <em>enum </em>for initialing the game and to print out the current state.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values.</li></ul><p><br></p><p><br></p><p><br></p>",
+');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Do one thing', 2, 2, '2019-03-28 11:08:09.851', 'todo', 6, 3);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Do One Thing', 2, 2, '2019-03-28 11:08:09.851', 6, 3, '<h2>Objective</h2><blockquote>Functions should do one thing. They should do it well. They should do it only. <br>So, another way to know that a function is doing more than “one thing” is if you can extract another function from it with a name that is not merely a restatement of its implementation. <em style=\"color: rgb(68, 68, 68);\"><br>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>For example, function&nbsp;<em>initGame&nbsp;</em>does not initialize game only, but also sets a player on turn, creates and fills playground, and places the tiles on it. Function&nbsp;<em>run&nbsp;</em>contains execution of the read line, which should be extracted as well. Function&nbsp;<em>move&nbsp;</em>does multiple things as well: it ends the game, finds tiles to flip, and flips them. Function&nbsp;<em>areValidMoves&nbsp;</em>gets possible moves. It also finds tiles to flip as well as&nbsp;<em>move</em>&nbsp;function with the use of duplicate code.</p><p>Make the current code way more readable and maintainable with extracting the functions from the ones, which do multiple things.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Extract function&nbsp;<em>execute&nbsp;</em>from function&nbsp;<em>run</em></li><li>Extract functions&nbsp;<em>setOnTurn</em>,&nbsp;<em>createPlayground</em>,&nbsp;<em>fillPlayground&nbsp;</em>and&nbsp;<em>setTile&nbsp;</em>from function&nbsp;<em>initGame</em></li><li>Extract function&nbsp;<em>endGame</em>,&nbsp;<em>flipTiles</em>,&nbsp;<em>getTilesToFlip&nbsp;</em>from function&nbsp;<em>move</em></li><li>Extract functions&nbsp;<em>getPossibleMoves</em>,&nbsp;<em>getTilesToFlip&nbsp;</em>from function&nbsp;<em>areValidMoves</em>.</li></ul><p><br></p>');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('One abstraction level', 3, 2, '2019-03-28 11:08:09.851', 'todo', 7, 3);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('One Level of Abstraction per Function', 3, 2, '2019-03-28 11:08:09.851', 7, 3, '<h2>Objective</h2><blockquote>Mixing levels of abstraction within a function is always confusing. Readers may not be able to tell whether a particular expression is an essential concept or a detail. Worse, like broken windows, once details are mixed with essential concepts, more and more details tend to accrete within the function. <em><br>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Functions setOnTurn and move do not hold the same abstraction level.</p><p>Make the current code way more readable and maintainable with extracting the functions, which hold lower abstraction levels, should be extracted.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Extract functions&nbsp;<em>isOnTurnInputCorrect</em>, from function&nbsp;<em>setOnTurn</em></li><li>Extract functions&nbsp;<em>isEmpty</em>, <em>isGameOver </em>and <em>swapPlayerOnTurn&nbsp;</em>from function&nbsp;<em>move</em>.</li></ul><p><br></p>');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Duplicities', 4, 2, '2019-03-28 11:08:09.851', 'todo', 8, 3);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('No Duplication', 4, 2, '2019-03-28 11:08:09.851', 8, 3, '<h2>Objective</h2><blockquote>Duplication is the primary enemy of a well-designed system. It represents additional work, additional risk, and additional unnecessary complexity. Duplication manifests itself in many forms. Lines of code that look exactly alike are, of course, duplication. Lines of code that are similar can often be massaged to look even more alike so that they can be more easily refactored.&nbsp;<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Most of the duplicate code was refactored in previous steps.</p><p>Make the code way more readable and maintainable with extracting the rest of duplicite code into fuctions.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Extract function&nbsp;<em>isTileInputCorrect </em>from functions&nbsp;<em>setTile </em>and <em>execute</em></li><li>Extract function&nbsp;<em>isWithinPlayground&nbsp;</em>from functions&nbsp;<em>move </em>and <em>getTilesToFlip.</em></li></ul><p><br></p>');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Left', 5, 2, '2019-03-28 11:08:09.851', 'todo', 9, 3);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Small!', 5, 2, '2019-03-28 11:08:09.851', 9, 3, '<h2>Objective</h2><blockquote>The first rule of functions is that they should be small. The second rule of functions is that they should be smaller than that.<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Most of the large code was refactored in previous steps because of extracting the function from large ones. But there are more ways to reduce function size without lost of readability.</p><p>Make the code functions a way more readable with changing the structure of variable <em>left</em>.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use map <em>left </em>to store the values of variables <em>leftB </em>and <em>leftW</em>.</li></ul>');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Config file exception', 6, 2, '2019-03-28 11:08:09.851', 'todo', 10, 3);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Error Handling I', 6, 2, '2019-03-28 11:08:09.851', 10, 3, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">This exercise focuses on handling exceptions. Errors handling not only makes code robust, but also clean.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;</span><em style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">try/catch/finally</em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;block.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException </em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">to handle errors when reading game configuration file;</span></li></ul>');
 
-INSERT INTO exercises (name, index, type_id, created, description, id, lesson_id)
-VALUES ('Move exception', 7, 2, '2019-03-28 11:08:09.851', 'todo', 11, 3);
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Error Handling II', 7, 2, '2019-03-28 11:08:09.851', 11, 3, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">This exercise focuses on handling exceptions, as well as previous one.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;</span><em style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">try/catch/finally</em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;block.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException </em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;to handle errors on user input.</span></li></ul>');
 
 INSERT INTO bugs_number (exercise_id, number)
 VALUES (1, 3);
@@ -4682,8 +4683,6 @@ public class Reversi {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
-//                execute(line);
-                // <!--
                 if (!(line.length() == 2 && line.substring(1, 2).matches("[1-8]") &&  line.substring(0, 1).matches("[A-H]"))) {
                     System.out.println("Incorrect tile input");
                     return;
@@ -4691,7 +4690,6 @@ public class Reversi {
                 int r = Integer.parseInt(line.substring(1, 2));
                 Alpha c = Alpha.valueOf(line.substring(0, 1));
                 move(c, r);
-                // -->
                 reader.close();
             }
         } catch (Exception e) {
@@ -4721,31 +4719,21 @@ public class Reversi {
             return;
         }
         try {
-//            setOnTurn(gameConfig[0]);
-            // <!--
             if (gameConfig[0] == null || ! gameConfig[0].matches("[B|W]")) {
                 System.out.println("Incorrect player on turn input.");
                 return;
             }
             onTurn = Player.valueOf(gameConfig[0]);
-            // -->
-//            createPlayground();
-            // <!--
             playground = new Player[SIZE][SIZE];
             for (int r = 0; r < SIZE; r++) {
                 for (int c = 0; c < SIZE; c++) {
                     playground[r][c] = Player.NONE;
                 }
             }
-            // -->
-//            fillPlayground(gameConfig);
-            // <!--
             try {
                 for (int i = 1; i < 3; i++) {
                     String[] tiles = gameConfig[i].split(" ");
                     for (String tile : tiles) {
-//                        setTile(tile, players[i - 1]);
-                        // <!--
                         if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
                             System.out.println("Incorrect tile input");
                             return;
@@ -4753,57 +4741,15 @@ public class Reversi {
                         int r = Integer.parseInt(tile.substring(1, 2)) - 1;
                         int c = Alpha.valueOf(tile.substring(0, 1)).getValue();
                         playground[r][c] = players[i - 1];
-                        // -->
                     }
                 }
             } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
                 System.out.println("Game configuration file is incorrect.");
             }
-            // -->
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             System.out.println("Game configuration is incorrect.");
         }
     }
-
-//    void setOnTurn(String player) {
-//        if (player == null || ! player.matches("[B|W]")) {
-//            System.out.println("Incorrect player on turn input.");
-//            return;
-//        }
-//        onTurn = Player.valueOf(player);
-//    }
-
-//    void createPlayground() {
-//        playground = new Player[SIZE][SIZE];
-//        for (int r = 0; r < SIZE; r++) {
-//            for (int c = 0; c < SIZE; c++) {
-//                playground[r][c] = Player.NONE;
-//            }
-//        }
-//    }
-
-//    void fillPlayground(String[] gameConfig) {
-//        try {
-//            for (int i = 1; i < 3; i++) {
-//                String[] tiles = gameConfig[i].split(" ");
-//                for (String tile : tiles) {
-//                    setTile(tile, players[i - 1]);
-//                }
-//            }
-//        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-//            System.out.println("Game configuration file is incorrect.");
-//        }
-//    }
-
-//    void setTile(String tile, Player player) {
-//        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
-//            System.out.println("Incorrect tile input");
-//            return;
-//        }
-//        int r = Integer.parseInt(tile.substring(1, 2)) - 1;
-//        int c = Alpha.valueOf(tile.substring(0, 1)).getValue();
-//        playground[r][c] = player;
-//    }
 
     void initTilesCount() {
         try {
@@ -4849,16 +4795,6 @@ public class Reversi {
         return leftW;
     }
 
-//    void execute(String tile) {
-//        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
-//            System.out.println("Incorrect tile input");
-//            return;
-//        }
-//        int r = Integer.parseInt(tile.substring(1, 2));
-//        Alpha c = Alpha.valueOf(tile.substring(0, 1));
-//        move(c, r);
-//    }
-
     void move(Alpha c0, int r0) {
         int r = r0 - 1;
         int c = c0.getValue();
@@ -4876,8 +4812,6 @@ public class Reversi {
             return;
         }
 
-//        ArrayList<List<Integer>> tilesToFlip = getTilesToFlip(r, c);
-        // <!--
         ArrayList<List<Integer>> tilesToFlip = new ArrayList<>();
         playground[r][c] = onTurn;
         Player opposite = Player.NONE;
@@ -4913,14 +4847,10 @@ public class Reversi {
         if (tilesToFlip.size() != 0) {
             tilesToFlip.add(new ArrayList<>(List.of(r, c)));
         }
-        // --->
-
         if (tilesToFlip.size() == 0) {
             System.out.println("Move is not permitted");
             return;
         }
-//        flipTiles(tilesToFlip);
-        // <!--
         for (List<Integer> tile : tilesToFlip) {
             int tileR = tile.get(0);
             int tileC = tile.get(1);
@@ -4940,92 +4870,22 @@ public class Reversi {
                 }
             }
         }
-        // -->
 
         if (onTurn == Player.W) onTurn = Player.B;
         else if (onTurn == Player.B) onTurn = Player.W;
         if (! areValidMoves()) {
-            // endGame();
-            // <!--
             printTilesLeftCount();
             ended = true;
             if (getLeftB() > getLeftW()) winner = Player.B;
             else if (getLeftW() > getLeftB()) winner = Player.W;
-            // -->
         }
     }
 
-//    ArrayList<List<Integer>> getTilesToFlip(int r0, int c0) {
-//        ArrayList<List<Integer>> toFLip = new ArrayList<>();
-//        playground[r0][c0] = onTurn;
-//        Player opposite = Player.NONE;
-//        if (onTurn == Player.W) opposite = Player.B;
-//        else if (onTurn == Player.B) opposite = Player.W;
-//
-//        int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
-//        for (int[] direction : directions) {
-//            int r = r0;
-//            int c = c0;
-//            r += direction[0];
-//            c += direction[1];
-//            if (r >= 0 && c >= 0 && r < SIZE && c < SIZE && playground[r][c] != opposite) continue;
-//            r += direction[0];
-//            c += direction[1];
-//            if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) continue;
-//            while (playground[r][c] == opposite) {
-//                r += direction[0];
-//                c += direction[1];
-//                if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) break;
-//            }
-//            if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) continue;
-//            if (playground[r][c] != onTurn) continue;
-//            while (true) {
-//                r -= direction[0];
-//                c -= direction[1];
-//                if (r == r0 && c == c0) break;
-//                toFLip.add(new ArrayList<>(List.of(r, c)));
-//            }
-//        }
-//
-//        playground[r0][c0] = Player.NONE;
-//        if (toFLip.size() != 0) {
-//            toFLip.add(new ArrayList<>(List.of(r0, c0)));
-//        }
-//        return toFLip;
-//    }
-
-//    void flipTiles(List<List<Integer>> tiles) {
-//        for (List<Integer> tile : tiles) {
-//            int r = tile.get(0);
-//            int c = tile.get(1);
-//            if (playground[r][c] == onTurn) break;
-//            if (playground[r][c] == Player.NONE) {
-//                playground[r][c] = onTurn;
-//                if (onTurn == Player.B) leftB++;
-//                else if (onTurn == Player.W) leftW++;
-//            } else {
-//                playground[r][c] = onTurn;
-//                if (onTurn == Player.B) {
-//                    leftB++;
-//                    leftW--;
-//                } else {
-//                    leftW++;
-//                    leftB--;
-//                }
-//            }
-//        }
-//    }
-
     boolean areValidMoves() {
-//        int movesNum = getPossibleMoves().size();
-//        return movesNum != 0;
-        // <!--
         ArrayList<String> tiles = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != Player.NONE) continue;
-//                if (getTilesToFlip(r,c).size() == 0) continue;
-                // <!--
                 ArrayList<List<Integer>> toFLip = new ArrayList<>();
                 playground[r][c] = onTurn;
                 Player opposite = Player.NONE;
@@ -5062,23 +4922,13 @@ public class Reversi {
                     toFLip.add(new ArrayList<>(List.of(r, c)));
                 }
                 if (toFLip.size() == 0) continue;
-                // -->
                 String rString = String.valueOf(r + 1);
                 String cString = Alpha.values()[c].toString();
                 tiles.add(cString.concat(rString));
             }
         }
         return tiles.size() != 0;
-        // -->
     }
-
-//    void endGame() {
-//        printTilesLeftCount();
-//        ended = true;
-//        if (getLeftB() > getLeftW()) winner = Player.B;
-//        else if (getLeftW() > getLeftB()) winner = Player.W;
-//    }
-
 
     public static void main(String[] args) {
         String fileName = "game_init_b_starts.txt";
