@@ -3,6 +3,13 @@
 
   .run {
 
+    .run__button {
+      text-align: center;
+      width: 100%;
+      font-size: 1.5em;
+      padding: 8px;
+    }
+
     .run__output {
       white-space: pre-line;
       font-family: monospace;

@@ -101,7 +101,7 @@ public class SolutionEstimationController {
         Path outDirPath = storageService.load(created + "/solution_public" + solutionId);
         String publicEstimation = estimatePublic(solutionContents, outDirPath, created);
         String privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, created);
-        return publicEstimation + privateEstimation;
+        return publicEstimation + "\n\n" + privateEstimation;
     }
 
     private String estimateSourceTestFile(long solutionId, String created) {
@@ -120,7 +120,7 @@ public class SolutionEstimationController {
         Path outDirPath = storageService.load(created + "/solution_private" + solutionId);
         String publicEstimation = estimatePublic(solutionContents, outDirPath, created);
         String privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, created);
-        return publicEstimation + privateEstimation;
+        return publicEstimation + "\n\n" + privateEstimation;
     }
 
 
@@ -519,10 +519,15 @@ public class SolutionEstimationController {
             List<Failure> failures = result.getFailures();
             for (int i = 0; i < failures.size(); i++) {
                 Failure failure = failures.get(i);
-                output.append("\n").append(i + 1).append(") ").append(failure);
+                String detail = String.format(
+                        "Test class: %s\nTest name: %s\nFailure cause: %s\n",
+                        failure.getDescription().getClassName(),
+                        failure.getDescription().getDisplayName(),
+                        failure.getException().toString());
+                output.append("\n").append(i + 1).append(") ").append(detail);
             }
         }
-        output.append("\nIgnored count: ").append(result.getIgnoreCount()).append("\n\n");
+        output.append("\nIgnored count: ").append(result.getIgnoreCount());
         return output;
     }
 }
