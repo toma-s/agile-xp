@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../shared/course.service';
-import { Course } from '../shared/course.model';
+import { Title } from '@angular/platform-browser';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-courses-list',
@@ -17,21 +16,18 @@ export class CoursesListComponent implements OnInit {
   data: any;
   selection = new SelectionModel<Element>(true, []);
 
-  constructor(private courseService: CourseService) { }
+  constructor(
+    private titleService: Title,
+    private courseService: CourseService
+  ) { }
 
   ngOnInit() {
+    this.setTitle();
     this.getData();
   }
 
-  delete(course) {
-    this.courseService.deleteCourse(course.id)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.getData();
-        },
-        error => console.log('error: ' + error)
-      );
+  setTitle() {
+    this.titleService.setTitle(`Courses | AgileXP`);
   }
 
   getData() {
@@ -41,6 +37,17 @@ export class CoursesListComponent implements OnInit {
           console.log(data);
           this.data = Object.assign(data);
           this.dataSource = new MatTableDataSource<Element>(this.data);
+        },
+        error => console.log('error: ' + error)
+      );
+  }
+
+  delete(course) {
+    this.courseService.deleteCourse(course.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.getData();
         },
         error => console.log('error: ' + error)
       );

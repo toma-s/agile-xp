@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-
+import { Title } from '@angular/platform-browser';
 import { CourseService } from '../shared/course.service';
 import { LessonService } from '../lessons/shared/lesson.service';
 import { ExerciseService } from '../lessons/exercises/shared/exercise/exercise/exercise.service';
@@ -26,15 +25,17 @@ export class CourseDetailComponent implements OnInit {
   exerciseTypes: Array<ExerciseType>;
 
   constructor(
+    private titleService: Title,
     private courseService: CourseService,
     private lessonService: LessonService,
     private exerciseService: ExerciseService,
     private exerciseTypeService: ExerciseTypeService,
     private route: ActivatedRoute
-  ) { }
+  ) {  }
 
   async ngOnInit() {
     await this.setCourse();
+    this.setTitle();
     await this.setLessons();
     this.getExercises();
     this.getExerciseTypes();
@@ -47,6 +48,10 @@ export class CourseDetailComponent implements OnInit {
       )
     );
     this.course = await this.getCourse(course$);
+  }
+
+  setTitle() {
+    this.titleService.setTitle(`${this.course.name} | AgileXP`);
   }
 
   getCourse(course$): Promise<Course> {

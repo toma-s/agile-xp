@@ -4,6 +4,7 @@ import { CourseService } from '../shared/course.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Lesson } from '../lessons/shared/lesson.model';
 import { LessonService } from '../lessons/shared/lesson.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -15,33 +16,38 @@ export class CourseCreateComponent implements OnInit {
 
   public lessonsFormGroup: FormGroup;
   public lessonsArray: FormArray;
-
   course = new Course();
   lessons = new Array<Lesson>();
   submitted = false;
 
-  get lessonFormGroup() {
-    return this.lessonsFormGroup.get('lessons') as FormArray;
-  }
-
   constructor(
+    private titleService: Title,
     private fb: FormBuilder,
     private courseService: CourseService,
     private lessonService: LessonService
   ) {}
+
+  ngOnInit(): void {
+    this.setTitle();
+    this.lessonsFormGroup = this.fb.group({
+      lessons: this.fb.array([this.createLesson()])
+    });
+    this.lessonsArray = this.lessonsFormGroup.get('lessons') as FormArray;
+  }
+
+  setTitle() {
+    this.titleService.setTitle(`Create course | AgileXP`);
+  }
+
+  get lessonFormGroup() {
+    return this.lessonsFormGroup.get('lessons') as FormArray;
+  }
 
   createLesson(): FormGroup {
     return this.fb.group({
       lessonName: [null, Validators.compose([Validators.required])],
       lessonDescription: [null, Validators.compose([Validators.required])]
     });
-  }
-
-  ngOnInit(): void {
-    this.lessonsFormGroup = this.fb.group({
-      lessons: this.fb.array([this.createLesson()])
-    });
-    this.lessonsArray = this.lessonsFormGroup.get('lessons') as FormArray;
   }
 
   addLesson() {
