@@ -88,9 +88,9 @@ export class ExerciseCreateComponent implements OnInit {
     this.viewInput = new Map<string, boolean>();
     this.exerciseFormGroup.get('intro').get('type').valueChanges.subscribe(typeValue => {
       if (this.isType(typeValue.value, 'whitebox')) {
-        this.setValidators('sourceControl', 'privateControl');
+        this.clearValidators('sourceControl', 'privateControl');
         this.setValidators('testControl', 'privateControl');
-        this.viewInput['private-sources'] = true;
+        this.viewInput['private-sources'] = false;
         this.viewInput['public-sources'] = true;
         this.viewInput['private-tests'] = true;
         this.viewInput['public-tests'] = true;
