@@ -1,5 +1,8 @@
-{
-  "1": {
+[
+  {
+
+  },
+  {
     "source_test": [
       {
         "exercise_content_type": "'private_source'",
@@ -12,7 +15,7 @@
     ],
     "file": "game_config_num"
   },
-  "2": {
+  {
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -29,7 +32,7 @@
     ],
     "file": "game_config_num"
   },
-  "3": {
+  {
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -50,7 +53,7 @@
     ],
     "file": "game_config"
   },
-  "4": {
+  {
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -71,7 +74,7 @@
     ],
     "file": "game_config"
   },
-  "5": {
+  {
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -92,32 +95,7 @@
     ],
     "file": "game_config"
   },
-  "6": {
-    "source_test": [
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Player.java'"
-      },
-      {
-        "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'ReversiTest.java'"
-      }
-    ],
-    "file": "game_config"
-  },
-  "7": {
+  {
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -142,7 +120,7 @@
     ],
     "file": "game_config"
   },
-  "8": {
+  {
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -167,7 +145,7 @@
     ],
     "file": "game_config"
   },
-  "9": {
+  {
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -192,7 +170,32 @@
     ],
     "file": "game_config"
   },
-  "10": {
+  {
+    "source_test": [
+      {
+        "exercise_content_type": "'public_source'",
+        "filename": "'Reversi.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
+        "filename": "'Alpha.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
+        "filename": "'Player.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ReversiTest.java'"
+      },
+      {
+        "exercise_content_type": "'public_test'",
+        "filename": "'ReversiTest.java'"
+      }
+    ],
+    "file": "game_config"
+  },
+  {
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -221,7 +224,7 @@
     ],
     "file": "game_config"
   },
-  "11": {
+  {
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -254,4 +257,4 @@
     ],
     "file": "game_config"
   }
-}
+]

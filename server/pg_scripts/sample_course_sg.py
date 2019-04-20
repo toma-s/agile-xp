@@ -62,17 +62,9 @@ class SampleCourseGenerator(ScriptGenerator):
             self.append_to_script(self.get_insert('bugs_number', **bugs_number))
 
         exercise_content_data = self.read_json_file('%s/exercise_content.json' % self.root)
-        for exercise_id, exercise_content_maps in exercise_content_data.items():
-            source_test = exercise_content_maps['source_test']
-            for exercise_content in source_test:
-                exercise_content['exercise_id'] = int(exercise_id)
-                exercise_content['content'] = self.read_exercise_content(exercise_content)
-                self.append_to_script(self.get_insert('exercise_content', **exercise_content))
-            file_dir = exercise_content_maps['file']
-            if file_dir == 'game_config':
-                self.handle_files(exercise_id, self.game_config)
-            elif file_dir == 'game_config_num':
-                self.handle_files(exercise_id, self.game_config_num)
+        for i in range(len(exercise_content_data)):
+            exercise_content = exercise_content_data[i]
+            self.handle_exercise_content(exercise_content, i + 1)
 
     def read_description(self, exercise_id):
         try:
@@ -80,7 +72,21 @@ class SampleCourseGenerator(ScriptGenerator):
             return self.quotify(self.read_text_file(filename).replace('\\n', '<br>').replace("'", "''"))
         except FileNotFoundError:
             return "'todo'"
-        # todo when descriptions are ready!!!
+
+    def handle_exercise_content(self, exercise_content, exercise_id):
+        try:
+            source_test = exercise_content['source_test']
+            for exercise_content in source_test:
+                exercise_content['exercise_id'] = int(exercise_id)
+                exercise_content['content'] = self.read_exercise_content(exercise_content)
+                self.append_to_script(self.get_insert('exercise_content', **exercise_content))
+            file_dir = exercise_content['file']
+            if file_dir == 'game_config':
+                self.handle_files(exercise_id, self.game_config)
+            elif file_dir == 'game_config_num':
+                self.handle_files(exercise_id, self.game_config_num)
+        except KeyError:
+            pass
 
     def handle_files(self, exercise_id, files):
         for file in files:

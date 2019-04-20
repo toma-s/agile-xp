@@ -11,12 +11,12 @@ import java.util.List;
 public class Reversi {
 
     private static final int SIZE = 8;
-    Player[][] playground;
+    int[][] playground;
     int leftB = 0;
     int leftW = 0;
-    private Player[] players = new Player[] { Player.B, Player.W };
-    Player onTurn = Player.NONE;
-    Player winner = Player.NONE;
+    private int[] players = new int[] { 1, 0 };
+    int onTurn = -1;
+    int winner = -1;
     boolean ended = false;
 
     Reversi() {
@@ -41,7 +41,7 @@ public class Reversi {
                 printPlayground();
                 printTilesLeftCount();
                 System.out.format("Make a move. %s is on turn\n", onTurn);
-                if (winner != Player.NONE) break;
+                if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
                 if (!(line.length() == 2 && line.substring(1, 2).matches("[1-8]") &&  line.substring(0, 1).matches("[A-H]"))) {
                     System.out.println("Incorrect tile input");
@@ -83,11 +83,15 @@ public class Reversi {
                 System.out.println("Incorrect player on turn input.");
                 return;
             }
-            onTurn = Player.valueOf(gameConfig[0]);
-            playground = new Player[SIZE][SIZE];
+            if ("B".equals(gameConfig[0])) {
+                onTurn = 1;
+            } else if ("W".equals(gameConfig[0])) {
+                onTurn = 0;
+            }
+            playground = new int[SIZE][SIZE];
             for (int r = 0; r < SIZE; r++) {
                 for (int c = 0; c < SIZE; c++) {
-                    playground[r][c] = Player.NONE;
+                    playground[r][c] = -1;
                 }
             }
             try {
@@ -115,9 +119,9 @@ public class Reversi {
         try {
             for (int r = 0; r < SIZE; r++) {
                 for (int c = 0; c < SIZE; c++) {
-                    if (playground[r][c] == Player.B) {
+                    if (playground[r][c] == 1) {
                         leftB++;
-                    } else if (playground[r][c] == Player.W) {
+                    } else if (playground[r][c] == 0) {
                         leftW++;
                     }
                 }
@@ -134,9 +138,9 @@ public class Reversi {
             System.out.print((r + 1) + " ");
             for (int c = 0; c < SIZE; c++) {
                 switch (playground[r][c]) {
-                    case B: System.out.print("B "); break;
-                    case W: System.out.print("W "); break;
-                    case NONE: System.out.print("_ "); break;
+                    case 1: System.out.print("B "); break;
+                    case 0: System.out.print("W "); break;
+                    case -1: System.out.print("_ "); break;
                 }
             }
             System.out.println();
@@ -163,20 +167,20 @@ public class Reversi {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
-        if (playground[r][c] != Player.NONE) {
+        if (playground[r][c] != -1) {
             System.out.println("Move on not empty tile is not permitted");
             return;
         }
-        if (winner != Player.NONE) {
+        if (winner != -1) {
             System.out.println("The game is over. No moves are permitted");
             return;
         }
 
         ArrayList<List<Integer>> tilesToFlip = new ArrayList<>();
         playground[r][c] = onTurn;
-        Player opposite = Player.NONE;
-        if (onTurn == Player.W) opposite = Player.B;
-        else if (onTurn == Player.B) opposite = Player.W;
+        int opposite = -1;
+        if (onTurn == 0) opposite = 1;
+        else if (onTurn == 1) opposite = 0;
 
         int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
         for (int[] direction : directions) {
@@ -203,10 +207,11 @@ public class Reversi {
             }
         }
 
-        playground[r][c] = Player.NONE;
+        playground[r][c] = -1;
         if (tilesToFlip.size() != 0) {
             tilesToFlip.add(new ArrayList<>(List.of(r, c)));
         }
+
         if (tilesToFlip.size() == 0) {
             System.out.println("Move is not permitted");
             return;
@@ -215,13 +220,13 @@ public class Reversi {
             int tileR = tile.get(0);
             int tileC = tile.get(1);
             if (playground[tileR][tileC] == onTurn) break;
-            if (playground[tileR][tileC] == Player.NONE) {
+            if (playground[tileR][tileC] == -1) {
                 playground[tileR][tileC] = onTurn;
-                if (onTurn == Player.B) leftB++;
-                else if (onTurn == Player.W) leftW++;
+                if (onTurn == 1) leftB++;
+                else if (onTurn == 0) leftW++;
             } else {
                 playground[tileR][tileC] = onTurn;
-                if (onTurn == Player.B) {
+                if (onTurn == 1) {
                     leftB++;
                     leftW--;
                 } else {
@@ -231,13 +236,13 @@ public class Reversi {
             }
         }
 
-        if (onTurn == Player.W) onTurn = Player.B;
-        else if (onTurn == Player.B) onTurn = Player.W;
+        if (onTurn == 0) onTurn = 1;
+        else if (onTurn == 1) onTurn = 0;
         if (! areValidMoves()) {
             printTilesLeftCount();
             ended = true;
-            if (getLeftB() > getLeftW()) winner = Player.B;
-            else if (getLeftW() > getLeftB()) winner = Player.W;
+            if (getLeftB() > getLeftW()) winner = 1;
+            else if (getLeftW() > getLeftB()) winner = 0;
         }
     }
 
@@ -245,12 +250,12 @@ public class Reversi {
         ArrayList<String> tiles = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if (playground[r][c] != Player.NONE) continue;
+                if (playground[r][c] != -1) continue;
                 ArrayList<List<Integer>> toFLip = new ArrayList<>();
                 playground[r][c] = onTurn;
-                Player opposite = Player.NONE;
-                if (onTurn == Player.W) opposite = Player.B;
-                else if (onTurn == Player.B) opposite = Player.W;
+                int opposite  = -1;
+                if (onTurn == 0) opposite = 1;
+                else if (onTurn == 1) opposite = 0;
 
                 int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
                 for (int[] direction : directions) {
@@ -277,7 +282,7 @@ public class Reversi {
                     }
                 }
 
-                playground[r][c] = Player.NONE;
+                playground[r][c] = -1;
                 if (toFLip.size() != 0) {
                     toFLip.add(new ArrayList<>(List.of(r, c)));
                 }

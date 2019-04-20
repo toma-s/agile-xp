@@ -1,14 +1,20 @@
 {
   "1": [
     {
-      "name": "'Finding the Bugs in Legacy Program'",
+      "name": "'Intro'",
       "index": 0,
+      "type_id": 5,
+      "created": "'2019-03-28 11:08:09.851'"
+    },
+    {
+      "name": "'Finding the Bugs in Legacy Program'",
+      "index": 1,
       "type_id": 4,
       "created": "'2019-03-28 11:08:09.851'"
     },
     {
       "name": "'Debugging the Legacy Program'",
-      "index": 1,
+      "index": 2,
       "type_id": 2,
       "created": "'2019-03-28 11:08:09.851'"
     }

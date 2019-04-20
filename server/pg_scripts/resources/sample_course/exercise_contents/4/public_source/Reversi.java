@@ -42,13 +42,13 @@ public class Reversi {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
-                if (!(line.length() == 2 && line.substring(1, 2).matches("[1-8]") &&  line.substring(0, 1).matches("[A-H]"))) {
+                if (!(line.length() == 2 && line.substring(1, 2).matches("[0-7]") &&  line.substring(0, 1).matches("[0-7]"))) {
                     System.out.println("Incorrect tile input");
                     return;
                 }
-                int r = Integer.parseInt(line.substring(1, 2));
-                Alpha c = Alpha.valueOf(line.substring(0, 1));
-                move(c, r);
+                int r = Integer.parseInt(line.substring(0, 1));
+                int c = Integer.parseInt(line.substring(1, 2));
+                move(r, c);
                 reader.close();
             }
         } catch (Exception e) {
@@ -97,12 +97,12 @@ public class Reversi {
                 for (int i = 1; i < 3; i++) {
                     String[] tiles = gameConfig[i].split(" ");
                     for (String tile : tiles) {
-                        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
+                        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[0-7]") &&  tile.substring(0, 1).matches("[0-7]"))) {
                             System.out.println("Incorrect tile input");
                             return;
                         }
-                        int r = Integer.parseInt(tile.substring(1, 2)) - 1;
-                        int c = Alpha.valueOf(tile.substring(0, 1)).getValue();
+                        int r = Integer.parseInt(tile.substring(0, 1));
+                        int c = Integer.parseInt(tile.substring(1, 2));
                         playground[r][c] = players[i - 1];
                     }
                 }
@@ -131,16 +131,16 @@ public class Reversi {
     }
 
     private void printPlayground() {
-        String[] abc = "ABCDEFGH".split("");
-        System.out.printf("  %s\n", String.join(" ", abc));
-        for (int r = 0; r <= 7; r++) {
-            System.out.print((r + 1) + " ");
+        System.out.println("  0 1 2 3 4 5 6 7");
+        for (int r = 0; r < 8; r++) {
+            System.out.print(r  + " ");
             for (int c = 0; c < 8; c++) {
-                switch (playground[r][c]) {
-                    case 1: System.out.print("B "); break;
-                    case 0: System.out.print("W "); break;
-                    case -1: System.out.print("_ "); break;
-                }
+                if (playground[r][c] == -1)
+                    System.out.print("_ ");
+                else if (playground[r][c] == 1)
+                    System.out.print("B ");
+                else
+                    System.out.print("W ");
             }
             System.out.println();
         }
@@ -158,9 +158,9 @@ public class Reversi {
         return leftW;
     }
 
-    void move(Alpha c0, int r0) {
-        int r = r0 - 1;
-        int c = c0.getValue();
+    void move(int r0, int c0) {
+        int r = r0;
+        int c = c0;
 
         if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
             System.out.println("Move out of bounds is not permitted");
@@ -286,8 +286,8 @@ public class Reversi {
                     toFLip.add(new ArrayList<>(List.of(r, c)));
                 }
                 if (toFLip.size() == 0) continue;
-                String rString = String.valueOf(r + 1);
-                String cString = Alpha.values()[c].toString();
+                String rString = String.valueOf(r);
+                String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
             }
         }

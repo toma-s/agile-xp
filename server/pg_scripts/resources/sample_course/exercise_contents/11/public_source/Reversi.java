@@ -1,15 +1,10 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-public class Reversi {
+class Reversi {
 
     private static final int SIZE = 8;
     Player[][] playground;
@@ -22,18 +17,18 @@ public class Reversi {
     Reversi() {
     }
 
-    Reversi(Path gameFilePath) throws IncorrectGameConfigFileException {
+    Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
             initTilesCount();
-        } catch (IncorrectGameConfigFileException e) {
+        } catch (Exception e) {
             ended = true;
-            throw new IncorrectGameConfigFileException(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
-    private void run() throws IncorrectGameConfigFileException {
+    private void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
             String line;
@@ -46,42 +41,45 @@ public class Reversi {
                 execute(line);
                 reader.close();
             }
-        } catch (IOException e) {
-            throw new IncorrectGameConfigFileException("IO exception occurred on reading user input: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("IO exception occurred on reading input: " + e.getMessage());
         }
     }
 
-    String[] readGameConfig(Path gameFilePath) throws IncorrectGameConfigFileException {
-        String[] gameConfig;
+    String[] readGameConfig(Path gameFilePath) {
+        String[] gameConfig = new String[] {};
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            throw new IncorrectGameConfigFileException("Game configuration file does not exist.");
+            System.out.println("Could not open game configuration file.");
         } catch (IOException e) {
-            throw new IncorrectGameConfigFileException("Could not read game configuration file.", e);
+            System.out.println("Could not read game configuration file.");
         }
         return gameConfig;
     }
 
-    void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
+    void initGame(String[] gameConfig) {
         if (gameConfig == null) {
-            throw new IncorrectGameConfigFileException("Game configuration is null");
+            System.out.println("Game configuration is null");
+            return;
         }
         if (gameConfig.length != 3) {
-            throw new IncorrectGameConfigFileException("Game configuration must contain 3 lines.");
+            System.out.println("Game configuration must contain 3 lines.");
+            return;
         }
         try {
             setOnTurn(gameConfig[0]);
             createPlayground();
             fillPlayground(gameConfig);
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new IncorrectGameConfigFileException("Game configuration is incorrect.");
+            System.out.println("Game configuration is incorrect.");
         }
     }
 
-    void setOnTurn(String player) throws IncorrectGameConfigFileException {
+    void setOnTurn(String player) {
         if (!isOnTurnInputCorrect(player)) {
-            throw new IncorrectGameConfigFileException("Incorrect player on turn input.");
+            System.out.println("Incorrect player on turn input.");
+            return;
         }
         onTurn = Player.valueOf(player);
     }
@@ -99,7 +97,7 @@ public class Reversi {
         }
     }
 
-    void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
+    void fillPlayground(String[] gameConfig) {
         try {
             for (int i = 1; i < 3; i++) {
                 String[] tiles = gameConfig[i].split(" ");
@@ -108,20 +106,21 @@ public class Reversi {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
+            System.out.println("Game configuration file is incorrect.");
         }
     }
 
-    void setTile(String tile, Player player) throws IncorrectGameConfigFileException {
+    void setTile(String tile, Player player) {
         if (!isTileInputCorrect(tile)) {
-            throw new IncorrectGameConfigFileException("Incorrect tile input");
+            System.out.println("Incorrect tile input");
+            return;
         }
         int r = Integer.parseInt(tile.substring(1, 2)) - 1;
         int c = Alpha.valueOf(tile.substring(0, 1)).getValue();
         playground[r][c] = player;
     }
 
-    void initTilesCount() throws IncorrectGameConfigFileException {
+    void initTilesCount() {
         try {
             for (int r = 0; r < SIZE; r++) {
                 for (int c = 0; c < SIZE; c++) {
@@ -133,7 +132,7 @@ public class Reversi {
                 }
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            throw new IncorrectGameConfigFileException("Playground  is not valid");
+            System.out.println("Playground  is not valid" + e.getMessage());
         }
     }
 
@@ -317,13 +316,8 @@ public class Reversi {
         File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
-        Reversi rev;
-        try {
-            rev = new Reversi(gameFilePath);
-            rev.run();
-        } catch (IncorrectGameConfigFileException e) {
-            System.out.println(e.getMessage());
-        }
+        Reversi rev = new Reversi(gameFilePath);
+        rev.run();
 
     }
 

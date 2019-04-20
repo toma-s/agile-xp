@@ -56,7 +56,7 @@ public class ReversiTest {
     // readGameConfig
 
     @Test
-    public void testReadGameConfigInit() {
+    public void testReadGameConfigInitB() {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(gameInitBStarts);
 
@@ -118,40 +118,40 @@ public class ReversiTest {
 
     // isOnTurnInputCorrect
 
-    @Test
-    public void testIsOnTurnInputCorrectB() {
-        Reversi game = rev;
-
-        assertTrue("on turn value of config file: B", game.isOnTurnInputCorrect("B"));
-    }
-
-    @Test
-    public void testIsOnTurnInputCorrectW() {
-        Reversi game = rev;
-
-        assertTrue("on turn value of config file: W", game.isOnTurnInputCorrect("W"));
-    }
-
-    @Test
-    public void testIsOnTurnInputCorrectA() {
-        Reversi game = rev;
-
-        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("A"));
-    }
-
-    @Test
-    public void testIsOnTurnInputCorrectNONE() {
-        Reversi game = rev;
-
-        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("NONE"));
-    }
-
-    @Test
-    public void testIsOnTurnInputCorrectnull() {
-        Reversi game = rev;
-
-        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect(null));
-    }
+//    @Test
+//    public void testIsOnTurnInputCorrectB() {
+//        Reversi game = rev;
+//
+//        assertTrue("on turn value of config file: B", game.isOnTurnInputCorrect("B"));
+//    }
+//
+//    @Test
+//    public void testIsOnTurnInputCorrectW() {
+//        Reversi game = rev;
+//
+//        assertTrue("on turn value of config file: W", game.isOnTurnInputCorrect("W"));
+//    }
+//
+//    @Test
+//    public void testIsOnTurnInputCorrectA() {
+//        Reversi game = rev;
+//
+//        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("A"));
+//    }
+//
+//    @Test
+//    public void testIsOnTurnInputCorrectNONE() {
+//        Reversi game = rev;
+//
+//        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("NONE"));
+//    }
+//
+//    @Test
+//    public void testIsOnTurnInputCorrectnull() {
+//        Reversi game = rev;
+//
+//        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect(null));
+//    }
 
 
     // setOnTurn
@@ -204,57 +204,6 @@ public class ReversiTest {
 
         assertArrayEquals("create empty playground", getEmptyPlayground(), game.playground);
     }
-
-
-    // isTileInputCorrect
-
-//    @Test
-//    public void testTileInputA1() {
-//        Reversi game = new Reversi(gameInitBStarts);
-//        assertTrue("tile input: A1", game.isTileInputCorrect("A1"));
-//    }
-//
-//    @Test
-//    public void testTileInputAA() {
-//        Reversi game = new Reversi(gameInitBStarts);
-//        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
-//    }
-//
-//    @Test
-//    public void testTileInput11() {
-//        Reversi game = new Reversi(gameInitBStarts);
-//        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
-//    }
-//
-//    @Test
-//    public void testTileInputa1()  {
-//        Reversi game = new Reversi(gameInitBStarts);
-//        assertFalse("tile input: a1", game.isTileInputCorrect("a1"));
-//    }
-//
-//    @Test
-//    public void testTileInput1A() {
-//        Reversi game = new Reversi(gameInitBStarts);
-//        assertFalse("tile input: 1A", game.isTileInputCorrect("1A"));
-//    }
-//
-//    @Test
-//    public void testTileInputI1() {
-//        Reversi game = new Reversi(gameInitBStarts);
-//        assertFalse("tile input: I1", game.isTileInputCorrect("I1"));
-//    }
-//
-//    @Test
-//    public void testTileInputA9() {
-//        Reversi game = new Reversi(gameInitBStarts);
-//        assertFalse("tile input: A9", game.isTileInputCorrect("A9"));
-//    }
-//
-//    @Test
-//    public void testTileInputI9() {
-//        Reversi game = new Reversi(gameInitBStarts);
-//        assertFalse("tile input: I9", game.isTileInputCorrect("I9"));
-//    }
 
 
     // setTile
@@ -558,98 +507,37 @@ public class ReversiTest {
     }
 
 
-    // printPlayground
-
-//    @Test
-//    public void testPrintPlaygroundInit() {
-//        /// ?
-//    }
-
-
-    // printTilesLeftCount
-
-//    @Test
-//    public void testprintTilesLeftCountInit() {
-//        /// ?
-//    }
-
-
-    // isWithinPlayground
-
-//    @Test
-//    public void testIsWithinPlayground00() {
-//        Reversi game = rev;
-//
-//        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
-//    }
-//
-//    @Test
-//    public void testIsWithinPlayground77() {
-//        Reversi game = rev;
-//
-//        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
-//    }
-//
-//    @Test
-//    public void testIsWithinPlaygroundNegR() {
-//        Reversi game = rev;
-//
-//        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
-//    }
-//
-//    @Test
-//    public void testIsWithinPlaygroundNegC() {
-//        Reversi game = rev;
-//
-//        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
-//    }
-//
-//    @Test
-//    public void testIsWithinPlaygroundLargeR() {
-//        Reversi game = rev;
-//
-//        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
-//    }
-//
-//    @Test
-//    public void testIsWithinPlaygroundLargeC() {
-//        Reversi game = rev;
-//
-//        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
-//    }
-
-
     // isEmpty
 
-    @Test
-    public void testIsEmptyInit00() {
-        Reversi game = new Reversi(gameInitBStarts);
-
-        assertTrue("is empty (0, 0) on init", game.isEmpty(0, 0));
-    }
-
-    @Test
-    public void testIsEmptyInit33() {
-        Reversi game = new Reversi(gameInitBStarts);
-
-        assertFalse("is empty (3, 3) on init", game.isEmpty(3, 3));
-    }
+//    @Test
+//    public void testIsEmptyInit00() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//
+//        assertTrue("is empty (0, 0) on init", game.isEmpty(0, 0));
+//    }
+//
+//    @Test
+//    public void testIsEmptyInit33() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//
+//        assertFalse("is empty (3, 3) on init", game.isEmpty(3, 3));
+//    }
 
 
     // isGameOver
 
-    @Test
-    public void testIsGameOverInit() {
-        Reversi game = new Reversi(gameInitBStarts);
-
-        assertFalse("is game over on init", game.isGameOver());
-    }
-
-    @Test
-    public void testIsGameOverOnEnd() {
-        Reversi game = new Reversi(gameComplete);
-        assertFalse("is game over on init", game.isGameOver());
-    }
+//    @Test
+//    public void testIsGameOverInit() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//
+//        assertFalse("is game over on init", game.isGameOver());
+//    }
+//
+//    @Test
+//    public void testIsGameOverOnEnd() {
+//        Reversi game = new Reversi(gameComplete);
+//        assertFalse("is game over on init", game.isGameOver());
+//    }
 
 
     // getTilesToFlip
@@ -734,21 +622,21 @@ public class ReversiTest {
 
     // swapPlayerOnTurn
 
-    @Test
-    public void testSwapPlayerOnTurnBtoW() {
-        Reversi game = new Reversi(gameInitBStarts);
-        game.swapPlayerOnTurn();
-
-        assertEquals("...", Player.W, game.onTurn);
-    }
-
-    @Test
-    public void testSwapPlayerOnTurnWtoB() {
-        Reversi game = new Reversi(gameInitWStarts);
-        game.swapPlayerOnTurn();
-
-        assertEquals("...", Player.B, game.onTurn);
-    }
+//    @Test
+//    public void testSwapPlayerOnTurnBtoW() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//        game.swapPlayerOnTurn();
+//
+//        assertEquals("...", Player.W, game.onTurn);
+//    }
+//
+//    @Test
+//    public void testSwapPlayerOnTurnWtoB() {
+//        Reversi game = new Reversi(gameInitWStarts);
+//        game.swapPlayerOnTurn();
+//
+//        assertEquals("...", Player.B, game.onTurn);
+//    }
 
     // endGame
 
@@ -1009,7 +897,6 @@ public class ReversiTest {
     private Player getTile(Reversi game, Alpha c0, int r0) {
         return game.playground[r0-1][c0.getValue()];
     }
-
 
     private Reversi setMoves(ArrayList<Pair<Alpha, Integer>> moves) {
         Reversi game = new Reversi(gameInitBStarts);

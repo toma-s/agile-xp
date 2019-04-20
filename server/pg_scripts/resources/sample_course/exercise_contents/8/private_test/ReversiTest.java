@@ -196,7 +196,6 @@ public class ReversiTest {
         assertEquals(Player.NONE, game.onTurn);
     }
 
-
     // createPlayground
 
     @Test
@@ -209,53 +208,53 @@ public class ReversiTest {
 
     // isTileInputCorrect
 
-    @Test
-    public void testTileInputA1() {
-        Reversi game = new Reversi(gameInitBStarts);
-        assertTrue("tile input: A1", game.isTileInputCorrect("A1"));
-    }
-
-    @Test
-    public void testTileInputAA() {
-        Reversi game = new Reversi(gameInitBStarts);
-        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
-    }
-
-    @Test
-    public void testTileInput11() {
-        Reversi game = new Reversi(gameInitBStarts);
-        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
-    }
-
-    @Test
-    public void testTileInputa1()  {
-        Reversi game = new Reversi(gameInitBStarts);
-        assertFalse("tile input: a1", game.isTileInputCorrect("a1"));
-    }
-
-    @Test
-    public void testTileInput1A() {
-        Reversi game = new Reversi(gameInitBStarts);
-        assertFalse("tile input: 1A", game.isTileInputCorrect("1A"));
-    }
-
-    @Test
-    public void testTileInputI1() {
-        Reversi game = new Reversi(gameInitBStarts);
-        assertFalse("tile input: I1", game.isTileInputCorrect("I1"));
-    }
-
-    @Test
-    public void testTileInputA9() {
-        Reversi game = new Reversi(gameInitBStarts);
-        assertFalse("tile input: A9", game.isTileInputCorrect("A9"));
-    }
-
-    @Test
-    public void testTileInputI9() {
-        Reversi game = new Reversi(gameInitBStarts);
-        assertFalse("tile input: I9", game.isTileInputCorrect("I9"));
-    }
+//    @Test
+//    public void testTileInputA1() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//        assertTrue("tile input: A1", game.isTileInputCorrect("A1"));
+//    }
+//
+//    @Test
+//    public void testTileInputAA() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
+//    }
+//
+//    @Test
+//    public void testTileInput11() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//        assertFalse("tile input: AA", game.isTileInputCorrect("a1"));
+//    }
+//
+//    @Test
+//    public void testTileInputa1()  {
+//        Reversi game = new Reversi(gameInitBStarts);
+//        assertFalse("tile input: a1", game.isTileInputCorrect("a1"));
+//    }
+//
+//    @Test
+//    public void testTileInput1A() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//        assertFalse("tile input: 1A", game.isTileInputCorrect("1A"));
+//    }
+//
+//    @Test
+//    public void testTileInputI1() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//        assertFalse("tile input: I1", game.isTileInputCorrect("I1"));
+//    }
+//
+//    @Test
+//    public void testTileInputA9() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//        assertFalse("tile input: A9", game.isTileInputCorrect("A9"));
+//    }
+//
+//    @Test
+//    public void testTileInputI9() {
+//        Reversi game = new Reversi(gameInitBStarts);
+//        assertFalse("tile input: I9", game.isTileInputCorrect("I9"));
+//    }
 
 
     // setTile
@@ -577,47 +576,47 @@ public class ReversiTest {
 
     // isWithinPlayground
 
-    @Test
-    public void testIsWithinPlayground00() {
-        Reversi game = rev;
-
-        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
-    }
-
-    @Test
-    public void testIsWithinPlayground77() {
-        Reversi game = rev;
-
-        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
-    }
-
-    @Test
-    public void testIsWithinPlaygroundNegR() {
-        Reversi game = rev;
-
-        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
-    }
-
-    @Test
-    public void testIsWithinPlaygroundNegC() {
-        Reversi game = rev;
-
-        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
-    }
-
-    @Test
-    public void testIsWithinPlaygroundLargeR() {
-        Reversi game = rev;
-
-        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
-    }
-
-    @Test
-    public void testIsWithinPlaygroundLargeC() {
-        Reversi game = rev;
-
-        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
-    }
+//    @Test
+//    public void testIsWithinPlayground00() {
+//        Reversi game = rev;
+//
+//        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlayground77() {
+//        Reversi game = rev;
+//
+//        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlaygroundNegR() {
+//        Reversi game = rev;
+//
+//        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlaygroundNegC() {
+//        Reversi game = rev;
+//
+//        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlaygroundLargeR() {
+//        Reversi game = rev;
+//
+//        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
+//    }
+//
+//    @Test
+//    public void testIsWithinPlaygroundLargeC() {
+//        Reversi game = rev;
+//
+//        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
+//    }
 
 
     // isEmpty
@@ -994,7 +993,7 @@ public class ReversiTest {
     }
 
     @Test
-    public void testExecuteFinishGame() {
+    public void testFinishGame() {
         Reversi game = new Reversi(gameAlmostComplete);
         game.execute("G7");
 
@@ -1058,4 +1057,3 @@ public class ReversiTest {
         return init;
     }
 }
-

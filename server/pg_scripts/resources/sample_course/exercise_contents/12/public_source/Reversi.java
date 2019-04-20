@@ -6,14 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Reversi {
 
     private static final int SIZE = 8;
     Player[][] playground;
-    int leftB = 0;
-    int leftW = 0;
+    private HashMap<Player, Integer> left = new HashMap<>() {{ put(Player.B, 0); put(Player.W, 0); }};
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
     Player winner = Player.NONE;
@@ -22,18 +22,18 @@ public class Reversi {
     Reversi() {
     }
 
-    Reversi(Path gameFilePath) {
+    Reversi(Path gameFilePath) throws IncorrectGameConfigFileException {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
             initTilesCount();
-        } catch (Exception e) {
+        } catch (IncorrectGameConfigFileException e) {
             ended = true;
-            System.out.println(e.getMessage());
+            throw new IncorrectGameConfigFileException(e.getMessage());
         }
     }
 
-    private void run() {
+    private void run() throws IncorrectGameConfigFileException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
             String line;
@@ -46,45 +46,42 @@ public class Reversi {
                 execute(line);
                 reader.close();
             }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        } catch (IOException e) {
+            throw new IncorrectGameConfigFileException("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
-    String[] readGameConfig(Path gameFilePath) {
-        String[] gameConfig = new String[] {};
+    String[] readGameConfig(Path gameFilePath) throws IncorrectGameConfigFileException {
+        String[] gameConfig;
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            System.out.println("Could not open game configuration file.");
+            throw new IncorrectGameConfigFileException("Game configuration file does not exist.");
         } catch (IOException e) {
-            System.out.println("Could not read game configuration file.");
+            throw new IncorrectGameConfigFileException("Could not read game configuration file.", e);
         }
         return gameConfig;
     }
 
-    void initGame(String[] gameConfig) {
+    void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
         if (gameConfig == null) {
-            System.out.println("Game configuration is null");
-            return;
+            throw new IncorrectGameConfigFileException("Game configuration is null");
         }
         if (gameConfig.length != 3) {
-            System.out.println("Game configuration must contain 3 lines.");
-            return;
+            throw new IncorrectGameConfigFileException("Game configuration must contain 3 lines.");
         }
         try {
             setOnTurn(gameConfig[0]);
             createPlayground();
             fillPlayground(gameConfig);
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect.");
+            throw new IncorrectGameConfigFileException("Game configuration is incorrect.");
         }
     }
 
-    void setOnTurn(String player) {
+    void setOnTurn(String player) throws IncorrectGameConfigFileException {
         if (!isOnTurnInputCorrect(player)) {
-            System.out.println("Incorrect player on turn input.");
-            return;
+            throw new IncorrectGameConfigFileException("Incorrect player on turn input.");
         }
         onTurn = Player.valueOf(player);
     }
@@ -102,7 +99,7 @@ public class Reversi {
         }
     }
 
-    void fillPlayground(String[] gameConfig) {
+    void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
         try {
             for (int i = 1; i < 3; i++) {
                 String[] tiles = gameConfig[i].split(" ");
@@ -111,33 +108,32 @@ public class Reversi {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration file is incorrect.");
+            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
         }
     }
 
-    void setTile(String tile, Player player) {
-        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
-            System.out.println("Incorrect tile input");
-            return;
+    void setTile(String tile, Player player) throws IncorrectGameConfigFileException {
+        if (!isTileInputCorrect(tile)) {
+            throw new IncorrectGameConfigFileException("Incorrect tile input");
         }
         int r = Integer.parseInt(tile.substring(1, 2)) - 1;
         int c = Alpha.valueOf(tile.substring(0, 1)).getValue();
         playground[r][c] = player;
     }
 
-    void initTilesCount() {
+    void initTilesCount() throws IncorrectGameConfigFileException {
         try {
             for (int r = 0; r < SIZE; r++) {
                 for (int c = 0; c < SIZE; c++) {
                     if (playground[r][c] == Player.B) {
-                        leftB++;
+                        left.put(Player.B, left.get(Player.B) + 1);
                     } else if (playground[r][c] == Player.W) {
-                        leftW++;
+                        left.put(Player.W, left.get(Player.W) + 1);
                     }
                 }
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            System.out.println("Playground  is not valid" + e.getMessage());
+            throw new IncorrectGameConfigFileException("Playground  is not valid");
         }
     }
 
@@ -162,15 +158,15 @@ public class Reversi {
     }
 
     int getLeftB() {
-        return leftB;
+        return left.get(Player.B);
     }
 
     int getLeftW() {
-        return leftW;
+        return left.get(Player.W);
     }
 
     void execute(String tile) {
-        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[1-8]") &&  tile.substring(0, 1).matches("[A-H]"))) {
+        if (!isTileInputCorrect(tile)) {
             System.out.println("Incorrect tile input");
             return;
         }
@@ -179,18 +175,18 @@ public class Reversi {
         move(c, r);
     }
 
-//    boolean isTileInputCorrect(String tile) {
-//        if (tile.length() != 2) return false;
-//        String r = tile.substring(1, 2);
-//        String c = tile.substring(0, 1);
-//        return r.matches("[1-8]") && c.matches("[A-H]");
-//    }
+    boolean isTileInputCorrect(String tile) {
+        if (tile.length() != 2) return false;
+        String r = tile.substring(1, 2);
+        String c = tile.substring(0, 1);
+        return r.matches("[1-8]") && c.matches("[A-H]");
+    }
 
     void move(Alpha c0, int r0) {
         int r = r0 - 1;
         int c = c0.getValue();
 
-        if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) {
+        if (!(isWithinPlayground(r, c))) {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
@@ -214,9 +210,9 @@ public class Reversi {
         if (! areValidMoves()) endGame();
     }
 
-//    boolean isWithinPlayground(int r, int c) {
-//        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
-//    }
+    boolean isWithinPlayground(int r, int c) {
+        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
+    }
 
     boolean isEmpty(int r, int c) {
         return playground[r][c] == Player.NONE;
@@ -239,16 +235,16 @@ public class Reversi {
             int c = c0;
             r += direction[0];
             c += direction[1];
-            if (r >= 0 && c >= 0 && r < SIZE && c < SIZE && playground[r][c] != opposite) continue;
+            if (isWithinPlayground(r, c) && playground[r][c] != opposite) continue;
             r += direction[0];
             c += direction[1];
-            if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) continue;
+            if (!isWithinPlayground(r, c)) continue;
             while (playground[r][c] == opposite) {
                 r += direction[0];
                 c += direction[1];
-                if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) break;
+                if (!isWithinPlayground(r, c)) break;
             }
-            if (!(r >= 0 && c >= 0 && r < SIZE && c < SIZE)) continue;
+            if (!isWithinPlayground(r, c)) continue;
             if (playground[r][c] != onTurn) continue;
             while (true) {
                 r -= direction[0];
@@ -265,26 +261,17 @@ public class Reversi {
         return toFLip;
     }
 
-    void flipTiles(List<List<Integer>> tiles) {
-        for (List<Integer> tile : tiles) {
-            int r = tile.get(0);
-            int c = tile.get(1);
-            if (playground[r][c] == onTurn) break;
-            if (playground[r][c] == Player.NONE) {
-                playground[r][c] = onTurn;
-                if (onTurn == Player.B) leftB++;
-                else if (onTurn == Player.W) leftW++;
-            } else {
-                playground[r][c] = onTurn;
-                if (onTurn == Player.B) {
-                    leftB++;
-                    leftW--;
-                } else {
-                    leftW++;
-                    leftB--;
-                }
+    void flipTiles(ArrayList<List<Integer>> tiles) {
+        tiles.forEach(tile -> {
+            Player previous = playground[tile.get(0)][tile.get(1)];
+            playground[tile.get(0)][tile.get(1)] = onTurn;
+            if (previous == Player.NONE) {
+                left.put(onTurn, left.get(onTurn) + 1);
+            } else if (previous != onTurn) {
+                left.put(previous, left.get(previous) - 1);
+                left.put(onTurn, left.get(onTurn) + 1);
             }
-        }
+        });
     }
 
     boolean areValidMoves() {
@@ -330,8 +317,13 @@ public class Reversi {
         File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
-        Reversi rev = new Reversi(gameFilePath);
-        rev.run();
+        Reversi rev;
+        try {
+            rev = new Reversi(gameFilePath);
+            rev.run();
+        } catch (IncorrectGameConfigFileException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
