@@ -25,6 +25,7 @@ export class CreateSubmitComponent implements OnInit {
 
   @Input() exerciseFormGroup: FormGroup;
   private exercise: Exercise;
+  // private error = '';
 
   constructor(
     private exerciseService: ExerciseService,
@@ -41,9 +42,16 @@ export class CreateSubmitComponent implements OnInit {
   }
 
   async submit() {
+    this.resetErrorMessage();
     this.exercise = await this.saveExercise();
     await this.saveExerciseItems();
-    this.setSuccess();
+    if (this.exerciseFormGroup.get('error').get('errorMessage').value === '') {
+      this.setSuccess();
+    }
+  }
+
+  resetErrorMessage() {
+    this.exerciseFormGroup.get('error').get('errorMessage').setValue('');
   }
 
   saveExercise(): Promise<Exercise> {
@@ -51,12 +59,8 @@ export class CreateSubmitComponent implements OnInit {
 
     return new Promise((resolve, reject) => {
       this.exerciseService.createExercise(exercise).subscribe(
-        data => {
-          resolve(data);
-        },
-        error => {
-          reject(error);
-        }
+        data => resolve(data),
+        error => reject(error)
       );
     });
   }
@@ -75,14 +79,12 @@ export class CreateSubmitComponent implements OnInit {
     const exerciseTypeValue = this.exerciseFormGroup.get('intro').get('type').value['value'];
     switch (exerciseTypeValue) {
       case 'whitebox': {
-        await this.savePrivateSources();
         await this.savePublicSourcesByType();
         await this.savePrivateTests();
         await this.savePublicTestsByType();
         break;
       }
       case 'whitebox-file': {
-        await this.savePrivateSources();
         await this.savePublicSourcesByType();
         await this.savePrivateTests();
         await this.savePublicTestsByType();
@@ -91,12 +93,12 @@ export class CreateSubmitComponent implements OnInit {
         break;
       }
       case 'blackbox': {
-        await this.savePrivateSources();
+        await this.savePrivateSources().catch(error => this.handleError(error));
         await this.savePublicTestsByType();
         break;
       }
       case 'blackbox-file': {
-        await this.savePrivateSources();
+        await this.savePrivateSources().catch(error => this.handleError(error));
         await this.savePublicTestsByType();
         await this.savePrivateFiles();
         await this.savePublicFilesByType();
@@ -116,9 +118,7 @@ export class CreateSubmitComponent implements OnInit {
     });
     return new Promise((resolve, reject) => {
       forkJoin(observables).subscribe(
-        data => {
-          resolve(data);
-        },
+        data => resolve(data),
         error => reject(error)
       );
     });
@@ -147,9 +147,7 @@ export class CreateSubmitComponent implements OnInit {
     });
     return new Promise((resolve, reject) => {
       forkJoin(observables).subscribe(
-        data => {
-          resolve(data);
-        },
+        data => resolve(data),
         error => reject(error)
       );
     });
@@ -169,9 +167,7 @@ export class CreateSubmitComponent implements OnInit {
     });
     return new Promise((resolve, reject) => {
       forkJoin(observables).subscribe(
-        data => {
-          resolve(data);
-        },
+        data => resolve(data),
         error => reject(error)
       );
     });
@@ -200,9 +196,7 @@ export class CreateSubmitComponent implements OnInit {
     });
     return new Promise((resolve, reject) => {
       forkJoin(observables).subscribe(
-        data => {
-          resolve(data);
-        },
+        data => resolve(data),
         error => reject(error)
       );
     });
@@ -221,9 +215,7 @@ export class CreateSubmitComponent implements OnInit {
     });
     return new Promise((resolve, reject) => {
       forkJoin(observables).subscribe(
-        data => {
-          resolve(data);
-        },
+        data => resolve(data),
         error => reject(error)
       );
     });
@@ -252,9 +244,7 @@ export class CreateSubmitComponent implements OnInit {
     });
     return new Promise((resolve, reject) => {
       forkJoin(observables).subscribe(
-        data => {
-          resolve(data);
-        },
+        data => resolve(data),
         error => reject(error)
       );
     });
@@ -268,6 +258,11 @@ export class CreateSubmitComponent implements OnInit {
 
   setSuccess() {
     this.exerciseFormGroup.get('params').get('success').setValue(true);
+  }
+
+  handleError(error) {
+    console.log(error);
+    this.exerciseFormGroup.get('error').get('errorMessage').setValue(error.message);
   }
 
 }

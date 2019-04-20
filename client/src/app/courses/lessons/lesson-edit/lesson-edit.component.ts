@@ -6,10 +6,11 @@ import { ExerciseService } from '../exercises/shared/exercise/exercise/exercise.
 import { Lesson } from '../shared/lesson.model';
 import { Exercise } from '../exercises/shared/exercise/exercise/exercise.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { forkJoin, of, Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-lesson-edit',
+  selector: 'lesson-edit',
   templateUrl: './lesson-edit.component.html',
   styleUrls: ['./lesson-edit.component.scss']
 })
@@ -20,13 +21,19 @@ export class LessonEditComponent implements OnInit {
   index: number;
 
   constructor(
+    private titleService: Title,
     private lessonServise: LessonService,
     private exerciseService: ExerciseService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.setTitle();
     this.getLessonByIdParam();
+  }
+
+  setTitle() {
+    this.titleService.setTitle(`Edit lesson | AgileXP`);
   }
 
   getLessonByIdParam() {

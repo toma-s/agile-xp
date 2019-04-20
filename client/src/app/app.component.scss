@@ -1,17 +1,26 @@
-mat-toolbar-row {
-  h1 {
-    margin-right: 5px;
+@import "src/variables.scss";
+
+.toolbar__row {
+  padding: 0 24px;
+  margin: 8px 0;
+
+  .title {
+    a {
+      text-decoration: none;
+      color: white;
+    }
   }
 
-  .example-spacer {
+  .space {
     flex: 1 1 auto;
   }
 
-  a {
-    margin-right: 20px;
-    font-size: 0.8em;
-    text-decoration: none;
-    color: white;
+  .button {
+    a {
+      font-size: 1em;
+      text-decoration: none;
+      color: $grey;
+    }
   }
 }
 

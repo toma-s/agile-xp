@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ExerciseType } from '../shared/exercise/exercise-type/exercise-type.model';
 import { Exercise } from '../shared/exercise/exercise/exercise.model';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-exercise-create',
@@ -18,14 +19,20 @@ export class ExerciseCreateComponent implements OnInit {
   viewInput = new Map<string, boolean>();
 
   constructor(
+    private titleService: Title,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.setTitle();
     this.initViewInput();
     this.createForm();
     console.log(this.exerciseFormGroup);
     this.listenToTypeChange();
+  }
+
+  setTitle() {
+    this.titleService.setTitle(`Create exercise | AgileXP`);
   }
 
   initViewInput() {
@@ -39,6 +46,7 @@ export class ExerciseCreateComponent implements OnInit {
 
   createForm() {
     this.exerciseFormGroup = this.getParamsGroup();
+    this.exerciseFormGroup.addControl('error', this.getErrorGroup());
     this.exerciseFormGroup.addControl('intro', this.getIntroGroup());
     this.exerciseFormGroup.addControl('sourceControl', this.getExerciseGroup('sources'));
     this.exerciseFormGroup.addControl('testControl', this.getExerciseGroup('tests'));
@@ -51,6 +59,12 @@ export class ExerciseCreateComponent implements OnInit {
         success: [false],
         viewInput: this.fb.group(this.viewInput)
       })
+    });
+  }
+
+  getErrorGroup() {
+    return this.fb.group({
+      errorMessage: ['']
     });
   }
 

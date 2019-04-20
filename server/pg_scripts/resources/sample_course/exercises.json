@@ -1,85 +1,74 @@
 {
   "1": [
     {
-      "name": "'Buggy'",
+      "name": "'Finding the Bugs in Legacy Program'",
       "index": 0,
       "type_id": 4,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     },
     {
-      "name": "'Fix buggy'",
+      "name": "'Debugging the Legacy Program'",
       "index": 1,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     }
   ],
   "2": [
     {
-      "name": "'Feature Alpha'",
+      "name": "'Adding New Feature'",
       "index": 0,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     }
   ],
   "3": [
     {
-      "name": "'Size constant'",
+      "name": "'Magic Numbers'",
       "index": 0,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     },
     {
-      "name": "'Player enum'",
+      "name": "'Constants versus Enums'",
       "index": 1,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     },
     {
-      "name": "'Do one thing'",
+      "name": "'Do One Thing'",
       "index": 2,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     },
     {
-      "name": "'One abstraction level'",
+      "name": "'One Level of Abstraction per Function'",
       "index": 3,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     },
     {
-      "name": "'Duplicities'",
+      "name": "'No Duplication'",
       "index": 4,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     },
     {
-      "name": "'Left'",
+      "name": "'Small!'",
       "index": 5,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     },
     {
-      "name": "'Config file exception'",
+      "name": "'Error Handling I'",
       "index": 6,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     },
     {
-      "name": "'Move exception'",
+      "name": "'Error Handling II'",
       "index": 7,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "description": "'todo'"
+      "created": "'2019-03-28 11:08:09.851'"
     }
   ]
 }

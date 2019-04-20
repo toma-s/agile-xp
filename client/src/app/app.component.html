@@ -1,18 +1,19 @@
-<div> 
-
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <a routerLink="">
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="toolbar__row">
+    <div class="title"><a routerLink="courses">
         <h1 title headline>{{headline}}</h1>
-        <h4 class="example-spacer">{{title}}</h4>
+        <h4>{{title}}</h4>
       </a>
+    </div>
 
+    <div class="space"></div>
+
+    <div class="button">
       <a routerLink="courses" role="button" routerLinkActive="active" mat-button>Courses</a>
-    </mat-toolbar-row>
-  </mat-toolbar>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
-  
+<div class="container">
+  <router-outlet></router-outlet>
 </div>

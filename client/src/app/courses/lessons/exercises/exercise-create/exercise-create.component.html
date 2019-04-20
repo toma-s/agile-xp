@@ -42,6 +42,10 @@
 
       <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
 
+      <div *ngIf="exerciseFormGroup.get('error').get('errorMessage').value !== ''">
+        <error formGroupName=error></error>
+      </div>
+
     </div>
 
   </ng-template>

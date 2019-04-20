@@ -2,10 +2,14 @@
   <mat-toolbar-row>
     <a mat-button color="primary" routerLink="../../../../">Back</a>
 
+    <div class="space"></div>
+
     <div class="nav">
       <a mat-button color="primary" [routerLink]="['../', previousExerciseId]" [disabled]="0 > previousIndex">Previous</a>
 
       <a mat-button color="primary" [routerLink]="['../', nextExerciseId]" [disabled]="nextIndex >= maxIndex">Next</a>
     </div>
+
+    <div class="space"></div>
   </mat-toolbar-row>
 </mat-toolbar>

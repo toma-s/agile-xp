@@ -10,6 +10,7 @@ export class SolveEditorComponent implements OnInit {
 
   @Input() solutionFormGroup: FormGroup;
   form: FormGroup;
+  editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
 
   constructor(
     public controlContainer: ControlContainer

@@ -11,6 +11,7 @@ import { PublicFileService } from '../shared/public/public-file/public-file.serv
 import { SolutionSource } from '../shared/solution/solution-source/solution-source.model';
 import { SolutionTest } from '../shared/solution/solution-test/solution-test.model';
 import { SolutionFile } from '../shared/solution/solution-file/solution-file.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'exercise-solve',
@@ -27,6 +28,7 @@ export class ExerciseSolveComponent implements OnInit {
   solutionFiles: Array<SolutionFile> = new Array<SolutionFile>();
 
   constructor(
+    private titleService: Title,
     private route: ActivatedRoute,
     private exerciseService: ExerciseService,
     private publicSourceService: PublicSourceService,
@@ -43,6 +45,7 @@ export class ExerciseSolveComponent implements OnInit {
   async reload() {
     this.resetFormGroup();
     this.exercise = await this.getExercise();
+    this.setTitle();
     this.exerciseType =  await this.getExerciseType();
     await this.getSolutionItems();
     this.createForm();
@@ -62,6 +65,10 @@ export class ExerciseSolveComponent implements OnInit {
         )
       );
     });
+  }
+
+  setTitle() {
+    this.titleService.setTitle(`${this.exercise.name} | AgileXP`);
   }
 
   getExerciseType(): Promise<ExerciseType> {
