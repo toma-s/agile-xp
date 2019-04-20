@@ -9,16 +9,17 @@
     </mat-form-field>
 
     <mat-form-field class="intro__field">
-        <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.type">
-          <mat-option *ngFor="let type of types" [value]="type">
-            {{type.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.type">
+        <mat-option *ngFor="let type of types" [value]="type">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <div>
       <h4>Description</h4>
-      <quill-editor [formControl]="exerciseFormGroup.controls.intro.controls.description" [style]="{height: '500px'}"></quill-editor>
+      <quill-editor [formControl]="exerciseFormGroup.controls.intro.controls.description" [style]="{height: '500px'}">
+      </quill-editor>
     </div>
 
   </div>
