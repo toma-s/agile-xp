@@ -93,53 +93,56 @@ INSERT INTO courses (name, created, description, id)
 VALUES ('Sample course', '2019-03-28 11:08:09.851', 'Web application functionality overview. Use agile programming methods to build a game, based on a legacy content', 1);
 
 INSERT INTO lessons (name, created, description, id, course_id)
-VALUES ('Debugging a legacy program', '2019-03-28 11:08:09.851', 'The aim is to find bugs in a legacy program and fix them, but keep original structure of program. The user should write own tests to find the bugs and fix them', 1, 1);
+VALUES ('Debugging a legacy program', '2019-03-28 11:08:09.851', 'Exercises on finding and fixing bugs in a legacy program', 1, 1);
 
 INSERT INTO lessons (name, created, description, id, course_id)
-VALUES ('Adding new features to the legacy program', '2019-03-28 11:08:09.851', 'The aim is to add some new features to the legacy program', 2, 1);
+VALUES ('Adding new features to the legacy program', '2019-03-28 11:08:09.851', 'Exercise on adding a new feature to the legacy program', 2, 1);
 
 INSERT INTO lessons (name, created, description, id, course_id)
-VALUES ('Refactoring the legacy program', '2019-03-28 11:08:09.851', 'The aim is to refactor the content of the legacy program with keeping its functionality', 3, 1);
+VALUES ('Refactoring the legacy program', '2019-03-28 11:08:09.851', 'Exercises on refactoring the content of the legacy program', 3, 1);
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Finding the Bugs in Legacy Program', 0, 4, '2019-03-28 11:08:09.851', 1, 1, '<h2>Objective</h2><p>You need to find bugs in the legacy program, but the source code is not available.</p><p>Write own tests to find the bugs.</p><p></p><h3><strong>User stories</strong></h3><ul><li>find <strong>three </strong>bugs.</li></ul><p><br></p><h2>Code structure</h2><pre class=\"ql-syntax\" spellcheck=\"false\">public class Reversi {<br><br>    int[][] playground;<br>    int leftB = 0;<br>    int leftW = 0;<br>    private int[] players = new int[] { 1, 0 };<br>    int onTurn = -1;<br>    int winner = -1;<br>    boolean ended = false;<br><br>    Reversi() { }<br>    Reversi(Path gameFilePath) {...}<br><br>    private void run() {...}<br>    String[] readGameConfig(Path gameFilePath) {...}<br>    void initGame(String[] gameConfig) {...}<br>    void initTilesCount() {...}<br>    int getLeftB() {...}<br>    int getLeftW() {...}<br>    void move(int r0, int c0) {...}<br>    boolean areValidMoves() {...}<br>    public static void main(String[] args) {...}<br>}<br></pre><p><br></p>');
+VALUES ('Intro', 0, 5, '2019-03-28 11:08:09.851', 1, 1, '<h2>Course overview</h2><p>In this course you would build an interactive Reversi game, based on a legacy program.</p><p>The work on the project would be done in three lessons, which represent iterations of the work on the program. Each lesson would have exercises, which would provide feedback and lead through the work on the project.</p><p>By working on project you would  learn Extreme programming methods and apply your skills. Most of the exercises would cover several of these skills, like Test-driven development, unit testing, refactoring and working with legacy code.</p><h4>Testing</h4><p>The first iteration provides exercises on debugging the legacy program. The aim is to find bugs in the legacy program and fix them, but keep the original structure of the code. Writing own tests is necessary to achieve it. The second iteration is aimed to add some features to the code, bud to keep the original structure of the code as well. Tests, used in a previous iteration, with the new tests would be needed to accomplish the iteration requirements. The last iteration is made up with numerous exercises on refactoring. The tests are essential to proof that the program would remain correct.</p><h4>Refactoring</h4><p>The refactoring exercises take place in the third, last iteration. At this moment, after the previous two iterations are completed successfully and passed all the tests, the code would be correct. Each of the numerous exercises is about a single step of the code change, exercise description and title would reference to the book \"Clean Code\" by Robert C. Martin. It is one of the mostly recommended books for software development, and for a good reason. During and after refactoring the code should maintain correct, and it can be provided by tests, written by the user.</p><h4>Legacy program overview</h4><p>The legacy program is a two-player interactive Reversi game. The rules can be found here <a href=\"http://www.flyordie.com/games/help/reversi/en/games_rules_reversi.html\" target=\"_blank\" style=\"color: rgb(70, 63, 92);\">http://www.flyordie.com/games/help/reversi/en/games_rules_reversi.html</a></p><p>The game is played from console. The state of the game is read from configuration files, which have the following structure:</p><ul><li>first row has \"B\" or \"W\", which means the player on turn, </li><li>the secong row contatins the moves of the player, whose color is black, </li><li>and the thirs row contains the moves of the player, whose color is white.</li></ul><p>The values are separated by space.</p>');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Debugging the Legacy Program', 1, 2, '2019-03-28 11:08:09.851', 2, 1, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">Fix bugs in the legacy program from previous exercise. You can use tests you wrote to find the bugs.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">When fixing the legacy program, you should keep the original core structure of the code. The program should pass all your and hidden tests.</span></p><p></p><h3><strong>User stories</strong></h3><ul><li>fix <strong>three </strong>bugs</li><li>do not make more.</li></ul><h2><br></h2>');
+VALUES ('Finding the Bugs in Legacy Program', 1, 4, '2019-03-28 11:08:09.851', 2, 1, '<h2>Objective</h2><p>You need to find bugs in the legacy program, but the source code is not available.</p><p>Write own tests to find the bugs.</p><p></p><h3><strong>User stories</strong></h3><ul><li>find <strong>three </strong>bugs.</li></ul><p><br></p><h2>Code structure</h2><pre class=\"ql-syntax\" spellcheck=\"false\">public class Reversi {<br><br>    int[][] playground;<br>    int leftB = 0;<br>    int leftW = 0;<br>    private int[] players = new int[] { 1, 0 };<br>    int onTurn = -1;<br>    int winner = -1;<br>    boolean ended = false;<br><br>    Reversi() { }<br>    Reversi(Path gameFilePath) {...}<br><br>    private void run() {...}<br>    String[] readGameConfig(Path gameFilePath) {...}<br>    void initGame(String[] gameConfig) {...}<br>    void initTilesCount() {...}<br>    int getLeftB() {...}<br>    int getLeftW() {...}<br>    void move(int r0, int c0) {...}<br>    boolean areValidMoves() {...}<br>    public static void main(String[] args) {...}<br>}<br></pre><p><br></p>');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Adding New Feature', 0, 2, '2019-03-28 11:08:09.851', 3, 2, '<h2>Objective</h2><p>Add a new feature to the legacy code:&nbsp;<strong>conventional board enumeration</strong> for Reversi.</p><p>Use Alpha&nbsp;<em>enum</em>&nbsp;to represent the values of the grid indexes: <em>Alpha.A</em>&nbsp;for 0,&nbsp;<em>Alpha.B</em>&nbsp;for 1 etc.</p><p>Function<em> move</em> would get conventional input like (Alpha.E, 4).</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>The board <span style=\"background-color: rgb(255, 255, 255); color: rgb(34, 34, 34);\">should </span>be enumerated A-H horizontally and 1-8 vertically</li><li><span style=\"background-color: rgb(255, 255, 255); color: rgb(34, 34, 34);\">Each move of a piece should be indicated by the coordinate of the destination square (e.g. E4)</span></li><li>New board enumeration should be used on printed out playground</li></ul><h2><br></h2>');
+VALUES ('Debugging the Legacy Program', 2, 2, '2019-03-28 11:08:09.851', 3, 1, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">Fix bugs in the legacy program from previous exercise. You can use tests you wrote to find the bugs.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">When fixing the legacy program, you should keep the original core structure of the code. The program should pass all your and hidden tests.</span></p><p></p><h3><strong>User stories</strong></h3><ul><li>fix <strong>three </strong>bugs</li><li>do not make more.</li></ul><h2><br></h2>');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Magic Numbers', 0, 2, '2019-03-28 11:08:09.851', 4, 3, '<h2>Objective</h2><p>Replace&nbsp;<strong>Magic Numbers</strong>&nbsp;with&nbsp;<strong>Named Constants</strong>. <span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">As a result, such variables get a name, which describes its meaning. It becomes easier to read, maintain and change the code.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><p></p><h3><strong>User stories</strong></h3><ul><li>Replace numbers representing the board size with private constant&nbsp;<em>SIZE</em>.</li></ul>');
+VALUES ('Adding New Feature', 0, 2, '2019-03-28 11:08:09.851', 4, 2, '<h2>Objective</h2><p>Add a new feature to the legacy code:&nbsp;<strong>conventional board enumeration</strong> for Reversi.</p><p>Use Alpha&nbsp;<em>enum</em>&nbsp;to represent the values of the grid indexes: <em>Alpha.A</em>&nbsp;for 0,&nbsp;<em>Alpha.B</em>&nbsp;for 1 etc.</p><p>Function<em> move</em> would get conventional input like (Alpha.E, 4).</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>The board <span style=\"background-color: rgb(255, 255, 255); color: rgb(34, 34, 34);\">should </span>be enumerated A-H horizontally and 1-8 vertically</li><li><span style=\"background-color: rgb(255, 255, 255); color: rgb(34, 34, 34);\">Each move of a piece should be indicated by the coordinate of the destination square (e.g. E4)</span></li><li>New board enumeration should be used on printed out playground</li></ul><h2><br></h2>');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Constants versus Enums', 1, 2, '2019-03-28 11:08:09.851', 5, 3, '<h2>Objective</h2><blockquote>Now that enums have been added to the language (Java 5), use them! Don’t keep using the old trick of <em>public static final int</em>s. The meaning of <em>int</em>s can get lost. The meaning of <em>enum</em>s cannot, because they belong to an enumeration that is named. What’s more, study the syntax for <em>enum</em>s carefully. They can have methods and fields. This makes them very powerful tools that allow much more expression and flexibility than <em>int</em>s.&nbsp;<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values:</p><ul><li><em>Player.W</em>&nbsp;for ''W'' instead of 0;</li><li><em>Player.B</em>&nbsp;for ''B'' instead of 1;</li><li><em>Player.NONE</em>&nbsp;for no player instead of -1.</li></ul><p>Use new <em>enum </em>for initialing the game and to print out the current state.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values.</li></ul><p><br></p><p><br></p><p><br></p>",
+VALUES ('Magic Numbers', 0, 2, '2019-03-28 11:08:09.851', 5, 3, '<h2>Objective</h2><p>Replace&nbsp;<strong>Magic Numbers</strong>&nbsp;with&nbsp;<strong>Named Constants</strong>. <span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">As a result, such variables get a name, which describes its meaning. It becomes easier to read, maintain and change the code.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><p></p><h3><strong>User stories</strong></h3><ul><li>Replace numbers representing the board size with private constant&nbsp;<em>SIZE</em>.</li></ul>');
+
+INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
+VALUES ('Constants versus Enums', 1, 2, '2019-03-28 11:08:09.851', 6, 3, '<h2>Objective</h2><blockquote>Now that enums have been added to the language (Java 5), use them! Don’t keep using the old trick of <em>public static final int</em>s. The meaning of <em>int</em>s can get lost. The meaning of <em>enum</em>s cannot, because they belong to an enumeration that is named. What’s more, study the syntax for <em>enum</em>s carefully. They can have methods and fields. This makes them very powerful tools that allow much more expression and flexibility than <em>int</em>s.&nbsp;<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values:</p><ul><li><em>Player.W</em>&nbsp;for ''W'' instead of 0;</li><li><em>Player.B</em>&nbsp;for ''B'' instead of 1;</li><li><em>Player.NONE</em>&nbsp;for no player instead of -1.</li></ul><p>Use new <em>enum </em>for initialing the game and to print out the current state.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values.</li></ul><p><br></p><p><br></p><p><br></p>",
 ');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Do One Thing', 2, 2, '2019-03-28 11:08:09.851', 6, 3, '<h2>Objective</h2><blockquote>Functions should do one thing. They should do it well. They should do it only. <br>So, another way to know that a function is doing more than “one thing” is if you can extract another function from it with a name that is not merely a restatement of its implementation. <em style=\"color: rgb(68, 68, 68);\"><br>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>For example, function&nbsp;<em>initGame&nbsp;</em>does not initialize game only, but also sets a player on turn, creates and fills playground, and places the tiles on it. Function&nbsp;<em>run&nbsp;</em>contains execution of the read line, which should be extracted as well. Function&nbsp;<em>move&nbsp;</em>does multiple things as well: it ends the game, finds tiles to flip, and flips them. Function&nbsp;<em>areValidMoves&nbsp;</em>gets possible moves. It also finds tiles to flip as well as&nbsp;<em>move</em>&nbsp;function with the use of duplicate code.</p><p>Make the current code way more readable and maintainable with extracting the functions from the ones, which do multiple things.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Extract function&nbsp;<em>execute&nbsp;</em>from function&nbsp;<em>run</em></li><li>Extract functions&nbsp;<em>setOnTurn</em>,&nbsp;<em>createPlayground</em>,&nbsp;<em>fillPlayground&nbsp;</em>and&nbsp;<em>setTile&nbsp;</em>from function&nbsp;<em>initGame</em></li><li>Extract function&nbsp;<em>endGame</em>,&nbsp;<em>flipTiles</em>,&nbsp;<em>getTilesToFlip&nbsp;</em>from function&nbsp;<em>move</em></li><li>Extract functions&nbsp;<em>getPossibleMoves</em>,&nbsp;<em>getTilesToFlip&nbsp;</em>from function&nbsp;<em>areValidMoves</em>.</li></ul><p><br></p>');
+VALUES ('Do One Thing', 2, 2, '2019-03-28 11:08:09.851', 7, 3, '<h2>Objective</h2><blockquote>Functions should do one thing. They should do it well. They should do it only. <br>So, another way to know that a function is doing more than “one thing” is if you can extract another function from it with a name that is not merely a restatement of its implementation. <em style=\"color: rgb(68, 68, 68);\"><br>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>For example, function&nbsp;<em>initGame&nbsp;</em>does not initialize game only, but also sets a player on turn, creates and fills playground, and places the tiles on it. Function&nbsp;<em>run&nbsp;</em>contains execution of the read line, which should be extracted as well. Function&nbsp;<em>move&nbsp;</em>does multiple things as well: it ends the game, finds tiles to flip, and flips them. Function&nbsp;<em>areValidMoves&nbsp;</em>gets possible moves. It also finds tiles to flip as well as&nbsp;<em>move</em>&nbsp;function with the use of duplicate code.</p><p>Make the current code way more readable and maintainable with extracting the functions from the ones, which do multiple things.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Extract function&nbsp;<em>execute&nbsp;</em>from function&nbsp;<em>run</em></li><li>Extract functions&nbsp;<em>setOnTurn</em>,&nbsp;<em>createPlayground</em>,&nbsp;<em>fillPlayground&nbsp;</em>and&nbsp;<em>setTile&nbsp;</em>from function&nbsp;<em>initGame</em></li><li>Extract function&nbsp;<em>endGame</em>,&nbsp;<em>flipTiles</em>,&nbsp;<em>getTilesToFlip&nbsp;</em>from function&nbsp;<em>move</em></li><li>Extract functions&nbsp;<em>getPossibleMoves</em>,&nbsp;<em>getTilesToFlip&nbsp;</em>from function&nbsp;<em>areValidMoves</em>.</li></ul><p><br></p>');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('One Level of Abstraction per Function', 3, 2, '2019-03-28 11:08:09.851', 7, 3, '<h2>Objective</h2><blockquote>Mixing levels of abstraction within a function is always confusing. Readers may not be able to tell whether a particular expression is an essential concept or a detail. Worse, like broken windows, once details are mixed with essential concepts, more and more details tend to accrete within the function. <em><br>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Functions setOnTurn and move do not hold the same abstraction level.</p><p>Make the current code way more readable and maintainable with extracting the functions, which hold lower abstraction levels, should be extracted.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Extract functions&nbsp;<em>isOnTurnInputCorrect</em>, from function&nbsp;<em>setOnTurn</em></li><li>Extract functions&nbsp;<em>isEmpty</em>, <em>isGameOver </em>and <em>swapPlayerOnTurn&nbsp;</em>from function&nbsp;<em>move</em>.</li></ul><p><br></p>');
+VALUES ('One Level of Abstraction per Function', 3, 2, '2019-03-28 11:08:09.851', 8, 3, '<h2>Objective</h2><blockquote>Mixing levels of abstraction within a function is always confusing. Readers may not be able to tell whether a particular expression is an essential concept or a detail. Worse, like broken windows, once details are mixed with essential concepts, more and more details tend to accrete within the function. <em><br>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Functions setOnTurn and move do not hold the same abstraction level.</p><p>Make the current code way more readable and maintainable with extracting the functions, which hold lower abstraction levels, should be extracted.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Extract functions&nbsp;<em>isOnTurnInputCorrect</em>, from function&nbsp;<em>setOnTurn</em></li><li>Extract functions&nbsp;<em>isEmpty</em>, <em>isGameOver </em>and <em>swapPlayerOnTurn&nbsp;</em>from function&nbsp;<em>move</em>.</li></ul><p><br></p>');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('No Duplication', 4, 2, '2019-03-28 11:08:09.851', 8, 3, '<h2>Objective</h2><blockquote>Duplication is the primary enemy of a well-designed system. It represents additional work, additional risk, and additional unnecessary complexity. Duplication manifests itself in many forms. Lines of code that look exactly alike are, of course, duplication. Lines of code that are similar can often be massaged to look even more alike so that they can be more easily refactored.&nbsp;<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Most of the duplicate code was refactored in previous steps.</p><p>Make the code way more readable and maintainable with extracting the rest of duplicite code into fuctions.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Extract function&nbsp;<em>isTileInputCorrect </em>from functions&nbsp;<em>setTile </em>and <em>execute</em></li><li>Extract function&nbsp;<em>isWithinPlayground&nbsp;</em>from functions&nbsp;<em>move </em>and <em>getTilesToFlip.</em></li></ul><p><br></p>');
+VALUES ('No Duplication', 4, 2, '2019-03-28 11:08:09.851', 9, 3, '<h2>Objective</h2><blockquote>Duplication is the primary enemy of a well-designed system. It represents additional work, additional risk, and additional unnecessary complexity. Duplication manifests itself in many forms. Lines of code that look exactly alike are, of course, duplication. Lines of code that are similar can often be massaged to look even more alike so that they can be more easily refactored.&nbsp;<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Most of the duplicate code was refactored in previous steps.</p><p>Make the code way more readable and maintainable with extracting the rest of duplicite code into fuctions.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Extract function&nbsp;<em>isTileInputCorrect </em>from functions&nbsp;<em>setTile </em>and <em>execute</em></li><li>Extract function&nbsp;<em>isWithinPlayground&nbsp;</em>from functions&nbsp;<em>move </em>and <em>getTilesToFlip.</em></li></ul><p><br></p>');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Small!', 5, 2, '2019-03-28 11:08:09.851', 9, 3, '<h2>Objective</h2><blockquote>The first rule of functions is that they should be small. The second rule of functions is that they should be smaller than that.<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Most of the large code was refactored in previous steps because of extracting the function from large ones. But there are more ways to reduce function size without lost of readability.</p><p>Make the code functions a way more readable with changing the structure of variable <em>left</em>.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use map <em>left </em>to store the values of variables <em>leftB </em>and <em>leftW</em>.</li></ul>');
+VALUES ('Small!', 5, 2, '2019-03-28 11:08:09.851', 10, 3, '<h2>Objective</h2><blockquote>The first rule of functions is that they should be small. The second rule of functions is that they should be smaller than that.<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Most of the large code was refactored in previous steps because of extracting the function from large ones. But there are more ways to reduce function size without lost of readability.</p><p>Make the code functions a way more readable with changing the structure of variable <em>left</em>.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use map <em>left </em>to store the values of variables <em>leftB </em>and <em>leftW</em>.</li></ul>');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Error Handling I', 6, 2, '2019-03-28 11:08:09.851', 10, 3, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">This exercise focuses on handling exceptions. Errors handling not only makes code robust, but also clean.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;</span><em style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">try/catch/finally</em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;block.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException </em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">to handle errors when reading game configuration file;</span></li></ul>');
+VALUES ('Error Handling I', 6, 2, '2019-03-28 11:08:09.851', 11, 3, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">This exercise focuses on handling exceptions. Errors handling not only makes code robust, but also clean.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;</span><em style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">try/catch/finally</em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;block.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException </em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">to handle errors when reading game configuration file;</span></li></ul>');
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description)
-VALUES ('Error Handling II', 7, 2, '2019-03-28 11:08:09.851', 11, 3, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">This exercise focuses on handling exceptions, as well as previous one.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;</span><em style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">try/catch/finally</em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;block.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException </em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;to handle errors on user input.</span></li></ul>');
+VALUES ('Error Handling II', 7, 2, '2019-03-28 11:08:09.851', 12, 3, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">This exercise focuses on handling exceptions, as well as previous one.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;</span><em style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">try/catch/finally</em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;block.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException </em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;to handle errors on user input.</span></li></ul>');
 
 INSERT INTO bugs_number (exercise_id, number)
 VALUES (1, 3);
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_source', 'Reversi.java', 1, 'import java.io.BufferedReader;
+VALUES ('private_source', 'Reversi.java', 2, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -462,7 +465,7 @@ public class Reversi {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 1, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 2, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -493,94 +496,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
-53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 1, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
-53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 1, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'B
-45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
-53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 1, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'B
-45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
-53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 1, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 1, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 1, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-34 43
-33 44
-33 44
-', 1, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-34 43
-33 44
-33 44
-', 1, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-34 43
-33 44
-', 1, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-34 43
-33 44
-', 1, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-34 43
-33 44
-', 1, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-34 43
-33 44
-', 1, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', '34 43
-33 44
-', 1, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', '34 43
-33 44
-', 1, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', '34 43
-', 1, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', '34 43
-', 1, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 2, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 3, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -886,7 +803,7 @@ public class Reversi {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 2, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 3, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -1421,7 +1338,7 @@ public class ReversiTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 2, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 3, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -1452,94 +1369,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
-53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 2, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
-53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 2, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'B
-45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
-53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 2, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'B
-45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
-53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 2, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 2, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 2, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-34 43
-33 44
-33 44
-', 2, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-34 43
-33 44
-33 44
-', 2, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-34 43
-33 44
-', 2, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-34 43
-33 44
-', 2, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-34 43
-33 44
-', 2, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-34 43
-33 44
-', 2, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', '34 43
-33 44
-', 2, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', '34 43
-33 44
-', 2, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', '34 43
-', 2, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', '34 43
-', 2, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 3, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 4, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -1855,12 +1686,12 @@ public class Reversi {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Alpha.java', 3, 'public enum Alpha {
+VALUES ('public_source', 'Alpha.java', 4, 'public enum Alpha {
 }
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 3, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 4, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -2397,7 +2228,7 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 3, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 4, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -2428,118 +2259,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 3, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 3, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 3, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 3, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 3, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 3, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 3, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 3, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 3, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 3, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 3, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 4, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 5, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -2854,7 +2575,7 @@ public class Reversi {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Alpha.java', 4, 'public enum Alpha {
+VALUES ('public_source', 'Alpha.java', 5, 'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
 
     private final int value;
@@ -2870,7 +2591,7 @@ VALUES ('public_source', 'Alpha.java', 4, 'public enum Alpha {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 4, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 5, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -3442,7 +3163,7 @@ public class ReversiTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 4, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 5, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -3473,118 +3194,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 4, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 4, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 4, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 4, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 4, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 4, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 4, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 4, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 4, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 4, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 4, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 5, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 6, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -3900,7 +3511,7 @@ public class Reversi {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Alpha.java', 5, 'public enum Alpha {
+VALUES ('public_source', 'Alpha.java', 6, 'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
 
     private final int value;
@@ -3916,7 +3527,7 @@ VALUES ('public_source', 'Alpha.java', 5, 'public enum Alpha {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 5, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 6, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -4496,7 +4107,7 @@ public class ReversiTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 5, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 6, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -4527,118 +4138,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 5, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 5, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 5, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 5, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 5, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 5, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 5, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 5, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 5, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 5, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 5, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 6, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 7, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -4949,7 +4450,7 @@ public class Reversi {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Alpha.java', 6, 'public enum Alpha {
+VALUES ('public_source', 'Alpha.java', 7, 'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
 
     private final int value;
@@ -4965,12 +4466,12 @@ VALUES ('public_source', 'Alpha.java', 6, 'public enum Alpha {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 6, 'public enum Player {
+VALUES ('public_source', 'Player.java', 7, 'public enum Player {
 }
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 6, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 7, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -5919,7 +5420,7 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 6, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 7, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -5950,118 +5451,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 6, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 6, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 6, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 6, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 6, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 6, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 6, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 6, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 6, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 6, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 6, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 7, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 8, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -6374,7 +5765,7 @@ public class Reversi {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Alpha.java', 7, 'public enum Alpha {
+VALUES ('public_source', 'Alpha.java', 8, 'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
 
     private final int value;
@@ -6390,7 +5781,7 @@ VALUES ('public_source', 'Alpha.java', 7, 'public enum Alpha {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 7, 'public enum Player {
+VALUES ('public_source', 'Player.java', 8, 'public enum Player {
     B(1), W(0), NONE(-1);
 
     private final int value;
@@ -6407,7 +5798,7 @@ VALUES ('public_source', 'Player.java', 7, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 7, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 8, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -7469,7 +6860,7 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 7, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 8, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -7500,118 +6891,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 7, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 8, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 9, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7951,7 +7232,7 @@ public class Reversi {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Alpha.java', 8, 'public enum Alpha {
+VALUES ('public_source', 'Alpha.java', 9, 'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
 
     private final int value;
@@ -7967,7 +7248,7 @@ VALUES ('public_source', 'Alpha.java', 8, 'public enum Alpha {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 8, 'public enum Player {
+VALUES ('public_source', 'Player.java', 9, 'public enum Player {
     B(1), W(0), NONE(-1);
 
     private final int value;
@@ -7984,7 +7265,7 @@ VALUES ('public_source', 'Player.java', 8, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 8, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 9, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -9048,7 +8329,7 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 8, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 9, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -9079,118 +8360,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 8, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 8, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 8, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 8, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 8, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 8, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 8, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 8, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 8, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 8, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 9, 'import java.io.*;
+VALUES ('public_source', 'Reversi.java', 10, 'import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -9530,7 +8701,7 @@ public class Reversi {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Alpha.java', 9, 'public enum Alpha {
+VALUES ('public_source', 'Alpha.java', 10, 'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
 
     private final int value;
@@ -9546,7 +8717,7 @@ VALUES ('public_source', 'Alpha.java', 9, 'public enum Alpha {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 9, 'public enum Player {
+VALUES ('public_source', 'Player.java', 10, 'public enum Player {
     B(1), W(0), NONE(-1);
 
     private final int value;
@@ -9563,7 +8734,7 @@ VALUES ('public_source', 'Player.java', 9, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 9, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 10, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -10625,7 +9796,7 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 9, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 10, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -10656,118 +9827,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 9, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 9, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 9, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 9, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 9, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 9, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 9, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 9, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 9, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 9, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 10, 'import java.io.*;
+VALUES ('public_source', 'Reversi.java', 11, 'import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -11093,7 +10154,7 @@ class Reversi {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Alpha.java', 10, 'public enum Alpha {
+VALUES ('public_source', 'Alpha.java', 11, 'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
 
     private final int value;
@@ -11109,7 +10170,7 @@ VALUES ('public_source', 'Alpha.java', 10, 'public enum Alpha {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 10, 'public enum Player {
+VALUES ('public_source', 'Player.java', 11, 'public enum Player {
     B(1), W(0), NONE(-1);
 
     private final int value;
@@ -11126,7 +10187,7 @@ VALUES ('public_source', 'Player.java', 10, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'IncorrectGameConfigFileException.java', 10, 'public class IncorrectGameConfigFileException extends Exception {
+VALUES ('public_source', 'IncorrectGameConfigFileException.java', 11, 'public class IncorrectGameConfigFileException extends Exception {
 
     public IncorrectGameConfigFileException(String message) {
         super(message);
@@ -11136,7 +10197,7 @@ VALUES ('public_source', 'IncorrectGameConfigFileException.java', 10, 'public cl
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 10, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 11, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -12140,7 +11201,7 @@ public class ReversiTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 10, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 11, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -12171,118 +11232,8 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 10, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 10, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 10, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 10, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 10, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 10, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 10, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 10, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 10, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 10, 'public_file');
-
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 11, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 12, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12614,7 +11565,7 @@ public class Reversi {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Alpha.java', 11, 'public enum Alpha {
+VALUES ('public_source', 'Alpha.java', 12, 'public enum Alpha {
     A(0), B(1), C(2), D(3), E(4), F(5), G(6), H(7);
 
     private final int value;
@@ -12630,7 +11581,7 @@ VALUES ('public_source', 'Alpha.java', 11, 'public enum Alpha {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 11, 'public enum Player {
+VALUES ('public_source', 'Player.java', 12, 'public enum Player {
     B(1), W(0), NONE(-1);
 
     private final int value;
@@ -12647,7 +11598,7 @@ VALUES ('public_source', 'Player.java', 11, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'IncorrectGameConfigFileException.java', 11, 'public class IncorrectGameConfigFileException extends Exception {
+VALUES ('public_source', 'IncorrectGameConfigFileException.java', 12, 'public class IncorrectGameConfigFileException extends Exception {
 
     public IncorrectGameConfigFileException(String message) {
         super(message);
@@ -12657,7 +11608,7 @@ VALUES ('public_source', 'IncorrectGameConfigFileException.java', 11, 'public cl
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'NotPermittedMoveException.java', 11, 'public class NotPermittedMoveException extends Exception {
+VALUES ('public_source', 'NotPermittedMoveException.java', 12, 'public class NotPermittedMoveException extends Exception {
 
     public NotPermittedMoveException(String message) {
         super(message);
@@ -12666,7 +11617,7 @@ VALUES ('public_source', 'NotPermittedMoveException.java', 11, 'public class Not
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 11, 'import javafx.util.Pair;
+VALUES ('private_test', 'ReversiTest.java', 12, 'import javafx.util.Pair;
 import org.junit.Test;
 
 import java.io.File;
@@ -13621,7 +12572,7 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 11, 'import org.junit.Test;
+VALUES ('public_test', 'ReversiTest.java', 12, 'import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -13651,114 +12602,4 @@ public class ReversiTest {
     }
 
 }');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_alpha.txt', 'B
-EE DD
-DD EE
-', 11, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_all_num.txt', 'B
-44 55
-44 55
-', 11, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_almost_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
-', 11, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_complete.txt', 'W
-A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
-H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
-', 11, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 11, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_four_lines.txt', 'B
-E4 D5
-D4 E5
-E4 D5
-', 11, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_b_starts.txt', 'B
-E4 D5
-D4 E5
-', 11, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_init_w_starts.txt', 'W
-E4 D5
-D4 E5
-', 11, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', 'E4 D5
-D4 E5
-', 11, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 11, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_one_line.txt', 'E4 D5
-', 11, 'public_file');
 

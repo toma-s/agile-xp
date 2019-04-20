@@ -82,15 +82,11 @@ public class Reversi {
     }
 
     void setOnTurn(String player) {
-        if (!isOnTurnInputCorrect(player)) {
+        if (player == null || ! player.matches("[B|W]")) {
             System.out.println("Incorrect player on turn input.");
             return;
         }
         onTurn = Player.valueOf(player);
-    }
-
-    boolean isOnTurnInputCorrect(String onTurn) {
-        return onTurn != null && onTurn.matches("[B|W]");
     }
 
     void createPlayground() {
@@ -179,13 +175,6 @@ public class Reversi {
         move(c, r);
     }
 
-//    boolean isTileInputCorrect(String tile) {
-//        if (tile.length() != 2) return false;
-//        String r = tile.substring(1, 2);
-//        String c = tile.substring(0, 1);
-//        return r.matches("[1-8]") && c.matches("[A-H]");
-//    }
-
     void move(Alpha c0, int r0) {
         int r = r0 - 1;
         int c = c0.getValue();
@@ -194,11 +183,11 @@ public class Reversi {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
-        if (!isEmpty(r, c)) {
+        if (playground[r][c] != Player.NONE) {
             System.out.println("Move on not empty tile is not permitted");
             return;
         }
-        if (isGameOver()) {
+        if (winner != Player.NONE) {
             System.out.println("The game is over. No moves are permitted");
             return;
         }
@@ -210,20 +199,9 @@ public class Reversi {
         }
         flipTiles(tilesToFlip);
 
-        swapPlayerOnTurn();
+        if (onTurn == Player.W) onTurn = Player.B;
+        else if (onTurn == Player.B) onTurn = Player.W;
         if (! areValidMoves()) endGame();
-    }
-
-//    boolean isWithinPlayground(int r, int c) {
-//        return r >= 0 && c >= 0 && r < SIZE && c < SIZE;
-//    }
-
-    boolean isEmpty(int r, int c) {
-        return playground[r][c] == Player.NONE;
-    }
-
-    boolean isGameOver() {
-        return winner != Player.NONE;
     }
 
     ArrayList<List<Integer>> getTilesToFlip(int r0, int c0) {
@@ -304,11 +282,6 @@ public class Reversi {
             }
         }
         return tiles;
-    }
-
-    void swapPlayerOnTurn() {
-        if (onTurn == Player.W) onTurn = Player.B;
-        else if (onTurn == Player.B) onTurn = Player.W;
     }
 
     void endGame() {

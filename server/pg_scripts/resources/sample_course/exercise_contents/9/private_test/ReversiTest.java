@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ReversiTest {
 
@@ -993,7 +994,7 @@ public class ReversiTest {
     }
 
     @Test
-    public void testFinishGame() {
+    public void testExecuteFinishGame() {
         Reversi game = new Reversi(gameAlmostComplete);
         game.execute("G7");
 
@@ -1057,3 +1058,4 @@ public class ReversiTest {
         return init;
     }
 }
+

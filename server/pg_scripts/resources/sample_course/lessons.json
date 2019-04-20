@@ -3,17 +3,17 @@
     {
       "name": "'Debugging a legacy program'",
       "created": "'2019-03-28 11:08:09.851'",
-      "description": "'The aim is to find bugs in a legacy program and fix them, but keep original structure of program. The user should write own tests to find the bugs and fix them'"
+      "description": "'Exercises on finding and fixing bugs in a legacy program'"
     },
     {
       "name": "'Adding new features to the legacy program'",
       "created": "'2019-03-28 11:08:09.851'",
-      "description": "'The aim is to add some new features to the legacy program'"
+      "description": "'Exercise on adding a new feature to the legacy program'"
     },
     {
       "name": "'Refactoring the legacy program'",
       "created": "'2019-03-28 11:08:09.851'",
-      "description": "'The aim is to refactor the content of the legacy program with keeping its functionality'"
+      "description": "'Exercises on refactoring the content of the legacy program'"
     }
   ]
 }
