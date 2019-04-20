@@ -27,6 +27,7 @@ import { CreateEditorsComponent } from './exercise-create/create-editors/create-
 import { CreateSubmitComponent } from './exercise-create/create-submit/create-submit.component';
 import { EditorComponent } from './exercise-create/editor/editor.component';
 import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor.component';
+import { ErrorComponent } from './exercise-create/error/error.component';
 
 @NgModule({
   entryComponents: [
@@ -43,7 +44,8 @@ import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor
     CreateEditorsComponent,
     CreateSubmitComponent,
     EditorComponent,
-    SolveEditorComponent
+    SolveEditorComponent,
+    ErrorComponent
   ],
   imports: [
     CommonModule,
