@@ -4,11 +4,11 @@
 
   <div class="intro" *ngIf="exerciseFormGroup.controls.intro">
 
-    <mat-form-field class="intro__field intro__name">
+    <mat-form-field class="intro__field">
       <input matInput placeholder="Title" [formControl]="exerciseFormGroup.controls.intro.controls.name" maxlength="35">
     </mat-form-field>
 
-    <mat-form-field class="intro__field intro__type">
+    <mat-form-field class="intro__field">
         <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.type">
           <mat-option *ngFor="let type of types" [value]="type">
             {{type.name}}
