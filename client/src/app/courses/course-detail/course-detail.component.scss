@@ -1,3 +1,5 @@
+@import "src/variables.scss";
+
 button {
     margin: 5px;
 }
@@ -6,13 +8,46 @@ button {
     padding: 20px;
 }
 
+.lesson {
+    font-size: 1.1em;
+
+    .lesson__name {
+        width: 40%;
+    }
+
+    .lesson__description {
+        width: 60%;
+        font-weight: 300;
+    }
+}
+
 .exercise {
+
+    border-bottom: 1px solid $grey-light;
 
     .exercise__name {
         width: 50%;
     }
 
     .exercise__type {
-        color: darkgrey;
+        color: $grey-dark;
+        width: 30%;
+        font-weight: 300;
     }
+
+    .exercise__solved, .exercise__notsolved {
+        text-align: right;
+        width: 20%;
+    }
+
+    .exercise__solved {
+        color: $green-dark;
+        font-weight: 300;
+    }
+
+    .exercise__notsolved {
+        color: $accent-dark;
+        font-weight: 300;
+    }
+
 }

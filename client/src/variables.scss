@@ -71,4 +71,18 @@ $accent: mat-palette($mat-xp-accent);
 
 $theme: mat-light-theme($primary, $accent);
 
-$grey: mat-color(mat-palette($mat-grey), lighter);
+$grey-light: mat-color(mat-palette($mat-grey), lighter);
+$grey-mid: mat-color(mat-palette($mat-grey), default);
+$grey-dark: mat-color(mat-palette($mat-grey), darker);
+
+$green-light: mat-color(mat-palette($mat-green), lighter);
+$green-mid: mat-color(mat-palette($mat-green), default);
+$green-dark: mat-color(mat-palette($mat-green), darker);
+
+$primary-light: mat-color($primary, lighter);
+$primary-mid: mat-color($primary, default);
+$primary-dark: mat-color($primary, darker);
+
+$accent-light: mat-color($accent, lighter);
+$accent-mid: mat-color($accent, default);
+$accent-dark: mat-color($accent, darker);

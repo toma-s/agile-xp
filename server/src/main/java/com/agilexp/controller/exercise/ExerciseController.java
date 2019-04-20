@@ -30,7 +30,8 @@ public class ExerciseController {
                 exercise.getLessonId(),
                 exercise.getTypeId(),
                 created,
-                exercise.getDescription()));
+                exercise.getDescription(),
+                false));
         System.out.format("Created exercise with id %s named %s at %s for lesson #%s", _exercise.getId(), exercise.getName(), created, exercise.getLessonId());
         return _exercise;
     }
@@ -39,22 +40,21 @@ public class ExerciseController {
     public List<Exercise> getAllExercises() {
         System.out.println("Get all exercises...");
 
-        List<Exercise> exercises = new ArrayList<>();
-        repository.findAll().forEach(exercises::add);
+        List<Exercise> exercises = new ArrayList<>(repository.findAllByOrderByIndex());
 
         System.out.println(exercises);
         return exercises;
     }
 
-    @GetMapping(value="/exercises/lesson/{lessonId}")
+    @GetMapping(value = "/exercises/lesson/{lessonId}")
     public List<Exercise> getExercisesByLessonId(@PathVariable("lessonId") long lessonId) {
         System.out.println("Get exercises with lesson id " + lessonId + "...");
 
-        List<Exercise> exercises = new ArrayList<>(repository.findByLessonId(lessonId));
+        List<Exercise> exercises = new ArrayList<>(repository.findAllByLessonIdOrderByIndex(lessonId));
         return exercises;
     }
 
-    @GetMapping(value="/exercises/{id}")
+    @GetMapping(value = "/exercises/{id}")
     public Exercise getExerciseById(@PathVariable("id") long id) {
         System.out.println("Get exercise with id " + id + "...");
 
@@ -73,9 +73,10 @@ public class ExerciseController {
             _exercise.setName(exercise.getName());
             _exercise.setIndex(exercise.getIndex());
             _exercise.setLessonId(exercise.getLessonId());
-            _exercise.setDescription(exercise.getDescription());
-            _exercise.setCreated(exercise.getCreated());
             _exercise.setTypeId(exercise.getTypeId());
+            _exercise.setCreated(exercise.getCreated());
+            _exercise.setDescription(exercise.getDescription());
+            _exercise.setSolved(exercise.isSolved());
             return new ResponseEntity<>(repository.save(_exercise), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

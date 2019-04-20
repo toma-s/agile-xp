@@ -12,6 +12,7 @@ import { SolutionSource } from '../shared/solution/solution-source/solution-sour
 import { SolutionTest } from '../shared/solution/solution-test/solution-test.model';
 import { SolutionFile } from '../shared/solution/solution-file/solution-file.model';
 import { Title } from '@angular/platform-browser';
+import { HttpResponseBase, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'exercise-solve',
@@ -82,6 +83,10 @@ export class ExerciseSolveComponent implements OnInit {
 
   async getSolutionItems() {
     switch (this.exerciseType.value) {
+      case 'theory': {
+        this.setSolved();
+        break;
+      }
       case 'whitebox': {
         this.solutionSources = await this.getSolutionSources();
         this.solutionTests = await this.getSolutionTests();
@@ -106,6 +111,16 @@ export class ExerciseSolveComponent implements OnInit {
         console.log('defaut: exercise type was not found');
       }
     }
+  }
+
+  setSolved(): Promise<Exercise> {
+    this.exercise.solved = true;
+    return new Promise<any>((resolve, reject) => {
+      this.exerciseService.updateExercise(this.exercise.id, this.exercise).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
   }
 
   getSolutionSources(): Promise<Array<SolutionSource>> {

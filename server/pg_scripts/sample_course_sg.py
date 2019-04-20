@@ -51,6 +51,7 @@ class SampleCourseGenerator(ScriptGenerator):
                 exercise['id'] = exercise_id_counter
                 exercise['lesson_id'] = int(lesson_id)
                 exercise['description'] = self.read_description(exercise_id_counter)
+                exercise['solved'] = False
                 self.append_to_script(self.get_insert('exercises', **exercise))
 
         bugs_number_data = self.read_json_file('%s/bugs_number.json' % self.root)
