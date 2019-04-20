@@ -35,17 +35,17 @@ button {
         font-weight: 300;
     }
 
-    .exercise__solved, .exercise__notsolved {
+    .exercise__is_solved, .exercise__not_solved {
         text-align: right;
         width: 20%;
     }
 
-    .exercise__solved {
+    .exercise__is_solved {
         color: $green-dark;
         font-weight: 300;
     }
 
-    .exercise__notsolved {
+    .exercise__not_solved {
         color: $accent-dark;
         font-weight: 300;
     }

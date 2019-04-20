@@ -72,7 +72,8 @@ drop table if exists solution_estimations cascade;
 create table solution_estimations (
 	id serial primary key,
 	estimation text,
-    solution_id int references solutions on delete cascade
+    solution_id int references solutions on delete cascade,
+    solved boolean
 );
 
 truncate table
@@ -140,7 +141,7 @@ INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description
 VALUES ('Error Handling II', 7, 2, '2019-03-28 11:08:09.851', 12, 3, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">This exercise focuses on handling exceptions, as well as previous one.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;</span><em style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">try/catch/finally</em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;block.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException </em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;to handle errors on user input.</span></li></ul>', False);
 
 INSERT INTO bugs_number (exercise_id, number)
-VALUES (1, 3);
+VALUES (2, 3);
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('private_source', 'Reversi.java', 2, 'import java.io.BufferedReader;
@@ -496,6 +497,92 @@ public class ReversiTest {
     }
 
 }');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
+', 2, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
+', 2, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'B
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
+', 2, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'B
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
+', 2, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 2, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 2, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+34 43
+33 44
+33 44
+', 2, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+34 43
+33 44
+33 44
+', 2, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+34 43
+33 44
+', 2, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+34 43
+33 44
+', 2, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+34 43
+33 44
+', 2, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+34 43
+33 44
+', 2, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', '34 43
+33 44
+', 2, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', '34 43
+33 44
+', 2, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', '34 43
+', 2, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', '34 43
+', 2, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 3, 'import java.io.BufferedReader;
@@ -1369,6 +1456,92 @@ public class ReversiTest {
     }
 
 }');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
+', 3, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
+', 3, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'B
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
+', 3, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'B
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
+', 3, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 3, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 3, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+34 43
+33 44
+33 44
+', 3, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+34 43
+33 44
+33 44
+', 3, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+34 43
+33 44
+', 3, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+34 43
+33 44
+', 3, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+34 43
+33 44
+', 3, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+34 43
+33 44
+', 3, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', '34 43
+33 44
+', 3, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', '34 43
+33 44
+', 3, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', '34 43
+', 3, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', '34 43
+', 3, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 4, 'import java.io.BufferedReader;
@@ -2259,6 +2432,116 @@ public class ReversiTest {
     }
 
 }');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 4, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 4, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 4, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 4, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 4, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 4, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 4, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 4, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 4, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 4, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 4, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 5, 'import java.io.BufferedReader;
@@ -3194,6 +3477,116 @@ public class ReversiTest {
     }
 
 }');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 5, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 5, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 5, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 5, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 5, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 5, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 5, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 5, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 5, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 5, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 5, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 6, 'import java.io.BufferedReader;
@@ -4138,6 +4531,116 @@ public class ReversiTest {
     }
 
 }');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 6, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 6, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 6, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 6, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 6, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 6, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 6, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 6, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 6, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 6, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 6, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 7, 'import java.io.BufferedReader;
@@ -5451,6 +5954,116 @@ public class ReversiTest {
     }
 
 }');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 7, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 8, 'import java.io.BufferedReader;
@@ -6891,6 +7504,116 @@ public class ReversiTest {
     }
 
 }');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 8, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 9, 'import java.io.BufferedReader;
@@ -8361,6 +9084,116 @@ public class ReversiTest {
 
 }');
 
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 9, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 9, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 9, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 9, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 9, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 9, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 9, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 9, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 9, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 9, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 9, 'public_file');
+
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 10, 'import java.io.*;
 import java.nio.file.Files;
@@ -9828,6 +10661,116 @@ public class ReversiTest {
 
 }');
 
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 10, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 10, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 10, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 10, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 10, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 10, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 10, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 10, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 10, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 10, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 10, 'public_file');
+
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 11, 'import java.io.*;
 import java.nio.file.Files;
@@ -11233,6 +12176,116 @@ public class ReversiTest {
 
 }');
 
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 11, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 11, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 11, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 11, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 11, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 11, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 11, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 11, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 11, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 11, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 11, 'public_file');
+
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'Reversi.java', 12, 'import java.io.BufferedReader;
 import java.io.File;
@@ -12603,4 +13656,114 @@ public class ReversiTest {
     }
 
 }');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_alpha.txt', 'B
+EE DD
+DD EE
+', 12, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_all_num.txt', 'B
+44 55
+44 55
+', 12, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_almost_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 F7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 H7 H8
+', 12, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_complete.txt', 'W
+A1 B1 C1 D1 E1 F1 G1 A2 D2 E2 F2 G2 A3 E3 G3 A4 C4 G4 A5 D5 E5 F5 G5 A6 C6 E6 G6 A7 D7 A8 B8 C8 D8 E8 F8 G8
+H1 B2 C2 H2 B3 C3 D3 F3 H3 B4 D4 E4 F4 H4 B5 C5 H5 B6 D6 F6 H6 B7 C7 E7 F7 G7 H7 H8
+', 12, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 12, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_four_lines.txt', 'B
+E4 D5
+D4 E5
+E4 D5
+', 12, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_b_starts.txt', 'B
+E4 D5
+D4 E5
+', 12, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_init_w_starts.txt', 'W
+E4 D5
+D4 E5
+', 12, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', 'E4 D5
+D4 E5
+', 12, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 12, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_one_line.txt', 'E4 D5
+', 12, 'public_file');
 

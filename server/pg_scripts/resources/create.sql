@@ -72,6 +72,7 @@ drop table if exists solution_estimations cascade;
 create table solution_estimations (
 	id serial primary key,
 	estimation text,
-    solution_id int references solutions on delete cascade
+    solution_id int references solutions on delete cascade,
+    solved boolean
 );
 

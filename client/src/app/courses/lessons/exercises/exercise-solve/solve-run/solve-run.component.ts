@@ -24,7 +24,6 @@ export class SolveRunComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-
     private solutionService: SolutonService,
     private solutionSourceService: SolutonSourceService,
     private solutionTestService: SolutonTestService,
@@ -70,8 +69,6 @@ export class SolveRunComponent implements OnInit {
 
   async setSolution() {
     const solution = await this.saveSolution();
-
-    console.log(solution);
     this.solution = solution;
   }
 
@@ -178,6 +175,7 @@ export class SolveRunComponent implements OnInit {
         data => {
           console.log(data);
           this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue(data.estimation);
+          this.solutionFormGroup.get('intro').get('solved').setValue(data.solved);
         },
         error => console.log(error)
       );

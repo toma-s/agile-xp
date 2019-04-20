@@ -15,6 +15,9 @@ public class SolutionEstimation {
     @Column(name="estimation")
     private String estimation;
 
+    @Column(name="solved")
+    private boolean solved;
+
     public SolutionEstimation() {
     }
 
@@ -22,9 +25,10 @@ public class SolutionEstimation {
         this.solutionId = solutionId;
     }
 
-    public SolutionEstimation(long solutionId, String estimation) {
+    public SolutionEstimation(long solutionId, String estimation, boolean solved) {
         this.solutionId = solutionId;
         this.estimation = estimation;
+        this.solved = solved;
     }
 
     public long getId() {
@@ -51,12 +55,21 @@ public class SolutionEstimation {
         this.estimation = estimation;
     }
 
+    public boolean isSolved() {
+        return solved;
+    }
+
+    public void setSolved(boolean solved) {
+        this.solved = solved;
+    }
+
     @Override
     public String toString() {
         return "SolutionEstimation{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", estimation='" + estimation + '\'' +
+                ", solved=" + solved +
                 '}';
     }
 }

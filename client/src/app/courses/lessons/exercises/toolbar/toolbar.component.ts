@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Exercise } from '../shared/exercise/exercise/exercise.model';
 import { ExerciseService } from '../shared/exercise/exercise/exercise.service';
 import { ActivatedRoute } from '@angular/router';
+import { ControlContainer, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'toolbar',
@@ -10,26 +11,34 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ToolbarComponent implements OnInit {
 
-  exercise: Exercise;
+  currentIndex: number;
   exercises: Array<Exercise>;
+  solved: boolean;
   maxIndex: number;
   previousIndex: number;
   previousExerciseId: number;
   nextIndex: number;
   nextExerciseId: number;
+  form: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
-    private exerciseService: ExerciseService
+    private exerciseService: ExerciseService,
+    public controlContainer: ControlContainer
   ) { }
 
   async ngOnInit() {
+    this.form = <FormGroup>this.controlContainer.control;
     this.exercises = await this.getExercises();
-    this.route.params.subscribe(() => this.reload());
+    this.reload();
+    this.form.get('solved').valueChanges.subscribe(() => {
+      this.reload();
+    });
   }
 
   async reload() {
-    this.exercise = await this.getExercise();
+    this.currentIndex = this.form.get('exerciseIndex').value;
+    this.solved = this.form.get('solved').value;
     this.getIndexes();
   }
 
@@ -56,13 +65,12 @@ export class ToolbarComponent implements OnInit {
 
   getIndexes() {
     this.maxIndex = this.exercises.length;
-    const currentIndex = this.exercise.index;
 
-    this.previousIndex = currentIndex - 1;
-    this.previousExerciseId = this.previousIndex >= 0 ? this.exercises[this.previousIndex].id : this.exercises[currentIndex].id;
+    this.previousIndex = this.currentIndex - 1;
+    this.previousExerciseId = this.previousIndex >= 0 ? this.exercises[this.previousIndex].id : this.exercises[this.currentIndex].id;
 
-    this.nextIndex = currentIndex + 1;
-    this.nextExerciseId = this.nextIndex < this.maxIndex ? this.exercises[this.nextIndex].id : this.exercises[currentIndex].id;
+    this.nextIndex = this.currentIndex + 1;
+    this.nextExerciseId = this.nextIndex < this.maxIndex ? this.exercises[this.nextIndex].id : this.exercises[this.currentIndex].id;
   }
 
 }

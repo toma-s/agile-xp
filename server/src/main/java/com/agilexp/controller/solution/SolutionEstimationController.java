@@ -18,6 +18,7 @@ import com.agilexp.storage.StorageException;
 import com.agilexp.storage.StorageService;
 import com.agilexp.tester.Tester;
 import com.agilexp.tester.exception.TestFailedException;
+import javafx.util.Pair;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +65,9 @@ public class SolutionEstimationController {
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        String estimation = estimateSourceTest(solutionId, created);
-        solutionEstimation.setEstimation(estimation);
+        Pair<Boolean, String> estimation = estimateSourceTest(solutionId, created);
+        solutionEstimation.setSolved(estimation.getKey());
+        solutionEstimation.setEstimation(estimation.getValue());
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
@@ -80,15 +82,16 @@ public class SolutionEstimationController {
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        String estimation = estimateSourceTestFile(solutionId, created);
-        solutionEstimation.setEstimation(estimation);
+        Pair<Boolean, String> estimation = estimateSourceTestFile(solutionId, created);
+        solutionEstimation.setSolved(estimation.getKey());
+        solutionEstimation.setEstimation(estimation.getValue());
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
         return _solutionEstimation;
     }
 
-    private String estimateSourceTest(long solutionId, String created) {
+    private Pair<Boolean, String> estimateSourceTest(long solutionId, String created) {
         List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
 
@@ -99,12 +102,13 @@ public class SolutionEstimationController {
         List<List<? extends ExerciseContent>> exerciseContents = List.of(privateTests);
 
         Path outDirPath = storageService.load(created + "/solution_public" + solutionId);
-        String publicEstimation = estimatePublic(solutionContents, outDirPath, created);
-        String privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, created);
-        return publicEstimation + "\n\n" + privateEstimation;
+        Pair<Boolean, String> publicEstimation = estimatePublic(solutionContents, outDirPath, created);
+        Pair<Boolean, String> privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, created);
+        boolean solved = publicEstimation.getKey() && privateEstimation.getKey();
+        return new Pair<>(solved, publicEstimation.getValue() + "\n\n" + privateEstimation.getValue());
     }
 
-    private String estimateSourceTestFile(long solutionId, String created) {
+    private Pair<Boolean, String> estimateSourceTestFile(long solutionId, String created) {
         List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
@@ -118,13 +122,14 @@ public class SolutionEstimationController {
         List<List<? extends ExerciseContent>> exerciseContents = List.of(privateTests);
 
         Path outDirPath = storageService.load(created + "/solution_private" + solutionId);
-        String publicEstimation = estimatePublic(solutionContents, outDirPath, created);
-        String privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, created);
-        return publicEstimation + "\n\n" + privateEstimation;
+        Pair<Boolean, String> publicEstimation = estimatePublic(solutionContents, outDirPath, created);
+        Pair<Boolean, String> privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, created);
+        boolean solved = publicEstimation.getKey() && privateEstimation.getKey();
+        return new Pair<>(solved, publicEstimation.getValue() + "\n\n" + privateEstimation.getValue());
     }
 
 
-    private String estimatePublic(List<List<? extends SolutionContent>> solutionContents, Path outDirPath, String created) {
+    private Pair<Boolean, String> estimatePublic(List<List<? extends SolutionContent>> solutionContents, Path outDirPath, String created) {
         try {
             storeFiles(solutionContents, List.of(), created);
 
@@ -135,17 +140,18 @@ public class SolutionEstimationController {
             List<Path> paths = getPublicPaths(solutionContents, created);
             compileFiles(paths, outDirPath);
             List<Result> testResults = testPublicFiles(solutionContents, outDirPath);
+            boolean solved = isSolved(testResults);
             removeTempFiles();
-            return getResult(testResults, PUBLIC);
+            return new Pair<>(solved, getResult(testResults, PUBLIC));
         } catch (StorageException e) {
             e.printStackTrace();
-            return "File storing failed: " + e.getMessage();
+            return new Pair<>(false, "File storing failed: \n" + e.getMessage());
         } catch (CompilationFailedException e) {
             e.printStackTrace();
-            return "Compilation failed: " + e.getMessage();
+            return new Pair<>(false, "Compilation failed: \n" + e.getMessage());
         } catch (TestFailedException e) {
             e.printStackTrace();
-            return "Tests run failed: " + e.getMessage();
+            return new Pair<>(false, "Tests run failed: \n" + e.getMessage());
         }
     }
 
@@ -167,23 +173,24 @@ public class SolutionEstimationController {
         }
     }
 
-    private String estimatePrivate(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath, String created) {
+    private Pair<Boolean, String> estimatePrivate(List<List<? extends SolutionContent>> solutionContents, List<List<? extends ExerciseContent>> exerciseContents, Path outDirPath, String created) {
         try {
             storeFiles(solutionContents, exerciseContents, created);
             List<Path> paths = getPrivatePaths(solutionContents, exerciseContents, created);
             compileFiles(paths, outDirPath);
             List<Result> testResults = testPrivateFiles(exerciseContents, outDirPath);
             removeTempFiles();
-            return getResult(testResults, PRIVATE);
+            boolean solved = isSolved(testResults);
+            return new Pair<>(solved, getResult(testResults, PRIVATE));
         } catch (StorageException e) {
             e.printStackTrace();
-            return "File storing failed: " + e.getMessage();
+            return new Pair<>(false, "File storing failed: " + e.getMessage());
         } catch (CompilationFailedException e) {
             e.printStackTrace();
-            return "Compilation failed: " + e.getMessage();
+            return new Pair<>(false, "Compilation failed: " + e.getMessage());
         } catch (TestFailedException e) {
             e.printStackTrace();
-            return "Tests run failed: " + e.getMessage();
+            return new Pair<>(false, "Tests run failed: " + e.getMessage());
         }
     }
 
@@ -223,15 +230,16 @@ public class SolutionEstimationController {
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        String privateEstimation = estimateBlackBox(solutionId, created);
-        solutionEstimation.setEstimation(privateEstimation);
+        Pair<Boolean, String> estimation = estimateBlackBox(solutionId, created);
+        solutionEstimation.setSolved(estimation.getKey());
+        solutionEstimation.setEstimation(estimation.getValue());
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
         return _solutionEstimation;
     }
 
-    private String estimateBlackBox(long solutionId, String created) {
+    private Pair<Boolean, String> estimateBlackBox(long solutionId, String created) {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
         List<PrivateSource> privateSources = privateSourceRepository.findPrivateSourcesByExerciseId(solution.getExerciseId());
@@ -260,16 +268,17 @@ public class SolutionEstimationController {
                     bugsFound++;
                 }
             }
-            return String.format("Bugs found: %s / %s", bugsFound, bugsNum);
+            boolean solved = bugsFound == bugsNum;
+            return new Pair<>(solved, String.format("Bugs found: %s / %s", bugsFound, bugsNum));
         } catch (StorageException e) {
             e.printStackTrace();
-            return "File storing failed: " + e.getMessage();
+            return new Pair<>(false, "File storing failed: \n" + e.getMessage());
         } catch (CompilationFailedException e) {
             e.printStackTrace();
-            return "Compilation failed: " + e.getMessage();
+            return new Pair<>(false, "Compilation failed: \n" + e.getMessage());
         } catch (TestFailedException e) {
             e.printStackTrace();
-            return "Tests run failed: " + e.getMessage();
+            return new Pair<>(false, "Tests run failed: \n" + e.getMessage());
         }
     }
 
@@ -281,15 +290,16 @@ public class SolutionEstimationController {
 
         SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
 
-        String privateEstimation = estimateTestFile(solutionId, created);
-        solutionEstimation.setEstimation(privateEstimation);
+        Pair<Boolean, String> estimation = estimateTestFile(solutionId, created);
+        solutionEstimation.setSolved(estimation.getKey());
+        solutionEstimation.setEstimation(estimation.getValue());
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
         return _solutionEstimation;
     }
 
-    private String estimateTestFile(long solutionId, String created) {
+    private Pair<Boolean, String> estimateTestFile(long solutionId, String created) {
         List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
         Solution solution = solutionRepository.findById(solutionId);
         List<PrivateSource> privateSources = privateSourceRepository.findPrivateSourcesByExerciseId(solution.getExerciseId());
@@ -320,16 +330,17 @@ public class SolutionEstimationController {
                     bugsFound++;
                 }
             }
-            return String.format("Bugs found: %s / %s", bugsFound, bugsNum);
+            boolean solved = bugsFound == bugsNum;
+            return new Pair<>(solved, String.format("Bugs found: %s / %s", bugsFound, bugsNum));
         } catch (StorageException e) {
             e.printStackTrace();
-            return "File storing failed: " + e.getMessage();
+            return new Pair<>(false, "File storing failed: " + e.getMessage());
         } catch (CompilationFailedException e) {
             e.printStackTrace();
-            return "Compilation failed: " + e.getMessage();
+            return new Pair<>(false, "Compilation failed: " + e.getMessage());
         } catch (TestFailedException e) {
             e.printStackTrace();
-            return "Tests run failed: " + e.getMessage();
+            return new Pair<>(false, "Tests run failed: " + e.getMessage());
         }
     }
 
@@ -495,6 +506,15 @@ public class SolutionEstimationController {
     private void removeTempFiles() {
         storageService.deleteAll(); // clean upload-dir
         storageService.init();
+    }
+
+    private boolean isSolved(List<Result> results) {
+        boolean solved = true;
+        for (Result result : results)
+            if (result.getFailureCount() != 0) {
+                solved = false;
+            }
+        return solved;
     }
 
     private String getResult(List<Result> exerciseTestsResults, String type) {

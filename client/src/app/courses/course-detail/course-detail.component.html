@@ -29,12 +29,12 @@
             [routerLink]="['lesson', lesson.id, 'exerciseSolve', exercise.id]" routerLinkActive="active">
             <p class="exercise__name">{{ exercise.name }}</p>
             <p class="exercise__type">{{ getExerciseTypeName(exercise.typeId) }}</p>
-            <p *ngIf="exercise.solved; then solved; else notSolved"></p>
-            <ng-template #solved>
-              <p class="exercise__solved">Solved</p>
+            <p *ngIf="exercise.solved; then isSolved; else notSolved"></p>
+            <ng-template #isSolved>
+              <p class="exercise__is_solved">Solved</p>
             </ng-template>
             <ng-template #notSolved>
-              <p class="exercise__notsolved">Not solved</p>
+              <p class="exercise__not_solved">Not solved</p>
             </ng-template>
           </mat-list-item>
         </mat-nav-list>

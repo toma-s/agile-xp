@@ -1,15 +1,21 @@
+@import "src/variables.scss";
+
 .toolbar {
   min-height: 5vh;
   max-height: 5vh;
   margin: 15px 0;
-  
-  &__run {
-    float: left;
-    width: 72px;
-  }
 
   .space {
     flex: 1 1 auto;
   }
 
+  .exercise__is_solved {
+    color: $green-dark;
+    width: 15%;
+  }
+
+  .exercise__not_solved {
+    color: $accent-dark;
+    width: 15%;
+  }
 }

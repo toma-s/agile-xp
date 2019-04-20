@@ -22,12 +22,12 @@
 
   .loader {
     width: 25%;
-    background-color: -light;
+    background-color: $grey-light;
     height: 80vh;
     float: left;
 
     h3 {
-      padding: 5px;
+      padding: 10px;
     }
   }
 }

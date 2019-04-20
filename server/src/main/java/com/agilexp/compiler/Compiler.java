@@ -24,7 +24,7 @@ public class Compiler {
             if (!diagnostics.getDiagnostics().isEmpty()) {
                 StringBuilder message = new StringBuilder();
                 for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
-                    String error = String.format("Error on line %d in %s",
+                    String error = String.format("Error on line %d in %s\n",
                             diagnostic.getLineNumber(),
                             diagnostic.getSource().toString()
                     );
