@@ -36,8 +36,10 @@ public class SolutionSourceController {
         System.out.println("Get solution sources with exercise id " + exerciseId + "...");
 
         List<Solution> solutions = solutionRepository.findSolutionByExerciseIdOrderByCreatedDesc(exerciseId);
-
-        List<SolutionSource> solutionSources = new ArrayList<>(repository.findBySolutionId(solutions.get(0).getId()));
+        List<SolutionSource> solutionSources = new ArrayList<>();
+        solutions.forEach(solution -> {
+            solutionSources.addAll(repository.findBySolutionId(solution.getId()));
+        });
 
         System.out.format("Found solution sources %s\n", solutionSources);
         return solutionSources;

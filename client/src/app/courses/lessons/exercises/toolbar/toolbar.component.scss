@@ -11,11 +11,13 @@
 
   .exercise__is_solved {
     color: $green-dark;
+    text-align: right;
     width: 15%;
   }
 
   .exercise__not_solved {
     color: $accent-dark;
+    text-align: right;
     width: 15%;
   }
 }

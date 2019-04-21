@@ -12,7 +12,6 @@ import { SolutionSource } from '../shared/solution/solution-source/solution-sour
 import { SolutionTest } from '../shared/solution/solution-test/solution-test.model';
 import { SolutionFile } from '../shared/solution/solution-file/solution-file.model';
 import { Title } from '@angular/platform-browser';
-import { HttpResponseBase, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'exercise-solve',
@@ -142,8 +141,7 @@ export class ExerciseSolveComponent implements OnInit {
 
 
   createForm() {
-    this.solutionFormGroup = this.fb.group({
-    });
+    this.solutionFormGroup = this.fb.group({});
     this.setExerciseIntro();
     this.setSolutionControl('source', this.solutionSources);
     this.setSolutionControl('test', this.solutionTests);
