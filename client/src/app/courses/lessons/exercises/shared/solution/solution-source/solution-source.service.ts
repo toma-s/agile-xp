@@ -19,4 +19,8 @@ export class SolutonSourceService {
   getSolutionSourcesByExerciseId(exerciseId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
   }
+
+  updateSolutinSource(id: number, value: any): Observable<Object> {
+    return this.http.put(`${this.baseUrl}/${id}`, value);
+  }
 }

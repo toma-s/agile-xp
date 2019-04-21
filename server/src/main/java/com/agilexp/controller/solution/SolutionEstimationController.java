@@ -38,10 +38,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class SolutionEstimationController {
     @Autowired private SolutionEstimationRepository repository;
-    @Autowired private SolutionRepository solutionRepository;
-    @Autowired private SolutionSourceRepository solutionSourceRepository;
-    @Autowired private SolutionTestRepository solutionTestRepository;
-    @Autowired private SolutionFileRepository solutionFileRepository;
     @Autowired private PrivateSourceRepository privateSourceRepository;
     @Autowired private PrivateTestRepository privateTestRepository;
     @Autowired private PrivateFileRepository privateFileRepository;
@@ -57,15 +53,11 @@ public class SolutionEstimationController {
         this.storageService = storageService;
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/whitebox/{solutionId}")
-    public SolutionEstimation getWhiteboxEstimation(@PathVariable long solutionId) {
-//        Date date = new Date();
-//        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
-        String created = "12345";
+    @GetMapping(value = "/solution-estimations/estimate/whitebox")
+    public SolutionEstimation getWhiteboxEstimation(@RequestBody SolutionItems solutionItems) {
+        SolutionEstimation solutionEstimation = new SolutionEstimation();
 
-        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
-
-        Pair<Boolean, String> estimation = estimateSourceTest(solutionId, created);
+        Pair<Boolean, String> estimation = estimateSourceTest(solutionItems);
         solutionEstimation.setSolved(estimation.getKey());
         solutionEstimation.setEstimation(estimation.getValue());
 
@@ -74,56 +66,54 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/whitebox-file/{solutionId}")
-    public SolutionEstimation getWhiteboxFileEstimation(@PathVariable long solutionId) {
-//        Date date = new Date();
-//        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
-        String created = "12345";
+    private Pair<Boolean, String> estimateSourceTest(SolutionItems solutionItems) {
+        String directoryName = "12345";
 
-        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
-
-        Pair<Boolean, String> estimation = estimateSourceTestFile(solutionId, created);
-        solutionEstimation.setSolved(estimation.getKey());
-        solutionEstimation.setEstimation(estimation.getValue());
-
-        SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
-        System.out.format("Created solution estimation %s\n", _solutionEstimation);
-        return _solutionEstimation;
-    }
-
-    private Pair<Boolean, String> estimateSourceTest(long solutionId, String created) {
-        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
-        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
-
-        Solution solution = solutionRepository.findById(solutionId);
-        List<PrivateTest> privateTests = privateTestRepository.findPrivateTestsByExerciseId(solution.getExerciseId());
+        long exerciseId = solutionItems.getExerciseId();
+        List<SolutionSource> solutionSources = solutionItems.getSolutionSources();
+        List<SolutionTest> solutionTests = solutionItems.getSolutionTests();
+        List<PrivateTest> privateTests = privateTestRepository.findPrivateTestsByExerciseId(exerciseId);
 
         List<List<? extends SolutionContent>> solutionContents = List.of(solutionSources, solutionTests);
         List<List<? extends ExerciseContent>> exerciseContents = List.of(privateTests);
 
-        Path outDirPath = storageService.load(created + "/solution_public" + solutionId);
-        Pair<Boolean, String> publicEstimation = estimatePublic(solutionContents, outDirPath, created);
-        Pair<Boolean, String> privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, created);
+        Path outDirPath = storageService.load(directoryName + "/solution_public");
+        Pair<Boolean, String> publicEstimation = estimatePublic(solutionContents, outDirPath, directoryName);
+        Pair<Boolean, String> privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, directoryName);
         boolean solved = publicEstimation.getKey() && privateEstimation.getKey();
         return new Pair<>(solved, publicEstimation.getValue() + "\n\n" + privateEstimation.getValue());
     }
 
-    private Pair<Boolean, String> estimateSourceTestFile(long solutionId, String created) {
-        List<SolutionSource> solutionSources = solutionSourceRepository.findBySolutionId(solutionId);
-        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
-        List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
+    @PostMapping(value = "/solution-estimations/estimate/whitebox-file")
+    public SolutionEstimation getWhiteboxFileEstimation(@RequestBody SolutionItems solutionItems) {
+        SolutionEstimation solutionEstimation = new SolutionEstimation();
 
-        Solution solution = solutionRepository.findById(solutionId);
-        List<PrivateTest> privateTests = privateTestRepository.findPrivateTestsByExerciseId(solution.getExerciseId());
-//      privateFileRepository.findExerciseFilesByExerciseId(solution.getExerciseId())
+        Pair<Boolean, String> estimation = estimateSourceTestFile(solutionItems);
+        solutionEstimation.setSolved(estimation.getKey());
+        solutionEstimation.setEstimation(estimation.getValue());
+
+        SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
+        System.out.format("Created solution estimation %s\n", _solutionEstimation);
+        return _solutionEstimation;
+    }
+
+    private Pair<Boolean, String> estimateSourceTestFile(SolutionItems solutionItems) {
+        String directoryName = "12345";
+
+        long exerciseId = solutionItems.getExerciseId();
+        List<SolutionSource> solutionSources = solutionItems.getSolutionSources();
+        List<SolutionTest> solutionTests = solutionItems.getSolutionTests();
+        List<SolutionFile> solutionFiles = solutionItems.getSolutionFiles();
+        List<PrivateTest> privateTests = privateTestRepository.findPrivateTestsByExerciseId(exerciseId);
+//      privateFileRepository.findExerciseFilesByExerciseId(exerciseId)
 //      TODO: 02-Apr-19 exerciseFiles when solutionFiles work completely
 
         List<List<? extends SolutionContent>> solutionContents = List.of(solutionSources, solutionTests, solutionFiles);
         List<List<? extends ExerciseContent>> exerciseContents = List.of(privateTests);
 
-        Path outDirPath = storageService.load(created + "/solution_private" + solutionId);
-        Pair<Boolean, String> publicEstimation = estimatePublic(solutionContents, outDirPath, created);
-        Pair<Boolean, String> privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, created);
+        Path outDirPath = storageService.load(directoryName + "/solution_private");
+        Pair<Boolean, String> publicEstimation = estimatePublic(solutionContents, outDirPath, directoryName);
+        Pair<Boolean, String> privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, directoryName);
         boolean solved = publicEstimation.getKey() && privateEstimation.getKey();
         return new Pair<>(solved, publicEstimation.getValue() + "\n\n" + privateEstimation.getValue());
     }
@@ -222,15 +212,11 @@ public class SolutionEstimationController {
         }
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/blackbox/{solutionId}")
-    public SolutionEstimation getBlackboxEstimation(@PathVariable long solutionId) {
-//        Date date = new Date();
-//        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
-        String created = "12345";
+    @GetMapping(value = "/solution-estimations/estimate/blackbox")
+    public SolutionEstimation getBlackboxEstimation(@RequestBody SolutionItems solutionItems) {
+        SolutionEstimation solutionEstimation = new SolutionEstimation();
 
-        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
-
-        Pair<Boolean, String> estimation = estimateBlackBox(solutionId, created);
+        Pair<Boolean, String> estimation = estimateBlackBox(solutionItems);
         solutionEstimation.setSolved(estimation.getKey());
         solutionEstimation.setEstimation(estimation.getValue());
 
@@ -239,27 +225,29 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-    private Pair<Boolean, String> estimateBlackBox(long solutionId, String created) {
-        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
-        Solution solution = solutionRepository.findById(solutionId);
-        List<PrivateSource> privateSources = privateSourceRepository.findPrivateSourcesByExerciseId(solution.getExerciseId());
+    private Pair<Boolean, String> estimateBlackBox(SolutionItems solutionItems) {
+        String directoryName = "12345";
+
+        long exerciseId = solutionItems.getExerciseId();
+        List<SolutionTest> solutionTests = solutionItems.getSolutionTests();
+        List<PrivateSource> privateSources = privateSourceRepository.findPrivateSourcesByExerciseId(exerciseId);
         List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
-        int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(solution.getExerciseId()).getNumber();
+        int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(exerciseId).getNumber();
         List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
         ExerciseFlags controllingFlags = getControllingFlags(bugsNum);
-        Path outDirPath = storageService.load(created + "/solution_public_blackbox" + solutionId);
+        Path outDirPath = storageService.load(directoryName + "/solution_public_blackbox");
 
         try {
             int bugsFound = 0;
             for (int i = 0; i < bugsNum; i++) {
-                storeFiles(List.of(solutionTests), List.of(privateSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), created);
-                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, created);
+                storeFiles(List.of(solutionTests), List.of(privateSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), directoryName);
+                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, directoryName);
                 compileFiles(paths, outDirPath);
                 List<Result> testResults = testPublicFiles(List.of(solutionTests), outDirPath);
                 removeTempFiles();
 
-                storeFiles(List.of(solutionTests), List.of(privateSources, exerciseSwitchers, List.of(controllingFlags)), created);
-                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, created);
+                storeFiles(List.of(solutionTests), List.of(privateSources, exerciseSwitchers, List.of(controllingFlags)), directoryName);
+                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, directoryName);
                 compileFiles(controllingPaths, outDirPath);
                 List<Result> controllingTestResults = testPublicFiles(List.of(solutionTests), outDirPath);
                 removeTempFiles();
@@ -283,14 +271,10 @@ public class SolutionEstimationController {
     }
 
     @GetMapping(value = "/solution-estimations/estimate/blackbox-file/{solutionId}")
-    public SolutionEstimation getSolutionTestFileEstimation(@PathVariable long solutionId) {
-//        Date date = new Date();
-//        String created = new Timestamp(date.getTime()).toString().replace('.', '-').replace(' ', '-').replace(':', '-');
-        String created = "12345";
+    public SolutionEstimation getSolutionTestFileEstimation(@RequestBody SolutionItems solutionItems) {
+        SolutionEstimation solutionEstimation = new SolutionEstimation();
 
-        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionId);
-
-        Pair<Boolean, String> estimation = estimateTestFile(solutionId, created);
+        Pair<Boolean, String> estimation = estimateTestFile(solutionItems);
         solutionEstimation.setSolved(estimation.getKey());
         solutionEstimation.setEstimation(estimation.getValue());
 
@@ -299,29 +283,31 @@ public class SolutionEstimationController {
         return _solutionEstimation;
     }
 
-    private Pair<Boolean, String> estimateTestFile(long solutionId, String created) {
-        List<SolutionTest> solutionTests = solutionTestRepository.findBySolutionId(solutionId);
-        Solution solution = solutionRepository.findById(solutionId);
-        List<PrivateSource> privateSources = privateSourceRepository.findPrivateSourcesByExerciseId(solution.getExerciseId());
-        List<SolutionFile> solutionFiles = solutionFileRepository.findBySolutionId(solutionId);
-        List<PrivateFile> privateFiles = privateFileRepository.findPrivateFilesByExerciseId(solution.getExerciseId());
+    private Pair<Boolean, String> estimateTestFile(SolutionItems solutionItems) {
+        String directoryName = "12345";
+
+        long exerciseId = solutionItems.getExerciseId();
+        List<SolutionTest> solutionTests = solutionItems.getSolutionTests();
+        List<SolutionFile> solutionFiles = solutionItems.getSolutionFiles();
+        List<PrivateSource> privateSources = privateSourceRepository.findPrivateSourcesByExerciseId(exerciseId);
+        List<PrivateFile> privateFiles = privateFileRepository.findPrivateFilesByExerciseId(exerciseId);
         List<ExerciseSwitcher> exerciseSwitchers = getExerciseSwitchers();
-        int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(solution.getExerciseId()).getNumber();
+        int bugsNum = bugsNumberRepository.findBugsNumberByExerciseId(exerciseId).getNumber();
         List<ExerciseFlags> exerciseFlags = getExerciseFlags(bugsNum);
         ExerciseFlags controllingFlags = getControllingFlags(bugsNum);
-        Path outDirPath = storageService.load(created + "/solution_public_blackbox" + solutionId);
+        Path outDirPath = storageService.load(directoryName + "/solution_public_blackbox");
 
         try {
             int bugsFound = 0;
             for (int i = 0; i < bugsNum; i++) {
-                storeFiles(List.of(solutionTests, solutionFiles), List.of(privateSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), created);
-                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, created);
+                storeFiles(List.of(solutionTests, solutionFiles), List.of(privateSources, exerciseSwitchers, List.of(exerciseFlags.get(i))), directoryName);
+                List<Path> paths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, directoryName);
                 compileFiles(paths, outDirPath);
                 List<Result> testResults = testPublicFiles(List.of(solutionTests), outDirPath);
                 removeTempFiles();
 
-                storeFiles(List.of(solutionTests), List.of(privateSources, privateFiles, exerciseSwitchers, List.of(controllingFlags)), created);
-                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, created);
+                storeFiles(List.of(solutionTests), List.of(privateSources, privateFiles, exerciseSwitchers, List.of(controllingFlags)), directoryName);
+                List<Path> controllingPaths = getPublicBlackBoxPaths(solutionTests, exerciseSwitchers, privateSources, directoryName);
                 compileFiles(controllingPaths, outDirPath);
                 List<Result> controllingTestResults = testPublicFiles(List.of(solutionTests), outDirPath);
                 removeTempFiles();
@@ -550,4 +536,18 @@ public class SolutionEstimationController {
         output.append("\nIgnored count: ").append(result.getIgnoreCount());
         return output;
     }
+
+//    @GetMapping(value="/solution-estimations/exercise/{exerciseId}")
+//    public List<SolutionContentEstimationProjection> getSolutionEstimationsByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+//        System.out.println("Get solution estimations with exercise id " + exerciseId + "...");
+//
+//        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
+//        List<SolutionContentEstimationProjection> projections = new ArrayList<>();
+//        solutions.forEach(solution -> {
+//            projections.addAll(repository.findAllBySolutionId(solution.getId()));
+//        });
+//
+//        System.out.format("Found solution sources %s\n", projections);
+//        return projections;
+//    }
 }

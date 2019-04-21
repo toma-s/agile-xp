@@ -1,16 +1,14 @@
 package com.agilexp.dbmodel.solution;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name="solution_estimations")
+@Table(name="solution_estimation")
 public class SolutionEstimation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @Column(name="solution_id")
-    private long solutionId;
 
     @Column(name="estimation")
     private String estimation;
@@ -18,15 +16,13 @@ public class SolutionEstimation {
     @Column(name="solved")
     private boolean solved;
 
+    @OneToMany(mappedBy = "solutionEstimation")
+    private List<SolutionContent> solutionContent;
+
     public SolutionEstimation() {
     }
 
-    public SolutionEstimation(long solutionId) {
-        this.solutionId = solutionId;
-    }
-
     public SolutionEstimation(long solutionId, String estimation, boolean solved) {
-        this.solutionId = solutionId;
         this.estimation = estimation;
         this.solved = solved;
     }
@@ -37,14 +33,6 @@ public class SolutionEstimation {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getSolutionId() {
-        return solutionId;
-    }
-
-    public void setSolutionId(long solutionId) {
-        this.solutionId = solutionId;
     }
 
     public String getEstimation() {
@@ -63,11 +51,18 @@ public class SolutionEstimation {
         this.solved = solved;
     }
 
+    public List<SolutionContent> getSolutionContent() {
+        return solutionContent;
+    }
+
+    public void setSolutionContent(List<SolutionContent> solutionContent) {
+        this.solutionContent = solutionContent;
+    }
+
     @Override
     public String toString() {
         return "SolutionEstimation{" +
                 "id=" + id +
-                ", solutionId=" + solutionId +
                 ", estimation='" + estimation + '\'' +
                 ", solved=" + solved +
                 '}';

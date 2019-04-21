@@ -35,7 +35,7 @@ public class SolutionFileController {
     public List<SolutionFile> getSolutionFilesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get solution files with exercise id " + exerciseId + "...");
 
-        List<Solution> solutions = solutionRepository.findSolutionByExerciseIdOrderByCreatedDesc(exerciseId);
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
 
         List<SolutionFile> solutionTests = new ArrayList<>(repository.findBySolutionId(solutions.get(0).getId()));
 

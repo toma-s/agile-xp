@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SolutionRepository extends CrudRepository<Solution, Long> {
     Solution findById(long solutionId);
-    List<Solution> findSolutionByExerciseIdOrderByCreatedDesc(long exerciseId);
+    List<Solution> findSolutionsByExerciseIdOrderByCreatedDesc(long exerciseId);
 }

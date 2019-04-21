@@ -1,6 +1,7 @@
 package com.agilexp.dbmodel.solution;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name="solution_source")
 public class SolutionSource extends SolutionContent {

@@ -3,4 +3,5 @@ export class SolutionContent {
   solutionId: number;
   filename: string;
   content: string;
+  solutionEstimationId;
 }

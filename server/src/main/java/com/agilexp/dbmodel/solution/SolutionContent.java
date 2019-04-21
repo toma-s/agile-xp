@@ -19,6 +19,9 @@ public abstract class SolutionContent {
     @Column(name="content")
     private String content;
 
+    @ManyToOne
+    private SolutionEstimation solutionEstimation;
+
     SolutionContent() {
     }
 
@@ -59,6 +62,14 @@ public abstract class SolutionContent {
     public void setContent(String content) {
         this.content = content;
     }
+
+//    public SolutionEstimation getSolutionEstimation() {
+//        return solutionEstimation;
+//    }
+//
+//    public void setSolutionEstimation(SolutionEstimation solutionEstimation) {
+//        this.solutionEstimation = solutionEstimation;
+//    }
 
     @Override
     public String toString() {

@@ -10,6 +10,8 @@ import { SolutionSource } from '../../shared/solution/solution-source/solution-s
 import { forkJoin, Observable } from 'rxjs';
 import { SolutionTest } from '../../shared/solution/solution-test/solution-test.model';
 import { SolutionFile } from '../../shared/solution/solution-file/solution-file.model';
+import { SolutionItems } from '../../shared/solution/solution-items/soolution-items.model';
+import { SolutionEstimation } from '../../shared/solution/solution-estimation/solution-estimation.model';
 
 @Component({
   selector: 'solve-run',
@@ -19,8 +21,12 @@ import { SolutionFile } from '../../shared/solution/solution-file/solution-file.
 export class SolveRunComponent implements OnInit {
 
   @Input() solutionFormGroup: FormGroup;
-  private solution: Solution;
-  private exerciseTypeValue: string;
+  exerciseTypeValue: string;
+  solutionSources: Array<SolutionSource>;
+  solutionTests: Array<SolutionTest>;
+  solutionFiles: Array<SolutionFile>;
+  estimation: SolutionEstimation;
+  solution: Solution;
 
   constructor(
     private fb: FormBuilder,
@@ -37,22 +43,15 @@ export class SolveRunComponent implements OnInit {
   }
 
   updForm() {
-    this.createSolutionEstimation();
-  }
-
-  createSolutionEstimation() {
     this.solutionFormGroup.addControl(
-      'solutionEstimation', this.createEstimation()
+      'solutionEstimation', this.fb.group({
+        id: [''],
+        solutionId: [''],
+        estimation: ['']
+      })
     );
   }
 
-  createEstimation() {
-    return this.fb.group({
-      id: [''],
-      solutionId: [''],
-      estimation: ['']
-    });
-  }
 
   setExerciseType() {
     this.exerciseTypeValue = this.solutionFormGroup.get('intro').get('exerciseType').value;
@@ -61,28 +60,51 @@ export class SolveRunComponent implements OnInit {
 
   async run() {
     this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue('Running...');
-
-    await this.setSolution();
-    await this.saveSolutionItems();
-    await this.getEstimation();
+    this.setSolutionItems();
+    this.estimation = await this.getEstimation();
+    this.showEstimation();
+    this.solution = await this.saveSolution();
+    this.saveSolutionItems();
+    console.log('saved solution items');
   }
 
-  async setSolution() {
-    const solution = await this.saveSolution();
-    this.solution = solution;
+  setSolutionItems() {
+    this.solutionSources = this.solutionFormGroup.get('sourceControl').get('solutionControl').value;
+    this.solutionTests = this.solutionFormGroup.get('testControl').get('solutionControl').value;
+    this.solutionFiles = this.solutionFormGroup.get('fileControl').get('solutionControl').value;
   }
 
-  saveSolution(): any {
-    this.solution = new Solution();
-    this.solution.exerciseId = this.solutionFormGroup.get('intro').get('exerciseId').value;
-    // TODO | create with exerciseId only?
-    return new Promise((resolve, reject) => {
-      this.solutionService.createSolution(this.solution).subscribe(
+  getEstimation() {
+    const solutionItems = new SolutionItems();
+    solutionItems.exerciseId = Number(this.solutionFormGroup.get('intro').get('exerciseId').value);
+    solutionItems.solutionSources = this.solutionSources;
+    solutionItems.solutionTests = this.solutionTests;
+    solutionItems.solutionFiles = this.solutionFiles;
+
+    return new Promise<SolutionEstimation>((resolve, reject) => {
+      this.solutionEstimationService.estimateSourceTestSolution(this.exerciseTypeValue, solutionItems).subscribe(
         data => resolve(data),
         error => reject(error)
       );
     });
   }
+
+  showEstimation() {
+    this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue(this.estimation.estimation);
+    this.solutionFormGroup.get('intro').get('solved').setValue(this.estimation.solved);
+  }
+
+  async saveSolution() {
+    const solution = new Solution();
+    solution.exerciseId = this.solutionFormGroup.get('intro').get('exerciseId').value;
+    return new Promise<Solution>((resolve, reject) => {
+      this.solutionService.createSolution(solution).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
+  }
+
 
   async saveSolutionItems() {
     switch (this.exerciseTypeValue) {
@@ -113,9 +135,8 @@ export class SolveRunComponent implements OnInit {
   }
 
   saveSolutionSources(): Promise<{}> {
-    const solutionSources: Array<SolutionSource> = this.solutionFormGroup.get('sourceControl').get('solutionControl').value;
     const observables = [];
-    solutionSources.forEach(sc => {
+    this.solutionSources.forEach(sc => {
       observables.push(this.saveSolutionSource(sc));
     });
     return new Promise((resolve, reject) => {
@@ -128,13 +149,13 @@ export class SolveRunComponent implements OnInit {
 
   saveSolutionSource(solutionSource: SolutionSource): Observable<{}> {
     solutionSource.solutionId = this.solution.id;
+    solutionSource.solutionEstimationId = this.estimation.id;
     return this.solutionSourceService.createSolutionSource(solutionSource);
   }
 
   saveSolutionTests(): Promise<{}> {
-    const solutionTests: Array<SolutionTest> = this.solutionFormGroup.get('testControl').get('solutionControl').value;
     const observables = [];
-    solutionTests.forEach(st => {
+    this.solutionTests.forEach(st => {
       observables.push(this.saveSolutionTest(st));
     });
     return new Promise((resolve, reject) => {
@@ -147,13 +168,13 @@ export class SolveRunComponent implements OnInit {
 
   saveSolutionTest(solutionTest: SolutionTest): Observable<{}> {
     solutionTest.solutionId = this.solution.id;
+    solutionTest.solutionEstimationId = this.estimation.id;
     return this.solutionTestService.createSolutionTest(solutionTest);
   }
 
   saveSolutionFiles(): Promise<{}> {
-    const solutionFiles: Array<SolutionFile> = this.solutionFormGroup.get('fileControl').get('solutionControl').value;
     const observables = [];
-    solutionFiles.forEach(sf => {
+    this.solutionFiles.forEach(sf => {
       observables.push(this.saveSolutionFile(sf));
     });
     return new Promise((resolve, reject) => {
@@ -166,19 +187,8 @@ export class SolveRunComponent implements OnInit {
 
   saveSolutionFile(solutionFile: SolutionFile): Observable<{}> {
     solutionFile.solutionId = this.solution.id;
+    solutionFile.solutionEstimationId = this.estimation.id;
     return this.solutionFileService.createSolutionFile(solutionFile);
-  }
-
-  getEstimation() {
-    this.solutionEstimationService.estimateSourceTestSolution(this.exerciseTypeValue, this.solution.id)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue(data.estimation);
-          this.solutionFormGroup.get('intro').get('solved').setValue(data.solved);
-        },
-        error => console.log(error)
-      );
   }
 
 }

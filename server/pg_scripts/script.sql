@@ -33,7 +33,6 @@ create table exercises (
     solved boolean,
     type_id int references exercise_types on delete cascade,
 	lesson_id int references lessons on delete cascade
--- 	constraint unique_index_lesson_id unique (index, lesson_id)
 );
 
 drop table if exists exercise_content cascade;
@@ -65,14 +64,14 @@ create table solution_content (
     filename text,
     content text,
     solution_id int references solutions on delete cascade,
-    solution_content_type text
+    solution_content_type text,
+    solution_estimation_id int references solution_estimation
 );
 
-drop table if exists solution_estimations cascade;
-create table solution_estimations (
+drop table if exists solution_estimation cascade;
+create table solution_estimation (
 	id serial primary key,
 	estimation text,
-    solution_id int references solutions on delete cascade,
     solved boolean
 );
 
@@ -81,7 +80,11 @@ truncate table
     lessons,
     exercise_types,
     exercises,
-    exercise_content
+    exercise_content,
+    bugs_number,
+    solutions,
+    solution_content,
+    solution_estimation
 restart identity cascade;
 
 INSERT INTO exercise_types (id, name, value)
@@ -107,7 +110,7 @@ INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description
 VALUES ('Intro', 0, 5, '2019-03-28 11:08:09.851', 1, 1, '<h2>Course overview</h2><p>In this course you would build an interactive Reversi game, based on a legacy program.</p><p>The work on the project would be done in three lessons, which represent iterations of the work on the program. Each lesson would have exercises, which would provide feedback and lead through the work on the project.</p><p>By working on project you would  learn Extreme programming methods and apply your skills. Most of the exercises would cover several of these skills, like Test-driven development, unit testing, refactoring and working with legacy code.</p><h4>Testing</h4><p>The first iteration provides exercises on debugging the legacy program. The aim is to find bugs in the legacy program and fix them, but keep the original structure of the code. Writing own tests is necessary to achieve it. The second iteration is aimed to add some features to the code, bud to keep the original structure of the code as well. Tests, used in a previous iteration, with the new tests would be needed to accomplish the iteration requirements. The last iteration is made up with numerous exercises on refactoring. The tests are essential to proof that the program would remain correct.</p><h4>Refactoring</h4><p>The refactoring exercises take place in the third, last iteration. At this moment, after the previous two iterations are completed successfully and passed all the tests, the code would be correct. Each of the numerous exercises is about a single step of the code change, exercise description and title would reference to the book \"Clean Code\" by Robert C. Martin. It is one of the mostly recommended books for software development, and for a good reason. During and after refactoring the code should maintain correct, and it can be provided by tests, written by the user.</p><h4>Legacy program overview</h4><p>The legacy program is a two-player interactive Reversi game. The rules can be found here <a href=\"http://www.flyordie.com/games/help/reversi/en/games_rules_reversi.html\" target=\"_blank\" style=\"color: rgb(70, 63, 92);\">http://www.flyordie.com/games/help/reversi/en/games_rules_reversi.html</a></p><p>The game is played from console. The state of the game is read from configuration files, which have the following structure:</p><ul><li>first row has "B" or "W", which means the player on turn, </li><li>the secong row contatins the moves of the player, whose color is black, </li><li>and the thirs row contains the moves of the player, whose color is white.</li></ul><p>The values are separated by space.</p>', False);
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description, solved)
-VALUES ('Finding the Bugs in Legacy Program', 1, 4, '2019-03-28 11:08:09.851', 2, 1, '<h2>Objective</h2><p>You need to find bugs in the legacy program, but the source code is not available.</p><p>Write own tests to find the bugs.</p><p></p><h3><strong>User stories</strong></h3><ul><li>find <strong>three </strong>bugs.</li></ul><p><br></p><h2>Code structure</h2><pre class=\"ql-syntax\" spellcheck=\"false\">public class Reversi {<br><br>    int[][] playground;<br>    int leftB = 0;<br>    int leftW = 0;<br>    private int[] players = new int[] { 1, 0 };<br>    int onTurn = -1;<br>    int winner = -1;<br>    boolean ended = false;<br><br>    Reversi() { }<br>    Reversi(Path gameFilePath) {...}<br><br>    private void run() {...}<br>    String[] readGameConfig(Path gameFilePath) {...}<br>    void initGame(String[] gameConfig) {...}<br>    void initTilesCount() {...}<br>    int getLeftB() {...}<br>    int getLeftW() {...}<br>    void move(int r0, int c0) {...}<br>    boolean areValidMoves() {...}<br>    public static void main(String[] args) {...}<br>}<br></pre><p><br></p>', False);
+VALUES ('Finding the Bugs in Legacy Program', 1, 4, '2019-03-28 11:08:09.851', 2, 1, '<h2>Objective</h2><p>You need to find bugs in the legacy program, but the source code is not available.</p><p>Write own tests to find the bugs.</p><p></p><h3><strong>User stories</strong></h3><ul><li>find <strong>three </strong>bugs.</li></ul><p><br></p><h2>Source code structure</h2><pre class=\"ql-syntax\" spellcheck=\"false\">public class Reversi {<br><br>    int[][] playground;<br>    int leftB = 0;<br>    int leftW = 0;<br>    private int[] players = new int[] { 1, 0 };<br>    int onTurn = -1;<br>    int winner = -1;<br>    boolean ended = false;<br><br>    Reversi() { }<br>    Reversi(Path gameFilePath) {...}<br><br>    private void run() {...}<br>    String[] readGameConfig(Path gameFilePath) {...}<br>    void initGame(String[] gameConfig) {...}<br>    void initTilesCount() {...}<br>    int getLeftB() {...}<br>    int getLeftW() {...}<br>    void move(int r0, int c0) {...}<br>    boolean areValidMoves() {...}<br>    public static void main(String[] args) {...}<br>}<br></pre><p><br></p>', False);
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description, solved)
 VALUES ('Debugging the Legacy Program', 2, 2, '2019-03-28 11:08:09.851', 3, 1, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">Fix bugs in the legacy program from previous exercise. You can use tests you wrote to find the bugs.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">When fixing the legacy program, you should keep the original core structure of the code. The program should pass all your and hidden tests.</span></p><p></p><h3><strong>User stories</strong></h3><ul><li>fix <strong>three </strong>bugs</li><li>do not make more.</li></ul><h2><br></h2>', False);

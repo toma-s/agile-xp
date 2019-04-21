@@ -35,7 +35,7 @@ public class SolutionTestController {
     public List<SolutionTest> getSolutionTestsByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get solution tests with exercise id " + exerciseId + "...");
 
-        List<Solution> solutions = solutionRepository.findSolutionByExerciseIdOrderByCreatedDesc(exerciseId);
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
 
         List<SolutionTest> solutionTests = new ArrayList<>(repository.findBySolutionId(solutions.get(0).getId()));
 

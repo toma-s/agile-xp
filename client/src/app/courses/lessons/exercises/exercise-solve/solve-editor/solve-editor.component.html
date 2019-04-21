@@ -18,14 +18,26 @@
     </mat-tab-group>
   </div>
 
-  <div class="loader">
-    <h3>Load from solution</h3>
+  <aside class="sidebar">
 
-    <mat-list>
-      <mat-list-item *ngFor="let solution of loadedSolutions">
+    <mat-action-list>
+      <button mat-list-item (click)="reset()">
+        <mat-icon mat-list-icon>refresh</mat-icon>
+        <p>Reset</p>
+      </button>
+      <button mat-list-item (click)="showLoadSolutionDialog()">
+        <mat-icon mat-list-icon><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" /></svg></mat-icon>
+        <p mat-line>Load from solution</p>
+      </button>
+    </mat-action-list>
+
+    <!-- <mat-list>
+      <mat-list-item *ngFor="let solution of loadedSolutions" class="loader__item">
         <h4 mat-line>{{ solution.filename }}</h4>
+        <p mat-line>Estimation: {{ getEstimation(solution.solutionId) }}</p>
       </mat-list-item>
-    </mat-list>
-  </div>
+    </mat-list> -->
+  </aside>
 
 </div>
