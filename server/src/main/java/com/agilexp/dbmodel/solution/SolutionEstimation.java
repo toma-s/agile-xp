@@ -1,7 +1,7 @@
 package com.agilexp.dbmodel.solution;
 
 import javax.persistence.*;
-import java.util.List;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name="solution_estimation")
@@ -10,21 +10,30 @@ public class SolutionEstimation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(name="solutionId")
+    private long solutionId;
+
     @Column(name="estimation")
     private String estimation;
 
     @Column(name="solved")
     private boolean solved;
 
-    @OneToMany(mappedBy = "solutionEstimation")
-    private List<SolutionContent> solutionContent;
+    @Column(name="created")
+    private Timestamp created;
 
     public SolutionEstimation() {
     }
 
-    public SolutionEstimation(long solutionId, String estimation, boolean solved) {
+    public SolutionEstimation(long solutionId) {
+        this.solutionId = solutionId;
+    }
+
+    public SolutionEstimation(long solutionId, String estimation, boolean solved, Timestamp created) {
+        this.solutionId = solutionId;
         this.estimation = estimation;
         this.solved = solved;
+        this.created = created;
     }
 
     public long getId() {
@@ -33,6 +42,14 @@ public class SolutionEstimation {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getSolutionId() {
+        return solutionId;
+    }
+
+    public void setSolutionId(long solutionId) {
+        this.solutionId = solutionId;
     }
 
     public String getEstimation() {
@@ -51,18 +68,19 @@ public class SolutionEstimation {
         this.solved = solved;
     }
 
-    public List<SolutionContent> getSolutionContent() {
-        return solutionContent;
+    public Timestamp getCreated() {
+        return created;
     }
 
-    public void setSolutionContent(List<SolutionContent> solutionContent) {
-        this.solutionContent = solutionContent;
+    public void setCreated(Timestamp created) {
+        this.created = created;
     }
 
     @Override
     public String toString() {
         return "SolutionEstimation{" +
                 "id=" + id +
+                ", solutionId=" + solutionId +
                 ", estimation='" + estimation + '\'' +
                 ", solved=" + solved +
                 '}';

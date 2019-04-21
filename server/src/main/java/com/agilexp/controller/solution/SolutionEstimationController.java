@@ -9,6 +9,7 @@ import com.agilexp.dbmodel.exercise.PrivateTest;
 import com.agilexp.dbmodel.solution.*;
 import com.agilexp.model.ExerciseFlags;
 import com.agilexp.model.ExerciseSwitcher;
+import com.agilexp.model.SolutionItems;
 import com.agilexp.repository.exercise.BugsNumberRepository;
 import com.agilexp.repository.exercise.PrivateFileRepository;
 import com.agilexp.repository.exercise.PrivateSourceRepository;
@@ -30,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,6 +44,10 @@ public class SolutionEstimationController {
     @Autowired private PrivateTestRepository privateTestRepository;
     @Autowired private PrivateFileRepository privateFileRepository;
     @Autowired private BugsNumberRepository bugsNumberRepository;
+    @Autowired private SolutionRepository solutionRepository;
+    @Autowired private SolutionSourceRepository solutionSourceRepository;
+    @Autowired private SolutionTestRepository solutionTestRepository;
+    @Autowired private SolutionFileRepository solutionFileRepository;
 
     private final StorageService storageService;
 
@@ -53,13 +59,17 @@ public class SolutionEstimationController {
         this.storageService = storageService;
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/whitebox")
+    @GetMapping(value = "/solution-estimation/estimate/whitebox")
     public SolutionEstimation getWhiteboxEstimation(@RequestBody SolutionItems solutionItems) {
-        SolutionEstimation solutionEstimation = new SolutionEstimation();
+        Date date = new Date();
+        Timestamp created = new Timestamp(date.getTime());
+
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionItems.getSolutionId());
 
         Pair<Boolean, String> estimation = estimateSourceTest(solutionItems);
         solutionEstimation.setSolved(estimation.getKey());
         solutionEstimation.setEstimation(estimation.getValue());
+        solutionEstimation.setCreated(created);
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
@@ -84,13 +94,17 @@ public class SolutionEstimationController {
         return new Pair<>(solved, publicEstimation.getValue() + "\n\n" + privateEstimation.getValue());
     }
 
-    @PostMapping(value = "/solution-estimations/estimate/whitebox-file")
+    @PostMapping(value = "/solution-estimation/estimate/whitebox-file")
     public SolutionEstimation getWhiteboxFileEstimation(@RequestBody SolutionItems solutionItems) {
-        SolutionEstimation solutionEstimation = new SolutionEstimation();
+        Date date = new Date();
+        Timestamp created = new Timestamp(date.getTime());
+
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionItems.getSolutionId());
 
         Pair<Boolean, String> estimation = estimateSourceTestFile(solutionItems);
         solutionEstimation.setSolved(estimation.getKey());
         solutionEstimation.setEstimation(estimation.getValue());
+        solutionEstimation.setCreated(created);
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
@@ -212,13 +226,17 @@ public class SolutionEstimationController {
         }
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/blackbox")
+    @GetMapping(value = "/solution-estimation/estimate/blackbox")
     public SolutionEstimation getBlackboxEstimation(@RequestBody SolutionItems solutionItems) {
-        SolutionEstimation solutionEstimation = new SolutionEstimation();
+        Date date = new Date();
+        Timestamp created = new Timestamp(date.getTime());
+
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionItems.getSolutionId());
 
         Pair<Boolean, String> estimation = estimateBlackBox(solutionItems);
         solutionEstimation.setSolved(estimation.getKey());
         solutionEstimation.setEstimation(estimation.getValue());
+        solutionEstimation.setCreated(created);
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
@@ -270,13 +288,17 @@ public class SolutionEstimationController {
         }
     }
 
-    @GetMapping(value = "/solution-estimations/estimate/blackbox-file/{solutionId}")
+    @GetMapping(value = "/solution-estimation/estimate/blackbox-file")
     public SolutionEstimation getSolutionTestFileEstimation(@RequestBody SolutionItems solutionItems) {
-        SolutionEstimation solutionEstimation = new SolutionEstimation();
+        Date date = new Date();
+        Timestamp created = new Timestamp(date.getTime());
+
+        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionItems.getSolutionId());
 
         Pair<Boolean, String> estimation = estimateTestFile(solutionItems);
         solutionEstimation.setSolved(estimation.getKey());
         solutionEstimation.setEstimation(estimation.getValue());
+        solutionEstimation.setCreated(created);
 
         SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
@@ -537,17 +559,72 @@ public class SolutionEstimationController {
         return output;
     }
 
-//    @GetMapping(value="/solution-estimations/exercise/{exerciseId}")
-//    public List<SolutionContentEstimationProjection> getSolutionEstimationsByExerciseId(@PathVariable("exerciseId") long exerciseId) {
-//        System.out.println("Get solution estimations with exercise id " + exerciseId + "...");
-//
-//        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
-//        List<SolutionContentEstimationProjection> projections = new ArrayList<>();
-//        solutions.forEach(solution -> {
-//            projections.addAll(repository.findAllBySolutionId(solution.getId()));
-//        });
-//
-//        System.out.format("Found solution sources %s\n", projections);
-//        return projections;
-//    }
+    @GetMapping(value="/solution-estimation/exercise/{exerciseId}/source")
+    public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeSource(@PathVariable("exerciseId") long exerciseId) {
+        System.out.println("Get solution estimations with exercise id " + exerciseId + "...");
+
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
+        List<SolutionItems> solutionItems = new ArrayList<>();
+        for (Solution solution : solutions) {
+            SolutionItems newSolutionItems = new SolutionItems();
+            List<SolutionSource> solutionSources = new ArrayList<>(solutionSourceRepository.findBySolutionId(solution.getId()));
+            SolutionEstimation solutionEstimation = repository.findAllBySolutionId(solution.getId()).get(0);
+            newSolutionItems.setSolutionId(solution.getId());
+            newSolutionItems.setExerciseId(exerciseId);
+            newSolutionItems.setSolutionSources(solutionSources);
+            newSolutionItems.setCreated(solutionEstimation.getCreated());
+            newSolutionItems.setEstimation(solutionEstimation.getEstimation());
+            newSolutionItems.setSolved(solutionEstimation.isSolved());
+            solutionItems.add(newSolutionItems);
+        }
+
+        System.out.format("Found solution items\n");
+        return solutionItems;
+    }
+
+    @GetMapping(value="/solution-estimation/exercise/{exerciseId}/test")
+    public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeTest(@PathVariable("exerciseId") long exerciseId) {
+        System.out.println("Get solution estimations with exercise id " + exerciseId + "...");
+
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
+        List<SolutionItems> solutionItems = new ArrayList<>();
+        for (Solution solution : solutions) {
+            SolutionItems newSolutionItems = new SolutionItems();
+            List<SolutionTest> solutionTests = new ArrayList<>(solutionTestRepository.findBySolutionId(solution.getId()));
+            SolutionEstimation solutionEstimation = repository.findAllBySolutionId(solution.getId()).get(0);
+            newSolutionItems.setSolutionId(solution.getId());
+            newSolutionItems.setExerciseId(exerciseId);
+            newSolutionItems.setSolutionTests(solutionTests);
+            newSolutionItems.setCreated(solutionEstimation.getCreated());
+            newSolutionItems.setEstimation(solutionEstimation.getEstimation());
+            newSolutionItems.setSolved(solutionEstimation.isSolved());
+            solutionItems.add(newSolutionItems);
+        }
+
+        System.out.format("Found solution items\n");
+        return solutionItems;
+    }
+
+    @GetMapping(value="/solution-estimation/exercise/{exerciseId}/file")
+    public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeFile(@PathVariable("exerciseId") long exerciseId) {
+        System.out.println("Get solution estimations with exercise id " + exerciseId + "...");
+
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
+        List<SolutionItems> solutionItems = new ArrayList<>();
+        for (Solution solution : solutions) {
+            SolutionItems newSolutionItems = new SolutionItems();
+            List<SolutionFile> solutionFiles = new ArrayList<>(solutionFileRepository.findBySolutionId(solution.getId()));
+            SolutionEstimation solutionEstimation = repository.findAllBySolutionId(solution.getId()).get(0);
+            newSolutionItems.setSolutionId(solution.getId());
+            newSolutionItems.setExerciseId(exerciseId);
+            newSolutionItems.setSolutionFiles(solutionFiles);
+            newSolutionItems.setCreated(solutionEstimation.getCreated());
+            newSolutionItems.setEstimation(solutionEstimation.getEstimation());
+            newSolutionItems.setSolved(solutionEstimation.isSolved());
+            solutionItems.add(newSolutionItems);
+        }
+
+        System.out.format("Found solution items\n");
+        return solutionItems;
+    }
 }

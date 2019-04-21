@@ -6,4 +6,9 @@ public class IncorrectGameConfigFileException extends Exception {
         super(message);
     }
 
+    public IncorrectGameConfigFileException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+
 }

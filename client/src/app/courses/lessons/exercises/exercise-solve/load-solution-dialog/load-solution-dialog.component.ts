@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { SolutionEstimationService } from '../../shared/solution/solution-estimation/solution-estimation.service';
-import { SolutonSourceService } from '../../shared/solution/solution-source/solution-source.service';
-import { SolutonTestService } from '../../shared/solution/solution-test/solution-test.service';
-import { SolutionFileService } from '../../shared/solution/solution-file/solution-file.service';
 import { SolutionContent } from '../../shared/solution/solution-content/solution-content.model';
-import { SolutionEstimation } from '../../shared/solution/solution-estimation/solution-estimation.model';
+import { SolutionItems } from '../../shared/solution/solution-items/solution-items.model';
 
 @Component({
   selector: 'load-solution-dialog',
@@ -16,55 +13,71 @@ export class LoadSolutionDialogComponent implements OnInit {
 
   exerciseId: number;
   solutionType: string;
-  loadedSolutions: Array<SolutionContent>;
-  loadedEstimations: Array<SolutionEstimation>;
+  loadedEstimations: Array<SolutionItems>;
+  currentContent: Map<number, Array<SolutionContent>>;
+  chosen: SolutionContent;
 
   constructor(
     public dialogRef: MatDialogRef<LoadSolutionDialogComponent>,
-    private solutionEstimationService: SolutionEstimationService,
-    private solutionSourceService: SolutonSourceService,
-    private solutionTestService: SolutonTestService,
-    private solutionFileService: SolutionFileService,
+    private solutionEstimationService: SolutionEstimationService
   ) { }
 
   async ngOnInit() {
-    // this.loadedEstimations = await this.loadEstimations();
-    // console.log(this.loadEstimations);
-    // this.loadSolutions();
+    this.loadedEstimations = await this.loadEstimations();
+    console.log(this.loadedEstimations);
+    this.setCurrentContent();
   }
 
-  // loadEstimations() {
-  //   return new Promise<Array<SolutionEstimation>>((resolve, reject) => {
-  //     this.solutionEstimationService.getSolutionEstimationsByExerciseId(this.exerciseId).subscribe(
-  //       data => resolve(data),
-  //       error => reject(error)
-  //     );
-  //   });
-  // }
+  loadEstimations() {
+    return new Promise<Array<SolutionItems>>((resolve, reject) => {
+      this.solutionEstimationService.getSolutionEstimationsByExerciseIdAndType(this.exerciseId, this.solutionType).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
+  }
 
-  loadSolutions() {
+  setCurrentContent() {
+    this.currentContent = new Map();
     switch (this.solutionType) {
       case 'source': {
-        this.solutionSourceService.getSolutionSourcesByExerciseId(this.exerciseId).subscribe(
-          data => {
-            this.loadedSolutions = data;
-            console.log(data);
-          },
-          error => console.log(error)
-        );
-        console.log('source');
+        for (let i = 0; i < this.loadedEstimations.length; i++) {
+          const content = new Array<SolutionContent>();
+          this.loadedEstimations[i].solutionSources.forEach(ss => {
+            content.push(ss);
+          });
+          this.currentContent[i] = content;
+        }
         break;
       }
       case 'test': {
-        console.log('test');
+        for (let i = 0; i < this.loadedEstimations.length; i++) {
+          const content = new Array<SolutionContent>();
+          this.loadedEstimations[i].solutionTests.forEach(ss => {
+            content.push(ss);
+          });
+          this.currentContent[i] = content;
+        }
         break;
       }
       case 'file': {
-        console.log('file');
+        for (let i = 0; i < this.loadedEstimations.length; i++) {
+          const content = new Array<SolutionContent>();
+          this.loadedEstimations[i].solutionFiles.forEach(ss => {
+            content.push(ss);
+          });
+          this.currentContent[i] = content;
+        }
         break;
       }
     }
   }
+
+
+  choose(content: SolutionContent) {
+    this.chosen = content;
+  }
+
 
   onCloseClick(): void {
     this.dialogRef.close();

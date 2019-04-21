@@ -25,7 +25,8 @@ public class SolutionSourceController {
         SolutionSource _solutionSource = repository.save(new SolutionSource(
                 solutionSource.getSolutionId(),
                 solutionSource.getFilename(),
-                solutionSource.getContent()
+                solutionSource.getContent(),
+                solutionSource.getSolutionEstimationId()
         ));
         System.out.format("Created solution source %s\n", solutionSource);
         return _solutionSource;

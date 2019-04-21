@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface SolutionEstimationRepository extends CrudRepository<SolutionEstimation, Long> {
-//    List<SolutionEstimation> findSolutionEstimationsBySolutionId(long solutionId);
+    List<SolutionEstimation> findAllBySolutionId(long solutionId);
 
 //    @Query("select solution_content.filename as filename,\n" +
 //            "       solution_content.content as content,\n" +

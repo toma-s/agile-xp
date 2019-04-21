@@ -1,4 +1,5 @@
 package com.agilexp.dbmodel.solution;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,16 +20,17 @@ public abstract class SolutionContent {
     @Column(name="content")
     private String content;
 
-    @ManyToOne
-    private SolutionEstimation solutionEstimation;
+    @Column(name="solution_estimation_id")
+    private long solutionEstimationId;
 
     SolutionContent() {
     }
 
-    SolutionContent(long solutionId, String filename, String content) {
+    public SolutionContent(long solutionId, String filename, String content, long solutionEstimationId) {
         this.solutionId = solutionId;
         this.filename = filename;
         this.content = content;
+        this.solutionEstimationId = solutionEstimationId;
     }
 
     public long getId() {
@@ -63,13 +65,13 @@ public abstract class SolutionContent {
         this.content = content;
     }
 
-//    public SolutionEstimation getSolutionEstimation() {
-//        return solutionEstimation;
-//    }
-//
-//    public void setSolutionEstimation(SolutionEstimation solutionEstimation) {
-//        this.solutionEstimation = solutionEstimation;
-//    }
+    public long getSolutionEstimationId() {
+        return solutionEstimationId;
+    }
+
+    public void setSolutionEstimationId(long solutionEstimationId) {
+        this.solutionEstimationId = solutionEstimationId;
+    }
 
     @Override
     public String toString() {

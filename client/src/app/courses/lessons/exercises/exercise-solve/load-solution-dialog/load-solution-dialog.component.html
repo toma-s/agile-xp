@@ -1,5 +1,53 @@
 <div>
-  <mat-accordion>
-    
-  </mat-accordion>
+  <div>
+
+    <div>
+      Chosen solution content:
+      <mat-form-field>
+        <div *ngIf="chosen; then showChosen; else showEmpty"></div>
+        <ng-template #showChosen>
+          <input autofocus disabled matInput [(ngModel)]="chosen.id">
+        </ng-template>
+        <ng-template #showEmpty>
+          <input autofocus disabled matInput>
+        </ng-template>
+      </mat-form-field>
+
+      <button mat-button [mat-dialog-close]="chosen">Done</button>
+      <button mat-button (click)="onCloseClick()">Cancel</button>
+    </div>
+
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let solution of loadedEstimations; let i = index">
+
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <p>{{ solution.created | date:'M.d.y HH:mm' }}</p>
+          </mat-panel-title>
+          <mat-panel-description>
+            <p *ngIf="solution.solved; then isSolved; else notSolved"></p>
+            <ng-template #isSolved>
+              <p class="is_solved">Solved</p>
+            </ng-template>
+            <ng-template #notSolved>
+              <p class="not_solved">Not solved</p>
+            </ng-template>
+            <p>{{ (solution.estimation.length > 150)?
+               (solution.estimation | slice:0:150) + '...':(solution.estimation) }}</p>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-nav-list *ngIf="currentContent">
+          <mat-list-item *ngFor="let item of currentContent[i]" (click)="choose(item)">
+            <p>{{ item.filename }}</p>
+            <!-- <textarea>
+                item.content
+            </textarea> -->
+            <!-- <p>{{ (item.content.length > 150)? (item.content | slice:0:150) + '...':(item.content) }}</p> -->
+          </mat-list-item>
+        </mat-nav-list>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>

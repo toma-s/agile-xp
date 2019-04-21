@@ -71,7 +71,9 @@ create table solution_content (
 drop table if exists solution_estimation cascade;
 create table solution_estimation (
 	id serial primary key,
+	solution_id int,
 	estimation text,
-    solved boolean
+    solved boolean,
+    created timestamp
 );
 

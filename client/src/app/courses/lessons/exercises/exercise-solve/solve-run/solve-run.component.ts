@@ -10,7 +10,7 @@ import { SolutionSource } from '../../shared/solution/solution-source/solution-s
 import { forkJoin, Observable } from 'rxjs';
 import { SolutionTest } from '../../shared/solution/solution-test/solution-test.model';
 import { SolutionFile } from '../../shared/solution/solution-file/solution-file.model';
-import { SolutionItems } from '../../shared/solution/solution-items/soolution-items.model';
+import { SolutionItems } from '../../shared/solution/solution-items/solution-items.model';
 import { SolutionEstimation } from '../../shared/solution/solution-estimation/solution-estimation.model';
 
 @Component({
@@ -61,9 +61,10 @@ export class SolveRunComponent implements OnInit {
   async run() {
     this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue('Running...');
     this.setSolutionItems();
-    this.estimation = await this.getEstimation();
-    this.showEstimation();
     this.solution = await this.saveSolution();
+    this.estimation = await this.getEstimation();
+    console.log(this.estimation);
+    this.showEstimation();
     this.saveSolutionItems();
     console.log('saved solution items');
   }
@@ -77,12 +78,13 @@ export class SolveRunComponent implements OnInit {
   getEstimation() {
     const solutionItems = new SolutionItems();
     solutionItems.exerciseId = Number(this.solutionFormGroup.get('intro').get('exerciseId').value);
+    solutionItems.solutionId = this.solution.id;
     solutionItems.solutionSources = this.solutionSources;
     solutionItems.solutionTests = this.solutionTests;
     solutionItems.solutionFiles = this.solutionFiles;
 
     return new Promise<SolutionEstimation>((resolve, reject) => {
-      this.solutionEstimationService.estimateSourceTestSolution(this.exerciseTypeValue, solutionItems).subscribe(
+      this.solutionEstimationService.estimateSolution(this.exerciseTypeValue, solutionItems).subscribe(
         data => resolve(data),
         error => reject(error)
       );
@@ -150,6 +152,7 @@ export class SolveRunComponent implements OnInit {
   saveSolutionSource(solutionSource: SolutionSource): Observable<{}> {
     solutionSource.solutionId = this.solution.id;
     solutionSource.solutionEstimationId = this.estimation.id;
+    console.log(solutionSource);
     return this.solutionSourceService.createSolutionSource(solutionSource);
   }
 
