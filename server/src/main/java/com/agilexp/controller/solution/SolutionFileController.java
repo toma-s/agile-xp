@@ -25,7 +25,8 @@ public class SolutionFileController {
         SolutionFile _solutionFile = repository.save(new SolutionFile(
                 solutionFile.getSolutionId(),
                 solutionFile.getFilename(),
-                solutionFile.getContent()
+                solutionFile.getContent(),
+                solutionFile.getSolutionEstimationId()
         ));
         System.out.format("Created solution file %s\n", _solutionFile);
         return _solutionFile;
@@ -35,7 +36,7 @@ public class SolutionFileController {
     public List<SolutionFile> getSolutionFilesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get solution files with exercise id " + exerciseId + "...");
 
-        List<Solution> solutions = solutionRepository.findSolutionByExerciseIdOrderByCreatedDesc(exerciseId);
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
 
         List<SolutionFile> solutionTests = new ArrayList<>(repository.findBySolutionId(solutions.get(0).getId()));
 

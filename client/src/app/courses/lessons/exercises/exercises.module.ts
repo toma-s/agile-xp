@@ -28,10 +28,12 @@ import { CreateSubmitComponent } from './exercise-create/create-submit/create-su
 import { EditorComponent } from './exercise-create/editor/editor.component';
 import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor.component';
 import { ErrorComponent } from './exercise-create/error/error.component';
+import { LoadSolutionDialogComponent } from './exercise-solve/load-solution-dialog/load-solution-dialog.component';
 
 @NgModule({
   entryComponents: [
-    DialogComponent
+    DialogComponent,
+    LoadSolutionDialogComponent
   ],
   declarations: [
     ExerciseCreateComponent,
@@ -45,7 +47,8 @@ import { ErrorComponent } from './exercise-create/error/error.component';
     CreateSubmitComponent,
     EditorComponent,
     SolveEditorComponent,
-    ErrorComponent
+    ErrorComponent,
+    LoadSolutionDialogComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,12 @@
+.dialog {
+  overflow: scroll;
+
+  .container {
+    height: 60vh;
+
+    .content {
+      height: 60vh;
+      overflow: scroll;
+    }
+  }
+}

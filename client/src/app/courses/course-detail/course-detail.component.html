@@ -2,7 +2,7 @@
 
 <div *ngIf="course" class="mat-elevation-z2 card">
 
-  <h2>Course: {{ course.name }}</h2>
+  <h1>Course: {{ course.name }}</h1>
 
   <p><strong>Created: </strong>{{ course.created | date:'EEEE, MMMM d, y. HH:mm zzzz' }}</p>
 
@@ -10,16 +10,16 @@
 
   <div *ngIf="lessons">
 
-    <h3>Syllabus</h3>
+    <h2>Syllabus</h2>
 
     <mat-accordion>
       <mat-expansion-panel *ngFor="let lesson of lessons">
 
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <p>Lesson: {{ lesson.name }}</p>
+        <mat-expansion-panel-header class="lesson">
+          <mat-panel-title class="lesson__name">
+            <p>{{ lesson.name }}</p>
           </mat-panel-title>
-          <mat-panel-description>
+          <mat-panel-description class="lesson__description">
             <p>{{ lesson.description }}</p>
           </mat-panel-description>
         </mat-expansion-panel-header>
@@ -29,6 +29,13 @@
             [routerLink]="['lesson', lesson.id, 'exerciseSolve', exercise.id]" routerLinkActive="active">
             <p class="exercise__name">{{ exercise.name }}</p>
             <p class="exercise__type">{{ getExerciseTypeName(exercise.typeId) }}</p>
+            <p *ngIf="exercise.solved; then isSolved; else notSolved"></p>
+            <ng-template #isSolved>
+              <p class="exercise__is_solved">Solved</p>
+            </ng-template>
+            <ng-template #notSolved>
+              <p class="exercise__not_solved">Not solved</p>
+            </ng-template>
           </mat-list-item>
         </mat-nav-list>
 

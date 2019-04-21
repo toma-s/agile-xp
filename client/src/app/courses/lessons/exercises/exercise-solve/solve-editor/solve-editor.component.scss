@@ -20,14 +20,11 @@
     }
   }
 
-  .loader {
-    width: 25%;
-    background-color: $grey;
-    height: 80vh;
-    float: left;
-
-    h3 {
-      padding: 5px;
-    }
+  .sidebar {
+    width: calc(25% - 20px);
+    background-color: $grey-light;
+    height: calc(80vh - 20px);
+    overflow-y: auto;
+    padding: 10px;
   }
 }

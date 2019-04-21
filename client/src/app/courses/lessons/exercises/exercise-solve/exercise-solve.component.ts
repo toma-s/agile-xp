@@ -46,10 +46,11 @@ export class ExerciseSolveComponent implements OnInit {
     this.resetFormGroup();
     this.exercise = await this.getExercise();
     this.setTitle();
-    this.exerciseType =  await this.getExerciseType();
+    this.exerciseType = await this.getExerciseType();
     await this.getSolutionItems();
     this.createForm();
-    console.log(this.solutionFormGroup);
+    this.setSolvedListener();
+    this.setSolved();
   }
 
   resetFormGroup() {
@@ -82,6 +83,9 @@ export class ExerciseSolveComponent implements OnInit {
 
   async getSolutionItems() {
     switch (this.exerciseType.value) {
+      case 'theory': {
+        break;
+      }
       case 'whitebox': {
         this.solutionSources = await this.getSolutionSources();
         this.solutionTests = await this.getSolutionTests();
@@ -137,8 +141,7 @@ export class ExerciseSolveComponent implements OnInit {
 
 
   createForm() {
-    this.solutionFormGroup = this.fb.group({
-    });
+    this.solutionFormGroup = this.fb.group({});
     this.setExerciseIntro();
     this.setSolutionControl('source', this.solutionSources);
     this.setSolutionControl('test', this.solutionTests);
@@ -149,11 +152,20 @@ export class ExerciseSolveComponent implements OnInit {
     this.solutionFormGroup.addControl(
       'intro', this.fb.group({
         exerciseId: [this.exercise.id],
+        exerciseIndex: [this.exercise.index],
         exerciseName: [this.exercise.name],
         exerciseDescription: [this.exercise.description],
-        exerciseType: [this.exerciseType.value]
+        exerciseType: [this.exerciseType.value],
+        solved: [false]
       })
     );
+  }
+
+  setSolved() {
+    if (this.exercise.solved || this.exerciseType.value === 'theory') {
+      this.solutionFormGroup.get('intro').get('solved').setValue(true);
+    }
+    return false;
   }
 
   setSolutionControl(solutionType: string, intialSolution) {
@@ -177,6 +189,19 @@ export class ExerciseSolveComponent implements OnInit {
       fgs.push(fg);
     });
     return fgs;
+  }
+
+  setSolvedListener() {
+    this.solutionFormGroup.get('intro').get('solved').valueChanges.subscribe(value => {
+      this.exercise.solved = value;
+      this.exerciseService.updateExercise(this.exercise.id, this.exercise).subscribe(
+          data => {
+            console.log(data);
+            this.exercise = <Exercise> data;
+          },
+          error => console.log(error)
+      );
+    });
   }
 
 }

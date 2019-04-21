@@ -1,9 +1,9 @@
 <div *ngIf="exercise">
 
-  <toolbar></toolbar>
-
   <div *ngIf="solutionFormGroup">
     <div [formGroup]="solutionFormGroup">
+
+      <toolbar formGroupName="intro"></toolbar>
 
       <div *ngIf="exerciseType">
 
@@ -36,10 +36,12 @@
         </div>
       </div>
 
+      <toolbar formGroupName="intro"></toolbar>
+
     </div>
   </div>
 
-  <toolbar></toolbar>
+  
 
 </div>
 

@@ -28,15 +28,19 @@ public class Exercise {
     @Column(name="description")
     private String description;
 
+    @Column(name="solved")
+    private boolean solved;
+
     public Exercise() {}
 
-    public Exercise(String name, long index, long lessonId, long typeId, Timestamp created, String description) {
+    public Exercise(String name, long index, long lessonId, long typeId, Timestamp created, String description, boolean solved) {
         this.name = name;
         this.index = index;
         this.lessonId = lessonId;
         this.typeId = typeId;
         this.created = created;
         this.description = description;
+        this.solved = solved;
     }
 
     public long getId() {
@@ -95,6 +99,14 @@ public class Exercise {
         this.description = description;
     }
 
+    public boolean isSolved() {
+        return solved;
+    }
+
+    public void setSolved(boolean solved) {
+        this.solved = solved;
+    }
+
     @Override
     public String toString() {
         return "Exercise{" +
@@ -105,6 +117,7 @@ public class Exercise {
                 ", typeId=" + typeId +
                 ", created=" + created +
                 ", description='" + description + '\'' +
+                ", solved=" + solved +
                 '}';
     }
 }

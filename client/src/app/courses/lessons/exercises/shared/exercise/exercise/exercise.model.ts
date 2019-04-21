@@ -6,7 +6,5 @@ export class Exercise {
     typeId: number;
     created: Date;
     description: string;
-    loadSolutionSources: number;
-    loadSolutionTests: number;
-    loadSolutionFiles: number;
+    solved: boolean;
 }

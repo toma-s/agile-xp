@@ -25,7 +25,8 @@ public class SolutionTestController {
         SolutionTest _solutionTest = repository.save(new SolutionTest(
                 solutionTest.getSolutionId(),
                 solutionTest.getFilename(),
-                solutionTest.getContent()
+                solutionTest.getContent(),
+                solutionTest.getSolutionEstimationId()
         ));
         System.out.format("Created solution test %s\n", solutionTest);
         return _solutionTest;
@@ -35,7 +36,7 @@ public class SolutionTestController {
     public List<SolutionTest> getSolutionTestsByExerciseId(@PathVariable("exerciseId") long exerciseId) {
         System.out.println("Get solution tests with exercise id " + exerciseId + "...");
 
-        List<Solution> solutions = solutionRepository.findSolutionByExerciseIdOrderByCreatedDesc(exerciseId);
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
 
         List<SolutionTest> solutionTests = new ArrayList<>(repository.findBySolutionId(solutions.get(0).getId()));
 

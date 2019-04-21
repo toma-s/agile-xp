@@ -2,13 +2,13 @@
 
 .env {
   padding: 10px;
-  background-color: $grey;
+  background-color: $grey-light;
 
   .env__container {
     overflow: hidden;
     
     .env__editor {
-      border: 1px solid $grey;
+      border: 1px solid $grey-light;
       height: 60vh;
       width: 100%;
     }

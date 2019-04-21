@@ -30,9 +30,9 @@ create table exercises (
     description text,
 	index int,
     created timestamp,
+    solved boolean,
     type_id int references exercise_types on delete cascade,
 	lesson_id int references lessons on delete cascade
--- 	constraint unique_index_lesson_id unique (index, lesson_id)
 );
 
 drop table if exists exercise_content cascade;
@@ -64,13 +64,16 @@ create table solution_content (
     filename text,
     content text,
     solution_id int references solutions on delete cascade,
-    solution_content_type text
+    solution_content_type text,
+    solution_estimation_id int references solution_estimation
 );
 
-drop table if exists solution_estimations cascade;
-create table solution_estimations (
+drop table if exists solution_estimation cascade;
+create table solution_estimation (
 	id serial primary key,
+	solution_id int,
 	estimation text,
-    solution_id int references solutions on delete cascade
+    solved boolean,
+    created timestamp
 );
 

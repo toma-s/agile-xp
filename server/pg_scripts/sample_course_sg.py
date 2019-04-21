@@ -51,6 +51,7 @@ class SampleCourseGenerator(ScriptGenerator):
                 exercise['id'] = exercise_id_counter
                 exercise['lesson_id'] = int(lesson_id)
                 exercise['description'] = self.read_description(exercise_id_counter)
+                exercise['solved'] = False
                 self.append_to_script(self.get_insert('exercises', **exercise))
 
         bugs_number_data = self.read_json_file('%s/bugs_number.json' % self.root)
@@ -73,20 +74,20 @@ class SampleCourseGenerator(ScriptGenerator):
         except FileNotFoundError:
             return "'todo'"
 
-    def handle_exercise_content(self, exercise_content, exercise_id):
+    def handle_exercise_content(self, exercise_content_data, exercise_id):
         try:
-            source_test = exercise_content['source_test']
+            source_test = exercise_content_data['source_test']
             for exercise_content in source_test:
                 exercise_content['exercise_id'] = int(exercise_id)
                 exercise_content['content'] = self.read_exercise_content(exercise_content)
                 self.append_to_script(self.get_insert('exercise_content', **exercise_content))
-            file_dir = exercise_content['file']
+            file_dir = exercise_content_data['file']
             if file_dir == 'game_config':
                 self.handle_files(exercise_id, self.game_config)
             elif file_dir == 'game_config_num':
                 self.handle_files(exercise_id, self.game_config_num)
         except KeyError:
-            pass
+            return
 
     def handle_files(self, exercise_id, files):
         for file in files:

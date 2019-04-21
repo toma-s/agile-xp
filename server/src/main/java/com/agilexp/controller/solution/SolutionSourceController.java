@@ -25,21 +25,25 @@ public class SolutionSourceController {
         SolutionSource _solutionSource = repository.save(new SolutionSource(
                 solutionSource.getSolutionId(),
                 solutionSource.getFilename(),
-                solutionSource.getContent()
+                solutionSource.getContent(),
+                solutionSource.getSolutionEstimationId()
         ));
         System.out.format("Created solution source %s\n", solutionSource);
         return _solutionSource;
     }
 
-    @GetMapping(value="/solution-sources/exercise/{exerciseId}")
-    public List<SolutionSource> getSolutionSourceByExerciseId(@PathVariable("exerciseId") long exerciseId) {
-        System.out.println("Get solution sources with exercise id " + exerciseId + "...");
+//    @GetMapping(value="/solution-sources/exercise/{exerciseId}")
+//    public List<SolutionSource> getSolutionSourcesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+//        System.out.println("Get solution sources with exercise id " + exerciseId + "...");
+//
+//        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
+//        List<SolutionSource> solutionSources = new ArrayList<>();
+//        solutions.forEach(solution -> {
+//            solutionSources.addAll(repository.findBySolutionId(solution.getId()));
+//        });
+//
+//        System.out.format("Found solution sources %s\n", solutionSources);
+//        return solutionSources;
+//    }
 
-        List<Solution> solutions = solutionRepository.findSolutionByExerciseIdOrderByCreatedDesc(exerciseId);
-
-        List<SolutionSource> solutionSources = new ArrayList<>(repository.findBySolutionId(solutions.get(0).getId()));
-
-        System.out.format("Found solution sources %s\n", solutionSources);
-        return solutionSources;
-    }
 }

@@ -8,8 +8,8 @@ public class SolutionFile extends SolutionContent {
     public SolutionFile() {
     }
 
-    public SolutionFile(long solutionId, String filename, String content) {
-        super(solutionId, filename, content);
+    public SolutionFile(long solutionId, String filename, String content, long solutionEstimationId) {
+        super(solutionId, filename, content, solutionEstimationId);
     }
 
     @Override
