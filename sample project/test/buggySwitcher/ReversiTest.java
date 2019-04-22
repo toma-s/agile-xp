@@ -23,7 +23,7 @@ public class ReversiTest {
     private Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
 
 
-    // bug 0  (1)
+    // bug 1  (1)
 
     @Test
     public void testMoveOutOfBoundsBelow() {
@@ -33,7 +33,7 @@ public class ReversiTest {
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
     }
 
-    // bug 0  (1)
+    // bug 1  (2)
 
     @Test
     public void testMoveOutOfBoundsAbove() {
@@ -43,7 +43,7 @@ public class ReversiTest {
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
     }
 
-    // bug 1
+    // bug 2
 
     @Test
     public void testMoveOnNotEmpty() {

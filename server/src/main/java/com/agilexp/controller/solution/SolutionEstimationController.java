@@ -228,7 +228,7 @@ public class SolutionEstimationController {
         }
     }
 
-    @GetMapping(value = "/solution-estimation/estimate/blackbox")
+    @PostMapping(value = "/solution-estimation/estimate/blackbox")
     public SolutionEstimation getBlackboxEstimation(@RequestBody SolutionItems solutionItems) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
@@ -290,7 +290,7 @@ public class SolutionEstimationController {
         }
     }
 
-    @GetMapping(value = "/solution-estimation/estimate/blackbox-file")
+    @PostMapping(value = "/solution-estimation/estimate/blackbox-file")
     public SolutionEstimation getSolutionTestFileEstimation(@RequestBody SolutionItems solutionItems) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
