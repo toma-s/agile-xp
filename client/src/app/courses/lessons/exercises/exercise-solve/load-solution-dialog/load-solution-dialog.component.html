@@ -19,17 +19,17 @@
   <mat-accordion>
     <mat-expansion-panel *ngFor="let solution of shownEstimations; let i = index">
 
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <p>{{ solution.created | date:'M.d.y HH:mm' }}</p>
+      <mat-expansion-panel-header class="solution">
+        <mat-panel-title class="solution__title">
+          <p>{{ solution.created | date:'MM.d.y HH:mm' }}</p>
         </mat-panel-title>
         <mat-panel-description>
           <p *ngIf="solution.solved; then isSolved; else notSolved"></p>
           <ng-template #isSolved>
-            <p class="is_solved">Solved</p>
+            <p class="solution__solved--true">Solved</p>
           </ng-template>
           <ng-template #notSolved>
-            <p class="not_solved">Not solved</p>
+            <p class="solution__solved--false">Not solved</p>
           </ng-template>
           <p>{{ (solution.estimation.length > 150)?
                (solution.estimation | slice:0:150) + '...':(solution.estimation) }}</p>
@@ -38,8 +38,8 @@
 
       <mat-nav-list *ngIf="currentContent">
         <mat-list-item *ngFor="let item of currentContent[i]" (click)="choose(item)">
-          <p>{{ item.filename }}</p>
-          <p>{{ (item.content.length > 150)? (item.content | slice:0:150) + '...':(item.content) }}</p>
+          <p class="content__filename">{{ (item.filename.length > 20)? (item.filename | slice:0:20) + '...':(item.filename) }}</p>
+          <p class="content__content">{{ (item.content.length > 150)? (item.content | slice:0:150) + '...':(item.content) }}</p>
         </mat-list-item>
       </mat-nav-list>
 

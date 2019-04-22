@@ -1,5 +1,31 @@
+@import "src/variables.scss";
+
+.solution {
+  .solution__title {
+    width: 10%;
+  }
+
+  .solution__solved--true {
+    color: $green-light;
+    width: 20%;
+  }
+
+  .solution__solved--false {
+    color: $accent-light;
+    width: 20%;
+  }
+
+}
+
+.content__filename {
+  width: 25%;
+}
+
+.content__content {
+  width: 75%;
+}
+
 .paginator {
-  // width: 50%;
   margin-top: 20px;
 
   .paginator__button {
