@@ -6,6 +6,11 @@ import { SolutionContent } from '../../shared/solution/solution-content/solution
 import { PublicSourceService } from '../../shared/public/public-source/public-source.service';
 import { PublicTestService } from '../../shared/public/public-test/public-test.service';
 import { PublicFileService } from '../../shared/public/public-file/public-file.service';
+import { ExerciseService } from '../../shared/exercise/exercise/exercise.service';
+import { LessonService } from '../../../shared/lesson.service';
+import { Exercise } from '../../shared/exercise/exercise/exercise.model';
+import { Lesson } from '../../../shared/lesson.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'solve-editor',
@@ -16,21 +21,51 @@ export class SolveEditorComponent implements OnInit {
 
   @Input() solutionFormGroup: FormGroup;
   form: FormGroup;
-  editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
+  editorOptions = { theme: 'vs', language: 'java' };
   dialogRef: MatDialogRef<LoadSolutionDialogComponent>;
+  lessons: Array<Lesson>;
+  exercises: Map<string, Array<Exercise>> = new Map();
 
   constructor(
     public controlContainer: ControlContainer,
     public dialog: MatDialog,
+    private lessonService: LessonService,
+    private exerciseService: ExerciseService,
     private publicSourceService: PublicSourceService,
     private publicTestService: PublicTestService,
     private publicFileService: PublicFileService,
+    private route: ActivatedRoute
   ) { }
 
   async ngOnInit() {
     this.form = <FormGroup>this.controlContainer.control;
     console.log(this.form);
+    this.getLessons();
   }
+
+  getLessons() {
+    const courseId = Number(this.route.snapshot.params['courseId']);
+    this.lessonService.getLessonsByCourseId(courseId).subscribe(
+      data => {
+        console.log(data);
+        this.lessons = data;
+        this.getExercises();
+      },
+      error => console.log(error)
+    );
+  }
+
+  getExercises() {
+    this.lessons.forEach(lesson => {
+      this.exerciseService.getExercisesByLessonId(lesson.id).subscribe(
+        data => {
+          this.exercises[lesson.id] = data;
+        },
+        error => console.log(error)
+      );
+    });
+  }
+
 
   reset() {
     const exerciseId = this.solutionFormGroup.get('intro').get('exerciseId').value;
@@ -59,10 +94,10 @@ export class SolveEditorComponent implements OnInit {
     }
   }
 
-  showLoadSolutionDialog() {
+  showLoadSolutionDialog(exercise: Exercise) {
     const config = new MatDialogConfig();
     this.dialogRef = this.dialog.open(LoadSolutionDialogComponent, config);
-    this.dialogRef.componentInstance.exerciseId = Number(this.solutionFormGroup.get('intro').get('exerciseId').value);
+    this.dialogRef.componentInstance.exerciseId = this.getDialogExerciseId(exercise);
     this.dialogRef.componentInstance.solutionType = this.form.get('solutionType').value;
     this.dialogRef.afterClosed().subscribe(result => {
       if (result === undefined) {
@@ -71,6 +106,13 @@ export class SolveEditorComponent implements OnInit {
       this.updateContent(result);
       console.log(result);
     });
+  }
+
+  getDialogExerciseId(exercise: Exercise) {
+    if (exercise === null) {
+      return Number(this.solutionFormGroup.get('intro').get('exerciseId').value);
+    }
+    return exercise.id;
   }
 
   updateContent(newSolutionContent: SolutionContent) {
