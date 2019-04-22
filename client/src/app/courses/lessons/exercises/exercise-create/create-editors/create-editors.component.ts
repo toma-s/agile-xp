@@ -13,7 +13,7 @@ export class CreateEditorsComponent implements OnInit {
   @Input() exerciseFormGroup: FormGroup;
   exerciseType: string;
   exerciseTypePlural: string;
-  editorOptions = { theme: 'vs', language: 'java'/*, minimap: {'enabled': false}*/ };
+  editorOptions = { theme: 'vs', language: 'java' };
   lessons: Array<Lesson>;
   exercises: Array<Exercise>;
   form: FormGroup;
@@ -27,9 +27,16 @@ export class CreateEditorsComponent implements OnInit {
   ngOnInit() {
     this.form = <FormGroup>this.controlContainer.control;
     this.exerciseType = this.form.get('exerciseType').value;
+    this.setEditorOptions();
     console.log(this.form);
     this.setupValidators();
     this.setViewInput();
+  }
+
+  setEditorOptions() {
+    if (this.exerciseType.search('files') !== -1) {
+      this.editorOptions.language = 'text';
+    }
   }
 
   setViewInput() {

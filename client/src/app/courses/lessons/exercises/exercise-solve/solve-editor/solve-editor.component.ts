@@ -40,8 +40,18 @@ export class SolveEditorComponent implements OnInit {
   async ngOnInit() {
     this.form = <FormGroup>this.controlContainer.control;
     console.log(this.form);
+    this.setEditorOptions();
     this.getLessons();
   }
+
+  setEditorOptions() {
+    if (this.form.get('solutionType').value.search('file') !== -1) {
+      this.editorOptions.language = 'text';
+    } else {
+      this.editorOptions.language = 'java';
+    }
+  }
+
 
   getLessons() {
     const courseId = Number(this.route.snapshot.params['courseId']);
