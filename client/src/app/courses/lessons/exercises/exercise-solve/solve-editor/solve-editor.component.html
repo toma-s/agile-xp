@@ -20,24 +20,41 @@
 
   <aside class="sidebar">
 
-    <mat-action-list>
+    <mat-action-list class="sidebar__button">
       <button mat-list-item (click)="reset()">
         <mat-icon mat-list-icon>refresh</mat-icon>
         <p>Reset</p>
       </button>
-      <button mat-list-item (click)="showLoadSolutionDialog()">
+      <button mat-list-item (click)="showLoadSolutionDialog(null)">
         <mat-icon mat-list-icon><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" /></svg></mat-icon>
-        <p mat-line>Load from solution</p>
+        <p>Load from solution</p>
       </button>
     </mat-action-list>
 
-    <!-- <mat-list>
-      <mat-list-item *ngFor="let solution of loadedSolutions" class="loader__item">
-        <h4 mat-line>{{ solution.filename }}</h4>
-        <p mat-line>Estimation: {{ getEstimation(solution.solutionId) }}</p>
+    <mat-divider></mat-divider>
+
+    <mat-list class="sidebar__list">
+
+      <mat-list-item mat-line>
+        <mat-icon mat-list-icon><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" /></svg></mat-icon>
+        <p>Load from exercise:</p>
       </mat-list-item>
-    </mat-list> -->
+
+      <ng-container *ngFor="let lesson of lessons">
+        <mat-list-item mat-line>{{ lesson.name }}</mat-list-item>
+
+        <mat-action-list class="loader__exercises">
+          <div *ngFor="let exercise of exercises[lesson.id]">
+            <button mat-list-item class="loader__exercise" (click)="showLoadSolutionDialog(exercise)">
+              <p>{{ exercise.name }}</p>
+            </button>
+          </div>
+        </mat-action-list>
+      </ng-container>
+    </mat-list>
+
   </aside>
 
 </div>

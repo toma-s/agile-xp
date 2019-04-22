@@ -20,8 +20,8 @@ export class SolutionEstimationService {
     return this.http.post(`${this.baseUrl}/estimate/${exerciseType}`, solutionItems);
   }
 
-  getSolutionEstimationsByExerciseIdAndType(exerciseId: number, solutionType: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/exercise/${exerciseId}/${solutionType}`);
+  getSolutionEstimationsByExerciseIdAndType(exerciseId: number, solutionType: string, pageNumber, pageSize): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise/${exerciseId}/${solutionType}/${pageNumber}/${pageSize}`);
   }
 }
 

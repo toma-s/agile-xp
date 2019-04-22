@@ -23,6 +23,8 @@ import javafx.util.Pair;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -559,11 +561,15 @@ public class SolutionEstimationController {
         return output;
     }
 
-    @GetMapping(value="/solution-estimation/exercise/{exerciseId}/source")
-    public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeSource(@PathVariable("exerciseId") long exerciseId) {
+    @GetMapping(value="/solution-estimation/exercise/{exerciseId}/source/{pageNumber}/{pageSize}")
+    public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeSource(
+            @PathVariable("exerciseId") long exerciseId,
+            @PathVariable("pageNumber") int pageNumber,
+            @PathVariable("pageSize") int pageSize) {
         System.out.println("Get solution estimations with exercise id " + exerciseId + "...");
 
-        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(pageable, exerciseId);
         List<SolutionItems> solutionItems = new ArrayList<>();
         for (Solution solution : solutions) {
             SolutionItems newSolutionItems = new SolutionItems();
@@ -582,11 +588,15 @@ public class SolutionEstimationController {
         return solutionItems;
     }
 
-    @GetMapping(value="/solution-estimation/exercise/{exerciseId}/test")
-    public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeTest(@PathVariable("exerciseId") long exerciseId) {
+    @GetMapping(value="/solution-estimation/exercise/{exerciseId}/test/{pageNumber}/{pageSize}")
+    public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeTest(
+            @PathVariable("exerciseId") long exerciseId,
+            @PathVariable("pageNumber") int pageNumber,
+            @PathVariable("pageSize") int pageSize) {
         System.out.println("Get solution estimations with exercise id " + exerciseId + "...");
 
-        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(pageable, exerciseId);
         List<SolutionItems> solutionItems = new ArrayList<>();
         for (Solution solution : solutions) {
             SolutionItems newSolutionItems = new SolutionItems();
@@ -605,11 +615,15 @@ public class SolutionEstimationController {
         return solutionItems;
     }
 
-    @GetMapping(value="/solution-estimation/exercise/{exerciseId}/file")
-    public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeFile(@PathVariable("exerciseId") long exerciseId) {
+    @GetMapping(value="/solution-estimation/exercise/{exerciseId}/file/{pageNumber}/{pageSize}")
+    public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeFile(
+            @PathVariable("exerciseId") long exerciseId,
+            @PathVariable("pageNumber") int pageNumber,
+            @PathVariable("pageSize") int pageSize) {
         System.out.println("Get solution estimations with exercise id " + exerciseId + "...");
 
-        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(pageable, exerciseId);
         List<SolutionItems> solutionItems = new ArrayList<>();
         for (Solution solution : solutions) {
             SolutionItems newSolutionItems = new SolutionItems();

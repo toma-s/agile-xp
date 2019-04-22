@@ -32,15 +32,4 @@ public class SolutionTestController {
         return _solutionTest;
     }
 
-    @GetMapping(value="/solution-tests/exercise/{exerciseId}")
-    public List<SolutionTest> getSolutionTestsByExerciseId(@PathVariable("exerciseId") long exerciseId) {
-        System.out.println("Get solution tests with exercise id " + exerciseId + "...");
-
-        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
-
-        List<SolutionTest> solutionTests = new ArrayList<>(repository.findBySolutionId(solutions.get(0).getId()));
-
-        System.out.format("Found solution tests %s\n", solutionTests);
-        return solutionTests;
-    }
 }
