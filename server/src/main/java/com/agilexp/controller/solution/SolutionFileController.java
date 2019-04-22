@@ -32,15 +32,5 @@ public class SolutionFileController {
         return _solutionFile;
     }
 
-    @GetMapping(value="/solution-files/exercise/{exerciseId}")
-    public List<SolutionFile> getSolutionFilesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
-        System.out.println("Get solution files with exercise id " + exerciseId + "...");
 
-        List<Solution> solutions = solutionRepository.findSolutionsByExerciseIdOrderByCreatedDesc(exerciseId);
-
-        List<SolutionFile> solutionTests = new ArrayList<>(repository.findBySolutionId(solutions.get(0).getId()));
-
-        System.out.format("Found solution files %s\n", solutionTests);
-        return solutionTests;
-    }
 }

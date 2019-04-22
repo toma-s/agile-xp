@@ -29,6 +29,7 @@ import { EditorComponent } from './exercise-create/editor/editor.component';
 import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor.component';
 import { ErrorComponent } from './exercise-create/error/error.component';
 import { LoadSolutionDialogComponent } from './exercise-solve/load-solution-dialog/load-solution-dialog.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   entryComponents: [
@@ -71,6 +72,7 @@ import { LoadSolutionDialogComponent } from './exercise-solve/load-solution-dial
     MatDialogModule,
     MatDividerModule,
     MatListModule,
+    MatPaginatorModule,
     ExercisesRoutingModule,
     MonacoEditorModule,
     QuillModule

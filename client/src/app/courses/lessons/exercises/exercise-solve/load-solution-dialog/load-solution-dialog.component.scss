@@ -1,12 +1,13 @@
-.dialog {
-  overflow: scroll;
+.paginator {
+  // width: 50%;
+  margin-top: 20px;
 
-  .container {
-    height: 60vh;
+  .paginator__button {
+    width: 20%;
+  }
 
-    .content {
-      height: 60vh;
-      overflow: scroll;
-    }
+  .paginator__element {
+    width: 80%;
+    float: right;
   }
 }
