@@ -124,8 +124,7 @@ INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description
 VALUES ('Magic Numbers', 0, 2, '2019-03-28 11:08:09.851', 5, 3, '<h2>Objective</h2><p>Replace&nbsp;<strong>Magic Numbers</strong>&nbsp;with&nbsp;<strong>Named Constants</strong>. <span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">As a result, such variables get a name, which describes its meaning. It becomes easier to read, maintain and change the code.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><p></p><h3><strong>User stories</strong></h3><ul><li>Replace numbers representing the board size with private constant&nbsp;<em>SIZE</em>.</li></ul>', False);
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description, solved)
-VALUES ('Constants versus Enums', 1, 2, '2019-03-28 11:08:09.851', 6, 3, '<h2>Objective</h2><blockquote>Now that enums have been added to the language (Java 5), use them! Don’t keep using the old trick of <em>public static final int</em>s. The meaning of <em>int</em>s can get lost. The meaning of <em>enum</em>s cannot, because they belong to an enumeration that is named. What’s more, study the syntax for <em>enum</em>s carefully. They can have methods and fields. This makes them very powerful tools that allow much more expression and flexibility than <em>int</em>s.&nbsp;<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values:</p><ul><li><em>Player.W</em>&nbsp;for ''W'' instead of 0;</li><li><em>Player.B</em>&nbsp;for ''B'' instead of 1;</li><li><em>Player.NONE</em>&nbsp;for no player instead of -1.</li></ul><p>Use new <em>enum </em>for initialing the game and to print out the current state.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values.</li></ul><p><br></p><p><br></p><p><br></p>",
-', False);
+VALUES ('Constants versus Enums', 1, 2, '2019-03-28 11:08:09.851', 6, 3, '<h2>Objective</h2><blockquote>Now that enums have been added to the language (Java 5), use them! Don’t keep using the old trick of <em>public static final int</em>s. The meaning of <em>int</em>s can get lost. The meaning of <em>enum</em>s cannot, because they belong to an enumeration that is named. What’s more, study the syntax for <em>enum</em>s carefully. They can have methods and fields. This makes them very powerful tools that allow much more expression and flexibility than <em>int</em>s.&nbsp;<br><em>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values:</p><ul><li><em>Player.W</em>&nbsp;for ''W'' instead of 0;</li><li><em>Player.B</em>&nbsp;for ''B'' instead of 1;</li><li><em>Player.NONE</em>&nbsp;for no player instead of -1.</li></ul><p>Use new <em>enum </em>for initialing the game and to print out the current state.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Use&nbsp;<em>Player</em>&nbsp;<em>enum</em>&nbsp;to represent the players'' values.</li></ul><p><br></p><p><br></p><p><br></p>', False);
 
 INSERT INTO exercises (name, index, type_id, created, id, lesson_id, description, solved)
 VALUES ('Do One Thing', 2, 2, '2019-03-28 11:08:09.851', 7, 3, '<h2>Objective</h2><blockquote>Functions should do one thing. They should do it well. They should do it only. <br>So, another way to know that a function is doing more than “one thing” is if you can extract another function from it with a name that is not merely a restatement of its implementation. <em style=\"color: rgb(68, 68, 68);\"><br>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>For example, function&nbsp;<em>initGame&nbsp;</em>does not initialize game only, but also sets a player on turn, creates and fills playground, and places the tiles on it. Function&nbsp;<em>run&nbsp;</em>contains execution of the read line, which should be extracted as well. Function&nbsp;<em>move&nbsp;</em>does multiple things as well: it ends the game, finds tiles to flip, and flips them. Function&nbsp;<em>areValidMoves&nbsp;</em>gets possible moves. It also finds tiles to flip as well as&nbsp;<em>move</em>&nbsp;function with the use of duplicate code.</p><p>Make the current code way more readable and maintainable with extracting the functions from the ones, which do multiple things.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Extract function&nbsp;<em>execute&nbsp;</em>from function&nbsp;<em>run</em></li><li>Extract functions&nbsp;<em>setOnTurn</em>,&nbsp;<em>createPlayground</em>,&nbsp;<em>fillPlayground&nbsp;</em>and&nbsp;<em>setTile&nbsp;</em>from function&nbsp;<em>initGame</em></li><li>Extract function&nbsp;<em>endGame</em>,&nbsp;<em>flipTiles</em>,&nbsp;<em>getTilesToFlip&nbsp;</em>from function&nbsp;<em>move</em></li><li>Extract functions&nbsp;<em>getPossibleMoves</em>,&nbsp;<em>getTilesToFlip&nbsp;</em>from function&nbsp;<em>areValidMoves</em>.</li></ul><p><br></p>', False);
@@ -1898,6 +1897,21 @@ public class ReversiTest {
     private Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
 
 
+    // Alpha
+
+    @Test
+    public void testAlphaValueOf() {
+        assertEquals("Value of Alpha A", Alpha.A, Alpha.valueOf("A"));
+        assertEquals("Value of Alpha B", Alpha.B, Alpha.valueOf("B"));
+        assertEquals("Value of Alpha C", Alpha.C, Alpha.valueOf("C"));
+        assertEquals("Value of Alpha D", Alpha.D, Alpha.valueOf("D"));
+        assertEquals("Value of Alpha E", Alpha.E, Alpha.valueOf("E"));
+        assertEquals("Value of Alpha F", Alpha.F, Alpha.valueOf("F"));
+        assertEquals("Value of Alpha G", Alpha.G, Alpha.valueOf("G"));
+        assertEquals("Value of Alpha H", Alpha.H, Alpha.valueOf("H"));
+    }
+
+
     // readGameConfig
 
     @Test
@@ -1907,8 +1921,8 @@ public class ReversiTest {
 
         assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
         assertEquals("1st line of initial config file", "B", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "34 43", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "33 44", gameConfig[2]);
+        assertEquals("2nd line of initial config file", "E4 D5", gameConfig[1]);
+        assertEquals("3rd line of initial config file", "D4 E5", gameConfig[2]);
     }
 
     @Test
@@ -1975,15 +1989,15 @@ public class ReversiTest {
 
     @Test
     public void testInitGameInit() {
-        String[] gameConfig = new String[] {"B", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
         assertEquals("init playground on initial game config", 1, game.onTurn);
-        assertEquals("init playground on initial game config", 1, getTile(game, 3, 4));
-        assertEquals("init playground on initial game config", 1, getTile(game, 4, 3));
-        assertEquals("init playground on initial game config", 0, getTile(game, 3, 3));
-        assertEquals("init playground on initial game config", 0, getTile(game, 4, 4));
+        assertEquals("init playground on initial game config", 1, getTile(game, Alpha.E, 4));
+        assertEquals("init playground on initial game config", 1, getTile(game, Alpha.D, 5));
+        assertEquals("init playground on initial game config", 0, getTile(game, Alpha.D, 4));
+        assertEquals("init playground on initial game config", 0, getTile(game, Alpha.E, 5));
     }
 
     @Test
@@ -2035,7 +2049,7 @@ public class ReversiTest {
 
     @Test
     public void testInitTilesCountInit() {
-        String[] gameConfig = new String[] {"B", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5"};
         Reversi game = initReversi(gameConfig);
         game.initTilesCount();
 
@@ -2078,10 +2092,10 @@ public class ReversiTest {
         Reversi game = new Reversi(gameInitBStarts);
 
         assertEquals("on turn player on initial game config", 1, game.onTurn);
-        assertEquals("playground on initial game config", 0, getTile(game, 3, 3));
-        assertEquals("playground on initial game config", 1, getTile(game, 3, 4));
-        assertEquals("playground on initial game config", 1, getTile(game, 4, 3));
-        assertEquals("playground on initial game config", 0, getTile(game, 4, 4));
+        assertEquals("playground on initial game config", 0, getTile(game, Alpha.D, 4));
+        assertEquals("playground on initial game config", 1, getTile(game, Alpha.E, 4));
+        assertEquals("playground on initial game config", 1, getTile(game, Alpha.D, 5));
+        assertEquals("playground on initial game config", 0, getTile(game, Alpha.E, 5));
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
@@ -2112,6 +2126,16 @@ public class ReversiTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
+    public void testAllNum() {
+        Reversi game = new Reversi(gameAllNum);
+
+        assertArrayEquals(getEmptyPlayground(), game.playground);
+        assertEquals(1, game.onTurn);
         assertFalse(game.ended);
         assertEquals(-1, game.winner);
     }
@@ -2159,7 +2183,7 @@ public class ReversiTest {
     @Test
     public void testMoveOnNotEmpty() {
         Reversi game = new Reversi(gameInitBStarts);
-        game.move(4, 4);
+        game.move(Alpha.E,5);
 
         assertArrayEquals("check if didn''t change", getInitPlayground(), game.playground);
     }
@@ -2167,7 +2191,7 @@ public class ReversiTest {
     @Test
     public void testMoveOutOfBoundsBelow() {
         Reversi game = new Reversi(gameInitBStarts);
-        game.move(8, 0);
+        game.move(Alpha.A,9);
 
         assertArrayEquals("check if didn''t change", getInitPlayground(), game.playground);
     }
@@ -2175,7 +2199,7 @@ public class ReversiTest {
     @Test
     public void testMoveOutOfBoundsAbove() {
         Reversi game = new Reversi(gameInitBStarts);
-        game.move(-1, 0);
+        game.move(Alpha.A,0);
 
         assertArrayEquals("check if didn''t change", getInitPlayground(), game.playground);
     }
@@ -2183,7 +2207,7 @@ public class ReversiTest {
     @Test
     public void testMoveOnNotAdjacent() {
         Reversi game = new Reversi(gameInitBStarts);
-        game.move(0, 0);
+        game.move(Alpha.A,1);
 
         assertArrayEquals("check if didn''t change", getInitPlayground(), game.playground);
     }
@@ -2191,10 +2215,10 @@ public class ReversiTest {
     @Test
     public void testMoveFlipRight() {
         Reversi game = new Reversi(gameInitBStarts);
-        game.move(3, 2);
+        game.move(Alpha.C,4);
 
-        assertEquals("check if flipped", 1, getTile(game, 3, 3));
-        assertEquals("check if flipped", 1, getTile(game, 3, 2));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.D, 4));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.C, 4));
         assertEquals("on turn", 0, game.onTurn);
         assertEquals("W left", 1, game.getLeftW());
         assertEquals("B left", 4, game.getLeftB());
@@ -2203,10 +2227,10 @@ public class ReversiTest {
     @Test
     public void testMoveFlipUp() {
         Reversi game = new Reversi(gameInitBStarts);
-        game.move(5, 4);
+        game.move(Alpha.E, 6);
 
-        assertEquals("check if flipped", 1, getTile(game,4, 4));
-        assertEquals("check if flipped", 1, getTile(game, 5, 4));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.E, 5));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.E, 6));
         assertEquals("on turn", 0, game.onTurn);
         assertEquals("W left", 1, game.getLeftW());
         assertEquals("B left", 4, game.getLeftB());
@@ -2215,10 +2239,10 @@ public class ReversiTest {
     @Test
     public void testMoveFlipLeft() {
         Reversi game = new Reversi(gameInitBStarts);
-        game.move(4, 5);
+        game.move(Alpha.F, 5);
 
-        assertEquals("check if flipped", 1, getTile(game, 4, 4));
-        assertEquals("check if flipped", 1, getTile(game, 4, 5));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.E, 5));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.F, 5));
         assertEquals("on turn", 0, game.onTurn);
         assertEquals("W left", 1, game.getLeftW());
         assertEquals("B left", 4, game.getLeftB());
@@ -2227,10 +2251,10 @@ public class ReversiTest {
     @Test
     public void testMoveFlipDown() {
         Reversi game = new Reversi(gameInitBStarts);
-        game.move(2, 3);
+        game.move(Alpha.D, 3);
 
-        assertEquals("check if flipped", 1, getTile(game, 3, 3));
-        assertEquals("check if flipped", 1, getTile(game, 2, 3));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.D, 4));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.D, 3));
         assertEquals("on turn", 0, game.onTurn);
         assertEquals("W left", 1, game.getLeftW());
         assertEquals("B left", 4, game.getLeftB());
@@ -2238,14 +2262,14 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipRightUp() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(5, 4));
-        moves.add(new Pair<>(5, 3));
-        moves.add(new Pair<>(6, 2));
+        ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(Alpha.E, 6));
+        moves.add(new Pair<>(Alpha.D, 6));
+        moves.add(new Pair<>(Alpha.C, 7));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped", 1, getTile(game, 5, 3));
-        assertEquals("check if flipped", 1, getTile(game, 6, 2));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.D, 6));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.C, 7));
         assertEquals("on turn", 0, game.onTurn);
         assertEquals("W left", 2, game.getLeftW());
         assertEquals("B left", 5, game.getLeftB());
@@ -2253,13 +2277,13 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipLeftUp() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(5, 4));
-        moves.add(new Pair<>(5, 5));
+        ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(Alpha.E, 6));
+        moves.add(new Pair<>(Alpha.F, 6));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped", 0, getTile(game, 4, 4));
-        assertEquals("check if flipped", 0, getTile(game, 5, 5));
+        assertEquals("check if flipped", 0, getTile(game, Alpha.E, 5));
+        assertEquals("check if flipped", 0, getTile(game, Alpha.F, 6));
         assertEquals("on turn", 1, game.onTurn);
         assertEquals("W left", 3, game.getLeftW());
         assertEquals("B left", 3, game.getLeftB());
@@ -2267,14 +2291,14 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipLeftDown() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(2, 3));
-        moves.add(new Pair<>(2, 4));
-        moves.add(new Pair<>(1, 5));
+        ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(Alpha.D, 3));
+        moves.add(new Pair<>(Alpha.E, 3));
+        moves.add(new Pair<>(Alpha.F, 2));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped", 1, getTile(game, 2, 4));
-        assertEquals("check if flipped", 1, getTile(game, 1, 5));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.E, 3));
+        assertEquals("check if flipped", 1, getTile(game, Alpha.F, 2));
         assertEquals("on turn", 0, game.onTurn);
         assertEquals("W left", 2, game.getLeftW());
         assertEquals("B left", 5, game.getLeftB());
@@ -2282,13 +2306,13 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipRightDown() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(2, 3));
-        moves.add(new Pair<>(2, 2));
+        ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(Alpha.D, 3));
+        moves.add(new Pair<>(Alpha.C, 3));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped", 0, getTile(game, 3, 3));
-        assertEquals("check if flipped", 0, getTile(game, 2, 2));
+        assertEquals("check if flipped", 0, getTile(game, Alpha.D, 4));
+        assertEquals("check if flipped", 0, getTile(game, Alpha.C, 3));
         assertEquals("on turn", 1, game.onTurn);
         assertEquals("W left", 3, game.getLeftW());
         assertEquals("B left", 3, game.getLeftB());
@@ -2296,52 +2320,63 @@ public class ReversiTest {
 
     @Test
     public void testMoveDoubleFlip() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(2, 3));
-        moves.add(new Pair<>(2, 2));
-        moves.add(new Pair<>(3, 2));
-        moves.add(new Pair<>(2, 4));
+        ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(Alpha.D, 3));
+        moves.add(new Pair<>(Alpha.C, 3));
+        moves.add(new Pair<>(Alpha.C, 4));
+        moves.add(new Pair<>(Alpha.E, 3));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped (D,3) correctly", 0, getTile(game, 2, 3));
-        assertEquals("check if flipped (E,4) correctly", 0, getTile(game, 3, 4));
+        assertEquals("check if flipped (D,3) correctly", 0, getTile(game, Alpha.D, 3));
+        assertEquals("check if flipped (E,4) correctly", 0, getTile(game, Alpha.E, 4));
         assertEquals("W left", 5, game.getLeftW());
         assertEquals("B left", 3, game.getLeftB());
     }
 
     @Test
+    public void testMoveFinishGame() {
+        Reversi game = new Reversi(gameAlmostComplete);
+        game.move(Alpha.G, 7);
+
+        assertFalse("if the are valid moves", game.areValidMoves());
+        assertEquals("W left", 28, game.getLeftW());
+        assertEquals("B left", 36, game.getLeftB());
+        assertEquals("winner", 1, game.winner);
+    }
+
+    @Test
     public void testMovesCompleteGame() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(4, 5)); moves.add(new Pair<>(5, 3));
-        moves.add(new Pair<>(3, 2)); moves.add(new Pair<>(2, 3));
-        moves.add(new Pair<>(2, 2)); moves.add(new Pair<>(3, 5));
-        moves.add(new Pair<>(4, 2)); moves.add(new Pair<>(2, 1));
-        moves.add(new Pair<>(1, 2)); moves.add(new Pair<>(5, 4));
-        moves.add(new Pair<>(5, 2)); moves.add(new Pair<>(3, 1));
-        moves.add(new Pair<>(4, 1)); moves.add(new Pair<>(1, 3));
-        moves.add(new Pair<>(2, 4)); moves.add(new Pair<>(5, 0));
-        moves.add(new Pair<>(0, 2)); moves.add(new Pair<>(5, 1));
-        moves.add(new Pair<>(2, 5)); moves.add(new Pair<>(5, 5));
-        moves.add(new Pair<>(6, 5)); moves.add(new Pair<>(0, 4));
-        moves.add(new Pair<>(1, 4)); moves.add(new Pair<>(0, 5));
-        moves.add(new Pair<>(6, 4)); moves.add(new Pair<>(2, 6));
-        moves.add(new Pair<>(6, 2)); moves.add(new Pair<>(3, 6));
-        moves.add(new Pair<>(4, 6)); moves.add(new Pair<>(7, 3));
-        moves.add(new Pair<>(3, 7)); moves.add(new Pair<>(6, 3));
-        moves.add(new Pair<>(0, 3)); moves.add(new Pair<>(0, 1));
-        moves.add(new Pair<>(7, 1)); moves.add(new Pair<>(7, 2));
-        moves.add(new Pair<>(7, 4)); moves.add(new Pair<>(1, 5));
-        moves.add(new Pair<>(2, 7)); moves.add(new Pair<>(5, 6));
-        moves.add(new Pair<>(4, 7)); moves.add(new Pair<>(1, 6));
-        moves.add(new Pair<>(2, 0)); moves.add(new Pair<>(7, 5));
-        moves.add(new Pair<>(7, 6)); moves.add(new Pair<>(3, 0));
-        moves.add(new Pair<>(0, 7)); moves.add(new Pair<>(1, 0));
-        moves.add(new Pair<>(0, 6)); moves.add(new Pair<>(5, 7));
-        moves.add(new Pair<>(6, 1)); moves.add(new Pair<>(7, 0));
-        moves.add(new Pair<>(6, 0)); moves.add(new Pair<>(7, 7));
-        moves.add(new Pair<>(4, 0)); moves.add(new Pair<>(1, 7));
-        moves.add(new Pair<>(0, 0)); moves.add(new Pair<>(1, 1));
-        moves.add(new Pair<>(6, 7)); moves.add(new Pair<>(6, 6));
+        ArrayList<Pair<Alpha, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(Alpha.E, 6)); moves.add(new Pair<>(Alpha.F, 4));
+        moves.add(new Pair<>(Alpha.D, 3)); moves.add(new Pair<>(Alpha.C, 4));
+        moves.add(new Pair<>(Alpha.C, 3)); moves.add(new Pair<>(Alpha.D, 6));
+        moves.add(new Pair<>(Alpha.E, 3)); moves.add(new Pair<>(Alpha.C, 2));
+        moves.add(new Pair<>(Alpha.B, 3)); moves.add(new Pair<>(Alpha.F, 5));
+        moves.add(new Pair<>(Alpha.F, 3)); moves.add(new Pair<>(Alpha.D, 2));
+        moves.add(new Pair<>(Alpha.E, 2)); moves.add(new Pair<>(Alpha.B, 4));
+        moves.add(new Pair<>(Alpha.C, 5)); moves.add(new Pair<>(Alpha.F, 1));
+        moves.add(new Pair<>(Alpha.A, 3)); moves.add(new Pair<>(Alpha.F, 2));
+        moves.add(new Pair<>(Alpha.C, 6)); moves.add(new Pair<>(Alpha.F, 6));
+        moves.add(new Pair<>(Alpha.G, 6)); moves.add(new Pair<>(Alpha.A, 5));
+        moves.add(new Pair<>(Alpha.B, 5)); moves.add(new Pair<>(Alpha.A, 6));
+        moves.add(new Pair<>(Alpha.G, 5)); moves.add(new Pair<>(Alpha.C, 7));
+        moves.add(new Pair<>(Alpha.G, 3)); moves.add(new Pair<>(Alpha.D, 7));
+        moves.add(new Pair<>(Alpha.E, 7)); moves.add(new Pair<>(Alpha.H, 4));
+        moves.add(new Pair<>(Alpha.D, 8)); moves.add(new Pair<>(Alpha.G, 4));
+        moves.add(new Pair<>(Alpha.A, 4)); moves.add(new Pair<>(Alpha.A, 2));
+        moves.add(new Pair<>(Alpha.H, 2)); moves.add(new Pair<>(Alpha.H, 3));
+        moves.add(new Pair<>(Alpha.H, 5)); moves.add(new Pair<>(Alpha.B, 6));
+        moves.add(new Pair<>(Alpha.C, 8)); moves.add(new Pair<>(Alpha.F, 7));
+        moves.add(new Pair<>(Alpha.E, 8)); moves.add(new Pair<>(Alpha.B, 7));
+        moves.add(new Pair<>(Alpha.C, 1)); moves.add(new Pair<>(Alpha.H, 6));
+        moves.add(new Pair<>(Alpha.H, 7)); moves.add(new Pair<>(Alpha.D, 1));
+        moves.add(new Pair<>(Alpha.A, 8)); moves.add(new Pair<>(Alpha.B, 1));
+        moves.add(new Pair<>(Alpha.A, 7)); moves.add(new Pair<>(Alpha.F, 8));
+        moves.add(new Pair<>(Alpha.G, 2)); moves.add(new Pair<>(Alpha.H, 1));
+        moves.add(new Pair<>(Alpha.G, 1)); moves.add(new Pair<>(Alpha.H, 8));
+        moves.add(new Pair<>(Alpha.E, 1)); moves.add(new Pair<>(Alpha.B, 8));
+        moves.add(new Pair<>(Alpha.A, 1)); moves.add(new Pair<>(Alpha.B, 2));
+        moves.add(new Pair<>(Alpha.G, 8)); moves.add(new Pair<>(Alpha.G, 7));
         Reversi game = setMoves(moves);
 
         assertFalse("if the are valid moves", game.areValidMoves());
@@ -2353,15 +2388,15 @@ public class ReversiTest {
 
     // utility functions
 
-    private int getTile(Reversi game, int r0, int c0) {
-        return game.playground[r0][c0];
+    private int getTile(Reversi game, Alpha c0, int r0) {
+        return game.playground[r0-1][c0.getValue()];
     }
 
 
-    private Reversi setMoves(ArrayList<Pair<Integer, Integer>> moves) {
+    private Reversi setMoves(ArrayList<Pair<Alpha, Integer>> moves) {
         Reversi game = new Reversi(gameInitBStarts);
-        for (Pair<Integer, Integer> move  : moves) {
-            Integer r = move.getKey();
+        for (Pair<Alpha, Integer> move  : moves) {
+            Alpha r = move.getKey();
             Integer c = move.getValue();
             game.move(r, c);
         }
@@ -2403,8 +2438,7 @@ public class ReversiTest {
         init[4][3] = 1;
         return init;
     }
-}
-');
+}');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_test', 'ReversiTest.java', 4, 'import org.junit.Test;
@@ -3922,6 +3956,11 @@ VALUES ('public_source', 'Alpha.java', 6, 'public enum Alpha {
     public int getValue() {
         return value;
     }
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'Player.java', 6, 'public enum Player {
 }
 ');
 
@@ -11142,6 +11181,10 @@ VALUES ('public_source', 'IncorrectGameConfigFileException.java', 11, 'public cl
         super(message);
     }
 
+    public IncorrectGameConfigFileException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }
 ');
 
@@ -12661,6 +12704,10 @@ VALUES ('public_source', 'IncorrectGameConfigFileException.java', 12, 'public cl
 
     public IncorrectGameConfigFileException(String message) {
         super(message);
+    }
+
+    public IncorrectGameConfigFileException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

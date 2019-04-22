@@ -3,7 +3,6 @@ import { MatDialogRef, PageEvent } from '@angular/material';
 import { SolutionEstimationService } from '../../shared/solution/solution-estimation/solution-estimation.service';
 import { SolutionContent } from '../../shared/solution/solution-content/solution-content.model';
 import { SolutionItems } from '../../shared/solution/solution-items/solution-items.model';
-import { SolutionEstimation } from '../../shared/solution/solution-estimation/solution-estimation.model';
 
 @Component({
   selector: 'load-solution-dialog',

@@ -11,6 +11,7 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 export class EditorComponent implements OnInit {
 
   @Input() type: string;
+  @Input() editorOptions;
   form: FormGroup;
   dialogRef: MatDialogRef<DialogComponent>;
 

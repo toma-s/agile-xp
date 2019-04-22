@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { SolutionTest } from '../solution-test/solution-test.model';
-import { SolutionFile } from '../solution-file/solution-file.model';
-import { SolutionSource } from '../solution-source/solution-source.model';
 import { SolutionItems } from '../solution-items/solution-items.model';
 
 @Injectable({

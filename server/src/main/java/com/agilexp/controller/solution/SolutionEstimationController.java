@@ -53,9 +53,6 @@ public class SolutionEstimationController {
 
     private final StorageService storageService;
 
-    private final String PUBLIC = "Public";
-    private final String PRIVATE = "Private";
-
     @Autowired
     public SolutionEstimationController(StorageService storageService) {
         this.storageService = storageService;
@@ -93,7 +90,7 @@ public class SolutionEstimationController {
         Pair<Boolean, String> publicEstimation = estimatePublic(solutionContents, outDirPath, directoryName);
         Pair<Boolean, String> privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, directoryName);
         boolean solved = publicEstimation.getKey() && privateEstimation.getKey();
-        return new Pair<>(solved, publicEstimation.getValue() + "\n\n" + privateEstimation.getValue());
+        return new Pair<>(solved, getEstimation(publicEstimation, privateEstimation));
     }
 
     @PostMapping(value = "/solution-estimation/estimate/whitebox-file")
@@ -131,7 +128,7 @@ public class SolutionEstimationController {
         Pair<Boolean, String> publicEstimation = estimatePublic(solutionContents, outDirPath, directoryName);
         Pair<Boolean, String> privateEstimation = estimatePrivate(solutionContents, exerciseContents, outDirPath, directoryName);
         boolean solved = publicEstimation.getKey() && privateEstimation.getKey();
-        return new Pair<>(solved, publicEstimation.getValue() + "\n\n" + privateEstimation.getValue());
+        return new Pair<>(solved, getEstimation(publicEstimation, privateEstimation));
     }
 
 
@@ -148,7 +145,7 @@ public class SolutionEstimationController {
             List<Result> testResults = testPublicFiles(solutionContents, outDirPath);
             boolean solved = isSolved(testResults);
             removeTempFiles();
-            return new Pair<>(solved, getResult(testResults, PUBLIC));
+            return new Pair<>(solved, getResult(testResults));
         } catch (StorageException e) {
             e.printStackTrace();
             return new Pair<>(false, "File storing failed: \n" + e.getMessage());
@@ -187,16 +184,16 @@ public class SolutionEstimationController {
             List<Result> testResults = testPrivateFiles(exerciseContents, outDirPath);
             removeTempFiles();
             boolean solved = isSolved(testResults);
-            return new Pair<>(solved, getResult(testResults, PRIVATE));
+            return new Pair<>(solved, getResult(testResults));
         } catch (StorageException e) {
             e.printStackTrace();
-            return new Pair<>(false, "File storing failed: " + e.getMessage());
+            return new Pair<>(false, "File storing failed: \n" + e.getMessage());
         } catch (CompilationFailedException e) {
             e.printStackTrace();
-            return new Pair<>(false, "Compilation failed: " + e.getMessage());
+            return new Pair<>(false, "Compilation failed: \n" + e.getMessage());
         } catch (TestFailedException e) {
             e.printStackTrace();
-            return new Pair<>(false, "Tests run failed: " + e.getMessage());
+            return new Pair<>(false, "Tests run failed: \n" + e.getMessage());
         }
     }
 
@@ -228,7 +225,7 @@ public class SolutionEstimationController {
         }
     }
 
-    @GetMapping(value = "/solution-estimation/estimate/blackbox")
+    @PostMapping(value = "/solution-estimation/estimate/blackbox")
     public SolutionEstimation getBlackboxEstimation(@RequestBody SolutionItems solutionItems) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
@@ -290,7 +287,7 @@ public class SolutionEstimationController {
         }
     }
 
-    @GetMapping(value = "/solution-estimation/estimate/blackbox-file")
+    @PostMapping(value = "/solution-estimation/estimate/blackbox-file")
     public SolutionEstimation getSolutionTestFileEstimation(@RequestBody SolutionItems solutionItems) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
@@ -344,13 +341,13 @@ public class SolutionEstimationController {
             return new Pair<>(solved, String.format("Bugs found: %s / %s", bugsFound, bugsNum));
         } catch (StorageException e) {
             e.printStackTrace();
-            return new Pair<>(false, "File storing failed: " + e.getMessage());
+            return new Pair<>(false, "File storing failed: \n" + e.getMessage());
         } catch (CompilationFailedException e) {
             e.printStackTrace();
-            return new Pair<>(false, "Compilation failed: " + e.getMessage());
+            return new Pair<>(false, "Compilation failed: \n" + e.getMessage());
         } catch (TestFailedException e) {
             e.printStackTrace();
-            return new Pair<>(false, "Tests run failed: " + e.getMessage());
+            return new Pair<>(false, "Tests run failed: \n" + e.getMessage());
         }
     }
 
@@ -527,15 +524,11 @@ public class SolutionEstimationController {
         return solved;
     }
 
-    private String getResult(List<Result> exerciseTestsResults, String type) {
+    private String getResult(List<Result> exerciseTestsResults) {
         StringBuilder result = new StringBuilder();
-
-        result.append(type)
-            .append(" tests result:\n");
         exerciseTestsResults.forEach(exerciseTestsResult ->
             result.append(getResultInfo(exerciseTestsResult))
         );
-
         return result.toString();
     }
 
@@ -559,6 +552,13 @@ public class SolutionEstimationController {
         }
         output.append("\nIgnored count: ").append(result.getIgnoreCount());
         return output;
+    }
+
+    private String getEstimation(Pair<Boolean, String> publicEstimation, Pair<Boolean, String> privateEstimation) {
+        return "Public test result:\n" +
+                publicEstimation.getValue() +
+                "\n\nPrivate test result:\n" +
+                privateEstimation.getValue();
     }
 
     @GetMapping(value="/solution-estimation/exercise/{exerciseId}/source/{pageNumber}/{pageSize}")

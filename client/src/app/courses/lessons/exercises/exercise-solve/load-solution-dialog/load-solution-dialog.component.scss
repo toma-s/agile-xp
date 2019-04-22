@@ -2,16 +2,20 @@
 
 .solution {
   .solution__title {
-    width: 10%;
+    width: 15%;
+  }
+
+  .solution__dscription {
+    width: 85%;
   }
 
   .solution__solved--true {
-    color: $green-light;
+    color: $green-mid;
     width: 20%;
   }
 
   .solution__solved--false {
-    color: $accent-light;
+    color: $accent-mid;
     width: 20%;
   }
 
