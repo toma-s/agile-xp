@@ -85,6 +85,10 @@
         "filename": "'Alpha.java'"
       },
       {
+        "exercise_content_type": "'public_source'",
+        "filename": "'Player.java'"
+      },
+      {
         "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
