@@ -42,7 +42,7 @@ public class Reversi {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
-                if (!(line.length() == 2 && line.substring(1, 2).matches("[0-7]") &&  line.substring(0, 1).matches("[0-7]"))) {
+                if (!(line.length() == 2 && line.substring(0, 1).matches("[0-7]") &&  line.substring(1, 2).matches("[0-7]"))) {
                     System.out.println("Incorrect tile input");
                     return;
                 }
@@ -97,7 +97,7 @@ public class Reversi {
                 for (int i = 1; i < 3; i++) {
                     String[] tiles = gameConfig[i].split(" ");
                     for (String tile : tiles) {
-                        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[0-7]") &&  tile.substring(0, 1).matches("[0-7]"))) {
+                        if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
                             System.out.println("Incorrect tile input");
                             return;
                         }
@@ -295,14 +295,9 @@ public class Reversi {
     }
 
     public static void main(String[] args) {
-        String fileName = "game_init_b_starts.txt";
-//        String fileName = "game_empty.txt";
-//        String fileName = "game_one_line.txt";
-//        String fileName = "game_three_lines.txt";
-//        String fileName = "game_all_num.txt";
-//        String fileName = "game_all_alpha.txt";
+        String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config_8/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);

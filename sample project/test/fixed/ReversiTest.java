@@ -14,24 +14,25 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config_num/";
-    private Path gameComplete = new File(gameConfigDir + "game_complete.txt").toPath();
-    private Path gameAlmostComplete = new File(gameConfigDir + "game_almost_complete.txt").toPath();
+    private String gameConfigDir = "./game_config_8/";
+    private Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    private Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     private Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    private Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
-    private Path gameInitBStarts = new File(gameConfigDir + "game_init_b_starts.txt").toPath();
-    private Path gameInitWStarts = new File(gameConfigDir + "game_init_w_starts.txt").toPath();
-    private Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    private Path gameOneLine = new File(gameConfigDir + "game_one_line.txt").toPath();
     private Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    private Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
+    private Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    private Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    private Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    private Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    private Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
 
 
     // readGameConfig
 
     @Test
-    public void testReadGameConfigInit() {
+    public void testReadGameConfig8bInit() {
         Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(gameInitBStarts);
+        String[] gameConfig = game.readGameConfig(game8bInit);
 
         assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
         assertEquals("1st line of initial config file", "B", gameConfig[0]);
@@ -40,9 +41,9 @@ public class ReversiTest {
     }
 
     @Test
-    public void testReadGameConfigInitW() {
+    public void testReadGameConfig8wInit() {
         Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(gameInitWStarts);
+        String[] gameConfig = game.readGameConfig(game8wInit);
 
         assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
         assertEquals("1st line of initial config file", "W", gameConfig[0]);
@@ -59,12 +60,12 @@ public class ReversiTest {
     }
 
     @Test
-    public void testReadGameConfigOneLine() {
+    public void testReadGameConfigNotExisting() {
         Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(gameOneLine);
+        String[] gameConfig = game.readGameConfig(gameNotExisting);
 
-        assertEquals("lines number of 1-line config file", 1, gameConfig.length);
-        assertEquals("1st line of 1-line config file", "34 43", gameConfig[0]);
+        String[] expectedGameConfig = new String[]{};
+        assertArrayEquals(expectedGameConfig, gameConfig);
     }
 
     @Test
@@ -80,12 +81,33 @@ public class ReversiTest {
     }
 
     @Test
-    public void testReadGameConfigNotExisting() {
+    public void testReadGameConfigAlpha() {
         Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(gameNotExisting);
+        String[] gameConfig = game.readGameConfig(gameAlpha);
 
-        String[] expectedGameConfig = new String[]{};
-        assertArrayEquals(expectedGameConfig, gameConfig);
+        assertEquals(3, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
+        assertEquals("E4 D5", gameConfig[1]);
+        assertEquals("D4 E5", gameConfig[2]);
+    }
+
+    @Test
+    public void testReadGameConfigNoOnTurn() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(gameNoOnTurn);
+
+        assertEquals(2, gameConfig.length);
+        assertEquals("34 43", gameConfig[0]);
+        assertEquals("33 44", gameConfig[1]);
+    }
+
+    @Test
+    public void testReadGameConfigNoTiles() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(gameNoTiles);
+
+        assertEquals(1, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
     }
 
 
@@ -102,7 +124,7 @@ public class ReversiTest {
     // initGame
 
     @Test
-    public void testInitGameInit() {
+    public void testInitGame8bInit() {
         String[] gameConfig = new String[] {"B", "34 43", "33 44"};
         Reversi game = rev;
         game.initGame(gameConfig);
@@ -115,17 +137,22 @@ public class ReversiTest {
     }
 
     @Test
-    public void testInitGameNoLines() {
-        String[] gameConfig = new String[] {};
+    public void testInitGame8wInit() {
+        String[] gameConfig = new String[] {"W", "34 43", "33 44"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        assertEquals("init playground on initial game config", 0, game.onTurn);
+        assertEquals("init playground on initial game config", 1, getTile(game, 3, 4));
+        assertEquals("init playground on initial game config", 1, getTile(game, 4, 3));
+        assertEquals("init playground on initial game config", 0, getTile(game, 3, 3));
+        assertEquals("init playground on initial game config", 0, getTile(game, 4, 4));
     }
 
+
     @Test
-    public void testInitGameOneLine() {
-        String[] gameConfig = new String[] {"34 43"};
+    public void testInitGameEmpty() {
+        String[] gameConfig = new String[] {};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -142,18 +169,36 @@ public class ReversiTest {
     }
 
     @Test
-    public void testInitGameNull() {
+    public void testInitGameAlpha() {
+        String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5"};
         Reversi game = rev;
-        game.initGame(null);
+        game.initGame(gameConfig);
+
+        assertArrayEquals(getEmptyPlayground(), game.playground);
+    }
+
+    @Test
+    public void testInitGameNoOnTurn() {
+        String[] gameConfig = new String[] {"34 43", "33 44"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
 
         assertArrayEquals(null, game.playground);
     }
 
     @Test
-    public void testInitGameOnlyB() {
-        String[] gameConfig = new String[] {"B", "34 43"};
+    public void testInitGameNoTiles() {
+        String[] gameConfig = new String[] {"B"};
         Reversi game = rev;
         game.initGame(gameConfig);
+
+        assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameNull() {
+        Reversi game = rev;
+        game.initGame(null);
 
         assertArrayEquals(null, game.playground);
     }
@@ -184,7 +229,7 @@ public class ReversiTest {
 
     @Test
     public void testGetLeftB() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
 
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
     }
@@ -193,7 +238,7 @@ public class ReversiTest {
 
     @Test
     public void testGetLeftW() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
 
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
@@ -202,13 +247,26 @@ public class ReversiTest {
     // Reversi
 
     @Test
-    public void testInit() {
-        Reversi game = new Reversi(gameInitBStarts);
+    public void test8bInit() {
+        Reversi game = new Reversi(game8bInit);
 
         assertEquals("on turn player on initial game config", 1, game.onTurn);
         assertEquals("playground on initial game config", 0, getTile(game, 3, 3));
         assertEquals("playground on initial game config", 1, getTile(game, 3, 4));
         assertEquals("playground on initial game config", 1, getTile(game, 4, 3));
+        assertEquals("playground on initial game config", 0, getTile(game, 4, 4));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void test8wInit() {
+        Reversi game = new Reversi(game8wInit);
+
+        assertEquals("on turn player on initial game config", 0, game.onTurn);
+        assertEquals("playground on initial game config", 1, getTile(game, 3, 4));
+        assertEquals("playground on initial game config", 1, getTile(game, 4, 3));
+        assertEquals("playground on initial game config", 0, getTile(game, 3, 3));
         assertEquals("playground on initial game config", 0, getTile(game, 4, 4));
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
@@ -225,8 +283,8 @@ public class ReversiTest {
     }
 
     @Test
-    public void testOneLine() {
-        Reversi game = new Reversi(gameOneLine);
+    public void testNotExisting() {
+        Reversi game = new Reversi(gameNotExisting);
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
@@ -245,8 +303,27 @@ public class ReversiTest {
     }
 
     @Test
+    public void testAlpha() {
+        Reversi game = new Reversi(gameAlpha);
+
+        assertArrayEquals(getEmptyPlayground(), game.playground);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
     public void testNoOnTurn() {
         Reversi game = new Reversi(gameNoOnTurn);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(-1, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
+    public void testNoTiles() {
+        Reversi game = new Reversi(gameNoTiles);
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
@@ -259,14 +336,14 @@ public class ReversiTest {
 
     @Test
     public void testAreValidMovesInit() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
 
         assertTrue(game.areValidMoves());
     }
 
     @Test
     public void testAreValidMovesOnEnd() {
-        Reversi game = new Reversi(gameComplete);
+        Reversi game = new Reversi(game8bComplete);
 
         assertFalse(game.areValidMoves());
     }
@@ -276,7 +353,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveOnNotEmpty() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
         game.move(4, 4);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -284,7 +361,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveOutOfBoundsBelow() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
         game.move(8, 0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -292,7 +369,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveOutOfBoundsAbove() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
         game.move(-1, 0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -300,7 +377,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveOnNotAdjacent() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
         game.move(0, 0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -308,7 +385,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipRight() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
         game.move(3, 2);
 
         assertEquals("check if flipped", 1, getTile(game, 3, 3));
@@ -320,7 +397,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipUp() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
         game.move(5, 4);
 
         assertEquals("check if flipped", 1, getTile(game,4, 4));
@@ -332,7 +409,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipLeft() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
         game.move(4, 5);
 
         assertEquals("check if flipped", 1, getTile(game, 4, 4));
@@ -344,7 +421,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipDown() {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
         game.move(2, 3);
 
         assertEquals("check if flipped", 1, getTile(game, 3, 3));
@@ -429,7 +506,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveFinishGame() {
-        Reversi game = new Reversi(gameAlmostComplete);
+        Reversi game = new Reversi(game8bAlmostComplete);
         game.move(3, 4);
 
         assertFalse("if the are valid moves", game.areValidMoves());
@@ -488,7 +565,7 @@ public class ReversiTest {
 
 
     private Reversi setMoves(ArrayList<Pair<Integer, Integer>> moves) {
-        Reversi game = new Reversi(gameInitBStarts);
+        Reversi game = new Reversi(game8bInit);
         for (Pair<Integer, Integer> move  : moves) {
             Integer r = move.getKey();
             Integer c = move.getValue();

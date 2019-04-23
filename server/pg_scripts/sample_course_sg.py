@@ -8,12 +8,12 @@ class SampleCourseGenerator(ScriptGenerator):
         super().__init__()
         self.root = 'resources/sample_course'
         self.game_config = []
-        self.game_config_num = []
+        self.game_config_8 = []
 
     def make_script(self):
         super().make_script()
         self.game_config = self.get_files('game_config')
-        self.game_config_num = self.get_files('game_config_num')
+        self.game_config_8 = self.get_files('game_config_8')
         self.load_content()
 
     def get_files(self, directory) -> list:
@@ -84,8 +84,8 @@ class SampleCourseGenerator(ScriptGenerator):
             file_dir = exercise_content_data['file']
             if file_dir == 'game_config':
                 self.handle_files(exercise_id, self.game_config)
-            elif file_dir == 'game_config_num':
-                self.handle_files(exercise_id, self.game_config_num)
+            elif file_dir == 'game_config_8':
+                self.handle_files(exercise_id, self.game_config_8)
         except KeyError:
             return
 

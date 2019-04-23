@@ -28,53 +28,6 @@
     }
   ],
   "3": [
-    {
-      "name": "'Magic Numbers'",
-      "index": 0,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    },
-    {
-      "name": "'Constants versus Enums'",
-      "index": 1,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    },
-    {
-      "name": "'Do One Thing'",
-      "index": 2,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    },
-    {
-      "name": "'One Level of Abstraction per Function'",
-      "index": 3,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    },
-    {
-      "name": "'No Duplication'",
-      "index": 4,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    },
-    {
-      "name": "'Small!'",
-      "index": 5,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    },
-    {
-      "name": "'Error Handling I'",
-      "index": 6,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    },
-    {
-      "name": "'Error Handling II'",
-      "index": 7,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    }
+
   ]
 }
