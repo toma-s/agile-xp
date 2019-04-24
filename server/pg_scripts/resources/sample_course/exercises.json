@@ -2,79 +2,67 @@
   "1": [
     {
       "name": "'Intro'",
-      "index": 0,
       "type_id": 5,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "intro"
     },
     {
       "name": "'Finding the Bugs in Legacy Program'",
-      "index": 1,
       "type_id": 4,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "buggy"
     },
     {
       "name": "'Debugging the Legacy Program'",
-      "index": 2,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "fixed"
     }
   ],
   "2": [
     {
       "name": "'Adding New Feature'",
-      "index": 0,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "feature"
     }
   ],
   "3": [
     {
-      "name": "'Magic Numbers'",
-      "index": 0,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    },
-    {
       "name": "'Constants versus Enums'",
-      "index": 1,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "player"
     },
     {
       "name": "'Do One Thing'",
-      "index": 2,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "oneThing"
     },
     {
       "name": "'One Level of Abstraction per Function'",
-      "index": 3,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
-    },
-    {
-      "name": "'No Duplication'",
-      "index": 4,
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "abstrLevel"
     },
     {
       "name": "'Small!'",
-      "index": 5,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "left"
     },
     {
       "name": "'Error Handling I'",
-      "index": 6,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "fileException"
     },
     {
       "name": "'Error Handling II'",
-      "index": 7,
       "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'"
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "moveException"
     }
   ]
 }

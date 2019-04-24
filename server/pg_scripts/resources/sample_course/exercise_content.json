@@ -1,8 +1,9 @@
 [
   {
-
+    "directory": "intro"
   },
   {
+    "directory": "buggy",
     "source_test": [
       {
         "exercise_content_type": "'private_source'",
@@ -13,9 +14,10 @@
         "filename": "'ReversiTest.java'"
       }
     ],
-    "file": "game_config_num"
+    "file": "game_config_8"
   },
   {
+    "directory": "fixed",
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
@@ -30,38 +32,14 @@
         "filename": "'ReversiTest.java'"
       }
     ],
-    "file": "game_config_num"
+    "file": "game_config_8"
   },
   {
+    "directory": "feature",
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
         "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
-      },
-      {
-        "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'ReversiTest.java'"
-      }
-    ],
-    "file": "game_config"
-  },
-  {
-    "source_test": [
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
       },
       {
         "exercise_content_type": "'private_test'",
@@ -75,18 +53,11 @@
     "file": "game_config"
   },
   {
+    "directory": "player",
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
         "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Player.java'"
       },
       {
         "exercise_content_type": "'private_test'",
@@ -100,18 +71,11 @@
     "file": "game_config"
   },
   {
+    "directory": "oneThing",
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
         "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Player.java'"
       },
       {
         "exercise_content_type": "'private_test'",
@@ -125,18 +89,11 @@
     "file": "game_config"
   },
   {
+    "directory": "abstrLevel",
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
         "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Player.java'"
       },
       {
         "exercise_content_type": "'private_test'",
@@ -150,18 +107,11 @@
     "file": "game_config"
   },
   {
+    "directory": "left",
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
         "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Player.java'"
       },
       {
         "exercise_content_type": "'private_test'",
@@ -175,18 +125,11 @@
     "file": "game_config"
   },
   {
+    "directory": "fileException",
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
         "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Player.java'"
       },
       {
         "exercise_content_type": "'private_test'",
@@ -200,55 +143,11 @@
     "file": "game_config"
   },
   {
+    "directory": "moveException",
     "source_test": [
       {
         "exercise_content_type": "'public_source'",
         "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Player.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'IncorrectGameConfigFileException.java'"
-      },
-      {
-        "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'ReversiTest.java'"
-      }
-    ],
-    "file": "game_config"
-  },
-  {
-    "source_test": [
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Reversi.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Alpha.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'Player.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'IncorrectGameConfigFileException.java'"
-      },
-      {
-        "exercise_content_type": "'public_source'",
-        "filename": "'NotPermittedMoveException.java'"
       },
       {
         "exercise_content_type": "'private_test'",

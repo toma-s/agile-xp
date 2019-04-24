@@ -35,30 +35,6 @@ public class Reversi {
         }
     }
 
-    private void run() {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            String line;
-            while (!ended) {
-                printPlayground();
-                printTilesLeftCount();
-                System.out.format("Make a move. %s is on turn\n", onTurn);
-                if (winner != -1) break;
-                if ((line = reader.readLine()) == null) break;
-                if (!(line.length() == 2 && line.substring(1, 2).matches("[0-7]") &&  line.substring(0, 1).matches("[0-7]"))) {
-                    System.out.println("Incorrect tile input");
-                    return;
-                }
-                int r = Integer.parseInt(line.substring(0, 1));
-                int c = Integer.parseInt(line.substring(1, 2));
-                move(r, c);
-                reader.close();
-            }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
-        }
-    }
-
     String[] readGameConfig(Path gameFilePath) {
         String[] gameConfig = new String[] {};
         try {
@@ -76,8 +52,9 @@ public class Reversi {
             System.out.println("Game configuration is null");
             return;
         }
-        if (gameConfig.length != 3) {
-            System.out.println("Game configuration must contain 3 lines.");
+        int configFileLinesNumber = 3;
+        if (gameConfig.length != configFileLinesNumber) {
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines.");
             return;
         }
         try {
@@ -100,7 +77,7 @@ public class Reversi {
                 for (int i = 1; i < 3; i++) {
                     String[] tiles = gameConfig[i].split(" ");
                     for (String tile : tiles) {
-                        if (!(tile.length() == 2 && tile.substring(1, 2).matches("[0-7]") &&  tile.substring(0, 1).matches("[0-7]"))) {
+                        if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
                             System.out.println("Incorrect tile input");
                             return;
                         }
@@ -133,6 +110,30 @@ public class Reversi {
         }
     }
 
+    private void run() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String line;
+            while (!ended) {
+                printPlayground();
+                printTilesLeftCount();
+                System.out.format("Make a move. %s is on turn\n", onTurn);
+                if (winner != -1) break;
+                if ((line = reader.readLine()) == null) break;
+                if (!(line.length() == 2 && line.substring(0, 1).matches("[0-7]") &&  line.substring(1, 2).matches("[0-7]"))) {
+                    System.out.println("Incorrect tile input");
+                    return;
+                }
+                int r = Integer.parseInt(line.substring(0, 1));
+                int c = Integer.parseInt(line.substring(1, 2));
+                move(r, c);
+                reader.close();
+            }
+        } catch (Exception e) {
+            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        }
+    }
+
     private void printPlayground() {
         System.out.println("  0 1 2 3 4 5 6 7");
         for (int r = 0; r < 8; r++) {
@@ -161,22 +162,15 @@ public class Reversi {
         return leftW;
     }
 
-    void move(int r0, int c0) {
-        int r = r0;
-        int c = c0;
-
-//        if (! switcher.BUGS[0]) {
-            if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
-                System.out.println("Move out of bounds is not permitted");
-                return;
-            }
-//        }
-//        if (! switcher.BUGS[1]) {
-            if (playground[r][c] != -1) {
-                System.out.println("Move on not empty tile is not permitted");
-                return;
-            }
-//        }
+    void move(int r, int c) {
+        if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
+            System.out.println("Move out of bounds is not permitted");
+            return;
+        }
+        if (playground[r][c] != -1) {
+            System.out.println("Move on not empty tile is not permitted");
+            return;
+        }
 
         if (winner != -1) {
             System.out.println("The game is over. No moves are permitted");
@@ -198,6 +192,7 @@ public class Reversi {
             if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
+            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];
@@ -302,14 +297,9 @@ public class Reversi {
     }
 
     public static void main(String[] args) {
-        String fileName = "game_init_b_starts.txt";
-//        String fileName = "game_empty.txt";
-//        String fileName = "game_one_line.txt";
-//        String fileName = "game_three_lines.txt";
-//        String fileName = "game_all_num.txt";
-//        String fileName = "game_all_alpha.txt";
+        String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config_num/" + fileName);
+        File gameFile = new File("./game_config_8/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);

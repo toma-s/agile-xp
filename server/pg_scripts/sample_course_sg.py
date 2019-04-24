@@ -8,12 +8,12 @@ class SampleCourseGenerator(ScriptGenerator):
         super().__init__()
         self.root = 'resources/sample_course'
         self.game_config = []
-        self.game_config_num = []
+        self.game_config_8 = []
 
     def make_script(self):
         super().make_script()
         self.game_config = self.get_files('game_config')
-        self.game_config_num = self.get_files('game_config_num')
+        self.game_config_8 = self.get_files('game_config_8')
         self.load_content()
 
     def get_files(self, directory) -> list:
@@ -46,12 +46,16 @@ class SampleCourseGenerator(ScriptGenerator):
 
         exercises_data = self.read_json_file('%s/exercises.json' % self.root)
         for lesson_id, exercises in exercises_data.items():
+            exercise_index_counter = 0
             for exercise in exercises:
                 exercise_id_counter += 1
                 exercise['id'] = exercise_id_counter
+                exercise['index'] = exercise_index_counter
+                exercise_index_counter += 1
                 exercise['lesson_id'] = int(lesson_id)
-                exercise['description'] = self.read_description(exercise_id_counter)
+                exercise['description'] = self.read_description(exercise['directory'])
                 exercise['solved'] = False
+                exercise.pop('directory')
                 self.append_to_script(self.get_insert('exercises', **exercise))
 
         bugs_number_data = self.read_json_file('%s/bugs_number.json' % self.root)
@@ -67,27 +71,23 @@ class SampleCourseGenerator(ScriptGenerator):
             exercise_content = exercise_content_data[i]
             self.handle_exercise_content(exercise_content, i + 1)
 
-    def read_description(self, exercise_id):
-        try:
-            filename = '%s/exercise_contents/%s/description/description.txt' % (self.root, exercise_id)
-            return self.quotify(self.read_text_file(filename).replace('\\n', '<br>').replace("'", "''"))
-        except FileNotFoundError:
-            return "'todo'"
+    def read_description(self, directory_name):
+        filename = '%s/exercise_contents/%s/description/description.txt' % (self.root, directory_name)
+        return self.quotify(self.read_text_file(filename).replace('\\n', '<br>').replace("'", "''"))
 
     def handle_exercise_content(self, exercise_content_data, exercise_id):
-        try:
-            source_test = exercise_content_data['source_test']
-            for exercise_content in source_test:
-                exercise_content['exercise_id'] = int(exercise_id)
-                exercise_content['content'] = self.read_exercise_content(exercise_content)
-                self.append_to_script(self.get_insert('exercise_content', **exercise_content))
-            file_dir = exercise_content_data['file']
-            if file_dir == 'game_config':
-                self.handle_files(exercise_id, self.game_config)
-            elif file_dir == 'game_config_num':
-                self.handle_files(exercise_id, self.game_config_num)
-        except KeyError:
+        if 'source_test' not in exercise_content_data.keys():
             return
+        source_test = exercise_content_data['source_test']
+        for exercise_content in source_test:
+            exercise_content['exercise_id'] = int(exercise_id)
+            exercise_content['content'] = self.read_exercise_content(exercise_content, exercise_content_data['directory'])
+            self.append_to_script(self.get_insert('exercise_content', **exercise_content))
+        file_dir = exercise_content_data['file']
+        if file_dir == 'game_config':
+            self.handle_files(exercise_id, self.game_config)
+        elif file_dir == 'game_config_8':
+            self.handle_files(exercise_id, self.game_config_8)
 
     def handle_files(self, exercise_id, files):
         for file in files:
@@ -100,10 +100,10 @@ class SampleCourseGenerator(ScriptGenerator):
         with open(self.script_filename, mode='a', encoding='UTF-8') as script_file:
             script_file.write(content)
 
-    def read_exercise_content(self, exercise_content):
+    def read_exercise_content(self, exercise_content, directory_name):
         content = self.read_text_file('%s/exercise_contents/%s/%s/%s' % (
             self.root,
-            exercise_content['exercise_id'],
+            directory_name,
             exercise_content['exercise_content_type'][1:-1],
             exercise_content['filename'][1:-1]))
         return self.quotify(content.replace("'", "''"))
