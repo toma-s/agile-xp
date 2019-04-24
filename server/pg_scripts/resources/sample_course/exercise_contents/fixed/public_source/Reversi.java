@@ -1,5 +1,3 @@
-package fixed;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -80,8 +78,8 @@ public class Reversi {
                             System.out.println("Incorrect tile input");
                             return;
                         }
-                        int r = Integer.parseInt(tile.substring(0, 1));
-                        int c = Integer.parseInt(tile.substring(1, 2));
+                        int r = Integer.parseInt(tile.substring(1, 2));
+                        int c = Integer.parseInt(tile.substring(0, 1));
                         playground[r][c] = players[i - 1];
                     }
                 }
@@ -162,14 +160,6 @@ public class Reversi {
     }
 
     void move(int r, int c) {
-        if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
-            System.out.println("Move out of bounds is not permitted");
-            return;
-        }
-        if (playground[r][c] != -1) {
-            System.out.println("Move on not empty tile is not permitted");
-            return;
-        }
         if (winner != -1) {
             System.out.println("The game is over. No moves are permitted");
             return;
@@ -190,7 +180,6 @@ public class Reversi {
             if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
-            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];

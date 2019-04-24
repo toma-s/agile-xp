@@ -1,5 +1,3 @@
-package fixed;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +18,8 @@ public class Reversi {
     int winner = -1;
     boolean ended = false;
 
+    private BlackBoxSwitcher switcher = new BlackBoxSwitcher();
+
     Reversi() {
     }
 
@@ -31,6 +31,30 @@ public class Reversi {
         } catch (Exception e) {
             ended = true;
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void run() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String line;
+            while (!ended) {
+                printPlayground();
+                printTilesLeftCount();
+                System.out.format("Make a move. %s is on turn\n", onTurn);
+                if (winner != -1) break;
+                if ((line = reader.readLine()) == null) break;
+                if (!(line.length() == 2 && line.substring(0, 1).matches("[0-7]") &&  line.substring(1, 2).matches("[0-7]"))) {
+                    System.out.println("Incorrect tile input");
+                    return;
+                }
+                int r = Integer.parseInt(line.substring(0, 1));
+                int c = Integer.parseInt(line.substring(1, 2));
+                move(r, c);
+                reader.close();
+            }
+        } catch (Exception e) {
+            System.out.println("IO exception occurred on reading input: " + e.getMessage());
         }
     }
 
@@ -80,8 +104,8 @@ public class Reversi {
                             System.out.println("Incorrect tile input");
                             return;
                         }
-                        int r = Integer.parseInt(tile.substring(0, 1));
-                        int c = Integer.parseInt(tile.substring(1, 2));
+                        int r = Integer.parseInt(tile.substring(1, 2));
+                        int c = Integer.parseInt(tile.substring(0, 1));
                         playground[r][c] = players[i - 1];
                     }
                 }
@@ -106,30 +130,6 @@ public class Reversi {
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
             System.out.println("Playground  is not valid" + e.getMessage());
-        }
-    }
-
-    private void run() {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            String line;
-            while (!ended) {
-                printPlayground();
-                printTilesLeftCount();
-                System.out.format("Make a move. %s is on turn\n", onTurn);
-                if (winner != -1) break;
-                if ((line = reader.readLine()) == null) break;
-                if (!(line.length() == 2 && line.substring(0, 1).matches("[0-7]") &&  line.substring(1, 2).matches("[0-7]"))) {
-                    System.out.println("Incorrect tile input");
-                    return;
-                }
-                int r = Integer.parseInt(line.substring(0, 1));
-                int c = Integer.parseInt(line.substring(1, 2));
-                move(r, c);
-                reader.close();
-            }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
         }
     }
 
@@ -162,13 +162,17 @@ public class Reversi {
     }
 
     void move(int r, int c) {
-        if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
-            System.out.println("Move out of bounds is not permitted");
-            return;
+        if (! switcher.BUGS[0]) {
+            if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
+                System.out.println("Move out of bounds is not permitted");
+                return;
+            }
         }
-        if (playground[r][c] != -1) {
-            System.out.println("Move on not empty tile is not permitted");
-            return;
+        if (! switcher.BUGS[1]) {
+            if (playground[r][c] != -1) {
+                System.out.println("Move on not empty tile is not permitted");
+                return;
+            }
         }
         if (winner != -1) {
             System.out.println("The game is over. No moves are permitted");
@@ -190,7 +194,9 @@ public class Reversi {
             if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
-            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
+            if (! switcher.BUGS[2]) {
+                if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
+            }
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];
