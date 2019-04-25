@@ -1,4 +1,4 @@
-<a mat-button color="primary" routerLink="../courses" routerLinkActive="active" mat-button>Back</a>
+<a mat-button color="primary" routerLink="../" routerLinkActive="active" mat-button>Back</a>
 
 <div *ngIf="submitted; then success; else form"></div>
 
@@ -7,7 +7,7 @@
     <div class="mat-elevation-z2 card">
       <div class="form">
 
-        <h2>Create new course</h2>
+        <h2>{{ this.mode }} course</h2>
 
         <mat-form-field>
           <input matInput placeholder="Title" required name="course-name" [(ngModel)]="course.name" maxlength="35">
@@ -32,6 +32,11 @@
 
 <ng-template #success>
   <div class="mat-elevation-z2 card">
-    <p class="response">You have created course successfully!</p>
+    <p class="response">Course was saved successfully!</p>
+    <div *ngIf="mode === 'create'">
+      <button mat-button color="accent" class="submit__button" type="button" (click)="reset()">
+        Create new course
+      </button>
+    </div>
   </div>
 </ng-template>

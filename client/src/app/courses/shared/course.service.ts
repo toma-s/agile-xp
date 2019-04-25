@@ -29,7 +29,7 @@ export class CourseService {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text'});
   }
 
-  deleteAll(): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/delete`, { responseType: 'text'});
+  updateCourse(id: number, value: any): Observable<Object> {
+    return this.http.put(`${this.baseUrl}/${id}`, value);
   }
 }

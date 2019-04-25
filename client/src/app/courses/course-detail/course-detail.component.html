@@ -8,7 +8,7 @@
 
   <p><strong>Description: </strong>{{ course.description }}</p>
 
-  <div *ngIf="lessons">
+  <div *ngIf="lessons" class="lessons">
 
     <h2>Syllabus</h2>
 
@@ -47,9 +47,24 @@
 
       </mat-expansion-panel>
     </mat-accordion>
-
   </div>
 
+  <div class="link">
+    <a [routerLink]="['edit']" routerLinkActive="active">
+      <div class="link__content">
+        <button mat-button type="button" mat-stroked-button color="primary">
+          Edit course
+        </button>
+      </div>
+    </a>
+    <!-- <a routerLink="../lessonCreate" routerLinkActive="active">
+      <div class="link__content">
+        <button mat-button type="button" mat-stroked-button color="primary">
+          Add lesson
+        </button>
+      </div>
+    </a> -->
+  </div>
 
 
 </div>

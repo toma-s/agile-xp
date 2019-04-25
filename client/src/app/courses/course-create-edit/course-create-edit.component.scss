@@ -4,6 +4,10 @@
   .form {
     padding: 20px;
 
+    h2 {
+      text-transform: capitalize;
+    }
+
     .mat-form-field {
         display: flex;
         flex-direction: column;
@@ -11,16 +15,16 @@
       }
   }
 
-  .submit {
-    .submit__button {
-      font-size: 1.3em;
-      padding: 10px;
-      text-align: center;
-      width: 100%;
-    }
+  .submit__button {
+    font-size: 1.3em;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+
   }
 
   .response {
+    text-align: center;
     padding: 20px;
   }
 }
