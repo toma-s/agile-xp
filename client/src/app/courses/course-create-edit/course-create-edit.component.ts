@@ -109,5 +109,6 @@ export class CourseCreateEditComponent implements OnInit {
   reset() {
     this.course = new Course();
     this.submitted = false;
+    this.createForm();
   }
 }

@@ -15,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -54,6 +55,7 @@ const quillConfig = {
     MatTabsModule,
     MatDialogModule,
     MatDividerModule,
+    MatPaginatorModule,
     CoursesModule,
     MonacoEditorModule.forRoot(),
     QuillModule.forRoot(quillConfig),

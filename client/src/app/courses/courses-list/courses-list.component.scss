@@ -1,17 +1,21 @@
 @import "src/variables.scss";
 
-mat-header-cell, mat-cell {
-  display: flex;
-  justify-content: center;
+.table {
+  margin: 20px 0;
+
+  mat-header-cell {
+    font-size: 1em;
+  }
+  
+  mat-row:hover {
+    background-color: $grey-light;
+    cursor: pointer;
+  }
 }
 
-.mat-column-id {
-  width: 10% !important;
-}
-
-mat-row:hover {
-  background-color: $grey-light;
-  cursor: pointer;
+.paginator {
+  width: 50%;
+  float: right;
 }
 
 .link {
