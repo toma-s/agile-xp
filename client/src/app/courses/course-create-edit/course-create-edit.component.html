@@ -3,26 +3,25 @@
 <div *ngIf="submitted; then success; else form"></div>
 
 <ng-template #form>
-  <form (ngSubmit)="submit()">
+  <form *ngIf="courseForm" (ngSubmit)="submit()" [formGroup]="courseForm">
     <div class="mat-elevation-z2 card">
       <div class="form">
 
         <h2>{{ this.mode }} course</h2>
 
         <mat-form-field>
-          <input matInput placeholder="Title" required name="course-name" [(ngModel)]="course.name" maxlength="35">
+          <input matInput placeholder="Title" formControlName="name" maxlength="50">
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput placeholder="Description" rows="6" required name="course-description"
-            [(ngModel)]="course.description" maxlength="300">
-  </textarea>
+          <textarea matInput placeholder="Description" rows="6" formControlName="description" maxlength="500">
+          </textarea>
         </mat-form-field>
       </div>
     </div>
     <div class="mat-elevation-z2 card">
       <div class="submit">
-        <button mat-button color="accent" class="submit__button" type="submit">
+        <button mat-button color="accent" class="submit__button" type="submit" [disabled]="!courseForm.valid">
           Submit
         </button>
       </div>
