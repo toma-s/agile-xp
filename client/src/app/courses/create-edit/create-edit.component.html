@@ -1,13 +1,13 @@
-<a mat-button color="primary" routerLink="../" routerLinkActive="active" mat-button>Back</a>
+<a mat-button color="primary" routerLink="../../" routerLinkActive="active" mat-button>Back</a>
 
 <div *ngIf="submitted; then success; else form"></div>
 
 <ng-template #form>
-  <form *ngIf="courseForm" (ngSubmit)="submit()" [formGroup]="courseForm">
+  <form *ngIf="dataForm" (ngSubmit)="submit()" [formGroup]="dataForm">
     <div class="mat-elevation-z2 card">
       <div class="form">
 
-        <h2>{{ this.mode }} course</h2>
+        <h2>{{ title }}</h2>
 
         <mat-form-field>
           <input matInput placeholder="Title" formControlName="name" maxlength="50">
@@ -21,7 +21,7 @@
     </div>
     <div class="mat-elevation-z2 card">
       <div class="submit">
-        <button mat-button color="accent" class="submit__button" type="submit" [disabled]="!courseForm.valid">
+        <button mat-button color="accent" class="submit__button" type="submit" [disabled]="!dataForm.valid">
           Submit
         </button>
       </div>
@@ -31,10 +31,10 @@
 
 <ng-template #success>
   <div class="mat-elevation-z2 card">
-    <p class="response">Course was saved successfully!</p>
+    <p class="response"><span class="capitalise">{{ this.module }}</span> was saved successfully</p>
     <div *ngIf="mode === 'create'">
       <button mat-button color="accent" class="submit__button" type="button" (click)="reset()">
-        Create new course
+        Create new {{ this.module }}
       </button>
     </div>
   </div>

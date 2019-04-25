@@ -11,7 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { CoursesRoutingModule } from './courses-routing.module';
-import { CourseCreateEditComponent } from './course-create-edit/course-create-edit.component';
+import { CreateEditComponent } from './create-edit/create-edit.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { LessonsModule } from './lessons/lessons.module';
@@ -19,7 +19,7 @@ import { LessonsModule } from './lessons/lessons.module';
 
 @NgModule({
   declarations: [
-    CourseCreateEditComponent,
+    CreateEditComponent,
     CoursesListComponent,
     CourseDetailComponent
   ],

@@ -10,7 +10,7 @@
     <p><strong>Description: </strong>{{ course.description }}</p>
 
     <div>
-      <a [routerLink]="['edit']" routerLinkActive="active">
+      <a [routerLink]="['course', 'edit']" routerLinkActive="active">
         <button mat-button type="button" mat-stroked-button color="primary">
           Edit course
         </button>
@@ -60,7 +60,7 @@
     </div>
 
     <div>
-      <a routerLink="../lessonCreate" routerLinkActive="active">
+      <a [routerLink]="['lesson', 'create']" routerLinkActive="active">
         <button mat-button type="button" mat-stroked-button color="primary">
           Add lesson
         </button>
