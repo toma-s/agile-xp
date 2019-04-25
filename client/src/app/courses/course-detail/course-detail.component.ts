@@ -23,6 +23,7 @@ export class CourseDetailComponent implements OnInit {
   lessons: Array<Lesson>;
   exercises: Map<number, Array<Exercise>>;
   exerciseTypes: Array<ExerciseType>;
+  wasDeleted = false;
 
   constructor(
     private titleService: Title,
@@ -121,7 +122,18 @@ export class CourseDetailComponent implements OnInit {
     return this.exerciseTypes.filter(et => et.id === typeId)[0].name;
   }
 
-  delete(lesson: Lesson) {
+
+  deleteCourse() {
+    this.courseService.deleteCourse(this.course.id).subscribe(
+      data => {
+        console.log(data);
+        this.wasDeleted = true;
+      },
+      error => console.log(error)
+    );
+  }
+
+  deleteLesson(lesson: Lesson) {
     this.lessonService.deleteLesson(lesson.id).subscribe(
       data => {
         this.setLessons();
@@ -129,5 +141,6 @@ export class CourseDetailComponent implements OnInit {
       error => console.log(error)
     );
   }
+
 
 }

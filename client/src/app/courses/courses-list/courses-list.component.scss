@@ -17,23 +17,3 @@
   width: 50%;
   float: right;
 }
-
-.link {
-  width: 20%;
-  margin: 20px 0;
-  float: left;
-
-  .link__icon {
-    display: inline-block;
-    height: 100%;
-    font-size: 32px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .link__content button {
-    width: 100%;
-  }
-}
