@@ -38,9 +38,9 @@
       <mat-header-cell *matHeaderCellDef>
         Delete
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <button mat-icon-button color="warn">
-          <mat-icon (click)="delete(row)">delete</mat-icon>
+      <mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
+        <button mat-icon-button color="warn" (click)="delete(row)">
+          <mat-icon>delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
@@ -56,7 +56,6 @@
   <a routerLink="../courseCreate" routerLinkActive="active">
     <div class="link__content">
       <button mat-button type="button" mat-stroked-button color="primary">
-        <!-- <mat-icon class="link__icon">add</mat-icon> -->
         Create course
       </button>
     </div>
