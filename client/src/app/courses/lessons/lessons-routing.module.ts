@@ -5,7 +5,6 @@ import { ExerciseCreateComponent } from './exercises/exercise-create/exercise-cr
 
 const routes: Routes = [
   {path: '../../', component: CoursesListComponent},
-  {path: 'courseDetail/:courseId/lessonEdit/:lessonId/exerciseCreate/:index', component: ExerciseCreateComponent}
 ];
 
 @NgModule({

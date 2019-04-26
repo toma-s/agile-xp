@@ -1,0 +1,35 @@
+<a mat-button color="primary" routerLink="../../.." routerLinkActive="active" mat-button>Back</a>
+
+<div class="mat-elevation-z2 card">
+
+  <div *ngIf="lesson">
+
+    <h2>Manage lesson exercises</h2>
+
+    <p><strong>Title: </strong>{{lesson.name}}</p>
+
+    <p><strong>Description: </strong>{{lesson.description}}</p>
+
+    <div *ngIf="index">
+
+      <h3>Exercises:</h3>
+
+      <div cdkDropList class="droplist__list" (cdkDropListDropped)="drop($event)">
+        <div class="droplist__box" *ngFor="let exercise of exercises" cdkDrag>
+          <div class="droplist__content">
+            <p class="droplist__name">{{exercise.name}}</p>
+            <button class="droplist__button" mat-raised-button color="primary" (click)="deleteExercise(lesson)">Delete exercise (todo)</button>
+            <button class="droplist__button" mat-raised-button color="primary" [routerLink]="[lesson.id, 'lesson', 'edit']"
+              routerLinkActive="active">Edit exercise (todo)</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button mat-raised-button color="primary" [routerLink]="['create', index]" routerLinkActive="active">
+      Add exercise
+    </button>
+
+  </div>
+</div>

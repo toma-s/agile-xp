@@ -55,7 +55,7 @@
 
           <button mat-raised-button color="primary" (click)="deleteLesson(lesson)">Delete lesson</button>
 
-          <button mat-raised-button color="primary" [routerLink]="['manageExercises', lesson.id]"
+          <button mat-raised-button color="primary" [routerLink]="[lesson.id, 'exercises', 'manage']"
             routerLinkActive="active">
             Manage exercises (todo)
           </button>
