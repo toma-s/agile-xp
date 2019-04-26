@@ -1,5 +1,9 @@
 .card {
   padding: 20px;
+
+  h2 {
+    text-transform: capitalize;
+  }
 }
 
 .droplist__list {

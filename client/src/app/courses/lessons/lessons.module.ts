@@ -10,17 +10,16 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
-import { LessonEditComponent } from './lesson-edit/lesson-edit.component';
 import { LessonsRoutingModule } from './lessons-routing.module';
 import { ExercisesModule } from './exercises/exercises.module';
-import { LessonCreateComponent } from './lesson-create/lesson-create.component';
-import { ManageComponent } from './manage/manage.component';
+import { ManageLessonsComponent } from './manage/manage-lessons/manage-lessons.component';
+import { ManageExercisesComponent } from './manage/manage-exercises/manage-exercises.component';
+
 
 @NgModule({
   declarations: [
-    LessonEditComponent,
-    LessonCreateComponent,
-    ManageComponent
+    ManageLessonsComponent,
+    ManageExercisesComponent
   ],
   imports: [
     CommonModule,

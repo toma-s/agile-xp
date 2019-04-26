@@ -1,108 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-import { LessonService } from '../shared/lesson.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { ExerciseService } from '../exercises/shared/exercise/exercise/exercise.service';
-import { Lesson } from '../shared/lesson.model';
-import { Exercise } from '../exercises/shared/exercise/exercise/exercise.model';
+import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { forkJoin } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-manage',
-  templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.scss']
+  selector: 'app-manage'
 })
-export class ManageComponent implements OnInit {
+export abstract class ManageComponent implements OnInit {
 
-  lesson: Lesson;
-  exercises: Array<Exercise>;
+  protected abstract module: string;
+  protected abstract routerLink: string;
+  protected abstract parent;
+  protected abstract content;
+  protected abstract parentName;
+  protected abstract contentName;
   index: number;
 
   constructor(
-    private titleService: Title,
-    private lessonServise: LessonService,
-    private exerciseService: ExerciseService,
-    private route: ActivatedRoute
+    protected titleService: Title,
+    protected route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.setTitle();
-    this.getLessonByIdParam();
+    this.setNames();
+    this.load();
+  }
+
+  async load() {
+    await this.readParams();
+    await this.getContent();
+    this.getIndex();
   }
 
   setTitle() {
-    this.titleService.setTitle(`Edit lesson | AgileXP`);
+    this.titleService.setTitle(`Manage ${this.module} | AgileXP`);
   }
 
-  getLessonByIdParam() {
-    const lesson$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.lessonServise.getLessonById(Number(params.get('lessonId')))
-      )
-    );
-    lesson$
-      .subscribe(
-        data => {
-          console.log(data);
-          this.lesson = data;
-          this.getExercises();
-        },
-        error => console.log(error)
-      );
-  }
+  protected abstract setNames();
 
-  getExercises() {
-    this.exerciseService.getExercisesByLessonId(this.lesson.id)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.exercises = data;
-          this.getIndex();
-        },
-        error => console.log(error)
-      );
-  }
+  protected abstract async readParams();
+
+  protected abstract async getContent();
 
   getIndex() {
-    this.index = this.exercises.length;
-    console.log(this.index);
+    this.index = this.content.length;
   }
 
+
   drop(event: CdkDragDrop<string[]>) {
-    const newExercisesArray = Object.assign([], this.exercises);
-    moveItemInArray(this.exercises, event.previousIndex, event.currentIndex);
+    const newExercisesArray = Object.assign([], this.content);
+    moveItemInArray(this.content, event.previousIndex, event.currentIndex);
     this.reorder(newExercisesArray);
   }
 
-  reorder(newExercisesArray) {
-    const observables = [];
-    for (let i = 0; i < this.exercises.length; i++) {
-      this.exercises[i].index = i;
-      observables.push(
-        this.exerciseService.updateExercise(this.exercises[i].id, this.exercises[i])
-      );
-    }
-    forkJoin(observables).subscribe(
-      data => {
-        console.log(data);
-      },
-      error => {
-        console.log(error);
-        this.exercises = Object.assign([], newExercisesArray);
-      }
-    );
-  }
+  protected abstract reorder(newExercisesArray);
 
-  deleteExercise(exerciseId) {
-    this.exerciseService.deleteExercise(exerciseId).subscribe(
-      data => {
-        console.log(data);
-        this.getLessonByIdParam();
-      },
-      error => console.log(error)
-    );
-  }
+  protected abstract delete(id);
 
 }

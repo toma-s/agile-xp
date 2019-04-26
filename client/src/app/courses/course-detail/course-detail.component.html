@@ -10,14 +10,19 @@
     <p><strong>Description: </strong>{{ course.description }}</p>
 
     <div>
-      <a [routerLink]="['course', 'edit']" routerLinkActive="active">
-        <button mat-button type="button" mat-stroked-button color="primary">
+      <a [routerLink]="['edit', 'course']" routerLinkActive="active">
+        <button mat-raised-button type="button" color="primary">
           Edit course
         </button>
       </a>
-      <button mat-button type="button" mat-stroked-button color="primary" (click)="deleteCourse()">
+      <button mat-raised-button type="button" color="primary" (click)="deleteCourse()">
         Delete course
       </button>
+      <a [routerLink]="['manageLessons']" routerLinkActive="active">
+        <button mat-raised-button type="button" color="primary">
+          Manage lessons
+        </button>
+      </a>
     </div>
 
     <div *ngIf="lessons" class="lessons">
@@ -50,26 +55,16 @@
             </mat-list-item>
           </mat-nav-list>
 
-          <button mat-raised-button color="primary" [routerLink]="[lesson.id, 'lesson', 'edit']"
-            routerLinkActive="active">Edit lesson</button>
+          <!-- <button mat-raised-button color="primary" [routerLink]="[lesson.id, 'lesson', 'edit']"
+            routerLinkActive="active">Edit lesson</button> -->
 
-          <button mat-raised-button color="primary" (click)="deleteLesson(lesson)">Delete lesson</button>
+          <!-- <button mat-raised-button color="primary" (click)="deleteLesson(lesson)">Delete lesson</button> -->
 
-          <button mat-raised-button color="primary" [routerLink]="[lesson.id, 'exercises', 'manage']"
-            routerLinkActive="active">
-            Manage exercises (todo)
-          </button>
+          <button mat-raised-button color="primary" [routerLink]="[lesson.id, 'manageExercises']"
+            routerLinkActive="active">Manage exercises</button>
 
         </mat-expansion-panel>
       </mat-accordion>
-    </div>
-
-    <div>
-      <a [routerLink]="['lesson', 'create']" routerLinkActive="active">
-        <button mat-button type="button" mat-stroked-button color="primary">
-          Add lesson
-        </button>
-      </a>
     </div>
   </div>
 </ng-template>

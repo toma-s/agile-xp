@@ -4,11 +4,11 @@
 <div *ngIf="submitted; then success; else form"></div>
 
 <ng-template #form>
-  <form *ngIf="dataForm" (ngSubmit)="submit()" [formGroup]="dataForm">
+  <form *ngIf="formGroup" (ngSubmit)="submit()" [formGroup]="formGroup">
     <div class="mat-elevation-z2 card">
       <div class="form">
 
-        <h2>{{ title }}</h2>
+        <h1>{{ title }}</h1>
 
         <mat-form-field>
           <input matInput placeholder="Title" formControlName="name" maxlength="50">
@@ -22,7 +22,7 @@
     </div>
     <div class="mat-elevation-z2 card">
       <div class="submit">
-        <button mat-button color="accent" class="submit__button" type="submit" [disabled]="!dataForm.valid">
+        <button mat-button color="accent" class="submit__button" type="submit" [disabled]="!formGroup.valid">
           Submit
         </button>
       </div>
