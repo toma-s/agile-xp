@@ -30,6 +30,8 @@ import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor
 import { ErrorComponent } from './exercise-create/error/error.component';
 import { LoadSolutionDialogComponent } from './exercise-solve/load-solution-dialog/load-solution-dialog.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ExerciseEditComponent } from './exercise-edit/exercise-edit.component';
+import { ExerciseUpsertComponent } from './exercise-upsert/exercise-upsert.component';
 
 @NgModule({
   entryComponents: [
@@ -49,7 +51,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     EditorComponent,
     SolveEditorComponent,
     ErrorComponent,
-    LoadSolutionDialogComponent
+    LoadSolutionDialogComponent,
+    ExerciseEditComponent,
+    ExerciseUpsertComponent
   ],
   imports: [
     CommonModule,

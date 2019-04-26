@@ -10,6 +10,7 @@ import { CreateLessonComponent } from './upsert/create-lesson/create-lesson.comp
 import { CreateCourseComponent } from './upsert/create-course/create-course.component';
 import { EditCourseComponent } from './upsert/edit-course/edit-course.component';
 import { EditLessonComponent } from './upsert/edit-lesson/edit-lesson.component';
+import { ExerciseEditComponent } from './lessons/exercises/exercise-edit/exercise-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full'},
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'courseDetail/:courseId/manageLessons/:lessonId/edit/lesson', component: EditLessonComponent},
   { path: 'courseDetail/:courseId/manageLessons', component: ManageLessonsComponent},
   { path: 'courseDetail/:courseId/:lessonId/manageExercises/create/exercise/:index', component: ExerciseCreateComponent},
+  { path: 'courseDetail/:courseId/:lessonId/manageExercises/:index/edit/exercise', component: ExerciseEditComponent},
   { path: 'courseDetail/:courseId/:lessonId/manageExercises', component: ManageExercisesComponent},
   { path: 'courseDetail/:courseId/lesson/:lessonId/exerciseSolve/:exerciseId', component: ExerciseSolveComponent},
   { path: '../', redirectTo: 'courses' }

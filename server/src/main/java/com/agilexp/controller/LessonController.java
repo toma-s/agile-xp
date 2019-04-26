@@ -24,8 +24,12 @@ public class LessonController {
     public Lesson postCourse(@RequestBody Lesson lesson) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
-        Lesson _lesson = repository.save(new Lesson(lesson.getName(), lesson.getCourseId(),
-                created, lesson.getDescription()));
+        Lesson _lesson = repository.save(new Lesson(
+                lesson.getName(),
+                lesson.getIndex(),
+                lesson.getCourseId(),
+                created,
+                lesson.getDescription()));
         System.out.format("Created lesson %s at %s from course #%s", lesson.getName(), created,
                 lesson.getCourseId());
         return _lesson;
@@ -66,6 +70,7 @@ public class LessonController {
             Lesson _lesson = lessonData.get();
             _lesson.setName(lesson.getName());
             _lesson.setCourseId(lesson.getCourseId());
+            _lesson.setIndex(lesson.getIndex());
             _lesson.setCreated(lesson.getCreated());
             _lesson.setDescription(lesson.getDescription());
             return new ResponseEntity<>(repository.save(_lesson), HttpStatus.OK);

@@ -11,6 +11,7 @@ create table lessons (
 	id serial primary key,
 	name text,
     description text,
+    index int,
     created timestamp,
 	course_id int references courses on delete cascade
 );

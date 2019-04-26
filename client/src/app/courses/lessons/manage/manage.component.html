@@ -21,7 +21,7 @@
             <button class="droplist__button" mat-raised-button color="primary" (click)="delete(contentItem.id)">Delete
               {{contentName}}</button>
             <button class="droplist__button" mat-raised-button color="primary"
-              [routerLink]="[contentItem.id, 'edit', 'lesson']" routerLinkActive="active">Edit {{contentName}}</button>
+              [routerLink]="[contentItem.id, 'edit', contentName]" routerLinkActive="active">Edit {{contentName}}</button>
           </div>
         </div>
       </div>
