@@ -22,6 +22,7 @@ export class CreateEditComponent implements OnInit {
   mode: string;
   title: string;
   dataForm: FormGroup;
+  routerLink: string;
 
   constructor(
     private titleService: Title,
@@ -35,6 +36,7 @@ export class CreateEditComponent implements OnInit {
     this.setModule();
     this.setMode();
     this.setTitle();
+    this.setRouterLink();
     await this.setOriginal();
     this.createForm();
   }
@@ -53,6 +55,14 @@ export class CreateEditComponent implements OnInit {
     const capitalisedMode = this.capitalise(this.mode);
     this.title = capitalisedMode.concat(' ').concat(this.module);
     this.titleService.setTitle(`${this.title} | AgileXP`);
+  }
+
+  setRouterLink() {
+    if (this.module === 'lesson' && this.mode === 'edit') {
+      this.routerLink = '../../..';
+    } else {
+      this.routerLink = '../..';
+    }
   }
 
   capitalise(s: string) {

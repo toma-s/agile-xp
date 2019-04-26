@@ -1,4 +1,5 @@
-<a mat-button color="primary" routerLink="../../" routerLinkActive="active" mat-button>Back</a>
+<a [disabled]="routerLink === undefined" mat-button color="primary" [routerLink]="[routerLink]" routerLinkActive="active"
+  mat-button>Back</a>
 
 <div *ngIf="submitted; then success; else form"></div>
 
