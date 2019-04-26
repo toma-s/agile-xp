@@ -31,4 +31,8 @@ export class ExerciseService {
   updateExercise(id: number, value: any): Observable<Object> {
     return this.http.put(`${this.baseUrl}/${id}`, value);
   }
+
+  deleteExercise(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text'});
+  }
 }

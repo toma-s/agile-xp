@@ -95,4 +95,14 @@ export class ManageComponent implements OnInit {
     );
   }
 
+  deleteExercise(exerciseId) {
+    this.exerciseService.deleteExercise(exerciseId).subscribe(
+      data => {
+        console.log(data);
+        this.getLessonByIdParam();
+      },
+      error => console.log(error)
+    );
+  }
+
 }

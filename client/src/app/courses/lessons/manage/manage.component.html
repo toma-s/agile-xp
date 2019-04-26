@@ -18,9 +18,10 @@
         <div class="droplist__box" *ngFor="let exercise of exercises" cdkDrag>
           <div class="droplist__content">
             <p class="droplist__name">{{exercise.name}}</p>
-            <button class="droplist__button" mat-raised-button color="primary" (click)="deleteExercise(lesson)">Delete exercise (todo)</button>
-            <button class="droplist__button" mat-raised-button color="primary" [routerLink]="[lesson.id, 'lesson', 'edit']"
-              routerLinkActive="active">Edit exercise (todo)</button>
+            <button class="droplist__button" mat-raised-button color="primary" (click)="deleteExercise(exercise.id)">Delete
+              exercise</button>
+            <button class="droplist__button" mat-raised-button color="primary"
+              [routerLink]="[lesson.id, 'lesson', 'edit']" routerLinkActive="active">Edit exercise (todo)</button>
           </div>
         </div>
       </div>
