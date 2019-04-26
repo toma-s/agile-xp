@@ -27,4 +27,8 @@ export class LessonService {
   deleteLesson(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text'});
   }
+
+  updateLesson(id: number, value: any): Observable<Object> {
+    return this.http.put(`${this.baseUrl}/${id}`, value);
+  }
 }

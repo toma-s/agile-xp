@@ -50,11 +50,16 @@
             </mat-list-item>
           </mat-nav-list>
 
-          <button mat-raised-button color="primary" [routerLink]="['lessonEdit', lesson.id]" routerLinkActive="active">
-            Edit lesson
-          </button>
+          <button mat-raised-button color="primary" [routerLink]="[lesson.id, 'lesson', 'edit']"
+            routerLinkActive="active">Edit lesson (todo)</button>
 
           <button mat-raised-button color="primary" (click)="deleteLesson(lesson)">Delete lesson</button>
+
+          <button mat-raised-button color="primary" [routerLink]="['manageExercises', lesson.id]"
+            routerLinkActive="active">
+            Manage exercises (todo)
+          </button>
+
         </mat-expansion-panel>
       </mat-accordion>
     </div>

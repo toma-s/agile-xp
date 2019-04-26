@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'courseDetail/:courseId/lessonCreate', component: LessonCreateComponent},
   { path: 'courseDetail/:courseId/lessonEdit/:lessonId', component: LessonEditComponent},
   { path: 'courseDetail/:courseId/lesson/:lessonId/exerciseSolve/:exerciseId', component: ExerciseSolveComponent},
+  { path: 'courseDetail/:courseId/:lessonId/:module/:mode', component: CreateEditComponent},
   { path: 'courseDetail/:courseId/:module/:mode', component: CreateEditComponent},
   { path: '../', redirectTo: 'courses' }
 ];

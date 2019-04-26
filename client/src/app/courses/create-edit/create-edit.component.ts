@@ -62,6 +62,8 @@ export class CreateEditComponent implements OnInit {
   async setOriginal() {
     if (this.module === 'course') {
       await this.setCourse();
+    } else if (this.module === 'lesson') {
+      await this.setLesson();
     }
   }
 
@@ -81,12 +83,36 @@ export class CreateEditComponent implements OnInit {
     });
   }
 
+  async setLesson() {
+    if (this.mode === 'edit') {
+      this.lesson = await this.loadLesson();
+    }
+  }
+
+  loadLesson(): Promise<Lesson> {
+    const lessonId = Number(this.route.snapshot.params['lessonId']);
+    return new Promise<Lesson>((resolve, reject) => {
+      this.lessonService.getLessonById(lessonId).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
+  }
+
   createForm() {
     console.log(this.course);
-    this.dataForm = this.fb.group({
-      name: [this.course.name, Validators.required],
-      description: [this.course.description, Validators.required]
-    });
+    console.log(this.lesson);
+    if (this.module === 'course') {
+      this.dataForm = this.fb.group({
+        name: [this.course.name, Validators.required],
+        description: [this.course.description, Validators.required]
+      });
+    } else if (this.module === 'lesson') {
+      this.dataForm = this.fb.group({
+      name: [this.lesson.name, Validators.required],
+      description: [this.lesson.description, Validators.required]
+      });
+    }
   }
 
 
@@ -103,8 +129,12 @@ export class CreateEditComponent implements OnInit {
     } else if (this.module === 'lesson') {
       this.lesson.name = this.dataForm.get('name').value;
       this.lesson.description = this.dataForm.get('description').value;
-      this.lesson.courseId = Number(this.route.snapshot.params['courseId']);
-      this.saveLesson();
+      if (this.mode === 'create') {
+        this.lesson.courseId = Number(this.route.snapshot.params['courseId']);
+        this.saveLesson();
+      } else if (this.mode === 'edit') {
+        this.updateLesson();
+      }
     }
   }
 
@@ -130,6 +160,16 @@ export class CreateEditComponent implements OnInit {
 
   saveLesson() {
     this.lessonService.createLesson(this.lesson).subscribe(
+      data => {
+        console.log(data);
+        this.submitted = true;
+      },
+      error => console.log(error)
+    );
+  }
+
+  updateLesson() {
+    this.lessonService.updateLesson(this.lesson.id, this.lesson).subscribe(
       data => {
         console.log(data);
         this.submitted = true;
