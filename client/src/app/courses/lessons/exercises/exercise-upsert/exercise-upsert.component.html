@@ -1,48 +1,59 @@
-<div *ngIf="exercise">
+<a mat-button color="primary" routerLink="../../" routerLinkActive="active" mat-button>Back</a>
 
-  <div *ngIf="solutionFormGroup">
-    <div [formGroup]="solutionFormGroup">
+<div *ngIf="submitted; then success; else form"></div>
 
-      <toolbar formGroupName="intro"></toolbar>
+<ng-template #form>
+  <div *ngIf="exerciseFormGroup">
+    <form [formGroup]="exerciseFormGroup">
 
-      <div *ngIf="exerciseType">
+      <create-intro [exerciseFormGroup]="exerciseFormGroup"></create-intro>
 
-        <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
-
-        <div [ngSwitch]="exerciseType.value">
+      <div *ngIf="exerciseFormGroup.controls.intro">
+        <div *ngIf="exerciseFormGroup.controls.intro.controls.type.value"
+          [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value">
           <div *ngSwitchCase="'whitebox'">
-            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=sourceControl></solve-editor>
-            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=testControl></solve-editor>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
           </div>
           <div *ngSwitchCase="'whitebox-file'">
-            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=sourceControl></solve-editor>
-            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=testControl></solve-editor>
-            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=fileControl></solve-editor>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editors>
           </div>
           <div *ngSwitchCase="'blackbox'">
-            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=testControl></solve-editor>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
           </div>
           <div *ngSwitchCase="'blackbox-file'">
-            <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
-            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=testControl></solve-editor>
-            <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=fileControl></solve-editor>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editors>
           </div>
-          <div *ngSwitchDefault>
-            <p>default</p>
+          <div *ngSwitchCase="'theory'">
           </div>
         </div>
+
+        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+
+        <div *ngIf="exerciseFormGroup.get('error').get('errorMessage').value !== ''">
+          <error formGroupName=error></error>
+        </div>
+
       </div>
+    </form>
 
-      <toolbar formGroupName="intro"></toolbar>
+    <pre>{{ exerciseFormGroup.value | json }}</pre>
+  </div>
+</ng-template>
 
+
+<ng-template #success>
+  <div class="mat-elevation-z2 card">
+    <p class="response"><span class="capitalise">{{ this.module }}</span> was saved successfully</p>
+    <div *ngIf="mode === 'create'">
+      <button mat-button color="accent" class="submit__button" type="button" (click)="reset()">
+        Create new {{ this.module }}
+      </button>
     </div>
   </div>
-
-  
-
-</div>
-
-<pre *ngIf="solutionFormGroup">{{ solutionFormGroup.value | json }}</pre>
+</ng-template>

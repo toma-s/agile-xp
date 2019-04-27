@@ -1,207 +1,163 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ExerciseService } from '../shared/exercise/exercise/exercise.service';
-import { Exercise } from '../shared/exercise/exercise/exercise.model';
-import { ExerciseTypeService } from '../shared/exercise/exercise-type/exercise-type.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { ExerciseType } from '../shared/exercise/exercise-type/exercise-type.model';
-import { PublicSourceService } from '../shared/public/public-source/public-source.service';
-import { PublicTestService } from '../shared/public/public-test/public-test.service';
-import { PublicFileService } from '../shared/public/public-file/public-file.service';
-import { SolutionSource } from '../shared/solution/solution-source/solution-source.model';
-import { SolutionTest } from '../shared/solution/solution-test/solution-test.model';
-import { SolutionFile } from '../shared/solution/solution-file/solution-file.model';
+import { Exercise } from '../shared/exercise/exercise/exercise.model';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-exercise-upsert',
-  templateUrl: './exercise-upsert.component.html',
-  styleUrls: ['./exercise-upsert.component.scss']
+  selector: 'exercise-upsert'
 })
 export abstract class ExerciseUpsertComponent implements OnInit {
 
-  exercise: Exercise;
-  exerciseType: ExerciseType;
-  solutionFormGroup: FormGroup;
-  solutionSources: Array<SolutionSource> = new Array<SolutionSource>();
-  solutionTests: Array<SolutionTest> = new Array<SolutionTest>();
-  solutionFiles: Array<SolutionFile> = new Array<SolutionFile>();
+  submitted = false;
+  exerciseFormGroup: FormGroup;
+  viewInput = new Map<string, boolean>();
 
   constructor(
     protected titleService: Title,
-    protected route: ActivatedRoute,
-    protected exerciseService: ExerciseService,
-    protected publicSourceService: PublicSourceService,
-    protected publicTestService: PublicTestService,
-    protected publicFileService: PublicFileService,
-    protected exerciseTypeService: ExerciseTypeService,
     protected fb: FormBuilder
   ) { }
 
-  ngOnInit() {
-    this.route.params.subscribe(() => this.reload());
-  }
-
-  async reload() {
-    this.resetFormGroup();
-    this.exercise = await this.getExercise();
+  async ngOnInit() {
     this.setTitle();
-    this.exerciseType = await this.getExerciseType();
-    await this.getSolutionItems();
-    this.createForm();
-    this.setSolvedListener();
-    this.setSolved();
+    this.initViewInput();
+    await this.createForm();
+    console.log(this.exerciseFormGroup);
+    this.listenToTypeChange();
+    this.setupValidatorsOnInit();
   }
 
-  resetFormGroup() {
-    this.solutionFormGroup = null;
-  }
+  protected abstract setTitle();
 
-  getExercise(): Promise<Exercise> {
-    return new Promise<Exercise>((resolve, reject) => {
-      this.route.params.subscribe(params =>
-        this.exerciseService.getExerciseById(params['exerciseId']).subscribe(
-          data => resolve(data),
-          error => reject(error)
-        )
-      );
-    });
-  }
-
-  setTitle() {
-    this.titleService.setTitle(`${this.exercise.name} | AgileXP`);
-  }
-
-  getExerciseType(): Promise<ExerciseType> {
-    return new Promise<ExerciseType>((resolve, reject) => {
-      this.exerciseTypeService.getExerciseTypeById(this.exercise.typeId).subscribe(
-        data => resolve(data),
-        error => reject(error)
-      );
-    });
-  }
-
-  async getSolutionItems() {
-    switch (this.exerciseType.value) {
-      case 'theory': {
-        break;
-      }
-      case 'whitebox': {
-        this.solutionSources = await this.getSolutionSources();
-        this.solutionTests = await this.getSolutionTests();
-        break;
-      }
-      case 'whitebox-file': {
-        this.solutionSources = await this.getSolutionSources();
-        this.solutionTests = await this.getSolutionTests();
-        this.solutionFiles = await this.getSolutionFiles();
-        break;
-      }
-      case 'blackbox': {
-        this.solutionTests = await this.getSolutionTests();
-        break;
-      }
-      case 'blackbox-file': {
-        this.solutionTests = await this.getSolutionTests();
-        this.solutionFiles = await this.getSolutionFiles();
-        break;
-      }
-      default: {
-        console.log('defaut: exercise type was not found');
-      }
-    }
-  }
-
-  getSolutionSources(): Promise<Array<SolutionSource>> {
-    return new Promise<Array<SolutionSource>>((resolve, reject) => {
-      this.publicSourceService.getPublicSourcesByExerciseId(this.exercise.id).subscribe(
-        data => resolve(data),
-        error => reject(error)
-      );
-    });
-  }
-
-  getSolutionTests(): Promise<Array<SolutionTest>> {
-    return new Promise<Array<SolutionTest>>((resolve, reject) => {
-      this.publicTestService.getPublicTestsByExerciseId(this.exercise.id).subscribe(
-        data => resolve(data),
-        error => reject(error)
-      );
-    });
-  }
-
-  getSolutionFiles(): Promise<Array<SolutionFile>> {
-    return new Promise<Array<SolutionFile>>((resolve, reject) => {
-      this.publicFileService.getPublicFilesByExerciseId(this.exercise.id).subscribe(
-        data => resolve(data),
-        error => reject(error)
-      );
-    });
-  }
-
-
-  createForm() {
-    this.solutionFormGroup = this.fb.group({});
-    this.setExerciseIntro();
-    this.setSolutionControl('source', this.solutionSources);
-    this.setSolutionControl('test', this.solutionTests);
-    this.setSolutionControl('file', this.solutionFiles);
-  }
-
-  setExerciseIntro() {
-    this.solutionFormGroup.addControl(
-      'intro', this.fb.group({
-        exerciseId: [this.exercise.id],
-        exerciseIndex: [this.exercise.index],
-        exerciseName: [this.exercise.name],
-        exerciseDescription: [this.exercise.description],
-        exerciseType: [this.exerciseType.value],
-        solved: [false]
-      })
-    );
-  }
-
-  setSolved() {
-    if (this.exercise.solved || this.exerciseType.value === 'theory') {
-      this.solutionFormGroup.get('intro').get('solved').setValue(true);
-    }
-    return false;
-  }
-
-  setSolutionControl(solutionType: string, intialSolution) {
-    this.solutionFormGroup.addControl(
-      `${solutionType}Control`, this.fb.group({
-        solutionType: solutionType,
-        solutionControl: this.fb.array(this.getGroup(intialSolution))
-      })
-    );
-  }
-
-  getGroup(array: Array<any>) {
-    const fgs = new Array<FormGroup>();
-    array.forEach(e => {
-      const fg = this.fb.group({
-        id: [e.id],
-        filename: [e.filename],
-        content: [e.content],
-        exerciseId: [e.exerciseId]
+  initViewInput() {
+    this.viewInput = new Map<string, boolean>();
+    ['private', 'public'].forEach(privacyType => {
+      ['sources', 'tests', 'files'].forEach(contentType => {
+        this.viewInput[`${privacyType}-${contentType}`] = false;
       });
-      fgs.push(fg);
     });
-    return fgs;
   }
 
-  setSolvedListener() {
-    this.solutionFormGroup.get('intro').get('solved').valueChanges.subscribe(value => {
-      this.exercise.solved = value;
-      this.exerciseService.updateExercise(this.exercise.id, this.exercise).subscribe(
-          data => {
-            console.log(data);
-            this.exercise = <Exercise> data;
-          },
-          error => console.log(error)
-      );
+  async createForm() {
+    this.exerciseFormGroup = this.getParamsGroup();
+    this.exerciseFormGroup.addControl('error', this.getErrorGroup());
+    this.exerciseFormGroup.addControl('intro', await this.getIntroGroup());
+    this.exerciseFormGroup.addControl('sourceControl', await this.getExerciseGroup('sources'));
+    this.exerciseFormGroup.addControl('testControl', await this.getExerciseGroup('tests'));
+    this.exerciseFormGroup.addControl('fileControl', await this.getExerciseGroup('files'));
+  }
+
+  getParamsGroup() {
+    return this.fb.group({
+      'params': this.fb.group({
+        success: [false],
+        viewInput: this.fb.group(this.viewInput)
+      })
     });
   }
+
+  getErrorGroup() {
+    return this.fb.group({
+      errorMessage: ['']
+    });
+  }
+
+  protected abstract async getIntroGroup();
+
+  protected abstract getExerciseGroup(exerciseType);
+
+
+  listenToTypeChange() {
+    this.viewInput = new Map<string, boolean>();
+    this.exerciseFormGroup.get('intro').get('type').valueChanges.subscribe(typeValue => {
+      this.setupValidatorsByType(typeValue);
+    });
+  }
+
+  setupValidatorsByType(typeValue: string) {
+    console.log(typeValue);
+    if (this.isType(typeValue, 'whitebox')) {
+      this.setWhiteboxValidators();
+    } else if (this.isType(typeValue, 'blackbox')) {
+      this.setBlackboxValidators();
+    } else if (this.isType(typeValue, 'theory')) {
+      this.setTheoryValidators();
+    }
+    if (this.isType(typeValue, 'file')) {
+      this.setFileValidators();
+    } else {
+      this.unsetFileValidators();
+    }
+    this.setViewInputConrol();
+  }
+
+  isType(value: string, target: string): boolean {
+    return value.search(target) !== -1;
+  }
+
+  setWhiteboxValidators() {
+    this.clearValidators('sourceControl', 'privateControl');
+    this.setValidators('testControl', 'privateControl');
+    this.viewInput['private-sources'] = false;
+    this.viewInput['public-sources'] = true;
+    this.viewInput['private-tests'] = true;
+    this.viewInput['public-tests'] = true;
+  }
+
+  setBlackboxValidators() {
+    this.setValidators('sourceControl', 'privateControl');
+    this.clearValidators('testControl', 'publicControl');
+    this.clearValidators('testControl', 'privateControl');
+    this.setValidators('testControl', 'publicControl');
+    this.viewInput['private-sources'] = true;
+    this.viewInput['public-sources'] = false;
+    this.viewInput['private-tests'] = false;
+    this.viewInput['public-tests'] = true;
+  }
+
+  setTheoryValidators() {
+    this.clearValidators('sourceControl', 'privateControl');
+    this.clearValidators('sourceControl', 'publicControl');
+    this.clearValidators('testControl', 'privateControl');
+    this.clearValidators('testControl', 'publicControl');
+    this.viewInput['private-sources'] = false;
+    this.viewInput['public-sources'] = false;
+    this.viewInput['private-tests'] = false;
+    this.viewInput['public-tests'] = false;
+  }
+
+  setFileValidators() {
+    this.setValidators('fileControl', 'privateControl');
+    this.viewInput['private-files'] = true;
+    this.viewInput['public-files'] = true;
+  }
+
+  unsetFileValidators() {
+    this.clearValidators('fileControl', 'privateControl');
+    this.viewInput['private-files'] = false;
+    this.viewInput['public-files'] = false;
+  }
+
+  setValidators(controlType: string, publicitypControl: string) {
+    const array = this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent') as FormArray;
+    array.controls.forEach(control => {
+      control.get('content').setValidators(Validators.required);
+      control.get('content').updateValueAndValidity();
+    });
+  }
+
+  clearValidators(controlType: string, publicitypControl: string) {
+    const array = this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent') as FormArray;
+    array.controls.forEach(control => {
+      control.get('content').clearValidators();
+      control.get('content').updateValueAndValidity();
+    });
+  }
+
+  setViewInputConrol() {
+    this.exerciseFormGroup.get('params').get('viewInput').setValue(this.viewInput);
+  }
+
+  protected abstract setupValidatorsOnInit();
 
 }

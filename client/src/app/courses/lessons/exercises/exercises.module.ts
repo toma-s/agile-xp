@@ -15,23 +15,23 @@ import { MatListModule } from '@angular/material/list';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { QuillModule } from 'ngx-quill';
 
-import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SolveIntroComponent } from './exercise-solve/solve-intro/solve-intro.component';
 import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
-import { CreateIntroComponent } from './exercise-create/create-intro/create-intro.component';
-import { DialogComponent } from './exercise-create/dialog/dialog.component';
-import { CreateEditorsComponent } from './exercise-create/create-editors/create-editors.component';
-import { CreateSubmitComponent } from './exercise-create/create-submit/create-submit.component';
-import { EditorComponent } from './exercise-create/editor/editor.component';
 import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor.component';
-import { ErrorComponent } from './exercise-create/error/error.component';
 import { LoadSolutionDialogComponent } from './exercise-solve/load-solution-dialog/load-solution-dialog.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ExerciseEditComponent } from './exercise-edit/exercise-edit.component';
-import { ExerciseUpsertComponent } from './exercise-upsert/exercise-upsert.component';
+import { ExerciseCreateComponent } from './exercise-upsert/exercise-create/exercise-create.component';
+import { ExerciseEditComponent } from './exercise-upsert/exercise-edit/exercise-edit.component';
+import { DialogComponent } from './exercise-upsert/dialog/dialog.component';
+import { CreateIntroComponent } from './exercise-upsert/create-intro/create-intro.component';
+import { CreateEditorsComponent } from './exercise-upsert/create-editors/create-editors.component';
+import { CreateSubmitComponent } from './exercise-upsert/create-submit/create-submit.component';
+import { ErrorComponent } from './exercise-upsert/error/error.component';
+import { EditorComponent } from './exercise-upsert/editor/editor.component';
+
 
 @NgModule({
   entryComponents: [
@@ -39,7 +39,6 @@ import { ExerciseUpsertComponent } from './exercise-upsert/exercise-upsert.compo
     LoadSolutionDialogComponent
   ],
   declarations: [
-    ExerciseCreateComponent,
     ExerciseSolveComponent,
     ToolbarComponent,
     SolveIntroComponent,
@@ -52,8 +51,8 @@ import { ExerciseUpsertComponent } from './exercise-upsert/exercise-upsert.compo
     SolveEditorComponent,
     ErrorComponent,
     LoadSolutionDialogComponent,
-    ExerciseEditComponent,
-    ExerciseUpsertComponent
+    ExerciseCreateComponent,
+    ExerciseEditComponent
   ],
   imports: [
     CommonModule,
