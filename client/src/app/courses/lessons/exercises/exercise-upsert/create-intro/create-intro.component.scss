@@ -1,6 +1,10 @@
 .card {
   padding: 20px;
 
+  .capitalise {
+    text-transform: capitalize;
+  }
+
   .intro__field {
     display: flex;
     flex-direction: column;

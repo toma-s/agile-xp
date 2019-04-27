@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ExerciseType } from '../shared/exercise/exercise-type/exercise-type.model';
-import { Exercise } from '../shared/exercise/exercise/exercise.model';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 
@@ -106,7 +104,6 @@ export abstract class ExerciseUpsertComponent implements OnInit {
 
   setBlackboxValidators() {
     this.setValidators('sourceControl', 'privateControl');
-    this.clearValidators('testControl', 'publicControl');
     this.clearValidators('testControl', 'privateControl');
     this.setValidators('testControl', 'publicControl');
     this.viewInput['private-sources'] = true;
@@ -127,13 +124,11 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   }
 
   setFileValidators() {
-    this.setValidators('fileControl', 'privateControl');
     this.viewInput['private-files'] = true;
     this.viewInput['public-files'] = true;
   }
 
   unsetFileValidators() {
-    this.clearValidators('fileControl', 'privateControl');
     this.viewInput['private-files'] = false;
     this.viewInput['public-files'] = false;
   }

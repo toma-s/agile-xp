@@ -15,7 +15,7 @@
       <h4>Shown {{exerciseType}}</h4>
 
       <mat-form-field>
-        <mat-select [formControl]="form.controls.publicType.controls.chosen">
+        <mat-select [formControl]="form.controls.publicType.controls.chosen" [value]="form.controls.publicType.controls.chosen.value">
           <mat-option value="same">The same</mat-option>
           <mat-option value="custom">Custom</mat-option>
         </mat-select>

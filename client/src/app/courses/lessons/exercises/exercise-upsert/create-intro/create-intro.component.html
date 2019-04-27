@@ -1,8 +1,8 @@
 <div [formGroup]="exerciseFormGroup" class="mat-elevation-z2 card">
 
-  <h2>Create new exercise</h2>
-
   <div class="intro" *ngIf="exerciseFormGroup.controls.intro">
+
+    <h2><span class="capitalise">{{exerciseFormGroup.controls.intro.controls.mode.value}}</span> exercise</h2>
 
     <mat-form-field class="intro__field">
       <input matInput placeholder="Title" [formControl]="exerciseFormGroup.controls.intro.controls.name" maxlength="35">

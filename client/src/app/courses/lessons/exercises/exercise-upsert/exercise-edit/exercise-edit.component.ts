@@ -30,6 +30,8 @@ import { PublicFile } from '../../shared/public/public-file/public-file.model';
 })
 export class ExerciseEditComponent extends ExerciseUpsertComponent {
 
+  protected mode = 'edit';
+
   private exercise: Exercise;
   private exerciseType: ExerciseType;
   private privateSources: Array<PrivateSource>;
@@ -71,7 +73,8 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     return this.fb.group({
       name: [this.exercise.name, Validators.compose([Validators.required])],
       description: [this.exercise.description, Validators.compose([Validators.required])],
-      type: [this.exerciseType.value, Validators.compose([Validators.required])]
+      type: [this.exerciseType.value, Validators.compose([Validators.required])],
+      mode: 'edit'
     });
   }
 
