@@ -23,6 +23,7 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     this.form = <FormGroup>this.controlContainer.control;
+    console.log(this.form);
   }
 
   remove(index: number) {
@@ -47,8 +48,8 @@ export class EditorComponent implements OnInit {
 
   create(): FormGroup {
     return this.fb.group({
-      filename: ['TestFilename.java'],
-      content: ['', Validators.compose([Validators.required])]
+      filename: ['filename.java'],
+      content: ['']
     });
   }
 

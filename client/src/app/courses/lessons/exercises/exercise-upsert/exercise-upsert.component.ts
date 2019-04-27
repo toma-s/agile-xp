@@ -135,10 +135,8 @@ export abstract class ExerciseUpsertComponent implements OnInit {
 
   setValidators(controlType: string, publicitypControl: string) {
     const array = this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent') as FormArray;
-    console.log(controlType);
-    console.log(publicitypControl);
-    console.log(array.length);
     array.setValidators(Validators.required);
+    array.updateValueAndValidity();
     array.controls.forEach(control => {
       control.get('content').setValidators(Validators.required);
       control.get('content').updateValueAndValidity();
@@ -147,6 +145,8 @@ export abstract class ExerciseUpsertComponent implements OnInit {
 
   clearValidators(controlType: string, publicitypControl: string) {
     const array = this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent') as FormArray;
+    array.clearValidators();
+    array.updateValueAndValidity();
     array.controls.forEach(control => {
       control.get('content').clearValidators();
       control.get('content').updateValueAndValidity();
