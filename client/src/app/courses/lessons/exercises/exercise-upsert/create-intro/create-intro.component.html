@@ -8,13 +8,26 @@
       <input matInput placeholder="Title" [formControl]="exerciseFormGroup.controls.intro.controls.name" maxlength="35">
     </mat-form-field>
 
-    <mat-form-field class="intro__field">
-      <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.type">
-        <mat-option *ngFor="let type of types" [value]="type.value">
-          {{type.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div *ngIf="exerciseFormGroup.controls.intro.controls.type.value; then onEdit; else onCreate"></div>
+    <ng-template #onCreate>
+      <mat-form-field class="intro__field">
+        <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.intro.controls.type">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{type.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-template>
+    <ng-template #onEdit>
+      <mat-form-field class="intro__field">
+        <mat-select [placeholder]="exerciseFormGroup.controls.intro.controls.type.value.name"
+          [formControl]="exerciseFormGroup.controls.intro.controls.type">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{type.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-template>
 
     <div>
       <h4>Description</h4>

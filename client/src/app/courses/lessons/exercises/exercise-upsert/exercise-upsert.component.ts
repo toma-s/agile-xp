@@ -68,13 +68,14 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   listenToTypeChange() {
     this.viewInput = new Map<string, boolean>();
     this.exerciseFormGroup.get('intro').get('type').valueChanges.subscribe(typeValue => {
-      this.setupValidatorsByType(typeValue);
+      this.setupValidatorsByType(typeValue.value);
     });
   }
 
   setupValidatorsByType(typeValue: string) {
     console.log(typeValue);
     if (this.isType(typeValue, 'whitebox')) {
+      console.log('wb');
       this.setWhiteboxValidators();
     } else if (this.isType(typeValue, 'blackbox')) {
       this.setBlackboxValidators();

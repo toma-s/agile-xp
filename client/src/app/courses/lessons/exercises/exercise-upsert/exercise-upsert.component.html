@@ -10,7 +10,7 @@
 
       <div *ngIf="exerciseFormGroup.controls.intro">
         <div *ngIf="exerciseFormGroup.controls.intro.controls.type.value"
-          [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value">
+          [ngSwitch]="exerciseFormGroup.controls.intro.controls.type.value.value">
           <div *ngSwitchCase="'whitebox'">
             <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
             <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>

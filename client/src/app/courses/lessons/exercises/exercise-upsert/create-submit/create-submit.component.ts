@@ -43,6 +43,7 @@ export class CreateSubmitComponent implements OnInit {
   async submit() {
     this.resetErrorMessage();
     this.exercise = await this.saveExercise();
+    console.log(this.exercise);
     await this.saveExerciseItems();
     if (this.exerciseFormGroup.get('error').get('errorMessage').value === '') {
       this.setSuccess();
@@ -55,6 +56,7 @@ export class CreateSubmitComponent implements OnInit {
 
   saveExercise(): Promise<Exercise> {
     const exercise = this.createExercise();
+    console.log(exercise);
 
     return new Promise((resolve, reject) => {
       this.exerciseService.createExercise(exercise).subscribe(

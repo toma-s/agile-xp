@@ -73,7 +73,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     return this.fb.group({
       name: [this.exercise.name, Validators.compose([Validators.required])],
       description: [this.exercise.description, Validators.compose([Validators.required])],
-      type: [this.exerciseType.value, Validators.compose([Validators.required])],
+      type: [this.exerciseType, Validators.compose([Validators.required])],
       mode: 'edit'
     });
   }
@@ -211,7 +211,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
 
   setupValidatorsOnInit() {
     const typeValue = this.exerciseFormGroup.get('intro').get('type').value;
-    this.setupValidatorsByType(typeValue);
+    this.setupValidatorsByType(typeValue.value);
   }
 
 }

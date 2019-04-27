@@ -28,7 +28,6 @@ export class CreateEditorsComponent implements OnInit {
     this.form = <FormGroup>this.controlContainer.control;
     this.exerciseType = this.form.get('exerciseType').value;
     this.setEditorOptions();
-    console.log(this.form);
     this.setupValidators();
     this.setViewInput();
   }
