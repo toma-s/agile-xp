@@ -37,13 +37,13 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
     return this.fb.group({
       exerciseType: [exerciseType],
       privateControl: this.fb.group({
-        tabContent: this.fb.array([this.create()])
+        tabContent: this.fb.array([this.create()], Validators.required)
       }),
       publicType: this.fb.group({
         chosen: ['same', Validators.compose([Validators.required])]
       }),
       publicControl: this.fb.group({
-        tabContent: this.fb.array([this.create()])
+        tabContent: this.fb.array([this.create()], Validators.required)
       })
     });
   }

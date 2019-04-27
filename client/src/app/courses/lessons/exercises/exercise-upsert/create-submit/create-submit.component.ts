@@ -25,7 +25,6 @@ export class CreateSubmitComponent implements OnInit {
 
   @Input() exerciseFormGroup: FormGroup;
   private exercise: Exercise;
-  // private error = '';
 
   constructor(
     private exerciseService: ExerciseService,
