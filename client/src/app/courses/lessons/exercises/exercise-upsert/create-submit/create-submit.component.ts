@@ -80,13 +80,13 @@ export class CreateSubmitComponent implements OnInit {
     const exerciseTypeValue = this.exerciseFormGroup.get('intro').get('type').value['value'];
     switch (exerciseTypeValue) {
       case 'whitebox': {
-        await this.savePublicSourcesByType();
+        await this.savePublicSources();
         await this.savePrivateTests();
         await this.savePublicTestsByType();
         break;
       }
       case 'whitebox-file': {
-        await this.savePublicSourcesByType();
+        await this.savePublicSources();
         await this.savePrivateTests();
         await this.savePublicTestsByType();
         await this.savePrivateFiles();
@@ -130,15 +130,15 @@ export class CreateSubmitComponent implements OnInit {
     return this.privateSourceService.createPrivateSource(source);
   }
 
-  savePublicSourcesByType() {
-    const shownSourcesType: string = this.exerciseFormGroup.get('sourceControl').get('publicType').get('chosen').value;
-    if (shownSourcesType === 'same') {
-      const shownSources: Array<PublicSource> = this.exerciseFormGroup.get('sourceControl').get('privateControl').get('tabContent').value;
-      this.saveShownSources(shownSources);
-    } else if (shownSourcesType === 'custom') {
+  savePublicSources() {
+    // const shownSourcesType: string = this.exerciseFormGroup.get('sourceControl').get('publicType').get('chosen').value;
+    // if (shownSourcesType === 'same') {
+    //   const shownSources: Array<PublicSource> = this.exerciseFormGroup.get('sourceControl').get('privateControl').get('tabContent').value;
+    //   this.saveShownSources(shownSources);
+    // } else if (shownSourcesType === 'custom') {
       const shownSources: Array<PrivateSource> = this.exerciseFormGroup.get('sourceControl').get('publicControl').get('tabContent').value;
       this.saveShownSources(shownSources);
-    }
+    // }
   }
 
   saveShownSources(shownSources: Array<PublicSource>): Promise<{}> {
