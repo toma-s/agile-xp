@@ -31,6 +31,7 @@ import { CreateEditorsComponent } from './exercise-upsert/create-editors/create-
 import { CreateSubmitComponent } from './exercise-upsert/create-submit/create-submit.component';
 import { ErrorComponent } from './exercise-upsert/error/error.component';
 import { EditorComponent } from './exercise-upsert/editor/editor.component';
+import { ExerciseCreaterService } from './exercise-upsert/utils/exercise-creater.service';
 
 
 @NgModule({

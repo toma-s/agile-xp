@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { Exercise } from '../shared/exercise/exercise/exercise.model';
+import { ExerciseType } from '../shared/exercise/exercise-type/exercise-type.model';
 
 @Component({
   selector: 'exercise-upsert'
@@ -13,7 +16,8 @@ export abstract class ExerciseUpsertComponent implements OnInit {
 
   constructor(
     protected titleService: Title,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected route: ActivatedRoute
   ) { }
 
   async ngOnInit() {
@@ -48,7 +52,7 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   getParamsGroup() {
     return this.fb.group({
       'params': this.fb.group({
-        success: [false],
+        success: [null],
         viewInput: this.fb.group(this.viewInput)
       })
     });
@@ -62,12 +66,25 @@ export abstract class ExerciseUpsertComponent implements OnInit {
 
   protected abstract async getIntroGroup();
 
+  getGroupForExercise(exercise: Exercise, exerciseType: ExerciseType) {
+    return this.fb.group({
+      id: exercise.id,
+      name: exercise.name,
+      description: exercise.description,
+      type: exerciseType,
+      lessonId: exercise.lessonId,
+      created: exercise.created,
+      index: exercise.index,
+      solved: exercise.solved
+    });
+  }
+
   protected abstract getExerciseGroup(exerciseType);
 
 
   listenToTypeChange() {
     this.viewInput = new Map<string, boolean>();
-    this.exerciseFormGroup.get('intro').get('type').valueChanges.subscribe(typeValue => {
+    this.exerciseFormGroup.get('intro').get('exercise').get('type').valueChanges.subscribe(typeValue => {
       this.setupValidatorsByType(typeValue.value);
     });
   }
@@ -75,7 +92,6 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   setupValidatorsByType(typeValue: string) {
     console.log(typeValue);
     if (this.isType(typeValue, 'whitebox')) {
-      console.log('wb');
       this.setWhiteboxValidators();
     } else if (this.isType(typeValue, 'blackbox')) {
       this.setBlackboxValidators();
@@ -159,5 +175,11 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   }
 
   protected abstract setupValidatorsOnInit();
+
+
+  async reset() {
+    await this.createForm();
+    this.setupValidatorsOnInit();
+  }
 
 }

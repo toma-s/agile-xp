@@ -44,7 +44,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
   constructor(
     protected titleService: Title,
     protected fb: FormBuilder,
-    private route: ActivatedRoute,
+    protected route: ActivatedRoute,
     private exerciseService: ExerciseService,
     private exerciseTypeService: ExerciseTypeService,
     private privateSourceService: PrivateSourceService,
@@ -54,7 +54,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     private publicTestService: PublicTestService,
     private publicFileService: PublicFileService
   ) {
-    super(titleService, fb);
+    super(titleService, fb, route);
   }
 
   setTitle() {
@@ -71,9 +71,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     this.publicTests = await this.getPublicTests();
     this.publicFiles = await this.getPublicFiles();
     return this.fb.group({
-      name: [this.exercise.name, Validators.compose([Validators.required])],
-      description: [this.exercise.description, Validators.compose([Validators.required])],
-      type: [this.exerciseType, Validators.compose([Validators.required])],
+      exercise: this.getGroupForExercise(this.exercise, this.exerciseType),
       mode: 'edit'
     });
   }
@@ -156,18 +154,18 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     return this.fb.group({
       exerciseType: [exerciseType],
       privateControl: this.fb.group({
-        tabContent: this.fb.array(this.getGroup(this.getPrivate(exerciseType))),
+        tabContent: this.fb.array(this.getGroupForContents(this.getPrivate(exerciseType))),
       }),
       publicType: this.fb.group({
         chosen: ['same', Validators.compose([Validators.required])]
       }),
       publicControl: this.fb.group({
-        tabContent: this.fb.array(this.getGroup(this.getPublic(exerciseType))),
+        tabContent: this.fb.array(this.getGroupForContents(this.getPublic(exerciseType))),
       })
     });
   }
 
-  getGroup(array: Array<any>) {
+  getGroupForContents(array: Array<any>) {
     const fgs = new Array<FormGroup>();
     array.forEach(e => {
       const fg = this.fb.group({
@@ -210,7 +208,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
 
 
   setupValidatorsOnInit() {
-    const typeValue = this.exerciseFormGroup.get('intro').get('type').value;
+    const typeValue = this.exerciseFormGroup.get('intro').get('exercise').get('type').value;
     this.setupValidatorsByType(typeValue.value);
   }
 

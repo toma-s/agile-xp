@@ -1,4 +1,10 @@
+@import "src/variables.scss";
+
 .error {
   padding: 10px;
-  // background-color: $accent;
+  color: $accent-dark;
+
+  .error__message {
+    white-space: pre-line;
+  }
 }

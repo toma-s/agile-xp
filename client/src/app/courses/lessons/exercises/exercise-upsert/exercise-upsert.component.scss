@@ -1,0 +1,18 @@
+.card {
+
+  .submit__button {
+    font-size: 1.3em;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+
+    .capitalise {
+      text-transform: capitalize;
+    }
+  }
+
+  .response {
+    text-align: center;
+    padding: 20px;
+  }
+}

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ExerciseUpsertComponent } from '../exercise-upsert.component';
+import { ActivatedRoute } from '@angular/router';
+import { Exercise } from '../../shared/exercise/exercise/exercise.model';
+import { ExerciseType } from '../../shared/exercise/exercise-type/exercise-type.model';
 
 @Component({
   selector: 'exercise-create',
@@ -14,9 +17,10 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
 
   constructor(
     protected titleService: Title,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected route: ActivatedRoute
   ) {
-    super(titleService,  fb);
+    super(titleService,  fb, route);
   }
 
   setTitle() {
@@ -24,14 +28,14 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
   }
 
   async getIntroGroup() {
+    const exercise = new Exercise();
+    exercise.index = this.route.snapshot.params['index'];
+    exercise.lessonId = this.route.snapshot.params['lessonId'];
     return this.fb.group({
-      name: ['', Validators.compose([Validators.required])],
-      description: ['', Validators.compose([Validators.required])],
-      type: [null, Validators.compose([Validators.required])],
+      exercise: this.getGroupForExercise(exercise, new ExerciseType()),
       mode: 'create'
     });
   }
-
 
   getExerciseGroup(exerciseType: string) {
     return this.fb.group({
