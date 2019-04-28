@@ -1,17 +1,7 @@
 <h2>Courses overview</h2>
 
-<div *ngIf="dataSource !== undefined">
-  <mat-table [dataSource]="dataSource" class="mat-elevation-z2">
-
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef>
-        Id
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{element.id}}
-      </mat-cell>
-    </ng-container>
+<div *ngIf="dataSource">
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z2 table">
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
@@ -23,25 +13,23 @@
       </mat-cell>
     </ng-container>
 
+    <!-- Decription Column -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>
+        Decription
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{element.description }}
+      </mat-cell>
+    </ng-container>
+
     <!-- Created Column -->
     <ng-container matColumnDef="created">
       <mat-header-cell *matHeaderCellDef>
         Created
       </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{element.created | date:'EEEE, MMMM d, y. HH:mm zzzz' }}
-      </mat-cell>
-    </ng-container>
-
-    <!-- Delete Column -->
-    <ng-container matColumnDef="delete">
-      <mat-header-cell *matHeaderCellDef>
-        Delete
-      </mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <button mat-icon-button color="warn">
-          <mat-icon (click)="delete(row)">delete</mat-icon>
-        </button>
+        {{element.created | date:'MMMM d, y' }}
       </mat-cell>
     </ng-container>
 
@@ -52,13 +40,14 @@
   </mat-table>
 </div>
 
+<div class="paginator">
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
 <div class="link">
-  <a routerLink="../courseCreate" routerLinkActive="active">
-    <div class="link__content">
-      <button mat-button type="button" mat-stroked-button color="primary">
-        <!-- <mat-icon class="link__icon">add</mat-icon> -->
-        Create course
-      </button>
-    </div>
+  <a [routerLink]="['create', 'course']" routerLinkActive="active">
+    <button mat-raised-button type="button" mat-stroked-button color="primary">
+      Create course
+    </button>
   </a>
 </div>

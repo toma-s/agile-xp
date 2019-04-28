@@ -62,6 +62,15 @@ public class ExerciseController {
         return taskDataOptional.orElse(null);
     }
 
+    @DeleteMapping("/exercises/{id}")
+    public ResponseEntity<String> deleteExercise(@PathVariable("id") long id) {
+        System.out.println("Delete Exercise with ID = " + id + "...");
+
+        repository.deleteById(id);
+
+        return new ResponseEntity<>("Exercise has been deleted!", HttpStatus.OK);
+    }
+
     @PutMapping("/exercises/{id}")
     public ResponseEntity<Exercise> updateExercise(@PathVariable("id") long id, @RequestBody Exercise exercise) {
         System.out.println("Update Exercise with ID = " + id + "...");

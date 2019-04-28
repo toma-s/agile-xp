@@ -41,6 +41,7 @@ class SampleCourseGenerator(ScriptGenerator):
             for lesson in lessons:
                 lesson_id_counter += 1
                 lesson['id'] = lesson_id_counter
+                lesson['index'] = lesson_id_counter - 1
                 lesson['course_id'] = int(course_id)
                 self.append_to_script(self.get_insert('lessons', **lesson))
 

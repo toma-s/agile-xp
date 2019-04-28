@@ -65,4 +65,21 @@ public class CourseController {
         return new ResponseEntity<>("All Courses have been deleted!", HttpStatus.OK);
     }
 
+    @PutMapping("/courses/{id}")
+    public ResponseEntity<Course> updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
+        System.out.println("Update Course with ID = " + id + "...");
+
+        Optional<Course> courseData = repository.findById(id);
+
+        if (courseData.isPresent()) {
+            Course _course = courseData.get();
+            _course.setName(course.getName());
+            _course.setCreated(course.getCreated());
+            _course.setDescription(course.getDescription());
+            return new ResponseEntity<>(repository.save(_course), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

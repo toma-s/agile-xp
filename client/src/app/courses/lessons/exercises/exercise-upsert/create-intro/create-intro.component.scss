@@ -1,0 +1,16 @@
+.card {
+  padding: 20px;
+
+  .capitalise {
+    text-transform: capitalize;
+  }
+
+  .intro__field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin-left: 0;
+    width: 50%;
+  }
+
+}

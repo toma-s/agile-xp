@@ -1,0 +1,42 @@
+<a [disabled]="routerLink === undefined" mat-button color="primary" [routerLink]="[routerLink]" routerLinkActive="active"
+  mat-button>Back</a>
+
+<div *ngIf="submitted; then success; else form"></div>
+
+<ng-template #form>
+  <form *ngIf="formGroup" (ngSubmit)="submit()" [formGroup]="formGroup">
+    <div class="mat-elevation-z2 card">
+      <div class="form">
+
+        <h1>{{ title }}</h1>
+
+        <mat-form-field>
+          <input matInput placeholder="Title" formControlName="name" maxlength="50">
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea matInput placeholder="Description" rows="6" formControlName="description" maxlength="500">
+          </textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="mat-elevation-z2 card">
+      <div class="submit">
+        <button mat-button color="accent" class="submit__button" type="submit" [disabled]="!formGroup.valid">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #success>
+  <div class="mat-elevation-z2 card">
+    <p class="response"><span class="capitalise">{{ this.module }}</span> was saved successfully</p>
+    <div *ngIf="mode === 'create'">
+      <button mat-button color="accent" class="submit__button" type="button" (click)="reset()">
+        Create new {{ this.module }}
+      </button>
+    </div>
+  </div>
+</ng-template>

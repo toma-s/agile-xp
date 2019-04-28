@@ -8,18 +8,26 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { CoursesRoutingModule } from './courses-routing.module';
-import { CourseCreateComponent } from './course-create/course-create.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { LessonsModule } from './lessons/lessons.module';
+import { CreateCourseComponent } from './upsert/create-course/create-course.component';
+import { CreateLessonComponent } from './upsert/create-lesson/create-lesson.component';
+import { EditCourseComponent } from './upsert/edit-course/edit-course.component';
+import { EditLessonComponent } from './upsert/edit-lesson/edit-lesson.component';
+
 
 @NgModule({
   declarations: [
-    CourseCreateComponent,
     CoursesListComponent,
-    CourseDetailComponent
+    CourseDetailComponent,
+    CreateCourseComponent,
+    CreateLessonComponent,
+    EditCourseComponent,
+    EditLessonComponent
   ],
   imports: [
     CommonModule,
@@ -39,6 +47,7 @@ import { LessonsModule } from './lessons/lessons.module';
     MatTableModule,
     MatExpansionModule,
     MatListModule,
+    MatPaginatorModule,
     LessonsModule,
     CoursesRoutingModule,
   ]

@@ -28,7 +28,11 @@ export class ExerciseService {
     return this.http.get(`${this.baseUrl}/lesson/${lessonId}`);
   }
 
-  updateExercise(id: number, value: any): Observable<Object> {
+  updateExercise(id: number, value: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}`, value);
+  }
+
+  deleteExercise(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text'});
   }
 }

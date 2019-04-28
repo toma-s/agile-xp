@@ -1,35 +1,29 @@
 @import "src/variables.scss";
 
-mat-header-cell, mat-cell {
-  display: flex;
-  justify-content: center;
-}
-
-.mat-column-id {
-  width: 10% !important;
-}
-
-mat-row:hover {
-  background-color: $grey-light;
-  cursor: pointer;
-}
-
-.link {
-  width: 20%;
+.table {
   margin: 20px 0;
-  float: left;
 
-  .link__icon {
-    display: inline-block;
-    height: 100%;
-    font-size: 32px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .mat-header-cell:first-child,.mat-cell:first-child{
+    flex:25%;
+  }
+  .mat-header-cell:nth-child(2),.mat-cell:nth-child(2){
+    flex:65%;
+  }
+  .mat-header-cell:last-child,.mat-cell:last-child{
+    flex:10%
   }
 
-  .link__content button {
-    width: 100%;
+  mat-header-cell {
+    font-size: 1em;
   }
+
+  mat-row:hover {
+    background-color: $grey-light;
+    cursor: pointer;
+  }
+}
+
+.paginator {
+  width: 50%;
+  float: right;
 }

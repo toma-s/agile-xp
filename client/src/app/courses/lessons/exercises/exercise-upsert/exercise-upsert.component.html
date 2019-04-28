@@ -1,0 +1,64 @@
+<a mat-button color="primary" routerLink="../../../" routerLinkActive="active" mat-button>Back</a>
+
+
+<div *ngIf="exerciseFormGroup">
+
+  <div *ngIf="this.exerciseFormGroup.get('params').get('success').value; then success; else form"></div>
+
+  <ng-template #form>
+
+    <form [formGroup]="exerciseFormGroup">
+
+      <create-intro [exerciseFormGroup]="exerciseFormGroup"></create-intro>
+
+      <div *ngIf="exerciseFormGroup.controls.intro">
+        <div *ngIf="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value"
+          [ngSwitch]="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value.value">
+          <div *ngSwitchCase="'whitebox'">
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+          </div>
+          <div *ngSwitchCase="'whitebox-file'">
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editors>
+          </div>
+          <div *ngSwitchCase="'blackbox'">
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+          </div>
+          <div *ngSwitchCase="'blackbox-file'">
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></create-editors>
+            <create-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=fileControl></create-editors>
+          </div>
+          <div *ngSwitchCase="'theory'">
+          </div>
+        </div>
+
+        <create-submit [exerciseFormGroup]="exerciseFormGroup"></create-submit>
+
+        <div *ngIf="this.exerciseFormGroup.get('params').get('success').value === false; then error"></div>
+
+        <ng-template #error>
+          <error formGroupName=error></error>
+        </ng-template>
+
+
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #success>
+    <div class="mat-elevation-z2 card">
+      <p class="response">Exercise was saved successfully</p>
+      <div *ngIf="exerciseFormGroup.controls.intro.controls.mode.value === 'create'">
+        <button mat-button color="accent" class="submit__button" type="button" (click)="reset()">
+          Create new exercise
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <pre>{{ exerciseFormGroup.value | json }}</pre>
+</div>

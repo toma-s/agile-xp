@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PrivateSourceRepository extends CrudRepository<PrivateSource, Long> {
     List<PrivateSource> findPrivateSourcesByExerciseId(long exerciseId);
+
 }
