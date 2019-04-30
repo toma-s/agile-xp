@@ -46,9 +46,9 @@ public class Reversi {
             File curDir = new File(".");
             System.out.println("Curr dir: " + curDir.toPath().toAbsolutePath());
             getAllFiles(curDir);
-          throw new IncorrectGameConfigFileException("Game configuration file " + gameFilePath.toFile().toString() + " does not exist.");
+          throw new IncorrectGameConfigFileException("Game configuration file " + gameFilePath.toFile().toString() + " does not exist");
       } catch (IOException e) {
-          throw new IncorrectGameConfigFileException("Could not read game configuration file.", e);
+          throw new IncorrectGameConfigFileException("Could not read game configuration file", e);
       }
       System.out.println(gameConfig);
       return gameConfig;

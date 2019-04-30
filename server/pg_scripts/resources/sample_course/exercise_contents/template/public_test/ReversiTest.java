@@ -25,9 +25,12 @@ public class ReversiTest {
     private Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
 
     @Test
-    public void test() {
+    public void testSample() {
         Reversi game = rev;
-        // TODO
+
+        int expected = 1;
+        int actual = 1;
+        assertEquals(expected, actual);
     }
 
 }

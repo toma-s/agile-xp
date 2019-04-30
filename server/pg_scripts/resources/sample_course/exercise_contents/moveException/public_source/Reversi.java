@@ -38,9 +38,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            throw new IncorrectGameConfigFileException("Game configuration file does not exist.");
+            throw new IncorrectGameConfigFileException("Game configuration file does not exist");
         } catch (IOException e) {
-            throw new IncorrectGameConfigFileException("Could not read game configuration file.", e);
+            throw new IncorrectGameConfigFileException("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -51,28 +51,24 @@ public class Reversi {
         }
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
-            throw new IncorrectGameConfigFileException("Game configuration must contain 3 lines.");
+            throw new IncorrectGameConfigFileException("Game configuration must contain " + configFileLinesNumber + " lines");
         }
-        try {
-            setSize(gameConfig[0]);
-            setOnTurn(gameConfig[1]);
-            createPlayground();
-            fillPlayground(gameConfig);
-        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new IncorrectGameConfigFileException("Game configuration is incorrect.");
-        }
+        setSize(gameConfig[0]);
+        setOnTurn(gameConfig[1]);
+        createPlayground();
+        fillPlayground(gameConfig);
     }
 
     void setSize(String size) throws IncorrectGameConfigFileException {
         if (!size.matches("[0-9]+")) {
-            throw new IncorrectGameConfigFileException("Incorrect size input.");
+            throw new IncorrectGameConfigFileException("Incorrect size input");
         }
         this.size = Integer.parseInt(size);
     }
 
     void setOnTurn(String onTurn) throws IncorrectGameConfigFileException {
         if (!isOnTurnInputCorrect(onTurn)) {
-            throw new IncorrectGameConfigFileException("Incorrect player on turn input.");
+            throw new IncorrectGameConfigFileException("Incorrect player on turn input");
         }
         if ("B".equals(onTurn)) {
             this.onTurn = Player.B;
@@ -85,7 +81,7 @@ public class Reversi {
         return onTurn != null && onTurn.matches("[B|W]");
     }
 
-    void createPlayground() {
+    private void createPlayground() {
         playground = new Player[size][size];
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
@@ -103,7 +99,7 @@ public class Reversi {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
+            throw new IncorrectGameConfigFileException("Game configuration file is incorrect");
         }
     }
 
@@ -135,7 +131,7 @@ public class Reversi {
                 }
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            throw new IncorrectGameConfigFileException("Playground  is not valid");
+            throw new IncorrectGameConfigFileException("Playground  is not valid", e);
         }
     }
 
@@ -220,7 +216,7 @@ public class Reversi {
         }
 
         ArrayList<List<Integer>> tilesToFlip = getTilesToFlip(r, c);
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -277,7 +273,7 @@ public class Reversi {
         }
 
         playground[r0][c0] = Player.NONE;
-        if (toFLip.size() != 0) {
+        if (!toFLip.isEmpty()) {
             toFLip.add(new ArrayList<>(List.of(r0, c0)));
         }
         return toFLip;
@@ -311,7 +307,7 @@ public class Reversi {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != Player.NONE) continue;
-                if (getTilesToFlip(r,c).size() == 0) continue;
+                if (getTilesToFlip(r, c).isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));

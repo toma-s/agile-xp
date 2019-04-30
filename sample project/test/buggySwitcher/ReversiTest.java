@@ -11,24 +11,12 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config_8/";
-    private Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    private Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    private Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    private Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    private Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
-    private Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    private Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    private Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    private Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    private Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-
 
     // bug 1  (1)
 
     @Test
     public void testMoveOutOfBoundsBelow() {
-        Reversi game = new Reversi(game8bInit);
+        Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(8, 0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -38,7 +26,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveOutOfBoundsAbove() {
-        Reversi game = new Reversi(game8bInit);
+        Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(-1, 0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -48,7 +36,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveOnNotEmpty() {
-        Reversi game = new Reversi(game8bInit);
+        Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(4, 4);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
@@ -58,7 +46,7 @@ public class ReversiTest {
 
     @Test
     public void testMoveOnNotAdjacent() {
-        Reversi game = new Reversi(game8bInit);
+        Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(0, 0);
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);

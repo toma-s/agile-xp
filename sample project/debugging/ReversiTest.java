@@ -54,9 +54,9 @@ public class ReversiTest {
   @Test
   public void testReadGameConfigEmpty() throws IncorrectGameConfigFileException {
       Reversi game = rev;
-      String[] gameConfig = game.readGameConfig(gameEmpty);
+      String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
 
-      assertEquals("lines number of empty config file", 0, gameConfig.length);
+      assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
   }
 
   @Test
@@ -83,7 +83,7 @@ public class ReversiTest {
   @Test(expected = IncorrectGameConfigFileException.class)
   public void testReadGameConfigNotExisting() throws IncorrectGameConfigFileException {
       Reversi game = rev;
-      game.readGameConfig(gameNotExisting);
+      game.readGameConfig(GameConfig.gameNotExisting);
   }
 
 
