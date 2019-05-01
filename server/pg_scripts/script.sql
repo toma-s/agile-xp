@@ -451,7 +451,7 @@ public class Reversi {
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config_8/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -463,13 +463,30 @@ public class Reversi {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 2, 'import org.junit.Test;
-
-import java.io.File;
+VALUES ('private_source', 'GameConfig.java', 2, 'import java.io.File;
 import java.nio.file.Path;
 
+public class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_test', 'ReversiTest.java', 2, 'import org.junit.Test;
+
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -486,26 +503,6 @@ public class ReversiTest {
     }
 
 }');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'GameConfig.java', 2, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config_8/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_almost_complete.txt', 'W
@@ -645,9 +642,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            System.out.println("Could not open game configuration file.");
+            System.out.println("Game configuration file does not exist");
         } catch (IOException e) {
-            System.out.println("Could not read game configuration file.");
+            System.out.println("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -659,7 +656,7 @@ public class Reversi {
         }
         int configFileLinesNumber = 3;
         if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines.");
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
         try {
@@ -678,21 +675,17 @@ public class Reversi {
                     playground[r][c] = -1;
                 }
             }
-            try {
-                for (int i = 1; i < 3; i++) {
-                    String[] tiles = gameConfig[i].split(" ");
-                    for (String tile : tiles) {
-                        if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
-                            System.out.println("Incorrect tile input");
-                            return;
-                        }
-                        int r = Integer.parseInt(tile.substring(1, 2));
-                        int c = Integer.parseInt(tile.substring(0, 1));
-                        playground[r][c] = players[i - 1];
+            for (int i = 1; i < 3; i++) {
+                String[] tiles = gameConfig[i].split(" ");
+                for (String tile : tiles) {
+                    if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
+                        System.out.println("Incorrect tile input");
+                        return;
                     }
+                    int r = Integer.parseInt(tile.substring(1, 2));
+                    int c = Integer.parseInt(tile.substring(0, 1));
+                    playground[r][c] = players[i - 1];
                 }
-            } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-                System.out.println("Game configuration file is incorrect.");
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             System.out.println("Game configuration is incorrect.");
@@ -734,8 +727,8 @@ public class Reversi {
                 move(r, c);
                 reader.close();
             }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -808,7 +801,7 @@ public class Reversi {
             tilesToFlip.add(new ArrayList<>(List.of(r, c)));
         }
 
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -879,7 +872,7 @@ public class Reversi {
                 }
 
                 playground[r][c] = -1;
-                if (toFLip.size() != 0) {
+                if (!toFLip.isEmpty()) {
                     toFLip.add(new ArrayList<>(List.of(r, c)));
                 }
                 if (toFLip.size() == 0) continue;
@@ -894,7 +887,7 @@ public class Reversi {
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config_8/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -906,12 +899,42 @@ public class Reversi {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'GameConfig.java', 3, 'import java.io.File;
+import java.nio.file.Path;
+
+
+public final class GameConfig {
+
+//    public static final GameConfig INSTANCE = new GameConfig();
+//
+//    public GameConfig() {}
+//
+//    public static GameConfig getInstance() {
+//        return INSTANCE;
+//    }
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFourLines = new File(gameConfigDir + "game_fout_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('private_test', 'ReversiTest.java', 3, 'import javafx.util.Pair;
 import org.junit.Test;
+
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -925,10 +948,10 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
 
-        assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
-        assertEquals("1st line of initial config file", "B", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "34 43", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "33 44", gameConfig[2]);
+        assertEquals("Lines number of game8bInit config file", 3, gameConfig.length);
+        assertEquals("1st line of game8bInit config file", "B", gameConfig[0]);
+        assertEquals("2nd line of game8bInit config file", "34 43", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "33 44", gameConfig[2]);
     }
 
     @Test
@@ -936,10 +959,10 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
 
-        assertEquals("reading initial config file: lines number should be 3", 3, gameConfig.length);
-        assertEquals("1st line of initial config file", "W", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "34 43", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "33 44", gameConfig[2]);
+        assertEquals("Lines number of game8wInit config file", 3, gameConfig.length);
+        assertEquals("1st line of game8wInit config file", "W", gameConfig[0]);
+        assertEquals("2nd line of game8wInit config file", "34 43", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "33 44", gameConfig[2]);
     }
 
     @Test
@@ -947,7 +970,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
 
-        assertEquals("lines number of empty config file", 0, gameConfig.length);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
     @Test
@@ -955,8 +978,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
 
-        String[] expectedGameConfig = new String[]{};
-        assertArrayEquals(expectedGameConfig, gameConfig);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
     @Test
@@ -964,11 +986,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameFourLines);
 
-        assertEquals(4, gameConfig.length);
-        assertEquals("B", gameConfig[0]);
-        assertEquals("34 43", gameConfig[1]);
-        assertEquals("33 44", gameConfig[2]);
-        assertEquals("33 44", gameConfig[3]);
+        assertEquals("Lines number of gameFourLines config file", 4, gameConfig.length);
+        assertEquals("1st line of gameFourLines config file", "B", gameConfig[0]);
+        assertEquals("2nd line of gameFourLines config file", "34 43", gameConfig[1]);
+        assertEquals("3rd line of gameFourLines config file", "33 44", gameConfig[2]);
+        assertEquals("4th line of gameFourLines config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -976,10 +998,10 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameAlpha);
 
-        assertEquals(3, gameConfig.length);
-        assertEquals("B", gameConfig[0]);
-        assertEquals("E4 D5", gameConfig[1]);
-        assertEquals("D4 E5", gameConfig[2]);
+        assertEquals("Lines number of gameAlpha config file", 3, gameConfig.length);
+        assertEquals("1st line of gameAlpha config file", "B", gameConfig[0]);
+        assertEquals("2nd line of gameAlpha config file", "E4 D5", gameConfig[1]);
+        assertEquals("3rd line of gameAlpha config file", "D4 E5", gameConfig[2]);
     }
 
     @Test
@@ -1504,37 +1526,10 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'GameConfig.java', 3, 'package fixed;
-
-import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config_8/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_test', 'ReversiTest.java', 3, 'import org.junit.Test;
 
-import java.io.File;
-import java.nio.file.Path;
-
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -1550,25 +1545,6 @@ public class ReversiTest {
         assertEquals(expected, actual);
     }
 
-}');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'GameConfig.java', 3, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config_8/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFourLines = new File(gameConfigDir + "game_fout_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
 }
 ');
 
@@ -1684,8 +1660,8 @@ import java.util.List;
 public class Reversi {
 
     int[][] playground;
-    int leftB = 0;
-    int leftW = 0;
+    private int leftB = 0;
+    private int leftW = 0;
     private int[] players = new int[] { 1, 0 };
     int onTurn = -1;
     int winner = -1;
@@ -1710,9 +1686,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            System.out.println("Could not open game configuration file.");
+            System.out.println("Game configuration file does not exist");
         } catch (IOException e) {
-            System.out.println("Could not read game configuration file.");
+            System.out.println("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -1724,12 +1700,12 @@ public class Reversi {
         }
         int configFileLinesNumber = 3;
         if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines.");
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
         try {
             if (gameConfig[0] == null || ! gameConfig[0].matches("[B|W]")) {
-                System.out.println("Incorrect player on turn input.");
+                System.out.println("Incorrect player on turn input");
                 return;
             }
             if ("B".equals(gameConfig[0])) {
@@ -1743,24 +1719,20 @@ public class Reversi {
                     playground[r][c] = -1;
                 }
             }
-            try {
-                for (int i = 1; i < 3; i++) {
-                    String[] tiles = gameConfig[i].split(" ");
-                    for (String tile : tiles) {
-                        if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
-                            System.out.println("Incorrect tile input");
-                            return;
-                        }
-                        int r = Integer.parseInt(tile.substring(0, 1));
-                        int c = Integer.parseInt(tile.substring(1, 2));
-                        playground[r][c] = players[i - 1];
+            for (int i = 1; i < 3; i++) {
+                String[] tiles = gameConfig[i].split(" ");
+                for (String tile : tiles) {
+                    if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
+                        System.out.println("Incorrect tile input");
+                        return;
                     }
+                    int r = Integer.parseInt(tile.substring(0, 1));
+                    int c = Integer.parseInt(tile.substring(1, 2));
+                    playground[r][c] = players[i - 1];
                 }
-            } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-                System.out.println("Game configuration file is incorrect.");
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect.");
+            System.out.println("Game configuration is incorrect");
         }
     }
 
@@ -1799,8 +1771,8 @@ public class Reversi {
                 move(r, c);
                 reader.close();
             }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -1878,11 +1850,11 @@ public class Reversi {
         }
 
         playground[r][c] = -1;
-        if (tilesToFlip.size() != 0) {
+        if (!tilesToFlip.isEmpty()) {
             tilesToFlip.add(new ArrayList<>(List.of(r, c)));
         }
 
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -1953,22 +1925,22 @@ public class Reversi {
                 }
 
                 playground[r][c] = -1;
-                if (toFLip.size() != 0) {
+                if (!toFLip.isEmpty()) {
                     toFLip.add(new ArrayList<>(List.of(r, c)));
                 }
-                if (toFLip.size() == 0) continue;
+                if (toFLip.isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
             }
         }
-        return tiles.size() != 0;
+        return !tiles.isEmpty();
     }
 
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config_8/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -1980,12 +1952,35 @@ public class Reversi {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'GameConfig.java', 4, 'import java.io.File;
+import java.nio.file.Path;
+
+public class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('private_test', 'ReversiTest.java', 4, 'import javafx.util.Pair;
 import org.junit.Test;
+
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -2660,37 +2655,10 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'GameConfig.java', 4, 'package feature;
-
-import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_test', 'ReversiTest.java', 4, 'import org.junit.Test;
 
-import java.io.File;
-import java.nio.file.Path;
-
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -2707,28 +2675,6 @@ public class ReversiTest {
     }
 
 }');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'GameConfig.java', 4, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_10_b_init.txt', '10
@@ -2885,8 +2831,8 @@ public class Reversi {
 
     int size;
     int[][] playground;
-    int leftB = 0;
-    int leftW = 0;
+    private int leftB = 0;
+    private int leftW = 0;
     private int[] players = new int[] { 1, 0 };
     int onTurn = -1;
     int winner = -1;
@@ -2911,9 +2857,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            System.out.println("Could not open game configuration file.");
+            System.out.println("Game configuration file does not exist");
         } catch (IOException e) {
-            System.out.println("Could not read game configuration file.");
+            System.out.println("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -2925,17 +2871,17 @@ public class Reversi {
         }
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines.");
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
-                System.out.println("Incorrect size value.");
+                System.out.println("Incorrect size value");
                 return;
             }
             size = Integer.parseInt(gameConfig[0]);
             if (gameConfig[1] == null || !gameConfig[1].matches("[B|W]")) {
-                System.out.println("Incorrect player on turn input.");
+                System.out.println("Incorrect player on turn input");
                 return;
             }
             if ("B".equals(gameConfig[1])) {
@@ -2949,24 +2895,20 @@ public class Reversi {
                     playground[r][c] = -1;
                 }
             }
-            try {
-                for (int i = 2; i < 4; i++) {
-                    String[] tiles = gameConfig[i].split(" ");
-                    for (String tile : tiles) {
-                        if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-9]+") &&  tile.substring(1, 2).matches("[0-9]+"))) {
-                            System.out.println("Incorrect tile input");
-                            return;
-                        }
-                        int r = Integer.parseInt(tile.substring(0, 1));
-                        int c = Integer.parseInt(tile.substring(1, 2));
-                        playground[r][c] = players[i - 2];
+            for (int i = 2; i < 4; i++) {
+                String[] tiles = gameConfig[i].split(" ");
+                for (String tile : tiles) {
+                    if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-9]+") &&  tile.substring(1, 2).matches("[0-9]+"))) {
+                        System.out.println("Incorrect tile input");
+                        return;
                     }
+                    int r = Integer.parseInt(tile.substring(0, 1));
+                    int c = Integer.parseInt(tile.substring(1, 2));
+                    playground[r][c] = players[i - 2];
                 }
-            } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-                System.out.println("Game configuration file is incorrect.");
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect.");
+            System.out.println("Game configuration is incorrect");
         }
     }
 
@@ -3005,8 +2947,8 @@ public class Reversi {
                 move(r, c);
                 reader.close();
             }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -3092,11 +3034,11 @@ public class Reversi {
         }
 
         playground[r][c] = -1;
-        if (tilesToFlip.size() != 0) {
+        if (!tilesToFlip.isEmpty()) {
             tilesToFlip.add(new ArrayList<>(List.of(r, c)));
         }
 
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -3167,22 +3109,22 @@ public class Reversi {
                 }
 
                 playground[r][c] = -1;
-                if (toFLip.size() != 0) {
+                if (!toFLip.isEmpty()) {
                     toFLip.add(new ArrayList<>(List.of(r, c)));
                 }
-                if (toFLip.size() == 0) continue;
+                if (toFLip.isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
             }
         }
-        return tiles.size() != 0;
+        return !tiles.isEmpty();
     }
 
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -3210,12 +3152,35 @@ VALUES ('public_source', 'Player.java', 5, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'GameConfig.java', 5, 'import java.io.File;
+import java.nio.file.Path;
+
+public class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('private_test', 'ReversiTest.java', 5, 'import javafx.util.Pair;
 import org.junit.Test;
+
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -3239,11 +3204,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8bInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -3251,11 +3216,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "W", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8wInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8wInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -3263,11 +3228,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game10bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "10", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "45 54", gameConfig[2]);
-        assertEquals("4th line of initial config file", "44 55", gameConfig[3]);
+        assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
+        assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game10bInit config file", "45 54", gameConfig[2]);
+        assertEquals("4th line of game10bInit config file", "44 55", gameConfig[3]);
     }
 
     @Test
@@ -3275,7 +3240,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
 
-        assertEquals("lines number of empty config file", 0, gameConfig.length);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
     @Test
@@ -3283,8 +3248,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
 
-        String[] expectedGameConfig = new String[]{};
-        assertArrayEquals(expectedGameConfig, gameConfig);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
 
@@ -3293,12 +3257,12 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameFiveLines);
 
-        assertEquals(5, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("34 43", gameConfig[2]);
-        assertEquals("33 44", gameConfig[3]);
-        assertEquals("33 44", gameConfig[4]);
+        assertEquals("Lines number of gameFiveLines config file", 5, gameConfig.length);
+        assertEquals("1st line of gameFiveLines config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameFiveLines config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameFiveLines config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of gameFiveLines config file", "33 44", gameConfig[3]);
+        assertEquals("5th line of gameFiveLines config file", "33 44", gameConfig[4]);
     }
 
     @Test
@@ -3306,11 +3270,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameAlpha);
 
-        assertEquals(4, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("E4 D5", gameConfig[2]);
-        assertEquals("D4 E5", gameConfig[3]);
+        assertEquals("Lines number of gameAlpha config file", 4, gameConfig.length);
+        assertEquals("1st line of gameAlpha config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameAlpha config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameAlpha config file", "E4 D5", gameConfig[2]);
+        assertEquals("4th line of gameAlpha config file", "D4 E5", gameConfig[3]);
     }
 
     @Test
@@ -3900,37 +3864,10 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'GameConfig.java', 5, 'package player;
-
-import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_test', 'ReversiTest.java', 5, 'import org.junit.Test;
 
-import java.io.File;
-import java.nio.file.Path;
-
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -3947,28 +3884,6 @@ public class ReversiTest {
     }
 
 }');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'GameConfig.java', 5, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_10_b_init.txt', '10
@@ -4125,8 +4040,8 @@ public class Reversi {
 
     int size;
     Player[][] playground;
-    int leftB = 0;
-    int leftW = 0;
+    private int leftB = 0;
+    private int leftW = 0;
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
     Player winner = Player.NONE;
@@ -4151,9 +4066,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            System.out.println("Could not open game configuration file.");
+            System.out.println("Game configuration file does not exist");
         } catch (IOException e) {
-            System.out.println("Could not read game configuration file.");
+            System.out.println("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -4165,17 +4080,17 @@ public class Reversi {
         }
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines.");
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
-                System.out.println("Incorrect size value.");
+                System.out.println("Incorrect size input");
                 return;
             }
             size = Integer.parseInt(gameConfig[0]);
             if (gameConfig[1] == null || !gameConfig[1].matches("[B|W]")) {
-                System.out.println("Incorrect player on turn input.");
+                System.out.println("Incorrect player on turn input");
                 return;
             }
             if ("B".equals(gameConfig[1])) {
@@ -4189,24 +4104,20 @@ public class Reversi {
                     playground[r][c] = Player.NONE;
                 }
             }
-            try {
-                for (int i = 2; i < 4; i++) {
-                    String[] tiles = gameConfig[i].split(" ");
-                    for (String tile : tiles) {
-                        if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-9]+") &&  tile.substring(1, 2).matches("[0-9]+"))) {
-                            System.out.println("Incorrect tile input");
-                            return;
-                        }
-                        int r = Integer.parseInt(tile.substring(0, 1));
-                        int c = Integer.parseInt(tile.substring(1, 2));
-                        playground[r][c] = players[i - 2];
+            for (int i = 2; i < 4; i++) {
+                String[] tiles = gameConfig[i].split(" ");
+                for (String tile : tiles) {
+                    if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-9]+") &&  tile.substring(1, 2).matches("[0-9]+"))) {
+                        System.out.println("Incorrect tile input");
+                        return;
                     }
+                    int r = Integer.parseInt(tile.substring(0, 1));
+                    int c = Integer.parseInt(tile.substring(1, 2));
+                    playground[r][c] = players[i - 2];
                 }
-            } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-                System.out.println("Game configuration file is incorrect.");
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect.");
+            System.out.println("Game configuration is incorrect");
         }
     }
 
@@ -4245,8 +4156,8 @@ public class Reversi {
                 move(r, c);
                 reader.close();
             }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -4332,11 +4243,11 @@ public class Reversi {
         }
 
         playground[r][c] = Player.NONE;
-        if (tilesToFlip.size() != 0) {
+        if (!tilesToFlip.isEmpty()) {
             tilesToFlip.add(new ArrayList<>(List.of(r, c)));
         }
 
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -4407,22 +4318,22 @@ public class Reversi {
                 }
 
                 playground[r][c] = Player.NONE;
-                if (toFLip.size() != 0) {
+                if (!toFLip.isEmpty()) {
                     toFLip.add(new ArrayList<>(List.of(r, c)));
                 }
-                if (toFLip.size() == 0) continue;
+                if (toFLip.isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
             }
         }
-        return tiles.size() != 0;
+        return !tiles.isEmpty();
     }
 
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -4451,13 +4362,37 @@ VALUES ('public_source', 'Player.java', 6, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'GameConfig.java', 6, 'import java.io.File;
+import java.nio.file.Path;
+
+public class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('private_test', 'ReversiTest.java', 6, 'import javafx.util.Pair;
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 
 public class ReversiTest {
 
@@ -4481,11 +4416,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8bInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -4493,11 +4428,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "W", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8wInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8wInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -4505,11 +4440,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game10bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "10", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "45 54", gameConfig[2]);
-        assertEquals("4th line of initial config file", "44 55", gameConfig[3]);
+        assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
+        assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game10bInit config file", "45 54", gameConfig[2]);
+        assertEquals("4th line of game10bInit config file", "44 55", gameConfig[3]);
     }
 
     @Test
@@ -4517,7 +4452,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
 
-        assertEquals("lines number of empty config file", 0, gameConfig.length);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
     @Test
@@ -4525,8 +4460,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
 
-        String[] expectedGameConfig = new String[]{};
-        assertArrayEquals(expectedGameConfig, gameConfig);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
 
@@ -4535,12 +4469,12 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameFiveLines);
 
-        assertEquals(5, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("34 43", gameConfig[2]);
-        assertEquals("33 44", gameConfig[3]);
-        assertEquals("33 44", gameConfig[4]);
+        assertEquals("Lines number of gameFiveLines config file", 5, gameConfig.length);
+        assertEquals("1st line of gameFiveLines config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameFiveLines config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameFiveLines config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of gameFiveLines config file", "33 44", gameConfig[3]);
+        assertEquals("5th line of gameFiveLines config file", "33 44", gameConfig[4]);
     }
 
     @Test
@@ -4548,11 +4482,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameAlpha);
 
-        assertEquals(4, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("E4 D5", gameConfig[2]);
-        assertEquals("D4 E5", gameConfig[3]);
+        assertEquals("Lines number of gameAlpha config file", 4, gameConfig.length);
+        assertEquals("1st line of gameAlpha config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameAlpha config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameAlpha config file", "E4 D5", gameConfig[2]);
+        assertEquals("4th line of gameAlpha config file", "D4 E5", gameConfig[3]);
     }
 
     @Test
@@ -5402,40 +5336,14 @@ public class ReversiTest {
         init[4][3] = Player.B;
         return init;
     }
-}');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'GameConfig.java', 6, 'package oneThing;
-
-import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
 }
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_test', 'ReversiTest.java', 6, 'import org.junit.Test;
 
-import java.io.File;
-import java.nio.file.Path;
-
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -5452,28 +5360,6 @@ public class ReversiTest {
     }
 
 }');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'GameConfig.java', 6, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_10_b_init.txt', '10
@@ -5630,8 +5516,8 @@ public class Reversi {
 
     int size;
     Player[][] playground;
-    int leftB = 0;
-    int leftW = 0;
+    private int leftB = 0;
+    private int leftW = 0;
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
     Player winner = Player.NONE;
@@ -5656,9 +5542,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            System.out.println("Could not open game configuration file.");
+            System.out.println("Game configuration file does not exist");
         } catch (IOException e) {
-            System.out.println("Could not read game configuration file.");
+            System.out.println("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -5670,22 +5556,18 @@ public class Reversi {
         }
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines.");
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
-        try {
-            setSize(gameConfig[0]);
-            setOnTurn(gameConfig[1]);
-            createPlayground();
-            fillPlayground(gameConfig);
-        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect.");
-        }
+        setSize(gameConfig[0]);
+        setOnTurn(gameConfig[1]);
+        createPlayground();
+        fillPlayground(gameConfig);
     }
 
     void setSize(String size) {
         if (!size.matches("[0-9]+")) {
-            System.out.println("Incorrect size value.");
+            System.out.println("Incorrect size input");
             return;
         }
         this.size = Integer.parseInt(size);
@@ -5693,7 +5575,7 @@ public class Reversi {
 
     void setOnTurn(String onTurn) {
         if (onTurn == null || !onTurn.matches("[B|W]")) {
-            System.out.println("Incorrect player on turn input.");
+            System.out.println("Incorrect player on turn input");
             return;
         }
         if ("B".equals(onTurn)) {
@@ -5703,7 +5585,7 @@ public class Reversi {
         }
     }
 
-    void createPlayground() {
+    private void createPlayground() {
         playground = new Player[size][size];
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
@@ -5721,12 +5603,12 @@ public class Reversi {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration file is incorrect.");
+            System.out.println("Game configuration file is incorrect");
         }
     }
 
     void setTile(String tile, Player player) {
-        if (!isTileInputCorrect(tile)) {
+        if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-9]+") &&  tile.substring(1, 2).matches("[0-9]+"))) {
             System.out.println("Incorrect tile input");
             return;
         }
@@ -5736,10 +5618,6 @@ public class Reversi {
             return;
         }
         playground[r][c] = player;
-    }
-
-    boolean isTileInputCorrect(String tile) {
-        return tile.length() == 2 && tile.substring(0, 1).matches("[0-9]+") && tile.substring(1, 2).matches("[0-9]+");
     }
 
     void initTilesCount() {
@@ -5771,8 +5649,8 @@ public class Reversi {
                 execute(line);
                 reader.close();
             }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -5814,7 +5692,7 @@ public class Reversi {
 
     void execute(String line) {
         printTilesLeftCount();
-        if (!isTileInputCorrect(line)) {
+        if (!(line.length() == 2 && line.substring(0, 1).matches("[0-9]+") &&  line.substring(1, 2).matches("[0-9]+"))) {
             System.out.println("Incorrect tile input");
             return;
         }
@@ -5825,7 +5703,7 @@ public class Reversi {
     }
 
     void move(int r, int c) {
-        if (!isWithinPlayground(r, c)) {
+        if (!(r >= 0 && c >= 0 && r < size && c < size)) {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
@@ -5839,7 +5717,7 @@ public class Reversi {
         }
 
         ArrayList<List<Integer>> tilesToFlip = getTilesToFlip(r, c);
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -5850,10 +5728,6 @@ public class Reversi {
         if (! areValidMoves()) {
             endGame();
         }
-    }
-
-    boolean isWithinPlayground(int r, int c) {
-        return r >= 0 && c >= 0 && r < size && c < size;
     }
 
     ArrayList<List<Integer>> getTilesToFlip(int r0, int c0) {
@@ -5869,16 +5743,16 @@ public class Reversi {
             int c = c0;
             r += direction[0];
             c += direction[1];
-            if (isWithinPlayground(r, c) && playground[r][c] != opposite) continue;
+            if (r >= 0 && c >= 0 && r < size && c < size && playground[r][c] != opposite) continue;
             r += direction[0];
             c += direction[1];
-            if (!isWithinPlayground(r, c)) continue;
+            if (!(r >= 0 && c >= 0 && r < size && c < size)) continue;
             while (playground[r][c] == opposite) {
                 r += direction[0];
                 c += direction[1];
-                if (!isWithinPlayground(r, c)) break;
+                if (!(r >= 0 && c >= 0 && r < size && c < size)) break;
             }
-            if (!isWithinPlayground(r, c)) continue;
+            if (!(r >= 0 && c >= 0 && r < size && c < size)) continue;
             if (playground[r][c] != onTurn) continue;
             while (true) {
                 r -= direction[0];
@@ -5889,7 +5763,7 @@ public class Reversi {
         }
 
         playground[r0][c0] = Player.NONE;
-        if (toFLip.size() != 0) {
+        if (!toFLip.isEmpty()) {
             toFLip.add(new ArrayList<>(List.of(r0, c0)));
         }
         return toFLip;
@@ -5927,7 +5801,7 @@ public class Reversi {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != Player.NONE) continue;
-                if (getTilesToFlip(r,c).size() == 0) continue;
+                if (getTilesToFlip(r, c).isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
@@ -5946,7 +5820,7 @@ public class Reversi {
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -5975,13 +5849,37 @@ VALUES ('public_source', 'Player.java', 7, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'GameConfig.java', 7, 'import java.io.File;
+import java.nio.file.Path;
+
+public class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('private_test', 'ReversiTest.java', 7, 'import javafx.util.Pair;
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 
 public class ReversiTest {
 
@@ -6005,11 +5903,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8bInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -6017,11 +5915,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "W", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8wInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8wInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -6029,11 +5927,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game10bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "10", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "45 54", gameConfig[2]);
-        assertEquals("4th line of initial config file", "44 55", gameConfig[3]);
+        assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
+        assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game10bInit config file", "45 54", gameConfig[2]);
+        assertEquals("4th line of game10bInit config file", "44 55", gameConfig[3]);
     }
 
     @Test
@@ -6041,7 +5939,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
 
-        assertEquals("lines number of empty config file", 0, gameConfig.length);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
     @Test
@@ -6049,8 +5947,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
 
-        String[] expectedGameConfig = new String[]{};
-        assertArrayEquals(expectedGameConfig, gameConfig);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
 
@@ -6059,12 +5956,12 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameFiveLines);
 
-        assertEquals(5, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("34 43", gameConfig[2]);
-        assertEquals("33 44", gameConfig[3]);
-        assertEquals("33 44", gameConfig[4]);
+        assertEquals("Lines number of gameFiveLines config file", 5, gameConfig.length);
+        assertEquals("1st line of gameFiveLines config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameFiveLines config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameFiveLines config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of gameFiveLines config file", "33 44", gameConfig[3]);
+        assertEquals("5th line of gameFiveLines config file", "33 44", gameConfig[4]);
     }
 
     @Test
@@ -6072,11 +5969,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameAlpha);
 
-        assertEquals(4, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("E4 D5", gameConfig[2]);
-        assertEquals("D4 E5", gameConfig[3]);
+        assertEquals("Lines number of gameAlpha config file", 4, gameConfig.length);
+        assertEquals("1st line of gameAlpha config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameAlpha config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameAlpha config file", "E4 D5", gameConfig[2]);
+        assertEquals("4th line of gameAlpha config file", "D4 E5", gameConfig[3]);
     }
 
     @Test
@@ -6136,43 +6033,6 @@ public class ReversiTest {
         game.setSize("A");
 
         assertEquals("set size A", 0, game.size);
-    }
-
-    // setOnTurnInputCorrect
-
-    @Test
-    public void testIsOnTurnInputCorrectB() {
-        Reversi game = rev;
-
-        assertTrue("on turn value of config file: B", game.isOnTurnInputCorrect("B"));
-    }
-
-    @Test
-    public void testIsOnTurnInputCorrectW() {
-        Reversi game = rev;
-
-        assertTrue("on turn value of config file: W", game.isOnTurnInputCorrect("W"));
-    }
-
-    @Test
-    public void testIsOnTurnInputCorrectA() {
-        Reversi game = rev;
-
-        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("A"));
-    }
-
-    @Test
-    public void testIsOnTurnInputCorrectNONE() {
-        Reversi game = rev;
-
-        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect("NONE"));
-    }
-
-    @Test
-    public void testIsOnTurnInputCorrectnull() {
-        Reversi game = rev;
-
-        assertFalse("on turn value of config file: A", game.isOnTurnInputCorrect(null));
     }
 
 
@@ -6592,6 +6452,7 @@ public class ReversiTest {
         assertEquals(Player.NONE, game.winner);
     }
 
+
     // isWithinPlayground
 
     @Test
@@ -6638,39 +6499,6 @@ public class ReversiTest {
     }
 
 
-    // isEmpty
-
-    @Test
-    public void testIsEmptyInit00() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertTrue("is empty (0, 0) on init", game.isEmpty(0, 0));
-    }
-
-    @Test
-    public void testIsEmptyInit33() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertFalse("is empty (3, 3) on init", game.isEmpty(3, 3));
-    }
-
-
-    // isGameOver
-
-    @Test
-    public void testIsGameOverInit() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertFalse("is game over on init", game.isGameOver());
-    }
-
-    @Test
-    public void testIsGameOverOnEnd() {
-        Reversi game = new Reversi(GameConfig.game8bComplete);
-        assertFalse("is game over on init", game.isGameOver());
-    }
-
-
     // getTilesToFlip
 
     @Test
@@ -6707,8 +6535,8 @@ public class ReversiTest {
         tiles.add(Arrays.asList(3, 2));
         game.flipTiles(tiles);
 
-        assertEquals("...", Player.B, getTile(game, 3, 3));
-        assertEquals("...", Player.B, getTile(game, 3, 2));
+        assertEquals(Player.B, getTile(game, 3, 3));
+        assertEquals(Player.B, getTile(game, 3, 2));
     }
 
     // getPossibleMoves
@@ -6749,26 +6577,6 @@ public class ReversiTest {
 
         assertFalse(game.areValidMoves());
     }
-
-
-    // swapPlayerOnTurn
-
-    @Test
-    public void testSwapPlayerOnTurnBtoW() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.swapPlayerOnTurn();
-
-        assertEquals(Player.W, game.onTurn);
-    }
-
-    @Test
-    public void testSwapPlayerOnTurnWtoB() {
-        Reversi game = new Reversi(GameConfig.game8wInit);
-        game.swapPlayerOnTurn();
-
-        assertEquals(Player.B, game.onTurn);
-    }
-
 
     // endGame
 
@@ -7080,37 +6888,10 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'GameConfig.java', 7, 'package abstrLevel;
-
-import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_test', 'ReversiTest.java', 7, 'import org.junit.Test;
 
-import java.io.File;
-import java.nio.file.Path;
-
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -7127,28 +6908,6 @@ public class ReversiTest {
     }
 
 }');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'GameConfig.java', 7, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_10_b_init.txt', '10
@@ -7305,8 +7064,8 @@ public class Reversi {
 
     int size;
     Player[][] playground;
-    int leftB = 0;
-    int leftW = 0;
+    private int leftB = 0;
+    private int leftW = 0;
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
     Player winner = Player.NONE;
@@ -7331,9 +7090,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            System.out.println("Could not open game configuration file.");
+            System.out.println("Game configuration file does not exist");
         } catch (IOException e) {
-            System.out.println("Could not read game configuration file.");
+            System.out.println("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -7345,30 +7104,26 @@ public class Reversi {
         }
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines.");
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
-        try {
-            setSize(gameConfig[0]);
-            setOnTurn(gameConfig[1]);
-            createPlayground();
-            fillPlayground(gameConfig);
-        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect.");
-        }
+        setSize(gameConfig[0]);
+        setOnTurn(gameConfig[1]);
+        createPlayground();
+        fillPlayground(gameConfig);
     }
 
     void setSize(String size) {
         if (!size.matches("[0-9]+")) {
-            System.out.println("Incorrect size value.");
+            System.out.println("Incorrect size input");
             return;
         }
         this.size = Integer.parseInt(size);
     }
 
     void setOnTurn(String onTurn) {
-        if (!isOnTurnInputCorrect(onTurn)) {
-            System.out.println("Incorrect player on turn input.");
+        if (onTurn == null || !onTurn.matches("[B|W]")) {
+            System.out.println("Incorrect player on turn input");
             return;
         }
         if ("B".equals(onTurn)) {
@@ -7378,11 +7133,7 @@ public class Reversi {
         }
     }
 
-    boolean isOnTurnInputCorrect(String onTurn) {
-        return onTurn != null && onTurn.matches("[B|W]");
-    }
-
-    void createPlayground() {
+    private void createPlayground() {
         playground = new Player[size][size];
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
@@ -7400,7 +7151,7 @@ public class Reversi {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration file is incorrect.");
+            System.out.println("Game configuration file is incorrect");
         }
     }
 
@@ -7450,8 +7201,1233 @@ public class Reversi {
                 execute(line);
                 reader.close();
             }
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
+        }
+    }
+
+    private void printPlayground() {
+        System.out.println("  " + getLine());
+        for (int r = 0; r < size; r++) {
+            System.out.print(r  + " ");
+            for (int c = 0; c < size; c++) {
+                if (playground[r][c] == Player.NONE)
+                    System.out.print("_ ");
+                else if (playground[r][c] == Player.B)
+                    System.out.print("B ");
+                else
+                    System.out.print("W ");
+            }
+            System.out.println();
+        }
+    }
+
+    private String getLine() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            builder.append(i).append(" ");
+        }
+        return builder.toString();
+    }
+
+    private void printTilesLeftCount() {
+        System.out.printf("Number of tiles: B: %s; W: %s\n\n", getLeftB(), getLeftW());
+    }
+
+    int getLeftB() {
+        return leftB;
+    }
+
+    int getLeftW() {
+        return leftW;
+    }
+
+    void execute(String line) {
+        printTilesLeftCount();
+        if (!isTileInputCorrect(line)) {
+            System.out.println("Incorrect tile input");
+            return;
+        }
+        int r = Integer.parseInt(line.substring(0, 1));
+        int c = Integer.parseInt(line.substring(1, 2));
+        move(r, c);
+        printTilesLeftCount();
+    }
+
+    void move(int r, int c) {
+        if (!isWithinPlayground(r, c)) {
+            System.out.println("Move out of bounds is not permitted");
+            return;
+        }
+        if (playground[r][c] != Player.NONE) {
+            System.out.println("Move on not empty tile is not permitted");
+            return;
+        }
+        if (winner != Player.NONE) {
+            System.out.println("The game is over. No moves are permitted");
+            return;
+        }
+
+        ArrayList<List<Integer>> tilesToFlip = getTilesToFlip(r, c);
+        if (tilesToFlip.isEmpty()) {
+            System.out.println("Move is not permitted");
+            return;
+        }
+        flipTiles(tilesToFlip);
+
+        if (onTurn == Player.W) onTurn = Player.B;
+        else if (onTurn == Player.B) onTurn = Player.W;
+        if (! areValidMoves()) {
+            endGame();
+        }
+    }
+
+    boolean isWithinPlayground(int r, int c) {
+        return r >= 0 && c >= 0 && r < size && c < size;
+    }
+
+    ArrayList<List<Integer>> getTilesToFlip(int r0, int c0) {
+        ArrayList<List<Integer>> toFLip = new ArrayList<>();
+        playground[r0][c0] = onTurn;
+        Player opposite = Player.NONE;
+        if (onTurn == Player.W) opposite = Player.B;
+        else if (onTurn == Player.B) opposite = Player.W;
+
+        int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
+        for (int[] direction : directions) {
+            int r = r0;
+            int c = c0;
+            r += direction[0];
+            c += direction[1];
+            if (isWithinPlayground(r, c) && playground[r][c] != opposite) continue;
+            r += direction[0];
+            c += direction[1];
+            if (!isWithinPlayground(r, c)) continue;
+            while (playground[r][c] == opposite) {
+                r += direction[0];
+                c += direction[1];
+                if (!isWithinPlayground(r, c)) break;
+            }
+            if (!isWithinPlayground(r, c)) continue;
+            if (playground[r][c] != onTurn) continue;
+            while (true) {
+                r -= direction[0];
+                c -= direction[1];
+                if (r == r0 && c == c0) break;
+                toFLip.add(new ArrayList<>(List.of(r, c)));
+            }
+        }
+
+        playground[r0][c0] = Player.NONE;
+        if (!toFLip.isEmpty()) {
+            toFLip.add(new ArrayList<>(List.of(r0, c0)));
+        }
+        return toFLip;
+    }
+
+    void flipTiles(List<List<Integer>> tiles) {
+        for (List<Integer> tile : tiles) {
+            int r = tile.get(0);
+            int c = tile.get(1);
+            if (playground[r][c] == onTurn) break;
+            if (playground[r][c] == Player.NONE) {
+                playground[r][c] = onTurn;
+                if (onTurn == Player.B) leftB++;
+                else if (onTurn == Player.W) leftW++;
+            } else {
+                playground[r][c] = onTurn;
+                if (onTurn == Player.B) {
+                    leftB++;
+                    leftW--;
+                } else {
+                    leftW++;
+                    leftB--;
+                }
+            }
+        }
+    }
+
+    boolean areValidMoves() {
+        int movesNum = getPossibleMoves().size();
+        return movesNum != 0;
+    }
+
+    ArrayList<String> getPossibleMoves() {
+        ArrayList<String> tiles = new ArrayList<>();
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                if (playground[r][c] != Player.NONE) continue;
+                if (getTilesToFlip(r, c).isEmpty()) continue;
+                String rString = String.valueOf(r);
+                String cString = String.valueOf(c);
+                tiles.add(cString.concat(rString));
+            }
+        }
+        return tiles;
+    }
+
+    void endGame() {
+        printTilesLeftCount();
+        ended = true;
+        if (getLeftB() > getLeftW()) winner = Player.B;
+        else if (getLeftW() > getLeftB()) winner = Player.W;
+    }
+
+    public static void main(String[] args) {
+        String fileName = "game_8_b_init.txt.txt";
+
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
+        Path gameFilePath = gameFile.toPath();
+
+        Reversi rev = new Reversi(gameFilePath);
+        rev.run();
+
+    }
+
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'Player.java', 8, 'public enum Player {
+    B(1), W(0), NONE(-1);
+
+    private final int value;
+
+    Player(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'GameConfig.java', 8, 'import java.io.File;
+import java.nio.file.Path;
+
+public class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'ReversiTest.java', 8, 'import javafx.util.Pair;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.*;
+
+
+public class ReversiTest {
+
+    private Reversi rev = new Reversi();
+
+
+    // readGameConfig
+
+    @Test
+    public void testReadGameConfig8bInit() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
+
+        assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8bInit config file", "33 44", gameConfig[3]);
+    }
+
+    @Test
+    public void testReadGameConfig8wInit() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
+
+        assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8wInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8wInit config file", "33 44", gameConfig[3]);
+    }
+
+    @Test
+    public void testReadGameConfig10bInit() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.game10bInit);
+
+        assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
+        assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game10bInit config file", "45 54", gameConfig[2]);
+        assertEquals("4th line of game10bInit config file", "44 55", gameConfig[3]);
+    }
+
+    @Test
+    public void testReadGameConfigEmpty() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
+
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
+    }
+
+    @Test
+    public void testReadGameConfigNotExisting() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
+
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
+    }
+
+
+    @Test
+    public void testReadGameConfigFiveLines() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameFiveLines);
+
+        assertEquals("Lines number of gameFiveLines config file", 5, gameConfig.length);
+        assertEquals("1st line of gameFiveLines config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameFiveLines config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameFiveLines config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of gameFiveLines config file", "33 44", gameConfig[3]);
+        assertEquals("5th line of gameFiveLines config file", "33 44", gameConfig[4]);
+    }
+
+    @Test
+    public void testReadGameConfigAlpha() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameAlpha);
+
+        assertEquals("Lines number of gameAlpha config file", 4, gameConfig.length);
+        assertEquals("1st line of gameAlpha config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameAlpha config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameAlpha config file", "E4 D5", gameConfig[2]);
+        assertEquals("4th line of gameAlpha config file", "D4 E5", gameConfig[3]);
+    }
+
+    @Test
+    public void testReadGameConfigNoSize() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoSize);
+
+        assertEquals(3, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
+        assertEquals("34 43", gameConfig[1]);
+        assertEquals("33 44", gameConfig[2]);
+    }
+
+    @Test
+    public void testReadGameConfigNoOnTurn() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoOnTurn);
+
+        assertEquals(3, gameConfig.length);
+        assertEquals("8", gameConfig[0]);
+        assertEquals("34 43", gameConfig[1]);
+        assertEquals("33 44", gameConfig[2]);
+    }
+
+    @Test
+    public void testReadGameConfigNoTiles() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoTiles);
+
+        assertEquals(2, gameConfig.length);
+        assertEquals("8", gameConfig[0]);
+        assertEquals("B", gameConfig[1]);
+    }
+
+
+
+    // createPlayground
+
+    @Test
+    public void testCreatePlayground() {
+        Reversi game = getRevWithPlayground();
+
+        assertArrayEquals("create empty playground", getEmptyPlayground(), game.playground);
+    }
+
+
+    // initGame
+
+    @Test
+    public void testInitGame8bInit() {
+        String[] gameConfig = new String[] {"8", "B", "34 43", "33 44"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        assertEquals("init playground on initial game config", 8, game.size);
+        assertEquals("init playground on initial game config", 1, game.onTurn);
+        assertEquals("init playground on initial game config", 1, getTile(game, 3, 4));
+        assertEquals("init playground on initial game config", 1, getTile(game, 4, 3));
+        assertEquals("init playground on initial game config", 0, getTile(game, 3, 3));
+        assertEquals("init playground on initial game config", 0, getTile(game, 4, 4));
+    }
+
+    @Test
+    public void testInitGame8wInit() {
+        String[] gameConfig = new String[] {"8", "W", "34 43", "33 44"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        assertEquals("init playground on initial game config", 8, game.size);
+        assertEquals("init playground on initial game config", 0, game.onTurn);
+        assertEquals("init playground on initial game config", 1, getTile(game, 3, 4));
+        assertEquals("init playground on initial game config", 1, getTile(game, 4, 3));
+        assertEquals("init playground on initial game config", 0, getTile(game, 3, 3));
+        assertEquals("init playground on initial game config", 0, getTile(game, 4, 4));
+    }
+
+    @Test
+    public void testInitGame10bInit() {
+        String[] gameConfig = new String[] {"10", "B", "45 54", "44 55"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        assertEquals("init playground on initial game config", 10, game.size);
+        assertEquals("init playground on initial game config", 1, game.onTurn);
+        assertEquals("init playground on initial game config", 1, getTile(game, 4, 5));
+        assertEquals("init playground on initial game config", 1, getTile(game, 5, 4));
+        assertEquals("init playground on initial game config", 0, getTile(game, 4, 4));
+        assertEquals("init playground on initial game config", 0, getTile(game, 5, 5));
+    }
+
+
+    @Test
+    public void testInitGameEmpty() {
+        String[] gameConfig = new String[] {};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameFiveLines() {
+        String[] gameConfig = new String[] {"8", "B", "34 43", "33 44", "33 44"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameAlpha() {
+        String[] gameConfig = new String[] {"8", "B", "E4 D5", "D4 E5"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        assertArrayEquals(getEmptyPlayground(), game.playground);
+    }
+
+    @Test
+    public void testInitGameNoSize() {
+        String[] gameConfig = new String[] {"B", "34 43", "33 44"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameNoOnTurn() {
+        String[] gameConfig = new String[] {"8", "34 43", "33 44"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameNoTiles() {
+        String[] gameConfig = new String[] {"8", "B"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameNull() {
+        Reversi game = rev;
+        game.initGame(null);
+
+        assertArrayEquals(null, game.playground);
+    }
+
+
+    // initTilesCount
+
+    @Test
+    public void testInitTilesCountInit() {
+        String[] gameConfig = new String[] {"8", "B", "34 43", "33 44"};
+        Reversi game = initReversi(gameConfig);
+        game.initTilesCount();
+
+        assertEquals("init tiles count on initial game config", 2, game.getLeftB());
+        assertEquals("init tiles count on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void testInitTilesCountEmpty() {
+        Reversi game = getRevWithPlayground();
+
+        assertEquals("init tiles count on empty game config", 0, game.getLeftB());
+        assertEquals("init tiles count on empty game config", 0, game.getLeftW());
+    }
+
+
+    // getLeftB
+
+    @Test
+    public void testGetLeftB() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+    }
+
+
+    // getLeftW
+
+    @Test
+    public void testGetLeftW() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+
+    // Reversi
+
+    @Test
+    public void test8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertEquals("on turn player on initial game config", 1, game.onTurn);
+        assertEquals("size on initial game config", 8, game.size);
+        assertEquals("playground on initial game config", 1, getTile(game, 3, 4));
+        assertEquals("playground on initial game config", 1, getTile(game, 4, 3));
+        assertEquals("playground on initial game config", 0, getTile(game, 3, 3));
+        assertEquals("playground on initial game config", 0, getTile(game, 4, 4));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void test8wInit() {
+        Reversi game = new Reversi(GameConfig.game8wInit);
+
+        assertEquals("on turn player on initial game config", 0, game.onTurn);
+        assertEquals("size on initial game config", 8, game.size);
+        assertEquals("playground on initial game config", 1, getTile(game, 3, 4));
+        assertEquals("playground on initial game config", 1, getTile(game, 4, 3));
+        assertEquals("playground on initial game config", 0, getTile(game, 3, 3));
+        assertEquals("playground on initial game config", 0, getTile(game, 4, 4));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void test10bInit() {
+        Reversi game = new Reversi(GameConfig.game10bInit);
+
+        assertEquals("on turn player on initial game config", 1, game.onTurn);
+        assertEquals("playground on initial game config", 1, getTile(game, 4, 5));
+        assertEquals("playground on initial game config", 1, getTile(game, 5, 4));
+        assertEquals("playground on initial game config", 0, getTile(game, 4, 4));
+        assertEquals("playground on initial game config", 0, getTile(game, 5, 5));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void testEmpty() {
+        Reversi game = new Reversi(GameConfig.gameEmpty);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(-1, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
+    public void testNotExisting() {
+        Reversi game = new Reversi(GameConfig.gameNotExisting);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(-1, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
+    public void testFiveLines() {
+        Reversi game = new Reversi(GameConfig.gameFiveLines);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(-1, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
+    public void testAlpha() {
+        Reversi game = new Reversi(GameConfig.gameAlpha);
+
+        assertArrayEquals(getEmptyPlayground(), game.playground);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
+    public void testNoSize() {
+        Reversi game = new Reversi(GameConfig.gameNoSize);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(-1, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
+    public void testNoOnTurn() {
+        Reversi game = new Reversi(GameConfig.gameNoOnTurn);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(-1, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+    @Test
+    public void testNoTiles() {
+        Reversi game = new Reversi(GameConfig.gameNoTiles);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(-1, game.onTurn);
+        assertFalse(game.ended);
+        assertEquals(-1, game.winner);
+    }
+
+
+    // areValidMoves
+
+    @Test
+    public void testAreValidMovesInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertTrue(game.areValidMoves());
+    }
+
+    @Test
+    public void testAreValidMovesOnEnd() {
+        Reversi game = new Reversi(GameConfig.game8bComplete);
+
+        assertFalse(game.areValidMoves());
+    }
+
+
+    // move
+
+    @Test
+    public void testMoveOnNotEmpty() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(4, 4);
+
+        assertArrayEquals("check if didn''t change", getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveOutOfBoundsBelow() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(8, 0);
+
+        assertArrayEquals("check if didn''t change", getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveOutOfBoundsAbove() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(-1, 0);
+
+        assertArrayEquals("check if didn''t change", getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveOnNotAdjacent() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(0, 0);
+
+        assertArrayEquals("check if didn''t change", getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveFlipRight() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(3, 2);
+
+        assertEquals("check if flipped", 1, getTile(game, 3, 3));
+        assertEquals("check if flipped", 1, getTile(game, 3, 2));
+        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("W left", 1, game.getLeftW());
+        assertEquals("B left", 4, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipUp() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(5, 4);
+
+        assertEquals("check if flipped", 1, getTile(game,4, 4));
+        assertEquals("check if flipped", 1, getTile(game, 5, 4));
+        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("W left", 1, game.getLeftW());
+        assertEquals("B left", 4, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipLeft() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(4, 5);
+
+        assertEquals("check if flipped", 1, getTile(game, 4, 4));
+        assertEquals("check if flipped", 1, getTile(game, 4, 5));
+        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("W left", 1, game.getLeftW());
+        assertEquals("B left", 4, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipDown() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(2, 3);
+
+        assertEquals("check if flipped", 1, getTile(game, 3, 3));
+        assertEquals("check if flipped", 1, getTile(game, 2, 3));
+        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("W left", 1, game.getLeftW());
+        assertEquals("B left", 4, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipRightUp() {
+        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(5, 4));
+        moves.add(new Pair<>(5, 3));
+        moves.add(new Pair<>(6, 2));
+        Reversi game = setMoves(moves);
+
+        assertEquals("check if flipped", 1, getTile(game, 5, 3));
+        assertEquals("check if flipped", 1, getTile(game, 6, 2));
+        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("W left", 2, game.getLeftW());
+        assertEquals("B left", 5, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipLeftUp() {
+        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(5, 4));
+        moves.add(new Pair<>(5, 5));
+        Reversi game = setMoves(moves);
+
+        assertEquals("check if flipped", 0, getTile(game, 4, 4));
+        assertEquals("check if flipped", 0, getTile(game, 5, 5));
+        assertEquals("on turn", 1, game.onTurn);
+        assertEquals("W left", 3, game.getLeftW());
+        assertEquals("B left", 3, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipLeftDown() {
+        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(2, 3));
+        moves.add(new Pair<>(2, 4));
+        moves.add(new Pair<>(1, 5));
+        Reversi game = setMoves(moves);
+
+        assertEquals("check if flipped", 1, getTile(game, 2, 4));
+        assertEquals("check if flipped", 1, getTile(game, 1, 5));
+        assertEquals("on turn", 0, game.onTurn);
+        assertEquals("W left", 2, game.getLeftW());
+        assertEquals("B left", 5, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipRightDown() {
+        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(2, 3));
+        moves.add(new Pair<>(2, 2));
+        Reversi game = setMoves(moves);
+
+        assertEquals("check if flipped", 0, getTile(game, 3, 3));
+        assertEquals("check if flipped", 0, getTile(game, 2, 2));
+        assertEquals("on turn", 1, game.onTurn);
+        assertEquals("W left", 3, game.getLeftW());
+        assertEquals("B left", 3, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveDoubleFlip() {
+        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(2, 3));
+        moves.add(new Pair<>(2, 2));
+        moves.add(new Pair<>(3, 2));
+        moves.add(new Pair<>(2, 4));
+        Reversi game = setMoves(moves);
+
+        assertEquals("check if flipped (D,3) correctly", 0, getTile(game, 2, 3));
+        assertEquals("check if flipped (E,4) correctly", 0, getTile(game, 3, 4));
+        assertEquals("W left", 5, game.getLeftW());
+        assertEquals("B left", 3, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFinishGame() {
+        Reversi game = new Reversi(GameConfig.game8bAlmostComplete);
+        game.move(3, 4);
+
+        assertFalse("if the are valid moves", game.areValidMoves());
+        assertEquals("W left", 39, game.getLeftW());
+        assertEquals("B left", 25, game.getLeftB());
+        assertEquals("winner", 0, game.winner);
+    }
+
+    @Test
+    public void testMovesCompleteGame() {
+        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
+        moves.add(new Pair<>(4, 5)); moves.add(new Pair<>(5, 3));
+        moves.add(new Pair<>(3, 2)); moves.add(new Pair<>(2, 3));
+        moves.add(new Pair<>(2, 2)); moves.add(new Pair<>(3, 5));
+        moves.add(new Pair<>(4, 2)); moves.add(new Pair<>(2, 1));
+        moves.add(new Pair<>(1, 2)); moves.add(new Pair<>(5, 4));
+        moves.add(new Pair<>(5, 2)); moves.add(new Pair<>(3, 1));
+        moves.add(new Pair<>(4, 1)); moves.add(new Pair<>(1, 3));
+        moves.add(new Pair<>(2, 4)); moves.add(new Pair<>(5, 0));
+        moves.add(new Pair<>(0, 2)); moves.add(new Pair<>(5, 1));
+        moves.add(new Pair<>(2, 5)); moves.add(new Pair<>(5, 5));
+        moves.add(new Pair<>(6, 5)); moves.add(new Pair<>(0, 4));
+        moves.add(new Pair<>(1, 4)); moves.add(new Pair<>(0, 5));
+        moves.add(new Pair<>(6, 4)); moves.add(new Pair<>(2, 6));
+        moves.add(new Pair<>(6, 2)); moves.add(new Pair<>(3, 6));
+        moves.add(new Pair<>(4, 6)); moves.add(new Pair<>(7, 3));
+        moves.add(new Pair<>(3, 7)); moves.add(new Pair<>(6, 3));
+        moves.add(new Pair<>(0, 3)); moves.add(new Pair<>(0, 1));
+        moves.add(new Pair<>(7, 1)); moves.add(new Pair<>(7, 2));
+        moves.add(new Pair<>(7, 4)); moves.add(new Pair<>(1, 5));
+        moves.add(new Pair<>(2, 7)); moves.add(new Pair<>(5, 6));
+        moves.add(new Pair<>(4, 7)); moves.add(new Pair<>(1, 6));
+        moves.add(new Pair<>(2, 0)); moves.add(new Pair<>(7, 5));
+        moves.add(new Pair<>(7, 6)); moves.add(new Pair<>(3, 0));
+        moves.add(new Pair<>(0, 7)); moves.add(new Pair<>(1, 0));
+        moves.add(new Pair<>(0, 6)); moves.add(new Pair<>(5, 7));
+        moves.add(new Pair<>(6, 1)); moves.add(new Pair<>(7, 0));
+        moves.add(new Pair<>(6, 0)); moves.add(new Pair<>(7, 7));
+        moves.add(new Pair<>(4, 0)); moves.add(new Pair<>(1, 7));
+        moves.add(new Pair<>(0, 0)); moves.add(new Pair<>(1, 1));
+        moves.add(new Pair<>(6, 7)); moves.add(new Pair<>(6, 6));
+        Reversi game = setMoves(moves);
+
+        assertFalse("if the are valid moves", game.areValidMoves());
+        assertEquals("W left", 28, game.getLeftW());
+        assertEquals("B left", 36, game.getLeftB());
+        assertEquals("winner", 1, game.winner);
+    }
+
+
+    // utility functions
+
+    private int getTile(Reversi game, int r0, int c0) {
+        return game.playground[r0][c0];
+    }
+
+
+    private Reversi setMoves(ArrayList<Pair<Integer, Integer>> moves) {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        for (Pair<Integer, Integer> move  : moves) {
+            Integer r = move.getKey();
+            Integer c = move.getValue();
+            game.move(r, c);
+        }
+        return game;
+    }
+
+    private Reversi initReversi(String[] gameConfig) {
+        Reversi rev = new Reversi();
+        rev.initGame(gameConfig);
+        return rev;
+    }
+
+    private Reversi getRevWithPlayground() {
+        Reversi rev = new Reversi();
+        rev.playground = getEmptyPlayground();
+        return rev;
+    }
+
+    private int[][] getEmptyPlayground() {
+        int[][] empty = new int[8][8];
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                empty[r][c] = -1;
+            }
+        }
+        return empty;
+    }
+
+    private int[][] getInitPlayground() {
+        int[][] init = new int[8][8];
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                init[r][c] = -1;
+            }
+        }
+        init[3][3] = 0;
+        init[4][4] = 0;
+        init[3][4] = 1;
+        init[4][3] = 1;
+        return init;
+    }
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_test', 'ReversiTest.java', 8, 'import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+
+public class ReversiTest {
+
+    private Reversi rev = new Reversi();
+
+    @Test
+    public void testSample() {
+        Reversi game1 = rev;
+        Reversi game2 = new Reversi(GameConfig.game8bInit);
+
+        int expected = 1;
+        int actual = 1;
+        assertEquals(expected, actual);
+    }
+
+}');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_10_b_init.txt', '10
+B
+45 54
+44 55
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_10_b_init.txt', '10
+B
+45 54
+44 55
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_almost_complete.txt', '8
+W
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_almost_complete.txt', '8
+W
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_complete.txt', '8
+W
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_complete.txt', '8
+W
+45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
+53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_init.txt', '8
+B
+34 43
+33 44
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_init.txt', '8
+B
+34 43
+33 44
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_w_init.txt', '8
+W
+34 43
+33 44
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_w_init.txt', '8
+W
+34 43
+33 44
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_alpha.txt', '8
+B
+E4 D5
+D4 E5
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_alpha.txt', '8
+B
+E4 D5
+D4 E5
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_five_lines.txt', '8
+B
+34 43
+33 44
+33 44
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_five_lines.txt', '8
+B
+34 43
+33 44
+33 44
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', '8
+34 43
+33 44
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', '8
+34 43
+33 44
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_size.txt', 'B
+34 43
+33 44
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_size.txt', 'B
+34 43
+33 44
+', 8, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_tiles.txt', '8
+B
+', 8, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_tiles.txt', '8
+B
+', 8, 'public_file');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'Reversi.java', 9, 'import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Reversi {
+
+    int size;
+    Player[][] playground;
+    private int leftB = 0;
+    private int leftW = 0;
+    private Player[] players = new Player[] { Player.B, Player.W };
+    Player onTurn = Player.NONE;
+    Player winner = Player.NONE;
+    boolean ended = false;
+
+    Reversi() {
+    }
+
+    Reversi(Path gameFilePath) {
+        try {
+            String[] gameConfig = readGameConfig(gameFilePath);
+            initGame(gameConfig);
+            initTilesCount();
         } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+            ended = true;
+            System.out.println(e.getMessage());
+        }
+    }
+
+    String[] readGameConfig(Path gameFilePath) {
+        String[] gameConfig = new String[] {};
+        try {
+            gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
+        } catch (NoSuchFileException e) {
+            System.out.println("Game configuration file does not exist");
+        } catch (IOException e) {
+            System.out.println("Could not read game configuration file");
+        }
+        return gameConfig;
+    }
+
+    void initGame(String[] gameConfig) {
+        if (gameConfig == null) {
+            System.out.println("Game configuration is null");
+            return;
+        }
+        int configFileLinesNumber = 4;
+        if (gameConfig.length != configFileLinesNumber) {
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
+            return;
+        }
+        setSize(gameConfig[0]);
+        setOnTurn(gameConfig[1]);
+        createPlayground();
+        fillPlayground(gameConfig);
+    }
+
+    void setSize(String size) {
+        if (!size.matches("[0-9]+")) {
+            System.out.println("Incorrect size input");
+            return;
+        }
+        this.size = Integer.parseInt(size);
+    }
+
+    void setOnTurn(String onTurn) {
+        if (!isOnTurnInputCorrect(onTurn)) {
+            System.out.println("Incorrect player on turn input");
+            return;
+        }
+        if ("B".equals(onTurn)) {
+            this.onTurn = Player.B;
+        } else if ("W".equals(onTurn)) {
+            this.onTurn = Player.W;
+        }
+    }
+
+    boolean isOnTurnInputCorrect(String onTurn) {
+        return onTurn != null && onTurn.matches("[B|W]");
+    }
+
+    private void createPlayground() {
+        playground = new Player[size][size];
+        for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size; c++) {
+                playground[r][c] = Player.NONE;
+            }
+        }
+    }
+
+    void fillPlayground(String[] gameConfig) {
+        try {
+            for (int i = 2; i < 4; i++) {
+                String[] tiles = gameConfig[i].split(" ");
+                for (String tile : tiles) {
+                    setTile(tile, players[i - 2]);
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            System.out.println("Game configuration file is incorrect");
+        }
+    }
+
+    void setTile(String tile, Player player) {
+        if (!isTileInputCorrect(tile)) {
+            System.out.println("Incorrect tile input");
+            return;
+        }
+        int r = Integer.parseInt(tile.substring(0, 1));
+        int c = Integer.parseInt(tile.substring(1, 2));
+        if (r >= size || c >= size) {
+            return;
+        }
+        playground[r][c] = player;
+    }
+
+    boolean isTileInputCorrect(String tile) {
+        return tile.length() == 2 && tile.substring(0, 1).matches("[0-9]+") && tile.substring(1, 2).matches("[0-9]+");
+    }
+
+    void initTilesCount() {
+        try {
+            for (int r = 0; r < size; r++) {
+                for (int c = 0; c < size; c++) {
+                    if (playground[r][c] == Player.B) {
+                        leftB++;
+                    } else if (playground[r][c] == Player.W) {
+                        leftW++;
+                    }
+                }
+            }
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Playground  is not valid" + e.getMessage());
+        }
+    }
+
+    private void run() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String line;
+            while (!ended) {
+                printPlayground();
+                printTilesLeftCount();
+                System.out.format("Make a move. %s is on turn\n", onTurn);
+                if (winner != Player.NONE) break;
+                if ((line = reader.readLine()) == null) break;
+                execute(line);
+                reader.close();
+            }
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -7518,7 +8494,7 @@ public class Reversi {
         }
 
         ArrayList<List<Integer>> tilesToFlip = getTilesToFlip(r, c);
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -7575,7 +8551,7 @@ public class Reversi {
         }
 
         playground[r0][c0] = Player.NONE;
-        if (toFLip.size() != 0) {
+        if (!toFLip.isEmpty()) {
             toFLip.add(new ArrayList<>(List.of(r0, c0)));
         }
         return toFLip;
@@ -7618,7 +8594,7 @@ public class Reversi {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != Player.NONE) continue;
-                if (getTilesToFlip(r,c).size() == 0) continue;
+                if (getTilesToFlip(r, c).isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
@@ -7637,7 +8613,7 @@ public class Reversi {
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -7649,7 +8625,7 @@ public class Reversi {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 8, 'public enum Player {
+VALUES ('public_source', 'Player.java', 9, 'public enum Player {
     B(1), W(0), NONE(-1);
 
     private final int value;
@@ -7666,13 +8642,37 @@ VALUES ('public_source', 'Player.java', 8, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 8, 'import javafx.util.Pair;
+VALUES ('public_source', 'GameConfig.java', 9, 'import java.io.File;
+import java.nio.file.Path;
+
+public class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'ReversiTest.java', 9, 'import javafx.util.Pair;
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 
 public class ReversiTest {
 
@@ -7696,11 +8696,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8bInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -7708,11 +8708,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "W", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8wInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8wInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -7720,11 +8720,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game10bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "10", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "45 54", gameConfig[2]);
-        assertEquals("4th line of initial config file", "44 55", gameConfig[3]);
+        assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
+        assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game10bInit config file", "45 54", gameConfig[2]);
+        assertEquals("4th line of game10bInit config file", "44 55", gameConfig[3]);
     }
 
     @Test
@@ -7732,7 +8732,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
 
-        assertEquals("lines number of empty config file", 0, gameConfig.length);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
     @Test
@@ -7740,8 +8740,7 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
 
-        String[] expectedGameConfig = new String[]{};
-        assertArrayEquals(expectedGameConfig, gameConfig);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
 
@@ -7750,12 +8749,12 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameFiveLines);
 
-        assertEquals(5, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("34 43", gameConfig[2]);
-        assertEquals("33 44", gameConfig[3]);
-        assertEquals("33 44", gameConfig[4]);
+        assertEquals("Lines number of gameFiveLines config file", 5, gameConfig.length);
+        assertEquals("1st line of gameFiveLines config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameFiveLines config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameFiveLines config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of gameFiveLines config file", "33 44", gameConfig[3]);
+        assertEquals("5th line of gameFiveLines config file", "33 44", gameConfig[4]);
     }
 
     @Test
@@ -7763,11 +8762,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameAlpha);
 
-        assertEquals(4, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("E4 D5", gameConfig[2]);
-        assertEquals("D4 E5", gameConfig[3]);
+        assertEquals("Lines number of gameAlpha config file", 4, gameConfig.length);
+        assertEquals("1st line of gameAlpha config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameAlpha config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameAlpha config file", "E4 D5", gameConfig[2]);
+        assertEquals("4th line of gameAlpha config file", "D4 E5", gameConfig[3]);
     }
 
     @Test
@@ -8398,8 +9397,8 @@ public class ReversiTest {
         tiles.add(Arrays.asList(3, 2));
         game.flipTiles(tiles);
 
-        assertEquals("...", Player.B, getTile(game, 3, 3));
-        assertEquals("...", Player.B, getTile(game, 3, 2));
+        assertEquals(Player.B, getTile(game, 3, 3));
+        assertEquals(Player.B, getTile(game, 3, 2));
     }
 
     // getPossibleMoves
@@ -8771,37 +9770,10 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'GameConfig.java', 8, 'package left;
-
-import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 8, 'import org.junit.Test;
-
-import java.io.File;
-import java.nio.file.Path;
+VALUES ('public_test', 'ReversiTest.java', 9, 'import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -8819,117 +9791,95 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'GameConfig.java', 8, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_10_b_init.txt', '10
+B
+45 54
+44 55
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_10_b_init.txt', '10
 B
 45 54
 44 55
-', 8, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_10_b_init.txt', '10
-B
-45 54
-44 55
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_almost_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 8, 'private_file');
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_almost_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 8, 'private_file');
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_init.txt', '8
 B
 34 43
 33 44
-', 8, 'private_file');
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_init.txt', '8
 B
 34 43
 33 44
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_w_init.txt', '8
 W
 34 43
 33 44
-', 8, 'private_file');
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_w_init.txt', '8
 W
 34 43
 33 44
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_alpha.txt', '8
 B
 E4 D5
 D4 E5
-', 8, 'private_file');
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_alpha.txt', '8
 B
 E4 D5
 D4 E5
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 8, 'private_file');
+VALUES ('game_empty.txt', '', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 8, 'public_file');
+VALUES ('game_empty.txt', '', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_five_lines.txt', '8
@@ -8937,7 +9887,7 @@ B
 34 43
 33 44
 33 44
-', 8, 'private_file');
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_five_lines.txt', '8
@@ -8945,44 +9895,44 @@ B
 34 43
 33 44
 33 44
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_on_turn.txt', '8
 34 43
 33 44
-', 8, 'private_file');
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_on_turn.txt', '8
 34 43
 33 44
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_size.txt', 'B
 34 43
 33 44
-', 8, 'private_file');
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_size.txt', 'B
 34 43
 33 44
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_tiles.txt', '8
 B
-', 8, 'private_file');
+', 9, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_tiles.txt', '8
 B
-', 8, 'public_file');
+', 9, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 9, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 10, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9022,9 +9972,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            System.out.println("Could not open game configuration file.");
+            System.out.println("Game configuration file does not exist");
         } catch (IOException e) {
-            System.out.println("Could not read game configuration file.");
+            System.out.println("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -9036,22 +9986,18 @@ public class Reversi {
         }
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines.");
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
-        try {
-            setSize(gameConfig[0]);
-            setOnTurn(gameConfig[1]);
-            createPlayground();
-            fillPlayground(gameConfig);
-        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect.");
-        }
+        setSize(gameConfig[0]);
+        setOnTurn(gameConfig[1]);
+        createPlayground();
+        fillPlayground(gameConfig);
     }
 
     void setSize(String size) {
         if (!size.matches("[0-9]+")) {
-            System.out.println("Incorrect size value.");
+            System.out.println("Incorrect size input");
             return;
         }
         this.size = Integer.parseInt(size);
@@ -9059,7 +10005,7 @@ public class Reversi {
 
     void setOnTurn(String onTurn) {
         if (!isOnTurnInputCorrect(onTurn)) {
-            System.out.println("Incorrect player on turn input.");
+            System.out.println("Incorrect player on turn input");
             return;
         }
         if ("B".equals(onTurn)) {
@@ -9073,7 +10019,7 @@ public class Reversi {
         return onTurn != null && onTurn.matches("[B|W]");
     }
 
-    void createPlayground() {
+    private void createPlayground() {
         playground = new Player[size][size];
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
@@ -9091,7 +10037,7 @@ public class Reversi {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration file is incorrect.");
+            System.out.println("Game configuration file is incorrect");
         }
     }
 
@@ -9141,8 +10087,8 @@ public class Reversi {
                 execute(line);
                 reader.close();
             }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -9209,7 +10155,7 @@ public class Reversi {
         }
 
         ArrayList<List<Integer>> tilesToFlip = getTilesToFlip(r, c);
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -9266,7 +10212,7 @@ public class Reversi {
         }
 
         playground[r0][c0] = Player.NONE;
-        if (toFLip.size() != 0) {
+        if (!toFLip.isEmpty()) {
             toFLip.add(new ArrayList<>(List.of(r0, c0)));
         }
         return toFLip;
@@ -9300,7 +10246,7 @@ public class Reversi {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != Player.NONE) continue;
-                if (getTilesToFlip(r,c).size() == 0) continue;
+                if (getTilesToFlip(r, c).isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
@@ -9319,7 +10265,7 @@ public class Reversi {
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);
@@ -9331,7 +10277,7 @@ public class Reversi {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 9, 'public enum Player {
+VALUES ('public_source', 'Player.java', 10, 'public enum Player {
     B(1), W(0), NONE(-1);
 
     private final int value;
@@ -9348,7 +10294,7 @@ VALUES ('public_source', 'Player.java', 9, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'IncorrectGameConfigFileException.java', 9, 'public class IncorrectGameConfigFileException extends Exception {
+VALUES ('public_source', 'IncorrectGameConfigFileException.java', 10, 'public class IncorrectGameConfigFileException extends Exception {
 
     public IncorrectGameConfigFileException(String message) {
         super(message);
@@ -9362,17 +10308,46 @@ VALUES ('public_source', 'IncorrectGameConfigFileException.java', 9, 'public cla
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 9, 'import javafx.util.Pair;
+VALUES ('public_source', 'GameConfig.java', 10, 'import java.io.File;
+import java.nio.file.Path;
+
+public class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'ReversiTest.java', 10, 'import javafx.util.Pair;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+
 public class ReversiTest {
 
     private Reversi rev = new Reversi();
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
 
     // Player
@@ -9392,11 +10367,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8bInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -9404,11 +10379,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "W", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8wInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8wInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -9416,11 +10391,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game10bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "10", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "45 54", gameConfig[2]);
-        assertEquals("4th line of initial config file", "44 55", gameConfig[3]);
+        assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
+        assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game10bInit config file", "45 54", gameConfig[2]);
+        assertEquals("4th line of game10bInit config file", "44 55", gameConfig[3]);
     }
 
     @Test
@@ -9428,16 +10403,16 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
 
-        assertEquals("lines number of empty config file", 0, gameConfig.length);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testReadGameConfigNotExisting() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
 
-        String[] expectedGameConfig = new String[]{};
-        assertArrayEquals(expectedGameConfig, gameConfig);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration file does not exist");
+        game.readGameConfig(GameConfig.gameNotExisting);
     }
 
 
@@ -9509,20 +10484,22 @@ public class ReversiTest {
         assertEquals("set size 8", 8, game.size);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetSizeNeg8() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setSize("-8");
 
-        assertEquals("set size -8", 0, game.size);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect size input");
+        game.setSize("-8");
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetSizeA() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setSize("A");
 
-        assertEquals("set size A", 0, game.size);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect size input");
+        game.setSize("A");
     }
 
     // setOnTurnInputCorrect
@@ -9581,28 +10558,31 @@ public class ReversiTest {
         assertEquals("set player on turn: W", Player.W, game.onTurn);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetOnTurnA() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setOnTurn("A");
 
-        assertEquals(Player.NONE, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect player on turn input");
+        game.setOnTurn("A");
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetOnTurnNone() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setOnTurn("NONE");
 
-        assertEquals(Player.NONE, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect player on turn input");
+        game.setOnTurn("NONE");
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetOnTurnnull() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setOnTurn(null);
 
-        assertEquals(Player.NONE, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect player on turn input");
+        game.setOnTurn(null);
     }
 
 
@@ -9642,34 +10622,31 @@ public class ReversiTest {
         assertEquals("set player B on tile 00", Player.B, getTile(game, 0, 0));
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetTile80() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("80", Player.B);
 
-        Player[][] expectedPlayground = getInitPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
-        assertEquals(Player.B, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.setTile("80", Player.B);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetTile08() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("08", Player.B);
 
-        Player[][] expectedPlayground = getInitPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
-        assertEquals(Player.B, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.setTile("08", Player.B);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetTile88() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("88", Player.B);
 
-        Player[][] expectedPlayground = getInitPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
-        assertEquals(Player.B, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.setTile("88", Player.B);
     }
 
 
@@ -9688,33 +10665,33 @@ public class ReversiTest {
         assertEquals("fill playground with initial game config", Player.W, getTile(game, 4, 4));
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testFillPlaygroundConfigLen1() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"one"};
         Reversi game = getRevWithPlayground();
-        game.fillPlayground(gameConfig);
 
-        Player[][] expectedPlayground = getEmptyPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration file is incorrect");
+        game.fillPlayground(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testFillPlaygroundNull() throws IncorrectGameConfigFileException {
         Reversi game = getRevWithPlayground();
-        game.fillPlayground(null);
 
-        Player[][] expectedPlayground = getEmptyPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration file is incorrect");
+        game.fillPlayground(null);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testFillPlaygroundNoOnTurn() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "34 43", "33 44"};
         Reversi game = getRevWithPlayground();
-        game.fillPlayground(gameConfig);
 
-        Player[][] expectedPlayground = getEmptyPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.fillPlayground(gameConfig);
     }
 
 
@@ -9762,67 +10739,73 @@ public class ReversiTest {
         assertEquals("init playground on initial game config", Player.W, getTile(game, 5, 5));
     }
 
-
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameEmpty() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameFiveLines() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "B", "34 43", "33 44", "33 44"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameAlpha() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "B", "E4 D5", "D4 E5"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(getEmptyPlayground(), game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameNoSize() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"B", "34 43", "33 44"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameNoOnTurn() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "34 43", "33 44"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameNoTiles() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "B"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameNull() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.initGame(null);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration is null");
+        game.initGame(null);
     }
 
 
@@ -9910,39 +10893,53 @@ public class ReversiTest {
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testEmpty() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameEmpty);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameEmpty);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testNotExisting() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameNotExisting);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration file does not exist");
+        new Reversi(GameConfig.gameNotExisting);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testFiveLines() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameFiveLines);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameFiveLines);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testAlpha() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameAlpha);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        new Reversi(GameConfig.gameAlpha);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testNoSize() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameNoSize);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameNoSize);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testNoOnTurn() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameNoOnTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameNoOnTurn);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testNoTiles() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameNoTiles);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameNoTiles);
     }
 
 
@@ -10061,8 +11058,8 @@ public class ReversiTest {
         tiles.add(Arrays.asList(3, 2));
         game.flipTiles(tiles);
 
-        assertEquals("...", Player.B, getTile(game, 3, 3));
-        assertEquals("...", Player.B, getTile(game, 3, 2));
+        assertEquals(Player.B, getTile(game, 3, 3));
+        assertEquals(Player.B, getTile(game, 3, 2));
     }
 
     // getPossibleMoves
@@ -10434,37 +11431,10 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'GameConfig.java', 9, 'package fileException;
-
-import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 9, 'import org.junit.Test;
-
-import java.io.File;
-import java.nio.file.Path;
+VALUES ('public_test', 'ReversiTest.java', 10, 'import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -10482,117 +11452,95 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'GameConfig.java', 9, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_10_b_init.txt', '10
+B
+45 54
+44 55
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_10_b_init.txt', '10
 B
 45 54
 44 55
-', 9, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_10_b_init.txt', '10
-B
-45 54
-44 55
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_almost_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 9, 'private_file');
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_almost_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 9, 'private_file');
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_init.txt', '8
 B
 34 43
 33 44
-', 9, 'private_file');
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_init.txt', '8
 B
 34 43
 33 44
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_w_init.txt', '8
 W
 34 43
 33 44
-', 9, 'private_file');
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_w_init.txt', '8
 W
 34 43
 33 44
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_alpha.txt', '8
 B
 E4 D5
 D4 E5
-', 9, 'private_file');
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_alpha.txt', '8
 B
 E4 D5
 D4 E5
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 9, 'private_file');
+VALUES ('game_empty.txt', '', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 9, 'public_file');
+VALUES ('game_empty.txt', '', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_five_lines.txt', '8
@@ -10600,7 +11548,7 @@ B
 34 43
 33 44
 33 44
-', 9, 'private_file');
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_five_lines.txt', '8
@@ -10608,44 +11556,44 @@ B
 34 43
 33 44
 33 44
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_on_turn.txt', '8
 34 43
 33 44
-', 9, 'private_file');
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_on_turn.txt', '8
 34 43
 33 44
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_size.txt', 'B
 34 43
 33 44
-', 9, 'private_file');
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_size.txt', 'B
 34 43
 33 44
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_tiles.txt', '8
 B
-', 9, 'private_file');
+', 10, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_tiles.txt', '8
 B
-', 9, 'public_file');
+', 10, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 10, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 11, 'import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10685,9 +11633,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            throw new IncorrectGameConfigFileException("Game configuration file does not exist.");
+            throw new IncorrectGameConfigFileException("Game configuration file does not exist");
         } catch (IOException e) {
-            throw new IncorrectGameConfigFileException("Could not read game configuration file.", e);
+            throw new IncorrectGameConfigFileException("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -10698,28 +11646,24 @@ public class Reversi {
         }
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
-            throw new IncorrectGameConfigFileException("Game configuration must contain 3 lines.");
+            throw new IncorrectGameConfigFileException("Game configuration must contain " + configFileLinesNumber + " lines");
         }
-        try {
-            setSize(gameConfig[0]);
-            setOnTurn(gameConfig[1]);
-            createPlayground();
-            fillPlayground(gameConfig);
-        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new IncorrectGameConfigFileException("Game configuration is incorrect.");
-        }
+        setSize(gameConfig[0]);
+        setOnTurn(gameConfig[1]);
+        createPlayground();
+        fillPlayground(gameConfig);
     }
 
     void setSize(String size) throws IncorrectGameConfigFileException {
         if (!size.matches("[0-9]+")) {
-            throw new IncorrectGameConfigFileException("Incorrect size input.");
+            throw new IncorrectGameConfigFileException("Incorrect size input");
         }
         this.size = Integer.parseInt(size);
     }
 
     void setOnTurn(String onTurn) throws IncorrectGameConfigFileException {
         if (!isOnTurnInputCorrect(onTurn)) {
-            throw new IncorrectGameConfigFileException("Incorrect player on turn input.");
+            throw new IncorrectGameConfigFileException("Incorrect player on turn input");
         }
         if ("B".equals(onTurn)) {
             this.onTurn = Player.B;
@@ -10732,7 +11676,7 @@ public class Reversi {
         return onTurn != null && onTurn.matches("[B|W]");
     }
 
-    void createPlayground() {
+    private void createPlayground() {
         playground = new Player[size][size];
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
@@ -10750,7 +11694,7 @@ public class Reversi {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            throw new IncorrectGameConfigFileException("Game configuration file is incorrect.");
+            throw new IncorrectGameConfigFileException("Game configuration file is incorrect");
         }
     }
 
@@ -10782,7 +11726,7 @@ public class Reversi {
                 }
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            throw new IncorrectGameConfigFileException("Playground  is not valid");
+            throw new IncorrectGameConfigFileException("Playground  is not valid", e);
         }
     }
 
@@ -10867,7 +11811,7 @@ public class Reversi {
         }
 
         ArrayList<List<Integer>> tilesToFlip = getTilesToFlip(r, c);
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -10924,7 +11868,7 @@ public class Reversi {
         }
 
         playground[r0][c0] = Player.NONE;
-        if (toFLip.size() != 0) {
+        if (!toFLip.isEmpty()) {
             toFLip.add(new ArrayList<>(List.of(r0, c0)));
         }
         return toFLip;
@@ -10958,7 +11902,7 @@ public class Reversi {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != Player.NONE) continue;
-                if (getTilesToFlip(r,c).size() == 0) continue;
+                if (getTilesToFlip(r, c).isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
@@ -10977,7 +11921,7 @@ public class Reversi {
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev;
@@ -10990,10 +11934,11 @@ public class Reversi {
 
     }
 
-}');
+}
+');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 10, 'public enum Player {
+VALUES ('public_source', 'Player.java', 11, 'public enum Player {
     B(1), W(0), NONE(-1);
 
     private final int value;
@@ -11010,7 +11955,7 @@ VALUES ('public_source', 'Player.java', 10, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'IncorrectGameConfigFileException.java', 10, 'public class IncorrectGameConfigFileException extends Exception {
+VALUES ('public_source', 'IncorrectGameConfigFileException.java', 11, 'public class IncorrectGameConfigFileException extends Exception {
 
     public IncorrectGameConfigFileException(String message) {
         super(message);
@@ -11024,7 +11969,7 @@ VALUES ('public_source', 'IncorrectGameConfigFileException.java', 10, 'public cl
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'NotPermittedMoveException.java', 10, 'public class NotPermittedMoveException extends Exception {
+VALUES ('public_source', 'NotPermittedMoveException.java', 11, 'public class NotPermittedMoveException extends Exception {
 
     public NotPermittedMoveException(String message) {
         super(message);
@@ -11033,17 +11978,46 @@ VALUES ('public_source', 'NotPermittedMoveException.java', 10, 'public class Not
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReversiTest.java', 10, 'import javafx.util.Pair;
+VALUES ('public_source', 'GameConfig.java', 11, 'import java.io.File;
+import java.nio.file.Path;
+
+public class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'ReversiTest.java', 11, 'import javafx.util.Pair;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+
 public class ReversiTest {
 
     private Reversi rev = new Reversi();
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
 
     // Player
@@ -11063,11 +12037,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8bInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -11075,11 +12049,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "8", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "W", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of initial config file", "33 44", gameConfig[3]);
+        assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8wInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of game8wInit config file", "33 44", gameConfig[3]);
     }
 
     @Test
@@ -11087,11 +12061,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.game10bInit);
 
-        assertEquals("reading initial config file: lines number should be 4", 4, gameConfig.length);
-        assertEquals("1st line of initial config file", "10", gameConfig[0]);
-        assertEquals("2nd line of initial config file", "B", gameConfig[1]);
-        assertEquals("3rd line of initial config file", "45 54", gameConfig[2]);
-        assertEquals("4th line of initial config file", "44 55", gameConfig[3]);
+        assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
+        assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game10bInit config file", "45 54", gameConfig[2]);
+        assertEquals("4th line of game10bInit config file", "44 55", gameConfig[3]);
     }
 
     @Test
@@ -11099,16 +12073,16 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
 
-        assertEquals("lines number of empty config file", 0, gameConfig.length);
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testReadGameConfigNotExisting() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
 
-        String[] expectedGameConfig = new String[]{};
-        assertArrayEquals(expectedGameConfig, gameConfig);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration file does not exist");
+        game.readGameConfig(GameConfig.gameNotExisting);
     }
 
 
@@ -11117,12 +12091,12 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameFiveLines);
 
-        assertEquals(5, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("34 43", gameConfig[2]);
-        assertEquals("33 44", gameConfig[3]);
-        assertEquals("33 44", gameConfig[4]);
+        assertEquals("Lines number of gameFiveLines config file", 5, gameConfig.length);
+        assertEquals("1st line of gameFiveLines config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameFiveLines config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameFiveLines config file", "34 43", gameConfig[2]);
+        assertEquals("4th line of gameFiveLines config file", "33 44", gameConfig[3]);
+        assertEquals("5th line of gameFiveLines config file", "33 44", gameConfig[4]);
     }
 
     @Test
@@ -11130,11 +12104,11 @@ public class ReversiTest {
         Reversi game = rev;
         String[] gameConfig = game.readGameConfig(GameConfig.gameAlpha);
 
-        assertEquals(4, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-        assertEquals("E4 D5", gameConfig[2]);
-        assertEquals("D4 E5", gameConfig[3]);
+        assertEquals("Lines number of gameAlpha config file", 4, gameConfig.length);
+        assertEquals("1st line of gameAlpha config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameAlpha config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameAlpha config file", "E4 D5", gameConfig[2]);
+        assertEquals("4th line of gameAlpha config file", "D4 E5", gameConfig[3]);
     }
 
     @Test
@@ -11180,20 +12154,22 @@ public class ReversiTest {
         assertEquals("set size 8", 8, game.size);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetSizeNeg8() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setSize("-8");
 
-        assertEquals("set size -8", 0, game.size);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect size input");
+        game.setSize("-8");
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetSizeA() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setSize("A");
 
-        assertEquals("set size A", 0, game.size);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect size input");
+        game.setSize("A");
     }
 
     // setOnTurnInputCorrect
@@ -11252,28 +12228,31 @@ public class ReversiTest {
         assertEquals("set player on turn: W", Player.W, game.onTurn);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetOnTurnA() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setOnTurn("A");
 
-        assertEquals(Player.NONE, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect player on turn input");
+        game.setOnTurn("A");
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetOnTurnNone() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setOnTurn("NONE");
 
-        assertEquals(Player.NONE, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect player on turn input");
+        game.setOnTurn("NONE");
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetOnTurnnull() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.setOnTurn(null);
 
-        assertEquals(Player.NONE, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect player on turn input");
+        game.setOnTurn(null);
     }
 
 
@@ -11313,34 +12292,31 @@ public class ReversiTest {
         assertEquals("set player B on tile 00", Player.B, getTile(game, 0, 0));
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetTile80() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("80", Player.B);
 
-        Player[][] expectedPlayground = getInitPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
-        assertEquals(Player.B, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.setTile("80", Player.B);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetTile08() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("08", Player.B);
 
-        Player[][] expectedPlayground = getInitPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
-        assertEquals(Player.B, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.setTile("08", Player.B);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testSetTile88() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("88", Player.B);
 
-        Player[][] expectedPlayground = getInitPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
-        assertEquals(Player.B, game.onTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.setTile("88", Player.B);
     }
 
 
@@ -11359,33 +12335,33 @@ public class ReversiTest {
         assertEquals("fill playground with initial game config", Player.W, getTile(game, 4, 4));
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testFillPlaygroundConfigLen1() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"one"};
         Reversi game = getRevWithPlayground();
-        game.fillPlayground(gameConfig);
 
-        Player[][] expectedPlayground = getEmptyPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration file is incorrect");
+        game.fillPlayground(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testFillPlaygroundNull() throws IncorrectGameConfigFileException {
         Reversi game = getRevWithPlayground();
-        game.fillPlayground(null);
 
-        Player[][] expectedPlayground = getEmptyPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration file is incorrect");
+        game.fillPlayground(null);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testFillPlaygroundNoOnTurn() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "34 43", "33 44"};
         Reversi game = getRevWithPlayground();
-        game.fillPlayground(gameConfig);
 
-        Player[][] expectedPlayground = getEmptyPlayground();
-        assertArrayEquals(expectedPlayground, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.fillPlayground(gameConfig);
     }
 
 
@@ -11433,67 +12409,73 @@ public class ReversiTest {
         assertEquals("init playground on initial game config", Player.W, getTile(game, 5, 5));
     }
 
-
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameEmpty() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameFiveLines() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "B", "34 43", "33 44", "33 44"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameAlpha() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "B", "E4 D5", "D4 E5"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(getEmptyPlayground(), game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameNoSize() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"B", "34 43", "33 44"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameNoOnTurn() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "34 43", "33 44"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameNoTiles() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "B"};
         Reversi game = rev;
-        game.initGame(gameConfig);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.initGame(gameConfig);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testInitGameNull() throws IncorrectGameConfigFileException {
         Reversi game = rev;
-        game.initGame(null);
 
-        assertArrayEquals(null, game.playground);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration is null");
+        game.initGame(null);
     }
 
 
@@ -11581,39 +12563,53 @@ public class ReversiTest {
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testEmpty() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameEmpty);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameEmpty);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testNotExisting() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameNotExisting);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration file does not exist");
+        new Reversi(GameConfig.gameNotExisting);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testFiveLines() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameFiveLines);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameFiveLines);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testAlpha() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameAlpha);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect tile input");
+        new Reversi(GameConfig.gameAlpha);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testNoSize() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameNoSize);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameNoSize);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testNoOnTurn() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameNoOnTurn);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameNoOnTurn);
     }
 
-    @Test(expected = IncorrectGameConfigFileException.class)
+    @Test
     public void testNoTiles() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.gameNoTiles);
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameNoTiles);
     }
 
 
@@ -11732,8 +12728,8 @@ public class ReversiTest {
         tiles.add(Arrays.asList(3, 2));
         game.flipTiles(tiles);
 
-        assertEquals("...", Player.B, getTile(game, 3, 3));
-        assertEquals("...", Player.B, getTile(game, 3, 2));
+        assertEquals(Player.B, getTile(game, 3, 3));
+        assertEquals(Player.B, getTile(game, 3, 2));
     }
 
     // getPossibleMoves
@@ -11809,27 +12805,39 @@ public class ReversiTest {
 
     // move
 
-    @Test(expected = NotPermittedMoveException.class)
+    @Test
     public void testMoveOnNotEmpty() throws IncorrectGameConfigFileException, NotPermittedMoveException {
         Reversi game = new Reversi(GameConfig.game8bInit);
+
+        expectedException.expect(NotPermittedMoveException.class);
+        expectedException.expectMessage("Move on not empty tile is not permitted");
         game.move(4, 4);
     }
 
-    @Test(expected = NotPermittedMoveException.class)
+    @Test
     public void testMoveOutOfBoundsBelow() throws IncorrectGameConfigFileException, NotPermittedMoveException {
         Reversi game = new Reversi(GameConfig.game8bInit);
+
+        expectedException.expect(NotPermittedMoveException.class);
+        expectedException.expectMessage("Move out of bounds is not permitted");
         game.move(8, 0);
     }
 
-    @Test(expected = NotPermittedMoveException.class)
+    @Test
     public void testMoveOutOfBoundsAbove() throws IncorrectGameConfigFileException, NotPermittedMoveException {
         Reversi game = new Reversi(GameConfig.game8bInit);
+
+        expectedException.expect(NotPermittedMoveException.class);
+        expectedException.expectMessage("Move out of bounds is not permitted");
         game.move(-1, 0);
     }
 
-    @Test(expected = NotPermittedMoveException.class)
+    @Test
     public void testMoveOnNotAdjacent() throws IncorrectGameConfigFileException, NotPermittedMoveException {
         Reversi game = new Reversi(GameConfig.game8bInit);
+
+        expectedException.expect(NotPermittedMoveException.class);
+        expectedException.expectMessage("Move is not permitted");
         game.move(0, 0);
     }
 
@@ -12097,37 +13105,10 @@ public class ReversiTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'GameConfig.java', 10, 'package moveException;
-
-import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 10, 'import org.junit.Test;
-
-import java.io.File;
-import java.nio.file.Path;
+VALUES ('public_test', 'ReversiTest.java', 11, 'import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 
 public class ReversiTest {
 
@@ -12145,117 +13126,95 @@ public class ReversiTest {
 
 }');
 
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'GameConfig.java', 10, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./game_config/";
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_10_b_init.txt', '10
+B
+45 54
+44 55
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_10_b_init.txt', '10
 B
 45 54
 44 55
-', 10, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_10_b_init.txt', '10
-B
-45 54
-44 55
-', 10, 'public_file');
+', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_almost_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 10, 'private_file');
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_almost_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43
-', 10, 'public_file');
+', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 10, 'private_file');
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_complete.txt', '8
 W
 45 32 22 42 12 52 41 24 02 25 65 14 64 62 46 37 03 71 74 27 47 20 76 07 06 61 60 40 00 67 33 44
 53 23 35 21 54 31 13 50 51 55 04 05 26 36 73 63 01 72 15 56 16 75 30 10 57 70 77 17 11 66 43 34
-', 10, 'public_file');
+', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_init.txt', '8
 B
 34 43
 33 44
-', 10, 'private_file');
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_b_init.txt', '8
 B
 34 43
 33 44
-', 10, 'public_file');
+', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_w_init.txt', '8
 W
 34 43
 33 44
-', 10, 'private_file');
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_8_w_init.txt', '8
 W
 34 43
 33 44
-', 10, 'public_file');
+', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_alpha.txt', '8
 B
 E4 D5
 D4 E5
-', 10, 'private_file');
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_alpha.txt', '8
 B
 E4 D5
 D4 E5
-', 10, 'public_file');
+', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 10, 'private_file');
+VALUES ('game_empty.txt', '', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 10, 'public_file');
+VALUES ('game_empty.txt', '', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_five_lines.txt', '8
@@ -12263,7 +13222,7 @@ B
 34 43
 33 44
 33 44
-', 10, 'private_file');
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_five_lines.txt', '8
@@ -12271,39 +13230,39 @@ B
 34 43
 33 44
 33 44
-', 10, 'public_file');
+', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_on_turn.txt', '8
 34 43
 33 44
-', 10, 'private_file');
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_on_turn.txt', '8
 34 43
 33 44
-', 10, 'public_file');
+', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_size.txt', 'B
 34 43
 33 44
-', 10, 'private_file');
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_size.txt', 'B
 34 43
 33 44
-', 10, 'public_file');
+', 11, 'public_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_tiles.txt', '8
 B
-', 10, 'private_file');
+', 11, 'private_file');
 
 INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
 VALUES ('game_no_tiles.txt', '8
 B
-', 10, 'public_file');
+', 11, 'public_file');
 

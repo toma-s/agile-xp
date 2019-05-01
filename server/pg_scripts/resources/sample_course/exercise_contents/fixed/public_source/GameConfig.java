@@ -1,9 +1,10 @@
 import java.io.File;
 import java.nio.file.Path;
 
-class GameConfig {
 
-    private static String gameConfigDir = "./game_config_8/";
+public final class GameConfig {
+
+    private static String gameConfigDir = "upload-dir/12345/game_config/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();

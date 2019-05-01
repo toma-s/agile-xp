@@ -316,7 +316,7 @@ public class Reversi {
     public static void main(String[] args) {
         String fileName = "game_8_b_init.txt.txt";
 
-        File gameFile = new File("./game_config/" + fileName);
+        File gameFile = new File("upload-dir/12345/game_config/" + fileName);
         Path gameFilePath = gameFile.toPath();
 
         Reversi rev = new Reversi(gameFilePath);

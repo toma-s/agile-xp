@@ -10,21 +10,25 @@
     <div>
       <a mat-button color="primary" [routerLink]="['../', previousExerciseId]"
         [disabled]="0 > previousIndex">Previous</a>
+    </div>
 
+    <div>
       <a mat-button color="primary" [routerLink]="['../', nextExerciseId]" [disabled]="nextIndex >= maxIndex">Next</a>
     </div>
 
     <span class="space"></span>
 
-    <!-- <div *ngIf="exercise"> -->
-      <p *ngIf="solved; then isSolved; else notSolved"></p>
-      <ng-template #isSolved>
+    <p *ngIf="solved; then isSolved; else notSolved"></p>
+    <ng-template #isSolved>
+      <div>
         <a mat-button [disabled]="true" class="exercise__is_solved">Solved</a>
-      </ng-template>
-      <ng-template #notSolved>
+      </div>
+    </ng-template>
+    <ng-template #notSolved>
+      <div>
         <a mat-button [disabled]="true" class="exercise__not_solved">Not solved</a>
-      </ng-template>
-    <!-- </div> -->
+      </div>
+    </ng-template>
 
   </mat-toolbar-row>
 </mat-toolbar>

@@ -3,7 +3,15 @@ package fixed;
 import java.io.File;
 import java.nio.file.Path;
 
-class GameConfig {
+final class GameConfig {
+
+    private static final GameConfig INSTANCE = new GameConfig();
+
+    GameConfig() {}
+
+    public static GameConfig getInstance() {
+        return INSTANCE;
+    }
 
     private static String gameConfigDir = "./game_config_8/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();

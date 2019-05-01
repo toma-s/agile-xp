@@ -526,8 +526,10 @@ public class SolutionEstimationController {
 
     private String getResult(List<Result> exerciseTestsResults) {
         StringBuilder result = new StringBuilder();
-        exerciseTestsResults.forEach(exerciseTestsResult ->
-            result.append(getResultInfo(exerciseTestsResult))
+        exerciseTestsResults.forEach(exerciseTestsResult -> {
+                    result.append(getResultInfo(exerciseTestsResult));
+                    result.append("\n\n");
+                }
         );
         return result.toString();
     }
@@ -557,7 +559,7 @@ public class SolutionEstimationController {
     private String getEstimation(Pair<Boolean, String> publicEstimation, Pair<Boolean, String> privateEstimation) {
         return "Public test result:\n" +
                 publicEstimation.getValue() +
-                "\n\nPrivate test result:\n" +
+                "\nPrivate test result:\n" +
                 privateEstimation.getValue();
     }
 

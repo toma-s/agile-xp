@@ -10,12 +10,12 @@
         "filename": "'Reversi.java'"
       },
       {
-        "exercise_content_type": "'public_test'",
-        "filename": "'ReversiTest.java'"
+        "exercise_content_type": "'private_source'",
+        "filename": "'GameConfig.java'"
       },
       {
         "exercise_content_type": "'public_test'",
-        "filename": "'GameConfig.java'"
+        "filename": "'ReversiTest.java'"
       }
     ],
     "file": "game_config_8"
@@ -28,20 +28,16 @@
         "filename": "'Reversi.java'"
       },
       {
+        "exercise_content_type": "'public_source'",
+        "filename": "'GameConfig.java'"
+      },
+      {
         "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
       {
-        "exercise_content_type": "'private_test'",
-        "filename": "'GameConfig.java'"
-      },
-      {
         "exercise_content_type": "'public_test'",
         "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'GameConfig.java'"
       }
     ],
     "file": "game_config_8"
@@ -54,20 +50,16 @@
         "filename": "'Reversi.java'"
       },
       {
+        "exercise_content_type": "'public_source'",
+        "filename": "'GameConfig.java'"
+      },
+      {
         "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
       {
-        "exercise_content_type": "'private_test'",
-        "filename": "'GameConfig.java'"
-      },
-      {
         "exercise_content_type": "'public_test'",
         "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'GameConfig.java'"
       }
     ],
     "file": "game_config"
@@ -84,20 +76,16 @@
         "filename": "'Player.java'"
       },
       {
+        "exercise_content_type": "'public_source'",
+        "filename": "'GameConfig.java'"
+      },
+      {
         "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
       {
-        "exercise_content_type": "'private_test'",
-        "filename": "'GameConfig.java'"
-      },
-      {
         "exercise_content_type": "'public_test'",
         "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'GameConfig.java'"
       }
     ],
     "file": "game_config"
@@ -114,20 +102,42 @@
         "filename": "'Player.java'"
       },
       {
+        "exercise_content_type": "'public_source'",
+        "filename": "'GameConfig.java'"
+      },
+      {
         "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
       {
-        "exercise_content_type": "'private_test'",
+        "exercise_content_type": "'public_test'",
+        "filename": "'ReversiTest.java'"
+      }
+    ],
+    "file": "game_config"
+  },
+  {
+    "directory": "duplicity",
+    "source_test": [
+      {
+        "exercise_content_type": "'public_source'",
+        "filename": "'Reversi.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
+        "filename": "'Player.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
         "filename": "'GameConfig.java'"
       },
       {
-        "exercise_content_type": "'public_test'",
+        "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
       {
         "exercise_content_type": "'public_test'",
-        "filename": "'GameConfig.java'"
+        "filename": "'ReversiTest.java'"
       }
     ],
     "file": "game_config"
@@ -144,20 +154,16 @@
         "filename": "'Player.java'"
       },
       {
+        "exercise_content_type": "'public_source'",
+        "filename": "'GameConfig.java'"
+      },
+      {
         "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
       {
-        "exercise_content_type": "'private_test'",
-        "filename": "'GameConfig.java'"
-      },
-      {
         "exercise_content_type": "'public_test'",
         "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'GameConfig.java'"
       }
     ],
     "file": "game_config"
@@ -174,20 +180,16 @@
         "filename": "'Player.java'"
       },
       {
+        "exercise_content_type": "'public_source'",
+        "filename": "'GameConfig.java'"
+      },
+      {
         "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
       {
-        "exercise_content_type": "'private_test'",
-        "filename": "'GameConfig.java'"
-      },
-      {
         "exercise_content_type": "'public_test'",
         "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'GameConfig.java'"
       }
     ],
     "file": "game_config"
@@ -208,20 +210,16 @@
         "filename": "'IncorrectGameConfigFileException.java'"
       },
       {
+        "exercise_content_type": "'public_source'",
+        "filename": "'GameConfig.java'"
+      },
+      {
         "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
       {
-        "exercise_content_type": "'private_test'",
-        "filename": "'GameConfig.java'"
-      },
-      {
         "exercise_content_type": "'public_test'",
         "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'GameConfig.java'"
       }
     ],
     "file": "game_config"
@@ -246,20 +244,16 @@
         "filename": "'NotPermittedMoveException.java'"
       },
       {
+        "exercise_content_type": "'public_source'",
+        "filename": "'GameConfig.java'"
+      },
+      {
         "exercise_content_type": "'private_test'",
         "filename": "'ReversiTest.java'"
       },
       {
-        "exercise_content_type": "'private_test'",
-        "filename": "'GameConfig.java'"
-      },
-      {
         "exercise_content_type": "'public_test'",
         "filename": "'ReversiTest.java'"
-      },
-      {
-        "exercise_content_type": "'public_test'",
-        "filename": "'GameConfig.java'"
       }
     ],
     "file": "game_config"
