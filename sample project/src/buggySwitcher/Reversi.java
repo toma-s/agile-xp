@@ -58,8 +58,8 @@ public class Reversi {
                 move(r, c);
                 reader.close();
             }
-        } catch (Exception e) {
-            System.out.println("IO exception occurred on reading input: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -68,9 +68,9 @@ public class Reversi {
         try {
             gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
         } catch (NoSuchFileException e) {
-            System.out.println("Could not open game configuration file.");
+            System.out.println("Game configuration file does not exist");
         } catch (IOException e) {
-            System.out.println("Could not read game configuration file.");
+            System.out.println("Could not read game configuration file");
         }
         return gameConfig;
     }
@@ -82,12 +82,12 @@ public class Reversi {
         }
         int configFileLinesNumber = 3;
         if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines.");
+            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
         try {
             if (gameConfig[0] == null || ! gameConfig[0].matches("[B|W]")) {
-                System.out.println("Incorrect player on turn input.");
+                System.out.println("Incorrect player on turn input");
                 return;
             }
             if ("B".equals(gameConfig[0])) {
@@ -101,24 +101,20 @@ public class Reversi {
                     playground[r][c] = -1;
                 }
             }
-            try {
-                for (int i = 1; i < 3; i++) {
-                    String[] tiles = gameConfig[i].split(" ");
-                    for (String tile : tiles) {
-                        if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
-                            System.out.println("Incorrect tile input");
-                            return;
-                        }
-                        int r = Integer.parseInt(tile.substring(1, 2));
-                        int c = Integer.parseInt(tile.substring(0, 1));
-                        playground[r][c] = players[i - 1];
+            for (int i = 1; i < 3; i++) {
+                String[] tiles = gameConfig[i].split(" ");
+                for (String tile : tiles) {
+                    if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
+                        System.out.println("Incorrect tile input");
+                        return;
                     }
+                    int r = Integer.parseInt(tile.substring(1, 2));
+                    int c = Integer.parseInt(tile.substring(0, 1));
+                    playground[r][c] = players[i - 1];
                 }
-            } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-                System.out.println("Game configuration file is incorrect.");
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect.");
+            System.out.println("Game configuration is incorrect");
         }
     }
 
@@ -222,7 +218,7 @@ public class Reversi {
             tilesToFlip.add(new ArrayList<>(List.of(r, c)));
         }
 
-        if (tilesToFlip.size() == 0) {
+        if (tilesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
@@ -293,7 +289,7 @@ public class Reversi {
                 }
 
                 playground[r][c] = -1;
-                if (toFLip.size() != 0) {
+                if (!toFLip.isEmpty()) {
                     toFLip.add(new ArrayList<>(List.of(r, c)));
                 }
                 if (toFLip.size() == 0) continue;

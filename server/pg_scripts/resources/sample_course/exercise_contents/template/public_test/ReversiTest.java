@@ -10,7 +10,7 @@ public class ReversiTest {
 
     private Reversi rev = new Reversi();
 
-    private String gameConfigDir = "./game_config/";
+    private String gameConfigDir = "upload-dir/12345/game_config/";
     private Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     private Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     private Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -25,9 +25,12 @@ public class ReversiTest {
     private Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
 
     @Test
-    public void test() {
+    public void testSample() {
         Reversi game = rev;
-        // TODO
+
+        int expected = 1;
+        int actual = 1;
+        assertEquals(expected, actual);
     }
 
 }
