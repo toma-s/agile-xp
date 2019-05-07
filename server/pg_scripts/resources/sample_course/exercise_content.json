@@ -11,6 +11,10 @@
       },
       {
         "exercise_content_type": "'private_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'private_source'",
         "filename": "'GameConfig.java'"
       },
       {
@@ -29,11 +33,31 @@
       },
       {
         "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
         "filename": "'GameConfig.java'"
       },
       {
         "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
       },
       {
         "exercise_content_type": "'public_test'",
@@ -51,11 +75,31 @@
       },
       {
         "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
         "filename": "'GameConfig.java'"
       },
       {
         "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
       },
       {
         "exercise_content_type": "'public_test'",
@@ -73,6 +117,10 @@
       },
       {
         "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
         "filename": "'Player.java'"
       },
       {
@@ -81,7 +129,27 @@
       },
       {
         "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
+        "filename": "'PlayerTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
       },
       {
         "exercise_content_type": "'public_test'",
@@ -99,6 +167,10 @@
       },
       {
         "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
         "filename": "'Player.java'"
       },
       {
@@ -107,7 +179,31 @@
       },
       {
         "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
+        "filename": "'PlayerTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ExecuteTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
       },
       {
         "exercise_content_type": "'public_test'",
@@ -125,6 +221,10 @@
       },
       {
         "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
         "filename": "'Player.java'"
       },
       {
@@ -133,7 +233,27 @@
       },
       {
         "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
+        "filename": "'PlayerTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
       },
       {
         "exercise_content_type": "'public_test'",
@@ -151,6 +271,10 @@
       },
       {
         "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
         "filename": "'Player.java'"
       },
       {
@@ -159,7 +283,31 @@
       },
       {
         "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
+        "filename": "'PlayerTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ExecuteTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
       },
       {
         "exercise_content_type": "'public_test'",
@@ -177,6 +325,10 @@
       },
       {
         "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
         "filename": "'Player.java'"
       },
       {
@@ -185,7 +337,31 @@
       },
       {
         "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
+        "filename": "'PlayerTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ExecuteTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
       },
       {
         "exercise_content_type": "'public_test'",
@@ -203,6 +379,10 @@
       },
       {
         "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
         "filename": "'Player.java'"
       },
       {
@@ -215,7 +395,31 @@
       },
       {
         "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
+        "filename": "'PlayerTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ExecuteTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
       },
       {
         "exercise_content_type": "'public_test'",
@@ -230,6 +434,10 @@
       {
         "exercise_content_type": "'public_source'",
         "filename": "'Reversi.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
       },
       {
         "exercise_content_type": "'public_source'",
@@ -249,7 +457,31 @@
       },
       {
         "exercise_content_type": "'private_test'",
-        "filename": "'ReversiTest.java'"
+        "filename": "'PlayerTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ExecuteTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
       },
       {
         "exercise_content_type": "'public_test'",

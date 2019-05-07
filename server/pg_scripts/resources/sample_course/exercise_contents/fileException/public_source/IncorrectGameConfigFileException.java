@@ -8,4 +8,5 @@ public class IncorrectGameConfigFileException extends Exception {
         super(message, cause);
     }
 
+
 }

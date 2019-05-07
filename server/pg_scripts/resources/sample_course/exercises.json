@@ -35,16 +35,16 @@
       "directory": "player"
     },
     {
-      "name": "'Do One Thing'",
-      "type_id": 2,
-      "created": "'2019-03-28 11:08:09.851'",
-      "directory": "oneThing"
-    },
-    {
       "name": "'No Duplication'",
       "type_id": 2,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "duplicity"
+    },
+    {
+      "name": "'Do One Thing'",
+      "type_id": 2,
+      "created": "'2019-03-28 11:08:09.851'",
+      "directory": "oneThing"
     },
     {
       "name": "'One Level of Abstraction per Function'",
