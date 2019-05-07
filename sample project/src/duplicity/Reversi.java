@@ -28,7 +28,7 @@ public class Reversi {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
             initGame(gameConfig);
-            initTilesCount();
+            initPiecesCount();
         } catch (Exception e) {
             ended = true;
             System.out.println(e.getMessage());
@@ -79,13 +79,13 @@ public class Reversi {
                 }
             }
             for (int i = 2; i < 4; i++) {
-                String[] tiles = gameConfig[i].split(",");
-                for (String tile : tiles) {
-                    if (!isTileInputCorrect(tile)) {
-                        System.out.println("Incorrect tile input");
+                String[] pieces = gameConfig[i].split(",");
+                for (String piece : pieces) {
+                    if (!isPieceInputCorrect(piece)) {
+                        System.out.println("Incorrect piece input");
                         return;
                     }
-                    int[] coordinates = getCoordinates(tile);
+                    int[] coordinates = getCoordinates(piece);
                     int r = coordinates[0];
                     int c = coordinates[1];
                     if (r >= size || c >= size) {
@@ -99,18 +99,18 @@ public class Reversi {
         }
     }
 
-    boolean isTileInputCorrect(String tile) {
-        return tile.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*");
+    boolean isPieceInputCorrect(String piece) {
+        return piece.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*");
     }
 
-    int[] getCoordinates(String tile) {
-        String[] coordinates = tile.trim().split(" ");
+    int[] getCoordinates(String piece) {
+        String[] coordinates = piece.trim().split(" ");
         int r = Integer.parseInt(coordinates[0]);
         int c = Integer.parseInt(coordinates[1]);
         return new int[] {r, c};
     }
 
-    void initTilesCount() {
+    void initPiecesCount() {
         try {
             for (int r = 0; r < size; r++) {
                 for (int c = 0; c < size; c++) {
@@ -135,13 +135,13 @@ public class Reversi {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
-                if (!isTileInputCorrect(line)) {
-                    System.out.println("Incorrect tile input");
+                if (!isPieceInputCorrect(line)) {
+                    System.out.println("Incorrect piece input");
                     return;
                 }
                 int[] coordinates = getCoordinates(line);
                 move(coordinates[0], coordinates[1]);
-                printTilesLeftCount();
+                printPiecesLeftCount();
             }
             reader.close();
         } catch (IOException e) {
@@ -149,8 +149,8 @@ public class Reversi {
         }
     }
 
-    private void printTilesLeftCount() {
-        System.out.printf("Number of tiles: B: %s; W: %s\n\n", getLeftB(), getLeftW());
+    private void printPiecesLeftCount() {
+        System.out.printf("Number of pieces: B: %s; W: %s\n\n", getLeftB(), getLeftW());
     }
 
     int getLeftB() {
@@ -167,7 +167,7 @@ public class Reversi {
             return;
         }
         if (playground[r][c] != Player.NONE) {
-            System.out.println("Move on not empty tile is not permitted");
+            System.out.println("Move on not empty piece is not permitted");
             return;
         }
         if (winner != Player.NONE) {
@@ -175,7 +175,7 @@ public class Reversi {
             return;
         }
 
-        ArrayList<List<Integer>> tilesToFlip = new ArrayList<>();
+        ArrayList<List<Integer>> piecesToFlip = new ArrayList<>();
         playground[r][c] = onTurn;
         Player opposite = Player.NONE;
         if (onTurn == Player.W) opposite = Player.B;
@@ -202,29 +202,29 @@ public class Reversi {
                 dirR -= direction[0];
                 dirC -= direction[1];
                 if (dirR == r && dirC == c) break;
-                tilesToFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
+                piecesToFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
             }
         }
 
         playground[r][c] = Player.NONE;
-        if (!tilesToFlip.isEmpty()) {
-            tilesToFlip.add(new ArrayList<>(Arrays.asList(r, c)));
+        if (!piecesToFlip.isEmpty()) {
+            piecesToFlip.add(new ArrayList<>(Arrays.asList(r, c)));
         }
 
-        if (tilesToFlip.isEmpty()) {
+        if (piecesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
         }
-        for (List<Integer> tile : tilesToFlip) {
-            int tileR = tile.get(0);
-            int tileC = tile.get(1);
-            if (playground[tileR][tileC] == onTurn) break;
-            if (playground[tileR][tileC] == Player.NONE) {
-                playground[tileR][tileC] = onTurn;
+        for (List<Integer> piece : piecesToFlip) {
+            int pieceR = piece.get(0);
+            int pieceC = piece.get(1);
+            if (playground[pieceR][pieceC] == onTurn) break;
+            if (playground[pieceR][pieceC] == Player.NONE) {
+                playground[pieceR][pieceC] = onTurn;
                 if (onTurn == Player.B) leftB++;
                 else if (onTurn == Player.W) leftW++;
             } else {
-                playground[tileR][tileC] = onTurn;
+                playground[pieceR][pieceC] = onTurn;
                 if (onTurn == Player.B) {
                     leftB++;
                     leftW--;
@@ -238,7 +238,7 @@ public class Reversi {
         if (onTurn == Player.W) onTurn = Player.B;
         else if (onTurn == Player.B) onTurn = Player.W;
         if (! areValidMoves()) {
-            printTilesLeftCount();
+            printPiecesLeftCount();
             ended = true;
             if (getLeftB() > getLeftW()) winner = Player.B;
             else if (getLeftW() > getLeftB()) winner = Player.W;
@@ -250,7 +250,7 @@ public class Reversi {
     }
 
     boolean areValidMoves() {
-        ArrayList<String> tiles = new ArrayList<>();
+        ArrayList<String> pieces = new ArrayList<>();
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] != Player.NONE) continue;
@@ -292,10 +292,10 @@ public class Reversi {
                 if (toFlip.isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
-                tiles.add(rString + " " + cString);
+                pieces.add(rString + " " + cString);
             }
         }
-        return !tiles.isEmpty();
+        return !pieces.isEmpty();
     }
 
     public static void main(String[] args) {

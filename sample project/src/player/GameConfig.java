@@ -15,7 +15,7 @@ class GameConfig {
     static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
     static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
     static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoTiles = new File(gameConfigDir + "game_no_tiles.txt").toPath();
+    static Path gameNoPieces = new File(gameConfigDir + "game_no_pieces.txt").toPath();
     static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
     static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
 }

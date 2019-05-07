@@ -127,9 +127,9 @@ public class ReversiTest {
     }
 
     @Test
-    public void testReadGameConfigNoTiles() {
+    public void testReadGameConfigNoPieces() {
         Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameNoTiles);
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoPieces);
 
         assertEquals(2, gameConfig.length);
         assertEquals("8", gameConfig[0]);
@@ -217,24 +217,24 @@ public class ReversiTest {
     }
 
 
-    // isTileInputCorrect
+    // isPieceInputCorrect
 
     @Test
-    public void testTileInput00() {
+    public void testPieceInput00() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        assertTrue("tile input: 00", game.isTileInputCorrect("0 0"));
+        assertTrue("piece input: 00", game.isPieceInputCorrect("0 0"));
     }
 
     @Test
-    public void testTileInput00NoSpace() {
+    public void testPieceInput00NoSpace() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        assertFalse("tile input: 00", game.isTileInputCorrect("00"));
+        assertFalse("piece input: 00", game.isPieceInputCorrect("00"));
     }
 
     @Test
-    public void testTileInputD3() {
+    public void testPieceInputD3() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        assertFalse("tile input: D 3", game.isTileInputCorrect("D 3"));
+        assertFalse("piece input: D 3", game.isPieceInputCorrect("D 3"));
     }
 
 
@@ -249,20 +249,20 @@ public class ReversiTest {
     }
 
 
-    // setTile
+    // setPiece
 
     @Test
-    public void testSetTile00() {
+    public void testSetPiece00() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile(new int[]{0, 0}, Player.B);
+        game.setPiece(new int[]{0, 0}, Player.B);
 
-        assertEquals("set player B on tile 00", Player.B, getTile(game, 0, 0));
+        assertEquals("set player B on piece 00", Player.B, getPiece(game, 0, 0));
     }
 
     @Test
-    public void testSetTile80() {
+    public void testSetPiece80() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile(new int[]{8, 0}, Player.B);
+        game.setPiece(new int[]{8, 0}, Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
         assertArrayEquals(expectedPlayground, game.playground);
@@ -270,9 +270,9 @@ public class ReversiTest {
     }
 
     @Test
-    public void testSetTile08() {
+    public void testSetPiece08() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile(new int[]{0, 8}, Player.B);
+        game.setPiece(new int[]{0, 8}, Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
         assertArrayEquals(expectedPlayground, game.playground);
@@ -280,9 +280,9 @@ public class ReversiTest {
     }
 
     @Test
-    public void testSetTile88() {
+    public void testSetPiece88() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile(new int[]{8, 8}, Player.B);
+        game.setPiece(new int[]{8, 8}, Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
         assertArrayEquals(expectedPlayground, game.playground);
@@ -299,10 +299,10 @@ public class ReversiTest {
         game.size = 8;
         game.fillPlayground(gameConfig);
 
-        assertEquals("fill playground with initial game config", Player.B, getTile(game, 3, 4));
-        assertEquals("fill playground with initial game config", Player.B, getTile(game, 4, 3));
-        assertEquals("fill playground with initial game config", Player.W, getTile(game, 3, 3));
-        assertEquals("fill playground with initial game config", Player.W, getTile(game, 4, 4));
+        assertEquals("fill playground with initial game config", Player.B, getPiece(game, 3, 4));
+        assertEquals("fill playground with initial game config", Player.B, getPiece(game, 4, 3));
+        assertEquals("fill playground with initial game config", Player.W, getPiece(game, 3, 3));
+        assertEquals("fill playground with initial game config", Player.W, getPiece(game, 4, 4));
     }
 
     @Test
@@ -345,10 +345,10 @@ public class ReversiTest {
 
         assertEquals("init playground on initial game config", 8, game.size);
         assertEquals("init playground on initial game config", Player.B, game.onTurn);
-        assertEquals("init playground on initial game config", Player.B, getTile(game, 3, 4));
-        assertEquals("init playground on initial game config", Player.B, getTile(game, 4, 3));
-        assertEquals("init playground on initial game config", Player.W, getTile(game, 3, 3));
-        assertEquals("init playground on initial game config", Player.W, getTile(game, 4, 4));
+        assertEquals("init playground on initial game config", Player.B, getPiece(game, 3, 4));
+        assertEquals("init playground on initial game config", Player.B, getPiece(game, 4, 3));
+        assertEquals("init playground on initial game config", Player.W, getPiece(game, 3, 3));
+        assertEquals("init playground on initial game config", Player.W, getPiece(game, 4, 4));
     }
 
     @Test
@@ -359,10 +359,10 @@ public class ReversiTest {
 
         assertEquals("init playground on initial game config", 8, game.size);
         assertEquals("init playground on initial game config", Player.W, game.onTurn);
-        assertEquals("init playground on initial game config", Player.B, getTile(game, 3, 4));
-        assertEquals("init playground on initial game config", Player.B, getTile(game, 4, 3));
-        assertEquals("init playground on initial game config", Player.W, getTile(game, 3, 3));
-        assertEquals("init playground on initial game config", Player.W, getTile(game, 4, 4));
+        assertEquals("init playground on initial game config", Player.B, getPiece(game, 3, 4));
+        assertEquals("init playground on initial game config", Player.B, getPiece(game, 4, 3));
+        assertEquals("init playground on initial game config", Player.W, getPiece(game, 3, 3));
+        assertEquals("init playground on initial game config", Player.W, getPiece(game, 4, 4));
     }
 
     @Test
@@ -373,10 +373,10 @@ public class ReversiTest {
 
         assertEquals("init playground on initial game config", 10, game.size);
         assertEquals("init playground on initial game config", Player.B, game.onTurn);
-        assertEquals("init playground on initial game config", Player.B, getTile(game, 4, 5));
-        assertEquals("init playground on initial game config", Player.B, getTile(game, 5, 4));
-        assertEquals("init playground on initial game config", Player.W, getTile(game, 4, 4));
-        assertEquals("init playground on initial game config", Player.W, getTile(game, 5, 5));
+        assertEquals("init playground on initial game config", Player.B, getPiece(game, 4, 5));
+        assertEquals("init playground on initial game config", Player.B, getPiece(game, 5, 4));
+        assertEquals("init playground on initial game config", Player.W, getPiece(game, 4, 4));
+        assertEquals("init playground on initial game config", Player.W, getPiece(game, 5, 5));
     }
 
 
@@ -426,7 +426,7 @@ public class ReversiTest {
     }
 
     @Test
-    public void testInitGameNoTiles() {
+    public void testInitGameNoPieces() {
         String[] gameConfig = new String[]{"8", "B"};
         Reversi game = rev;
         game.initGame(gameConfig);
@@ -443,24 +443,24 @@ public class ReversiTest {
     }
 
 
-    // initTilesCount
+    // initPiecesCount
 
     @Test
-    public void testInitTilesCountInit() {
+    public void testInitPiecesCountInit() {
         String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = initReversi(gameConfig);
-        game.initTilesCount();
+        game.initPiecesCount();
 
-        assertEquals("init tiles count on initial game config", 2, game.getLeftB());
-        assertEquals("init tiles count on initial game config", 2, game.getLeftW());
+        assertEquals("init pieces count on initial game config", 2, game.getLeftB());
+        assertEquals("init pieces count on initial game config", 2, game.getLeftW());
     }
 
     @Test
-    public void testInitTilesCountEmpty() {
+    public void testInitPiecesCountEmpty() {
         Reversi game = getRevWithPlayground();
 
-        assertEquals("init tiles count on empty game config", 0, game.getLeftB());
-        assertEquals("init tiles count on empty game config", 0, game.getLeftW());
+        assertEquals("init pieces count on empty game config", 0, game.getLeftB());
+        assertEquals("init pieces count on empty game config", 0, game.getLeftW());
     }
 
 
@@ -492,10 +492,10 @@ public class ReversiTest {
 
         assertEquals("on turn player on initial game config", Player.B, game.onTurn);
         assertEquals("size on initial game config", 8, game.size);
-        assertEquals("playground on initial game config", Player.B, getTile(game, 3, 4));
-        assertEquals("playground on initial game config", Player.B, getTile(game, 4, 3));
-        assertEquals("playground on initial game config", Player.W, getTile(game, 3, 3));
-        assertEquals("playground on initial game config", Player.W, getTile(game, 4, 4));
+        assertEquals("playground on initial game config", Player.B, getPiece(game, 3, 4));
+        assertEquals("playground on initial game config", Player.B, getPiece(game, 4, 3));
+        assertEquals("playground on initial game config", Player.W, getPiece(game, 3, 3));
+        assertEquals("playground on initial game config", Player.W, getPiece(game, 4, 4));
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
@@ -506,10 +506,10 @@ public class ReversiTest {
 
         assertEquals("on turn player on initial game config", Player.W, game.onTurn);
         assertEquals("size on initial game config", 8, game.size);
-        assertEquals("playground on initial game config", Player.B, getTile(game, 3, 4));
-        assertEquals("playground on initial game config", Player.B, getTile(game, 4, 3));
-        assertEquals("playground on initial game config", Player.W, getTile(game, 3, 3));
-        assertEquals("playground on initial game config", Player.W, getTile(game, 4, 4));
+        assertEquals("playground on initial game config", Player.B, getPiece(game, 3, 4));
+        assertEquals("playground on initial game config", Player.B, getPiece(game, 4, 3));
+        assertEquals("playground on initial game config", Player.W, getPiece(game, 3, 3));
+        assertEquals("playground on initial game config", Player.W, getPiece(game, 4, 4));
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
@@ -519,10 +519,10 @@ public class ReversiTest {
         Reversi game = new Reversi(GameConfig.game10bInit);
 
         assertEquals("on turn player on initial game config", Player.B, game.onTurn);
-        assertEquals("playground on initial game config", Player.B, getTile(game, 4, 5));
-        assertEquals("playground on initial game config", Player.B, getTile(game, 5, 4));
-        assertEquals("playground on initial game config", Player.W, getTile(game, 4, 4));
-        assertEquals("playground on initial game config", Player.W, getTile(game, 5, 5));
+        assertEquals("playground on initial game config", Player.B, getPiece(game, 4, 5));
+        assertEquals("playground on initial game config", Player.B, getPiece(game, 5, 4));
+        assertEquals("playground on initial game config", Player.W, getPiece(game, 4, 4));
+        assertEquals("playground on initial game config", Player.W, getPiece(game, 5, 5));
         assertEquals("left Bs on initial game config", 2, game.getLeftB());
         assertEquals("left Ws on initial game config", 2, game.getLeftW());
     }
@@ -587,8 +587,8 @@ public class ReversiTest {
     }
 
     @Test
-    public void testNoTiles() {
-        Reversi game = new Reversi(GameConfig.gameNoTiles);
+    public void testNoPieces() {
+        Reversi game = new Reversi(GameConfig.gameNoPieces);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
@@ -597,44 +597,44 @@ public class ReversiTest {
     }
 
 
-    // getTilesToFlip
+    // getPiecesToFlip
 
     @Test
-    public void testGetTilesToFlipInit32() {
+    public void testGetPiecesToFlipInit32() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        List<List<Integer>> tiles = game.getTilesToFlip(3, 2);
+        List<List<Integer>> pieces = game.getPiecesToFlip(3, 2);
         List<List<Integer>> expected = new ArrayList<>();
         expected.add(Arrays.asList(3, 3));
         expected.add(Arrays.asList(3, 2));
 
-        assertEquals("tiles to flip on onit - (3, 2)", 2, tiles.size());
-        assertEquals(expected.get(0).get(0), tiles.get(0).get(0));
-        assertEquals(expected.get(0).get(1), tiles.get(0).get(1));
-        assertEquals(expected.get(1).get(0), tiles.get(1).get(0));
-        assertEquals(expected.get(1).get(1), tiles.get(1).get(1));
+        assertEquals("pieces to flip on onit - (3, 2)", 2, pieces.size());
+        assertEquals(expected.get(0).get(0), pieces.get(0).get(0));
+        assertEquals(expected.get(0).get(1), pieces.get(0).get(1));
+        assertEquals(expected.get(1).get(0), pieces.get(1).get(0));
+        assertEquals(expected.get(1).get(1), pieces.get(1).get(1));
     }
 
     @Test
-    public void testGetTilesToFlipInit00() {
+    public void testGetPiecesToFlipInit00() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        ArrayList<List<Integer>> tiles = game.getTilesToFlip(0, 0);
+        ArrayList<List<Integer>> pieces = game.getPiecesToFlip(0, 0);
 
-        assertEquals("tiles to flip on onit - (0, 0)", 0, tiles.size());
+        assertEquals("pieces to flip on onit - (0, 0)", 0, pieces.size());
     }
 
 
-    // flipTiles
+    // flipPieces
 
     @Test
-    public void testFlipTiles() {
+    public void testFlipPieces() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        List<List<Integer>> tiles = new ArrayList<>();
-        tiles.add(Arrays.asList(3, 3));
-        tiles.add(Arrays.asList(3, 2));
-        game.flipTiles(tiles);
+        List<List<Integer>> pieces = new ArrayList<>();
+        pieces.add(Arrays.asList(3, 3));
+        pieces.add(Arrays.asList(3, 2));
+        game.flipPieces(pieces);
 
-        assertEquals("...", Player.B, getTile(game, 3, 3));
-        assertEquals("...", Player.B, getTile(game, 3, 2));
+        assertEquals("...", Player.B, getPiece(game, 3, 3));
+        assertEquals("...", Player.B, getPiece(game, 3, 2));
     }
 
     // getPossibleMoves
@@ -642,21 +642,21 @@ public class ReversiTest {
     @Test
     public void testGetPossibleMoves8bInit() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        ArrayList<String> tiles = game.getPossibleMoves();
+        ArrayList<String> pieces = game.getPossibleMoves();
 
-        assertEquals("valid length", 4, tiles.size());
-        assertEquals("valid moves", "2 3", tiles.get(0));
-        assertEquals("valid moves", "3 2", tiles.get(1));
-        assertEquals("valid moves", "4 5", tiles.get(2));
-        assertEquals("valid moves", "5 4", tiles.get(3));
+        assertEquals("valid length", 4, pieces.size());
+        assertEquals("valid moves", "2 3", pieces.get(0));
+        assertEquals("valid moves", "3 2", pieces.get(1));
+        assertEquals("valid moves", "4 5", pieces.get(2));
+        assertEquals("valid moves", "5 4", pieces.get(3));
     }
 
     @Test
     public void testGetPossibleMovesEmpty() {
         Reversi game = getRevWithPlayground();
-        ArrayList<String> tiles = game.getPossibleMoves();
+        ArrayList<String> pieces = game.getPossibleMoves();
 
-        assertEquals("valid length", 0, tiles.size());
+        assertEquals("valid length", 0, pieces.size());
     }
 
 
@@ -727,8 +727,8 @@ public class ReversiTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(3, 2);
 
-        assertEquals("check if flipped", Player.B, getTile(game, 3, 3));
-        assertEquals("check if flipped", Player.B, getTile(game, 3, 2));
+        assertEquals("check if flipped", Player.B, getPiece(game, 3, 3));
+        assertEquals("check if flipped", Player.B, getPiece(game, 3, 2));
         assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 1, game.getLeftW());
         assertEquals("B left", 4, game.getLeftB());
@@ -739,8 +739,8 @@ public class ReversiTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(5, 4);
 
-        assertEquals("check if flipped", Player.B, getTile(game, 4, 4));
-        assertEquals("check if flipped", Player.B, getTile(game, 5, 4));
+        assertEquals("check if flipped", Player.B, getPiece(game, 4, 4));
+        assertEquals("check if flipped", Player.B, getPiece(game, 5, 4));
         assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 1, game.getLeftW());
         assertEquals("B left", 4, game.getLeftB());
@@ -751,8 +751,8 @@ public class ReversiTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(4, 5);
 
-        assertEquals("check if flipped", Player.B, getTile(game, 4, 4));
-        assertEquals("check if flipped", Player.B, getTile(game, 4, 5));
+        assertEquals("check if flipped", Player.B, getPiece(game, 4, 4));
+        assertEquals("check if flipped", Player.B, getPiece(game, 4, 5));
         assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 1, game.getLeftW());
         assertEquals("B left", 4, game.getLeftB());
@@ -763,8 +763,8 @@ public class ReversiTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(2, 3);
 
-        assertEquals("check if flipped", Player.B, getTile(game, 3, 3));
-        assertEquals("check if flipped", Player.B, getTile(game, 2, 3));
+        assertEquals("check if flipped", Player.B, getPiece(game, 3, 3));
+        assertEquals("check if flipped", Player.B, getPiece(game, 2, 3));
         assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 1, game.getLeftW());
         assertEquals("B left", 4, game.getLeftB());
@@ -778,8 +778,8 @@ public class ReversiTest {
         moves.add(Arrays.asList(6, 2));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped", Player.B, getTile(game, 5, 3));
-        assertEquals("check if flipped", Player.B, getTile(game, 6, 2));
+        assertEquals("check if flipped", Player.B, getPiece(game, 5, 3));
+        assertEquals("check if flipped", Player.B, getPiece(game, 6, 2));
         assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 2, game.getLeftW());
         assertEquals("B left", 5, game.getLeftB());
@@ -792,8 +792,8 @@ public class ReversiTest {
         moves.add(Arrays.asList(5, 5));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped", Player.W, getTile(game, 4, 4));
-        assertEquals("check if flipped", Player.W, getTile(game, 5, 5));
+        assertEquals("check if flipped", Player.W, getPiece(game, 4, 4));
+        assertEquals("check if flipped", Player.W, getPiece(game, 5, 5));
         assertEquals("on turn", Player.B, game.onTurn);
         assertEquals("W left", 3, game.getLeftW());
         assertEquals("B left", 3, game.getLeftB());
@@ -807,8 +807,8 @@ public class ReversiTest {
         moves.add(Arrays.asList(1, 5));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped", Player.B, getTile(game, 2, 4));
-        assertEquals("check if flipped", Player.B, getTile(game, 1, 5));
+        assertEquals("check if flipped", Player.B, getPiece(game, 2, 4));
+        assertEquals("check if flipped", Player.B, getPiece(game, 1, 5));
         assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 2, game.getLeftW());
         assertEquals("B left", 5, game.getLeftB());
@@ -821,8 +821,8 @@ public class ReversiTest {
         moves.add(Arrays.asList(2, 2));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped", Player.W, getTile(game, 3, 3));
-        assertEquals("check if flipped", Player.W, getTile(game, 2, 2));
+        assertEquals("check if flipped", Player.W, getPiece(game, 3, 3));
+        assertEquals("check if flipped", Player.W, getPiece(game, 2, 2));
         assertEquals("on turn", Player.B, game.onTurn);
         assertEquals("W left", 3, game.getLeftW());
         assertEquals("B left", 3, game.getLeftB());
@@ -837,8 +837,8 @@ public class ReversiTest {
         moves.add(Arrays.asList(2, 4));
         Reversi game = setMoves(moves);
 
-        assertEquals("check if flipped (D,3) correctly", Player.W, getTile(game, 2, 3));
-        assertEquals("check if flipped (E,4) correctly", Player.W, getTile(game, 3, 4));
+        assertEquals("check if flipped (D,3) correctly", Player.W, getPiece(game, 2, 3));
+        assertEquals("check if flipped (E,4) correctly", Player.W, getPiece(game, 3, 4));
         assertEquals("W left", 5, game.getLeftW());
         assertEquals("B left", 3, game.getLeftB());
     }
@@ -933,8 +933,8 @@ public class ReversiTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.execute("3 2");
 
-        assertEquals("check if flipped", Player.B, getTile(game, 3, 3));
-        assertEquals("check if flipped", Player.B, getTile(game, 3, 2));
+        assertEquals("check if flipped", Player.B, getPiece(game, 3, 3));
+        assertEquals("check if flipped", Player.B, getPiece(game, 3, 2));
         assertEquals("on turn", Player.W, game.onTurn);
         assertEquals("W left", 1, game.getLeftW());
         assertEquals("B left", 4, game.getLeftB());
@@ -962,7 +962,7 @@ public class ReversiTest {
 
     // utility functions
 
-    private Player getTile(Reversi game, int r0, int c0) {
+    private Player getPiece(Reversi game, int r0, int c0) {
         return game.playground[r0][c0];
     }
 
