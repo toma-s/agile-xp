@@ -10,8 +10,8 @@ public class ExecuteTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.execute("3 2");
 
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 3, 3));
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 3, 2));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 2));
         Assert.assertEquals("on turn", Player.W, game.onTurn);
         Assert.assertEquals("W left", 1, game.getLeftW());
         Assert.assertEquals("B left", 4, game.getLeftB());

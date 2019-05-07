@@ -11,6 +11,8 @@ import static org.junit.Assert.assertEquals;
 public class InitGameTest {
 
     private Reversi rev = new Reversi();
+
+
     //setSize
 
     @Test
@@ -128,9 +130,9 @@ public class InitGameTest {
 
     @Test
     public void testCreatePlayground() {
-        Reversi game = ReversiTest.getRevWithPlayground();
+        Reversi game = TestUtils.getRevWithPlayground();
 
-        assertArrayEquals("create empty playground", ReversiTest.getEmptyPlayground(), game.playground);
+        assertArrayEquals("create empty playground", TestUtils.getEmptyPlayground(), game.playground);
     }
 
 
@@ -173,7 +175,7 @@ public class InitGameTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.setPiece(new int[]{0, 0}, Player.B);
 
-        assertEquals("set player B on piece 00", Player.B, InitGameTest.getPiece(game, 0, 0));
+        assertEquals("set player B on piece 00", Player.B, TestUtils.getPiece(game, 0, 0));
     }
 
     @Test
@@ -209,20 +211,20 @@ public class InitGameTest {
     @Test
     public void testFillPlayground8bInit() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "B", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = ReversiTest.getRevWithPlayground();
+        Reversi game = TestUtils.getRevWithPlayground();
         game.size = 8;
         game.fillPlayground(gameConfig);
 
-        assertEquals("fill playground with initial game config", Player.B, InitGameTest.getPiece(game, 3, 4));
-        assertEquals("fill playground with initial game config", Player.B, InitGameTest.getPiece(game, 4, 3));
-        assertEquals("fill playground with initial game config", Player.W, InitGameTest.getPiece(game, 3, 3));
-        assertEquals("fill playground with initial game config", Player.W, InitGameTest.getPiece(game, 4, 4));
+        assertEquals("fill playground with initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        assertEquals("fill playground with initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        assertEquals("fill playground with initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        assertEquals("fill playground with initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
     }
 
     @Test
     public void testFillPlaygroundConfigLen1() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"one"};
-        Reversi game = ReversiTest.getRevWithPlayground();
+        Reversi game = TestUtils.getRevWithPlayground();
 
         expectedException.expect(IncorrectGameConfigFileException.class);
         expectedException.expectMessage("Game configuration file is incorrect");
@@ -231,7 +233,7 @@ public class InitGameTest {
 
     @Test
     public void testFillPlaygroundNull() throws IncorrectGameConfigFileException {
-        Reversi game = ReversiTest.getRevWithPlayground();
+        Reversi game = TestUtils.getRevWithPlayground();
 
         expectedException.expect(IncorrectGameConfigFileException.class);
         expectedException.expectMessage("Game configuration file is incorrect");
@@ -241,7 +243,7 @@ public class InitGameTest {
     @Test
     public void testFillPlaygroundNoOnTurn() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[] {"8", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = ReversiTest.getRevWithPlayground();
+        Reversi game = TestUtils.getRevWithPlayground();
 
         expectedException.expect(IncorrectGameConfigFileException.class);
         expectedException.expectMessage("Incorrect piece input");
@@ -262,10 +264,10 @@ public class InitGameTest {
 
         Assert.assertEquals("init playground on initial game config", 8, game.size);
         Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
-        Assert.assertEquals("init playground on initial game config", Player.B, getPiece(game, 3, 4));
-        Assert.assertEquals("init playground on initial game config", Player.B, getPiece(game, 4, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, getPiece(game, 3, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, getPiece(game, 4, 4));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
     }
 
     @Test
@@ -276,10 +278,10 @@ public class InitGameTest {
 
         Assert.assertEquals("init playground on initial game config", 8, game.size);
         Assert.assertEquals("init playground on initial game config", Player.W, game.onTurn);
-        Assert.assertEquals("init playground on initial game config", Player.B, getPiece(game, 3, 4));
-        Assert.assertEquals("init playground on initial game config", Player.B, getPiece(game, 4, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, getPiece(game, 3, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, getPiece(game, 4, 4));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
     }
 
     @Test
@@ -290,10 +292,10 @@ public class InitGameTest {
 
         Assert.assertEquals("init playground on initial game config", 10, game.size);
         Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
-        Assert.assertEquals("init playground on initial game config", Player.B, getPiece(game, 4, 5));
-        Assert.assertEquals("init playground on initial game config", Player.B, getPiece(game, 5, 4));
-        Assert.assertEquals("init playground on initial game config", Player.W, getPiece(game, 4, 4));
-        Assert.assertEquals("init playground on initial game config", Player.W, getPiece(game, 5, 5));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 5));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 5, 4));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 5, 5));
     }
 
     @Test
@@ -365,7 +367,136 @@ public class InitGameTest {
         game.initGame(null);
     }
 
-    static Player getPiece(Reversi game, int r0, int c0) {
-        return game.playground[r0][c0];
+    // initPiecesCount
+
+    @Test
+    public void testInitPiecesCountInit() throws IncorrectGameConfigFileException {
+        String[] gameConfig = new String[] {"8", "B", "3 4, 4 3", "3 3, 4 4"};
+        Reversi game = TestUtils.initReversi(gameConfig);
+        game.initPiecesCount();
+
+        assertEquals("init pieces count on initial game config", 2, game.getLeftB());
+        assertEquals("init pieces count on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void testInitPiecesCountEmpty() {
+        Reversi game = TestUtils.getRevWithPlayground();
+
+        assertEquals("init pieces count on empty game config", 0, game.getLeftB());
+        assertEquals("init pieces count on empty game config", 0, game.getLeftW());
+    }
+
+
+    // getLeftB
+
+    @Test
+    public void testGetLeftB() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+    }
+
+
+    // getLeftW
+
+    @Test
+    public void testGetLeftW() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+
+    // Reversi
+
+    @Test
+    public void test8bInit() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertEquals("on turn player on initial game config", Player.B, game.onTurn);
+        assertEquals("size on initial game config", 8, game.size);
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void test8wInit() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game8wInit);
+
+        assertEquals("on turn player on initial game config", Player.W, game.onTurn);
+        assertEquals("size on initial game config", 8, game.size);
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void test10bInit() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game10bInit);
+
+        assertEquals("on turn player on initial game config", Player.B, game.onTurn);
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 5));
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 5, 4));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 5, 5));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void testEmpty() throws IncorrectGameConfigFileException {
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameEmpty);
+    }
+
+    @Test
+    public void testNotExisting() throws IncorrectGameConfigFileException {
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration file does not exist");
+        new Reversi(GameConfig.gameNotExisting);
+    }
+
+    @Test
+    public void testFiveLines() throws IncorrectGameConfigFileException {
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameFiveLines);
+    }
+
+    @Test
+    public void testAlpha() throws IncorrectGameConfigFileException {
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Incorrect piece input");
+        new Reversi(GameConfig.gameAlpha);
+    }
+
+    @Test
+    public void testNoSize() throws IncorrectGameConfigFileException {
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameNoSize);
+    }
+
+    @Test
+    public void testNoOnTurn() throws IncorrectGameConfigFileException {
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameNoOnTurn);
+    }
+
+    @Test
+    public void testNoPieces() throws IncorrectGameConfigFileException {
+        expectedException.expect(IncorrectGameConfigFileException.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        new Reversi(GameConfig.gameNoPieces);
     }
 }

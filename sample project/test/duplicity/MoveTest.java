@@ -7,14 +7,83 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class MoveTest {
+
+
+    // isWithinPlayground
+
+    @Test
+    public void testIsWithinPlayground00() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.size = 8;
+
+        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground77() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
+    }
+
+    @Test
+    public void testIsWithinPlaygroundNeg10() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground0Neg1() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
+    }
+
+    @Test
+    public void testIsWithinPlayground80() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground08() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
+    }
+
+
+    // areValidMoves
+
+    @Test
+    public void testAreValidMovesInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertTrue(game.areValidMoves());
+    }
+
+    @Test
+    public void testAreValidMovesOnEnd() {
+        Reversi game = new Reversi(GameConfig.game8bComplete);
+
+        assertFalse(game.areValidMoves());
+    }
+
+
+    // move
 
     @Test
     public void testMoveOnNotEmpty() {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(4, 4);
 
-        Assert.assertArrayEquals("check if didn't change", ReversiTest.getInitPlayground(), game.playground);
+        Assert.assertArrayEquals("check if didn't change", TestUtils.getInitPlayground(), game.playground);
     }
 
     @Test
@@ -22,7 +91,7 @@ public class MoveTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(8, 0);
 
-        Assert.assertArrayEquals("check if didn't change", ReversiTest.getInitPlayground(), game.playground);
+        Assert.assertArrayEquals("check if didn't change", TestUtils.getInitPlayground(), game.playground);
     }
 
     @Test
@@ -30,7 +99,7 @@ public class MoveTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(-1, 0);
 
-        Assert.assertArrayEquals("check if didn't change", ReversiTest.getInitPlayground(), game.playground);
+        Assert.assertArrayEquals("check if didn't change", TestUtils.getInitPlayground(), game.playground);
     }
 
     @Test
@@ -38,7 +107,7 @@ public class MoveTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(0, 0);
 
-        Assert.assertArrayEquals("check if didn't change", ReversiTest.getInitPlayground(), game.playground);
+        Assert.assertArrayEquals("check if didn't change", TestUtils.getInitPlayground(), game.playground);
     }
 
     @Test
@@ -46,8 +115,8 @@ public class MoveTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(3, 2);
 
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 3, 3));
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 3, 2));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 2));
         Assert.assertEquals("on turn", Player.W, game.onTurn);
         Assert.assertEquals("W left", 1, game.getLeftW());
         Assert.assertEquals("B left", 4, game.getLeftB());
@@ -58,8 +127,8 @@ public class MoveTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(5, 4);
 
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 4, 4));
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 5, 4));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 4, 4));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 5, 4));
         Assert.assertEquals("on turn", Player.W, game.onTurn);
         Assert.assertEquals("W left", 1, game.getLeftW());
         Assert.assertEquals("B left", 4, game.getLeftB());
@@ -70,8 +139,8 @@ public class MoveTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(4, 5);
 
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 4, 4));
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 4, 5));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 4, 4));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 4, 5));
         Assert.assertEquals("on turn", Player.W, game.onTurn);
         Assert.assertEquals("W left", 1, game.getLeftW());
         Assert.assertEquals("B left", 4, game.getLeftB());
@@ -82,8 +151,8 @@ public class MoveTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.move(2, 3);
 
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 3, 3));
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 2, 3));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 2, 3));
         Assert.assertEquals("on turn", Player.W, game.onTurn);
         Assert.assertEquals("W left", 1, game.getLeftW());
         Assert.assertEquals("B left", 4, game.getLeftB());
@@ -95,10 +164,10 @@ public class MoveTest {
         moves.add(Arrays.asList(5, 4));
         moves.add(Arrays.asList(5, 3));
         moves.add(Arrays.asList(6, 2));
-        Reversi game = ReversiTest.setMoves(moves);
+        Reversi game = TestUtils.setMoves(moves);
 
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 5, 3));
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 6, 2));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 5, 3));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 6, 2));
         Assert.assertEquals("on turn", Player.W, game.onTurn);
         Assert.assertEquals("W left", 2, game.getLeftW());
         Assert.assertEquals("B left", 5, game.getLeftB());
@@ -109,10 +178,10 @@ public class MoveTest {
         List<List<Integer>> moves = new ArrayList<>();
         moves.add(Arrays.asList(5, 4));
         moves.add(Arrays.asList(5, 5));
-        Reversi game = ReversiTest.setMoves(moves);
+        Reversi game = TestUtils.setMoves(moves);
 
-        Assert.assertEquals("check if flipped", Player.W, ReversiTest.getPiece(game, 4, 4));
-        Assert.assertEquals("check if flipped", Player.W, ReversiTest.getPiece(game, 5, 5));
+        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 4, 4));
+        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 5, 5));
         Assert.assertEquals("on turn", Player.B, game.onTurn);
         Assert.assertEquals("W left", 3, game.getLeftW());
         Assert.assertEquals("B left", 3, game.getLeftB());
@@ -124,10 +193,10 @@ public class MoveTest {
         moves.add(Arrays.asList(2, 3));
         moves.add(Arrays.asList(2, 4));
         moves.add(Arrays.asList(1, 5));
-        Reversi game = ReversiTest.setMoves(moves);
+        Reversi game = TestUtils.setMoves(moves);
 
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 2, 4));
-        Assert.assertEquals("check if flipped", Player.B, ReversiTest.getPiece(game, 1, 5));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 2, 4));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 1, 5));
         Assert.assertEquals("on turn", Player.W, game.onTurn);
         Assert.assertEquals("W left", 2, game.getLeftW());
         Assert.assertEquals("B left", 5, game.getLeftB());
@@ -138,10 +207,10 @@ public class MoveTest {
         List<List<Integer>> moves = new ArrayList<>();
         moves.add(Arrays.asList(2, 3));
         moves.add(Arrays.asList(2, 2));
-        Reversi game = ReversiTest.setMoves(moves);
+        Reversi game = TestUtils.setMoves(moves);
 
-        Assert.assertEquals("check if flipped", Player.W, ReversiTest.getPiece(game, 3, 3));
-        Assert.assertEquals("check if flipped", Player.W, ReversiTest.getPiece(game, 2, 2));
+        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 2, 2));
         Assert.assertEquals("on turn", Player.B, game.onTurn);
         Assert.assertEquals("W left", 3, game.getLeftW());
         Assert.assertEquals("B left", 3, game.getLeftB());
@@ -154,10 +223,10 @@ public class MoveTest {
         moves.add(Arrays.asList(2, 2));
         moves.add(Arrays.asList(3, 2));
         moves.add(Arrays.asList(2, 4));
-        Reversi game = ReversiTest.setMoves(moves);
+        Reversi game = TestUtils.setMoves(moves);
 
-        Assert.assertEquals("check if flipped (D,3) correctly", Player.W, ReversiTest.getPiece(game, 2, 3));
-        Assert.assertEquals("check if flipped (E,4) correctly", Player.W, ReversiTest.getPiece(game, 3, 4));
+        Assert.assertEquals("check if flipped (D,3) correctly", Player.W, TestUtils.getPiece(game, 2, 3));
+        Assert.assertEquals("check if flipped (E,4) correctly", Player.W, TestUtils.getPiece(game, 3, 4));
         Assert.assertEquals("W left", 5, game.getLeftW());
         Assert.assertEquals("B left", 3, game.getLeftB());
     }
@@ -236,7 +305,7 @@ public class MoveTest {
         moves.add(Arrays.asList(1, 1));
         moves.add(Arrays.asList(6, 7));
         moves.add(Arrays.asList(6, 6));
-        Reversi game = ReversiTest.setMoves(moves);
+        Reversi game = TestUtils.setMoves(moves);
 
         Assert.assertFalse("if the are valid moves", game.areValidMoves());
         Assert.assertEquals("W left", 28, game.getLeftW());
