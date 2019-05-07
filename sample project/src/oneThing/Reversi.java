@@ -293,8 +293,8 @@ public class Reversi {
 
     ArrayList<String> getPossibleMoves() {
         ArrayList<String> tiles = new ArrayList<>();
-        for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++) {
+        for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size; c++) {
                 if (playground[r][c] != Player.NONE) continue;
                 if (getTilesToFlip(r, c).isEmpty()) continue;
                 String rString = String.valueOf(r);
