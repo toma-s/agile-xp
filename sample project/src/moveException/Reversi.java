@@ -139,7 +139,7 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
-                printPlayground();
+                PlaygroundPrinter.printPlayground(playground, size);
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
@@ -157,42 +157,7 @@ public class Reversi {
         }
     }
 
-    private void printPlayground() {
-        printUpperEnumeration();
-        for (int r = 0; r < size; r++) {
-            printLeftEnumeration(r);
-            for (int c = 0; c < size; c++) {
-                if (playground[r][c] == Player.NONE) {
-                    printPiece("_");
-                }
-                else if (playground[r][c] == Player.B) {
-                    printPiece("B");
-                }
-                else {
-                    printPiece("W");
-                }
-            }
-            System.out.println();
-        }
-    }
 
-    private void printUpperEnumeration() {
-        int length = String.valueOf(size).length() + 1;
-        System.out.print(String.join("", Collections.nCopies(length, " ")));
-        for (int i = 0; i < size; i++) {
-            System.out.print(String.format("%-" + (length) + "d", i));
-        }
-        System.out.print("\n");
-    }
-
-    private void printLeftEnumeration(int r) {
-        int length = String.valueOf(size).length();
-        System.out.print(String.format("%" + length + "d ", r));
-    }
-
-    private void printPiece(String piece) {
-        System.out.print(piece + String.join("", Collections.nCopies(String.valueOf(size).length(), " ")));
-    }
 
     private void printTilesLeftCount() {
         System.out.printf("Number of tiles: B: %s; W: %s\n\n", getLeftB(), getLeftW());

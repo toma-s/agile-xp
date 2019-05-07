@@ -110,7 +110,7 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
-                printPlayground();
+                PlaygroundPrinter.printPlayground(playground);
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
@@ -126,22 +126,6 @@ public class Reversi {
             reader.close();
         } catch (IOException e) {
             System.out.println("IO exception occurred on reading user input: " + e.getMessage());
-        }
-    }
-
-    private void printPlayground() {
-        System.out.println("  0 1 2 3 4 5 6 7");
-        for (int r = 0; r < 8; r++) {
-            System.out.print(r  + " ");
-            for (int c = 0; c < 8; c++) {
-                if (playground[r][c] == -1)
-                    System.out.print("_ ");
-                else if (playground[r][c] == 1)
-                    System.out.print("B ");
-                else
-                    System.out.print("W ");
-            }
-            System.out.println();
         }
     }
 

@@ -143,7 +143,7 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
-                printPlayground();
+                PlaygroundPrinter.printPlayground(playground, size);
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
@@ -153,22 +153,6 @@ public class Reversi {
             reader.close();
         } catch (IOException e) {
             System.out.println("IO exception occurred on reading user input: " + e.getMessage());
-        }
-    }
-
-    private void printPlayground() {
-        System.out.println("  " + getLine());
-        for (int r = 0; r < size; r++) {
-            System.out.print(r  + " ");
-            for (int c = 0; c < size; c++) {
-                if (playground[r][c] == Player.NONE)
-                    System.out.print("_ ");
-                else if (playground[r][c] == Player.B)
-                    System.out.print("B ");
-                else
-                    System.out.print("W ");
-            }
-            System.out.println();
         }
     }
 
