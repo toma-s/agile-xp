@@ -1,5 +1,6 @@
 package fileException;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -341,46 +342,16 @@ public class ReversiTest {
         Reversi game = new Reversi(GameConfig.game8bComplete);
         game.endGame();
 
-        assertTrue(game.ended);
-        assertEquals(Player.B, game.winner);
+        Assert.assertTrue(game.ended);
+        Assert.assertEquals(Player.B, game.winner);
     }
-
 
     // move
 
 
     // execute
 
-    @Test
-    public void testExecute() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.execute("3 2");
 
-        assertEquals("check if flipped", Player.B, InitGameTest.getPiece(game, 3, 3));
-        assertEquals("check if flipped", Player.B, InitGameTest.getPiece(game, 3, 2));
-        assertEquals("on turn", Player.W, game.onTurn);
-        assertEquals("W left", 1, game.getLeftW());
-        assertEquals("B left", 4, game.getLeftB());
-    }
-
-    @Test
-    public void testExecute00() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.execute("0 0");
-
-        assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
-    }
-
-    @Test
-    public void testFinishGame() throws IncorrectGameConfigFileException {
-        Reversi game = new Reversi(GameConfig.game8bAlmostComplete);
-        game.execute("3 4");
-
-        assertFalse("if the are valid moves", game.areValidMoves());
-        assertEquals("W left", 39, game.getLeftW());
-        assertEquals("B left", 25, game.getLeftB());
-        assertEquals("winner", Player.W, game.winner);
-    }
 
 
     // utility functions
