@@ -1063,7 +1063,7 @@ public class ReversiTest {
     // execute
 
     @Test
-    public void testExecute() throws IncorrectGameConfigFileException, NotPermittedMoveException {
+    public void testExecute() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.execute("3 2");
 
@@ -1074,8 +1074,8 @@ public class ReversiTest {
         assertEquals("B left", 4, game.getLeftB());
     }
 
-    @Test(expected = NotPermittedMoveException.class)
-    public void testExecute00() throws IncorrectGameConfigFileException, NotPermittedMoveException {
+    @Test
+    public void testExecute00() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
         game.execute("0 0");
 
@@ -1083,7 +1083,7 @@ public class ReversiTest {
     }
 
     @Test
-    public void testFinishGame() throws IncorrectGameConfigFileException, NotPermittedMoveException {
+    public void testExecuteFinishGame() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bAlmostComplete);
         game.execute("3 4");
 

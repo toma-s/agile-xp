@@ -151,17 +151,25 @@ public class Reversi {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
-                try {
-                    execute(line);
-                } catch (NotPermittedMoveException e) {
-                    System.out.println(e.getMessage());
-                    System.out.println("Try again");
-                }
+                execute(line);
                 printTilesLeftCount();
             }
             reader.close();
         } catch (IOException e) {
             throw new IncorrectGameConfigFileException("IO exception occurred on reading user input: " + e.getMessage());
+        }
+    }
+
+    void execute(String line) {
+        try {
+            if (!isTileInputCorrect(line)) {
+                throw new NotPermittedMoveException("Incorrect tile input");
+            }
+            int[] coordinates = getCoordinates(line);
+            move(coordinates[0], coordinates[1]);
+        } catch (NotPermittedMoveException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Try again");
         }
     }
 
@@ -175,14 +183,6 @@ public class Reversi {
 
     int getLeftW() {
         return left.get(Player.W);
-    }
-
-    void execute(String line) throws NotPermittedMoveException {
-        if (!isTileInputCorrect(line)) {
-            throw new NotPermittedMoveException("Incorrect tile input");
-        }
-        int[] coordinates = getCoordinates(line);
-        move(coordinates[0], coordinates[1]);
     }
 
     void move(int r, int c) throws NotPermittedMoveException {

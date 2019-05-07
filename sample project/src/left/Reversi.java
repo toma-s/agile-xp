@@ -168,6 +168,15 @@ public class Reversi {
         }
     }
 
+    void execute(String line) {
+        if (!isTileInputCorrect(line)) {
+            System.out.println("Incorrect tile input");
+            return;
+        }
+        int[] coordinates = getCoordinates(line);
+        move(coordinates[0], coordinates[1]);
+    }
+
     private void printTilesLeftCount() {
         System.out.printf("Number of tiles: B: %s; W: %s\n\n", getLeftB(), getLeftW());
     }
@@ -178,15 +187,6 @@ public class Reversi {
 
     int getLeftW() {
         return left.get(Player.W);
-    }
-
-    void execute(String line) {
-        if (!isTileInputCorrect(line)) {
-            System.out.println("Incorrect tile input");
-            return;
-        }
-        int[] coordinates = getCoordinates(line);
-        move(coordinates[0], coordinates[1]);
     }
 
     void move(int r, int c) {
