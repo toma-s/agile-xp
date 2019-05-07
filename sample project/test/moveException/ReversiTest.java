@@ -51,7 +51,7 @@ public class ReversiTest {
 
         assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
         assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
-        assertEquals("2nd line of game8wInit config file", "B", gameConfig[1]);
+        assertEquals("2nd line of game8wInit config file", "W", gameConfig[1]);
         assertEquals("3rd line of game8wInit config file", "34 43", gameConfig[2]);
         assertEquals("4th line of game8wInit config file", "33 44", gameConfig[3]);
     }

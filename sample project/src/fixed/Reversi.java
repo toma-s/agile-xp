@@ -121,8 +121,8 @@ public class Reversi {
                 int r = Integer.parseInt(line.substring(0, 1));
                 int c = Integer.parseInt(line.substring(1, 2));
                 move(r, c);
-                reader.close();
             }
+            reader.close();
         } catch (IOException e) {
             System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
@@ -245,7 +245,7 @@ public class Reversi {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != -1) continue;
-                ArrayList<List<Integer>> toFLip = new ArrayList<>();
+                ArrayList<List<Integer>> toFlip = new ArrayList<>();
                 playground[r][c] = onTurn;
                 int opposite  = -1;
                 if (onTurn == 0) opposite = 1;
@@ -272,15 +272,15 @@ public class Reversi {
                         dirR -= direction[0];
                         dirC -= direction[1];
                         if (dirR == r && dirC == c) break;
-                        toFLip.add(new ArrayList<>(List.of(dirR, dirC)));
+                        toFlip.add(new ArrayList<>(List.of(dirR, dirC)));
                     }
                 }
 
                 playground[r][c] = -1;
-                if (!toFLip.isEmpty()) {
-                    toFLip.add(new ArrayList<>(List.of(r, c)));
+                if (!toFlip.isEmpty()) {
+                    toFlip.add(new ArrayList<>(List.of(r, c)));
                 }
-                if (toFLip.isEmpty()) continue;
+                if (toFlip.isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));

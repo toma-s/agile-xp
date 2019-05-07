@@ -144,8 +144,8 @@ public class Reversi {
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
                 execute(line);
-                reader.close();
             }
+            reader.close();
         } catch (IOException e) {
             System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
@@ -228,7 +228,7 @@ public class Reversi {
     }
 
     ArrayList<List<Integer>> getTilesToFlip(int r0, int c0) {
-        ArrayList<List<Integer>> toFLip = new ArrayList<>();
+        ArrayList<List<Integer>> toFlip = new ArrayList<>();
         playground[r0][c0] = onTurn;
         Player opposite = Player.NONE;
         if (onTurn == Player.W) opposite = Player.B;
@@ -255,15 +255,15 @@ public class Reversi {
                 r -= direction[0];
                 c -= direction[1];
                 if (r == r0 && c == c0) break;
-                toFLip.add(new ArrayList<>(List.of(r, c)));
+                toFlip.add(new ArrayList<>(List.of(r, c)));
             }
         }
 
         playground[r0][c0] = Player.NONE;
-        if (!toFLip.isEmpty()) {
-            toFLip.add(new ArrayList<>(List.of(r0, c0)));
+        if (!toFlip.isEmpty()) {
+            toFlip.add(new ArrayList<>(List.of(r0, c0)));
         }
-        return toFLip;
+        return toFlip;
     }
 
     void flipTiles(List<List<Integer>> tiles) {
