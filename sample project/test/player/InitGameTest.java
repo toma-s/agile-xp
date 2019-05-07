@@ -3,10 +3,24 @@ package player;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.assertArrayEquals;
+
 public class InitGameTest {
 
     private Reversi rev = new Reversi();
 
+
+    // createPlayground
+
+    @Test
+    public void testCreatePlayground() {
+        Reversi game = ReversiTest.getRevWithPlayground();
+
+        assertArrayEquals("create empty playground", ReversiTest.getEmptyPlayground(), game.playground);
+    }
+
+
+    // initGame
 
     @Test
     public void testInitGame8bInit() {
