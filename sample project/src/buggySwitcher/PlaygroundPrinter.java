@@ -27,7 +27,7 @@ class PlaygroundPrinter {
         int length = String.valueOf(size).length() + 1;
         System.out.print(String.join("", Collections.nCopies(length, " ")));
         for (int i = 0; i < size; i++) {
-            System.out.print(String.format("%-" + (length) + "d", (i + 1)));
+            System.out.print(String.format("%-" + (length) + "d", i));
         }
         System.out.print("\n");
     }

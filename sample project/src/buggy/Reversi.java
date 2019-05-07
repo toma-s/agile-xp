@@ -265,7 +265,7 @@ public class Reversi {
                 if (toFlip.isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
-                tiles.add(cString.concat(rString));
+                tiles.add(rString + " " + cString);
             }
         }
         return !tiles.isEmpty();

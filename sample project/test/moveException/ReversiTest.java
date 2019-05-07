@@ -507,7 +507,7 @@ public class ReversiTest {
     }
 
     @Test
-    public void testInitTilesCountEmpty() throws IncorrectGameConfigFileException {
+    public void testInitTilesCountEmpty() {
         Reversi game = getRevWithPlayground();
 
         assertEquals("init tiles count on empty game config", 0, game.getLeftB());
@@ -755,10 +755,10 @@ public class ReversiTest {
         List<String> tiles = game.getPossibleMoves();
 
         assertEquals("valid length", 4, tiles.size());
-        assertEquals("valid moves", "32", tiles.get(0));
-        assertEquals("valid moves", "23", tiles.get(1));
-        assertEquals("valid moves", "54", tiles.get(2));
-        assertEquals("valid moves", "45", tiles.get(3));
+        assertEquals("valid moves", "2 3", tiles.get(0));
+        assertEquals("valid moves", "3 2", tiles.get(1));
+        assertEquals("valid moves", "4 5", tiles.get(2));
+        assertEquals("valid moves", "5 4", tiles.get(3));
     }
 
     @Test

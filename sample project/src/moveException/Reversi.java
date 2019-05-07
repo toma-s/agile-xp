@@ -290,7 +290,7 @@ public class Reversi {
                 if (getTilesToFlip(r, c).isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
-                tiles.add(cString.concat(rString));
+                tiles.add(rString + " " + cString);
             }
         }
         return tiles;

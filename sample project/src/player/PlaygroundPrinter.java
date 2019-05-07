@@ -7,7 +7,7 @@ class PlaygroundPrinter {
     static void printPlayground(Player[][] playground, int size) {
         printUpperEnumeration(size);
         for (int r = 0; r < size; r++) {
-            printLeftEnumeration(r + 1, size);
+            printLeftEnumeration(r, size);
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] == Player.NONE) {
                     printPiece("_", size);
@@ -27,7 +27,7 @@ class PlaygroundPrinter {
         int length = String.valueOf(size).length() + 1;
         System.out.print(String.join("", Collections.nCopies(length, " ")));
         for (int i = 0; i < size; i++) {
-            System.out.print(String.format("%-" + (length) + "d", (i + 1)));
+            System.out.print(String.format("%-" + (length) + "d", i));
         }
         System.out.print("\n");
     }
