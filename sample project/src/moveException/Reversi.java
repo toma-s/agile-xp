@@ -165,7 +165,7 @@ public class Reversi {
             System.out.print(r  + " ");
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] == Player.NONE)
-                    System.out.print("_ ");
+                    System.out.print("_" + (" ".repeat(String.valueOf(c).length())));
                 else if (playground[r][c] == Player.B)
                     System.out.print("B ");
                 else
@@ -323,7 +323,9 @@ public class Reversi {
     }
 
     public static void main(String[] args) {
-        Path gameFilePath = GameConfig.game8bInit;
+//        Path gameFilePath = GameConfig.game8bInit;
+        Path gameFilePath = GameConfig.game10bInit;
+        // TODO: 07-May-19 TEMP!
         Reversi rev;
         try {
             rev = new Reversi(gameFilePath);

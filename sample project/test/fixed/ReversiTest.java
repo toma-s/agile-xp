@@ -1,9 +1,9 @@
 package fixed;
 
-import javafx.util.Pair;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -418,10 +418,10 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipRightUp() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(5, 4));
-        moves.add(new Pair<>(5, 3));
-        moves.add(new Pair<>(6, 2));
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(List.of(5, 4));
+        moves.add(List.of(5, 3));
+        moves.add(List.of(6, 2));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", 1, getTile(game, 5, 3));
@@ -433,9 +433,9 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipLeftUp() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(5, 4));
-        moves.add(new Pair<>(5, 5));
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(List.of(5, 4));
+        moves.add(List.of(5, 5));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", 0, getTile(game, 4, 4));
@@ -447,10 +447,10 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipLeftDown() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(2, 3));
-        moves.add(new Pair<>(2, 4));
-        moves.add(new Pair<>(1, 5));
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(List.of(2, 3));
+        moves.add(List.of(2, 4));
+        moves.add(List.of(1, 5));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", 1, getTile(game, 2, 4));
@@ -462,9 +462,9 @@ public class ReversiTest {
 
     @Test
     public void testMoveFlipRightDown() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(2, 3));
-        moves.add(new Pair<>(2, 2));
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(List.of(2, 3));
+        moves.add(List.of(2, 2));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", 0, getTile(game, 3, 3));
@@ -476,11 +476,11 @@ public class ReversiTest {
 
     @Test
     public void testMoveDoubleFlip() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(2, 3));
-        moves.add(new Pair<>(2, 2));
-        moves.add(new Pair<>(3, 2));
-        moves.add(new Pair<>(2, 4));
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(List.of(2, 3));
+        moves.add(List.of(2, 2));
+        moves.add(List.of(3, 2));
+        moves.add(List.of(2, 4));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped (D,3) correctly", 0, getTile(game, 2, 3));
@@ -502,37 +502,37 @@ public class ReversiTest {
 
     @Test
     public void testMovesCompleteGame() {
-        ArrayList<Pair<Integer, Integer>> moves = new ArrayList<>();
-        moves.add(new Pair<>(4, 5)); moves.add(new Pair<>(5, 3));
-        moves.add(new Pair<>(3, 2)); moves.add(new Pair<>(2, 3));
-        moves.add(new Pair<>(2, 2)); moves.add(new Pair<>(3, 5));
-        moves.add(new Pair<>(4, 2)); moves.add(new Pair<>(2, 1));
-        moves.add(new Pair<>(1, 2)); moves.add(new Pair<>(5, 4));
-        moves.add(new Pair<>(5, 2)); moves.add(new Pair<>(3, 1));
-        moves.add(new Pair<>(4, 1)); moves.add(new Pair<>(1, 3));
-        moves.add(new Pair<>(2, 4)); moves.add(new Pair<>(5, 0));
-        moves.add(new Pair<>(0, 2)); moves.add(new Pair<>(5, 1));
-        moves.add(new Pair<>(2, 5)); moves.add(new Pair<>(5, 5));
-        moves.add(new Pair<>(6, 5)); moves.add(new Pair<>(0, 4));
-        moves.add(new Pair<>(1, 4)); moves.add(new Pair<>(0, 5));
-        moves.add(new Pair<>(6, 4)); moves.add(new Pair<>(2, 6));
-        moves.add(new Pair<>(6, 2)); moves.add(new Pair<>(3, 6));
-        moves.add(new Pair<>(4, 6)); moves.add(new Pair<>(7, 3));
-        moves.add(new Pair<>(3, 7)); moves.add(new Pair<>(6, 3));
-        moves.add(new Pair<>(0, 3)); moves.add(new Pair<>(0, 1));
-        moves.add(new Pair<>(7, 1)); moves.add(new Pair<>(7, 2));
-        moves.add(new Pair<>(7, 4)); moves.add(new Pair<>(1, 5));
-        moves.add(new Pair<>(2, 7)); moves.add(new Pair<>(5, 6));
-        moves.add(new Pair<>(4, 7)); moves.add(new Pair<>(1, 6));
-        moves.add(new Pair<>(2, 0)); moves.add(new Pair<>(7, 5));
-        moves.add(new Pair<>(7, 6)); moves.add(new Pair<>(3, 0));
-        moves.add(new Pair<>(0, 7)); moves.add(new Pair<>(1, 0));
-        moves.add(new Pair<>(0, 6)); moves.add(new Pair<>(5, 7));
-        moves.add(new Pair<>(6, 1)); moves.add(new Pair<>(7, 0));
-        moves.add(new Pair<>(6, 0)); moves.add(new Pair<>(7, 7));
-        moves.add(new Pair<>(4, 0)); moves.add(new Pair<>(1, 7));
-        moves.add(new Pair<>(0, 0)); moves.add(new Pair<>(1, 1));
-        moves.add(new Pair<>(6, 7)); moves.add(new Pair<>(6, 6));
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(List.of(4, 5)); moves.add(List.of(5, 3));
+        moves.add(List.of(3, 2)); moves.add(List.of(2, 3));
+        moves.add(List.of(2, 2)); moves.add(List.of(3, 5));
+        moves.add(List.of(4, 2)); moves.add(List.of(2, 1));
+        moves.add(List.of(1, 2)); moves.add(List.of(5, 4));
+        moves.add(List.of(5, 2)); moves.add(List.of(3, 1));
+        moves.add(List.of(4, 1)); moves.add(List.of(1, 3));
+        moves.add(List.of(2, 4)); moves.add(List.of(5, 0));
+        moves.add(List.of(0, 2)); moves.add(List.of(5, 1));
+        moves.add(List.of(2, 5)); moves.add(List.of(5, 5));
+        moves.add(List.of(6, 5)); moves.add(List.of(0, 4));
+        moves.add(List.of(1, 4)); moves.add(List.of(0, 5));
+        moves.add(List.of(6, 4)); moves.add(List.of(2, 6));
+        moves.add(List.of(6, 2)); moves.add(List.of(3, 6));
+        moves.add(List.of(4, 6)); moves.add(List.of(7, 3));
+        moves.add(List.of(3, 7)); moves.add(List.of(6, 3));
+        moves.add(List.of(0, 3)); moves.add(List.of(0, 1));
+        moves.add(List.of(7, 1)); moves.add(List.of(7, 2));
+        moves.add(List.of(7, 4)); moves.add(List.of(1, 5));
+        moves.add(List.of(2, 7)); moves.add(List.of(5, 6));
+        moves.add(List.of(4, 7)); moves.add(List.of(1, 6));
+        moves.add(List.of(2, 0)); moves.add(List.of(7, 5));
+        moves.add(List.of(7, 6)); moves.add(List.of(3, 0));
+        moves.add(List.of(0, 7)); moves.add(List.of(1, 0));
+        moves.add(List.of(0, 6)); moves.add(List.of(5, 7));
+        moves.add(List.of(6, 1)); moves.add(List.of(7, 0));
+        moves.add(List.of(6, 0)); moves.add(List.of(7, 7));
+        moves.add(List.of(4, 0)); moves.add(List.of(1, 7));
+        moves.add(List.of(0, 0)); moves.add(List.of(1, 1));
+        moves.add(List.of(6, 7)); moves.add(List.of(6, 6));
         Reversi game = setMoves(moves);
 
         assertFalse("if the are valid moves", game.areValidMoves());
@@ -549,11 +549,11 @@ public class ReversiTest {
     }
 
 
-    private Reversi setMoves(ArrayList<Pair<Integer, Integer>> moves) {
+    private Reversi setMoves(List<List<Integer>> moves) {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        for (Pair<Integer, Integer> move  : moves) {
-            Integer r = move.getKey();
-            Integer c = move.getValue();
+        for (List<Integer> move  : moves) {
+            Integer r = move.get(0);
+            Integer c = move.get(1);
             game.move(r, c);
         }
         return game;
