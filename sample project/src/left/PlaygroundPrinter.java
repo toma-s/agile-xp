@@ -1,7 +1,5 @@
 package left;
 
-import fileException.Player;
-
 import java.util.Collections;
 
 class PlaygroundPrinter {

@@ -238,7 +238,7 @@ public class ReversiTest {
     @Test
     public void testSetTile00() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("00", Player.B);
+        game.setTile(new int[]{0, 0}, Player.B);
 
         assertEquals("set player B on tile 00", Player.B, getTile(game, 0, 0));
     }
@@ -246,7 +246,7 @@ public class ReversiTest {
     @Test
     public void testSetTile80() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("80", Player.B);
+        game.setTile(new int[]{8, 0}, Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
         assertArrayEquals(expectedPlayground, game.playground);
@@ -256,7 +256,7 @@ public class ReversiTest {
     @Test
     public void testSetTile08() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("08", Player.B);
+        game.setTile(new int[]{0, 8}, Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
         assertArrayEquals(expectedPlayground, game.playground);
@@ -266,7 +266,7 @@ public class ReversiTest {
     @Test
     public void testSetTile88() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("88", Player.B);
+        game.setTile(new int[]{8, 8}, Player.B);
 
         Player[][] expectedPlayground = getInitPlayground();
         assertArrayEquals(expectedPlayground, game.playground);

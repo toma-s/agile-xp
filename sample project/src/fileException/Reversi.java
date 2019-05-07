@@ -95,9 +95,13 @@ public class Reversi {
     void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
         try {
             for (int i = 2; i < 4; i++) {
-                String[] tiles = gameConfig[i].split(" ");
+                String[] tiles = gameConfig[i].split(",");
                 for (String tile : tiles) {
-                    setTile(tile, players[i - 2]);
+                    if (!isTileInputCorrect(tile)) {
+                        throw new IncorrectGameConfigFileException("Incorrect tile input");
+                    }
+                    int[] coordinates = getCoordinates(tile);
+                    setTile(coordinates, players[i - 2]);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
@@ -105,20 +109,24 @@ public class Reversi {
         }
     }
 
-    void setTile(String tile, Player player) throws IncorrectGameConfigFileException {
-        if (!isTileInputCorrect(tile)) {
-            throw new IncorrectGameConfigFileException("Incorrect tile input");
-        }
-        int r = Integer.parseInt(tile.substring(0, 1));
-        int c = Integer.parseInt(tile.substring(1, 2));
+    boolean isTileInputCorrect(String tile) {
+        return tile.matches("[ ]*[0-9]+[ ]*[0-9]+[ ]*");
+    }
+
+    private int[] getCoordinates(String tile) {
+        String[] coordinates = tile.trim().split(" ");
+        int r = Integer.parseInt(coordinates[0]);
+        int c = Integer.parseInt(coordinates[1]);
+        return new int[] {r, c};
+    }
+
+    void setTile(int[] coordinates, Player player) throws IncorrectGameConfigFileException {
+        int r = coordinates[0];
+        int c = coordinates[1];
         if (r >= size || c >= size) {
             throw new IncorrectGameConfigFileException("Incorrect tile input");
         }
         playground[r][c] = player;
-    }
-
-    boolean isTileInputCorrect(String tile) {
-        return tile.length() == 2 && tile.substring(0, 1).matches("[0-9]+") && tile.substring(1, 2).matches("[0-9]+");
     }
 
     void initTilesCount() throws IncorrectGameConfigFileException {
@@ -172,9 +180,8 @@ public class Reversi {
             System.out.println("Incorrect tile input");
             return;
         }
-        int r = Integer.parseInt(line.substring(0, 1));
-        int c = Integer.parseInt(line.substring(1, 2));
-        move(r, c);
+        int[] coordinates = getCoordinates(line);
+        move(coordinates[0], coordinates[1]);
     }
 
     void move(int r, int c) {

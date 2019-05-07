@@ -39,8 +39,8 @@ public class ReversiTest {
         assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
         assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
         assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
-        assertEquals("3rd line of game8bInit config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of game8bInit config file", "33 44", gameConfig[3]);
+        assertEquals("3rd line of game8bInit config file", "3 4, 4 3", gameConfig[2]);
+        assertEquals("4th line of game8bInit config file", "3 3, 4 4", gameConfig[3]);
     }
 
     @Test
@@ -51,8 +51,8 @@ public class ReversiTest {
         assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
         assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
         assertEquals("2nd line of game8wInit config file", "W", gameConfig[1]);
-        assertEquals("3rd line of game8wInit config file", "34 43", gameConfig[2]);
-        assertEquals("4th line of game8wInit config file", "33 44", gameConfig[3]);
+        assertEquals("3rd line of game8wInit config file", "3 4, 4 3", gameConfig[2]);
+        assertEquals("4th line of game8wInit config file", "3 3, 4 4", gameConfig[3]);
     }
 
     @Test
@@ -63,8 +63,8 @@ public class ReversiTest {
         assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
         assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
         assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
-        assertEquals("3rd line of game10bInit config file", "45 54", gameConfig[2]);
-        assertEquals("4th line of game10bInit config file", "44 55", gameConfig[3]);
+        assertEquals("3rd line of game10bInit config file", "4 5, 5 4", gameConfig[2]);
+        assertEquals("4th line of game10bInit config file", "4 4, 5 5", gameConfig[3]);
     }
 
     @Test
@@ -93,9 +93,9 @@ public class ReversiTest {
         assertEquals(5, gameConfig.length);
         assertEquals("8", gameConfig[0]);
         assertEquals("B", gameConfig[1]);
-        assertEquals("34 43", gameConfig[2]);
-        assertEquals("33 44", gameConfig[3]);
-        assertEquals("33 44", gameConfig[4]);
+        assertEquals("3 4, 4 3", gameConfig[2]);
+        assertEquals("3 3, 4 4", gameConfig[3]);
+        assertEquals("3 3, 4 4", gameConfig[4]);
     }
 
     @Test
@@ -106,8 +106,8 @@ public class ReversiTest {
         assertEquals(4, gameConfig.length);
         assertEquals("8", gameConfig[0]);
         assertEquals("B", gameConfig[1]);
-        assertEquals("E4 D5", gameConfig[2]);
-        assertEquals("D4 E5", gameConfig[3]);
+        assertEquals("E 4, D 5", gameConfig[2]);
+        assertEquals("D 4, E 5", gameConfig[3]);
     }
 
     @Test
@@ -117,8 +117,8 @@ public class ReversiTest {
 
         assertEquals(3, gameConfig.length);
         assertEquals("B", gameConfig[0]);
-        assertEquals("34 43", gameConfig[1]);
-        assertEquals("33 44", gameConfig[2]);
+        assertEquals("3 4, 4 3", gameConfig[1]);
+        assertEquals("3 3, 4 4", gameConfig[2]);
     }
 
     @Test
@@ -128,8 +128,8 @@ public class ReversiTest {
 
         assertEquals(3, gameConfig.length);
         assertEquals("8", gameConfig[0]);
-        assertEquals("34 43", gameConfig[1]);
-        assertEquals("33 44", gameConfig[2]);
+        assertEquals("3 4, 4 3", gameConfig[1]);
+        assertEquals("3 3, 4 4", gameConfig[2]);
     }
 
     @Test
@@ -286,7 +286,7 @@ public class ReversiTest {
     @Test
     public void testSetTile00() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.setTile("00", Player.B);
+        game.setTile(new int[]{0, 0}, Player.B);
 
         assertEquals("set player B on tile 00", Player.B, getTile(game, 0, 0));
     }
@@ -297,7 +297,7 @@ public class ReversiTest {
 
         expectedException.expect(IncorrectGameConfigFileException.class);
         expectedException.expectMessage("Incorrect tile input");
-        game.setTile("80", Player.B);
+        game.setTile(new int[]{8, 0}, Player.B);
     }
 
     @Test
@@ -306,7 +306,7 @@ public class ReversiTest {
 
         expectedException.expect(IncorrectGameConfigFileException.class);
         expectedException.expectMessage("Incorrect tile input");
-        game.setTile("08", Player.B);
+        game.setTile(new int[]{0, 8}, Player.B);
     }
 
     @Test
@@ -315,7 +315,7 @@ public class ReversiTest {
 
         expectedException.expect(IncorrectGameConfigFileException.class);
         expectedException.expectMessage("Incorrect tile input");
-        game.setTile("88", Player.B);
+        game.setTile(new int[]{8, 8}, Player.B);
     }
 
 
@@ -323,7 +323,7 @@ public class ReversiTest {
 
     @Test
     public void testFillPlayground8bInit() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"8", "B", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"8", "B", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = getRevWithPlayground();
         game.size = 8;
         game.fillPlayground(gameConfig);
@@ -368,7 +368,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGame8bInit() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"8", "B", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"8", "B", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -382,7 +382,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGame8wInit() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"8", "W", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"8", "W", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -396,7 +396,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGame10bInit() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"10", "B", "45 54", "44 55"};
+        String[] gameConfig = new String[] {"10", "B", "4 5, 5 4", "4 4, 5 5"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -482,7 +482,7 @@ public class ReversiTest {
 
     @Test
     public void testInitTilesCountInit() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"8", "B", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"8", "B", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = initReversi(gameConfig);
         game.initTilesCount();
 
@@ -1015,7 +1015,7 @@ public class ReversiTest {
     @Test
     public void testExecute() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.execute("32");
+        game.execute("3 2");
 
         assertEquals("check if flipped", Player.B, getTile(game, 3, 3));
         assertEquals("check if flipped", Player.B, getTile(game, 3, 2));
@@ -1027,7 +1027,7 @@ public class ReversiTest {
     @Test
     public void testExecute00() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        game.execute("00");
+        game.execute("0 0");
 
         assertArrayEquals("check if didn't change", getInitPlayground(), game.playground);
     }
@@ -1035,7 +1035,7 @@ public class ReversiTest {
     @Test
     public void testFinishGame() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bAlmostComplete);
-        game.execute("34");
+        game.execute("3 4");
 
         assertFalse("if the are valid moves", game.areValidMoves());
         assertEquals("W left", 39, game.getLeftW());
