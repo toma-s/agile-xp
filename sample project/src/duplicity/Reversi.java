@@ -143,11 +143,11 @@ public class Reversi {
             String line;
             while (!ended) {
                 printPlayground();
-                printTilesLeftCount();
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
                 execute(line);
+                printTilesLeftCount();
             }
             reader.close();
         } catch (IOException e) {
@@ -192,7 +192,6 @@ public class Reversi {
     }
 
     void execute(String line) {
-        printTilesLeftCount();
         if (!isTileInputCorrect(line)) {
             System.out.println("Incorrect tile input");
             return;
@@ -200,7 +199,6 @@ public class Reversi {
         int r = Integer.parseInt(line.substring(0, 1));
         int c = Integer.parseInt(line.substring(1, 2));
         move(r, c);
-        printTilesLeftCount();
     }
 
     void move(int r, int c) {
