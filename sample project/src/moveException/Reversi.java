@@ -158,27 +158,40 @@ public class Reversi {
     }
 
     private void printPlayground() {
-        System.out.println("  " + getLine());
+        printUpperEnumeration();
         for (int r = 0; r < size; r++) {
-            System.out.print(r  + " ");
+            printLeftEnumeration(r);
             for (int c = 0; c < size; c++) {
-                if (playground[r][c] == Player.NONE)
-                    System.out.print("_" + String.join("", Collections.nCopies(String.valueOf(c).length(), " ")));
-                else if (playground[r][c] == Player.B)
-                    System.out.print("B ");
-                else
-                    System.out.print("W ");
+                if (playground[r][c] == Player.NONE) {
+                    printPiece("_");
+                }
+                else if (playground[r][c] == Player.B) {
+                    printPiece("B");
+                }
+                else {
+                    printPiece("W");
+                }
             }
             System.out.println();
         }
     }
 
-    private String getLine() {
-        StringBuilder builder = new StringBuilder();
+    private void printUpperEnumeration() {
+        int length = String.valueOf(size).length() + 1;
+        System.out.print(String.join("", Collections.nCopies(length, " ")));
         for (int i = 0; i < size; i++) {
-            builder.append(i).append(" ");
+            System.out.print(String.format("%-" + (length) + "d", i));
         }
-        return builder.toString();
+        System.out.print("\n");
+    }
+
+    private void printLeftEnumeration(int r) {
+        int length = String.valueOf(size).length();
+        System.out.print(String.format("%" + length + "d ", r));
+    }
+
+    private void printPiece(String piece) {
+        System.out.print(piece + String.join("", Collections.nCopies(String.valueOf(size).length(), " ")));
     }
 
     private void printTilesLeftCount() {
