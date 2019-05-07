@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Reversi {
@@ -253,13 +254,13 @@ public class Reversi {
                 r -= direction[0];
                 c -= direction[1];
                 if (r == r0 && c == c0) break;
-                toFlip.add(new ArrayList<>(List.of(r, c)));
+                toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
             }
         }
 
         playground[r0][c0] = Player.NONE;
         if (!toFlip.isEmpty()) {
-            toFlip.add(new ArrayList<>(List.of(r0, c0)));
+            toFlip.add(new ArrayList<>(Arrays.asList(r0, c0)));
         }
         return toFlip;
     }

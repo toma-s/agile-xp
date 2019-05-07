@@ -703,8 +703,8 @@ public class ReversiTest {
         Reversi game = new Reversi(GameConfig.game8bInit);
         List<List<Integer>> tiles = game.getTilesToFlip(3, 2);
         List<List<Integer>> expected = new ArrayList<>();
-        expected.add(List.of(3, 3));
-        expected.add(List.of(3, 2));
+        expected.add(Arrays.asList(3, 3));
+        expected.add(Arrays.asList(3, 2));
 
         assertEquals("tiles to flip on onit - (3, 2)", 2, tiles.size());
         assertEquals(expected.get(0).get(0), tiles.get(0).get(0));
@@ -892,9 +892,9 @@ public class ReversiTest {
     @Test
     public void testMoveFlipRightUp() {
         List<List<Integer>> moves = new ArrayList<>();
-        moves.add(List.of(5, 4));
-        moves.add(List.of(5, 3));
-        moves.add(List.of(6, 2));
+        moves.add(Arrays.asList(5, 4));
+        moves.add(Arrays.asList(5, 3));
+        moves.add(Arrays.asList(6, 2));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", Player.B, getTile(game, 5, 3));
@@ -907,8 +907,8 @@ public class ReversiTest {
     @Test
     public void testMoveFlipLeftUp() {
         List<List<Integer>> moves = new ArrayList<>();
-        moves.add(List.of(5, 4));
-        moves.add(List.of(5, 5));
+        moves.add(Arrays.asList(5, 4));
+        moves.add(Arrays.asList(5, 5));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", Player.W, getTile(game, 4, 4));
@@ -921,9 +921,9 @@ public class ReversiTest {
     @Test
     public void testMoveFlipLeftDown() {
         List<List<Integer>> moves = new ArrayList<>();
-        moves.add(List.of(2, 3));
-        moves.add(List.of(2, 4));
-        moves.add(List.of(1, 5));
+        moves.add(Arrays.asList(2, 3));
+        moves.add(Arrays.asList(2, 4));
+        moves.add(Arrays.asList(1, 5));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", Player.B, getTile(game, 2, 4));
@@ -936,8 +936,8 @@ public class ReversiTest {
     @Test
     public void testMoveFlipRightDown() {
         List<List<Integer>> moves = new ArrayList<>();
-        moves.add(List.of(2, 3));
-        moves.add(List.of(2, 2));
+        moves.add(Arrays.asList(2, 3));
+        moves.add(Arrays.asList(2, 2));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped", Player.W, getTile(game, 3, 3));
@@ -950,10 +950,10 @@ public class ReversiTest {
     @Test
     public void testMoveDoubleFlip() {
         List<List<Integer>> moves = new ArrayList<>();
-        moves.add(List.of(2, 3));
-        moves.add(List.of(2, 2));
-        moves.add(List.of(3, 2));
-        moves.add(List.of(2, 4));
+        moves.add(Arrays.asList(2, 3));
+        moves.add(Arrays.asList(2, 2));
+        moves.add(Arrays.asList(3, 2));
+        moves.add(Arrays.asList(2, 4));
         Reversi game = setMoves(moves);
 
         assertEquals("check if flipped (D,3) correctly", Player.W, getTile(game, 2, 3));
@@ -976,36 +976,36 @@ public class ReversiTest {
     @Test
     public void testMovesCompleteGame() {
         List<List<Integer>> moves = new ArrayList<>();
-        moves.add(List.of(4, 5)); moves.add(List.of(5, 3));
-        moves.add(List.of(3, 2)); moves.add(List.of(2, 3));
-        moves.add(List.of(2, 2)); moves.add(List.of(3, 5));
-        moves.add(List.of(4, 2)); moves.add(List.of(2, 1));
-        moves.add(List.of(1, 2)); moves.add(List.of(5, 4));
-        moves.add(List.of(5, 2)); moves.add(List.of(3, 1));
-        moves.add(List.of(4, 1)); moves.add(List.of(1, 3));
-        moves.add(List.of(2, 4)); moves.add(List.of(5, 0));
-        moves.add(List.of(0, 2)); moves.add(List.of(5, 1));
-        moves.add(List.of(2, 5)); moves.add(List.of(5, 5));
-        moves.add(List.of(6, 5)); moves.add(List.of(0, 4));
-        moves.add(List.of(1, 4)); moves.add(List.of(0, 5));
-        moves.add(List.of(6, 4)); moves.add(List.of(2, 6));
-        moves.add(List.of(6, 2)); moves.add(List.of(3, 6));
-        moves.add(List.of(4, 6)); moves.add(List.of(7, 3));
-        moves.add(List.of(3, 7)); moves.add(List.of(6, 3));
-        moves.add(List.of(0, 3)); moves.add(List.of(0, 1));
-        moves.add(List.of(7, 1)); moves.add(List.of(7, 2));
-        moves.add(List.of(7, 4)); moves.add(List.of(1, 5));
-        moves.add(List.of(2, 7)); moves.add(List.of(5, 6));
-        moves.add(List.of(4, 7)); moves.add(List.of(1, 6));
-        moves.add(List.of(2, 0)); moves.add(List.of(7, 5));
-        moves.add(List.of(7, 6)); moves.add(List.of(3, 0));
-        moves.add(List.of(0, 7)); moves.add(List.of(1, 0));
-        moves.add(List.of(0, 6)); moves.add(List.of(5, 7));
-        moves.add(List.of(6, 1)); moves.add(List.of(7, 0));
-        moves.add(List.of(6, 0)); moves.add(List.of(7, 7));
-        moves.add(List.of(4, 0)); moves.add(List.of(1, 7));
-        moves.add(List.of(0, 0)); moves.add(List.of(1, 1));
-        moves.add(List.of(6, 7)); moves.add(List.of(6, 6));
+        moves.add(Arrays.asList(4, 5)); moves.add(Arrays.asList(5, 3));
+        moves.add(Arrays.asList(3, 2)); moves.add(Arrays.asList(2, 3));
+        moves.add(Arrays.asList(2, 2)); moves.add(Arrays.asList(3, 5));
+        moves.add(Arrays.asList(4, 2)); moves.add(Arrays.asList(2, 1));
+        moves.add(Arrays.asList(1, 2)); moves.add(Arrays.asList(5, 4));
+        moves.add(Arrays.asList(5, 2)); moves.add(Arrays.asList(3, 1));
+        moves.add(Arrays.asList(4, 1)); moves.add(Arrays.asList(1, 3));
+        moves.add(Arrays.asList(2, 4)); moves.add(Arrays.asList(5, 0));
+        moves.add(Arrays.asList(0, 2)); moves.add(Arrays.asList(5, 1));
+        moves.add(Arrays.asList(2, 5)); moves.add(Arrays.asList(5, 5));
+        moves.add(Arrays.asList(6, 5)); moves.add(Arrays.asList(0, 4));
+        moves.add(Arrays.asList(1, 4)); moves.add(Arrays.asList(0, 5));
+        moves.add(Arrays.asList(6, 4)); moves.add(Arrays.asList(2, 6));
+        moves.add(Arrays.asList(6, 2)); moves.add(Arrays.asList(3, 6));
+        moves.add(Arrays.asList(4, 6)); moves.add(Arrays.asList(7, 3));
+        moves.add(Arrays.asList(3, 7)); moves.add(Arrays.asList(6, 3));
+        moves.add(Arrays.asList(0, 3)); moves.add(Arrays.asList(0, 1));
+        moves.add(Arrays.asList(7, 1)); moves.add(Arrays.asList(7, 2));
+        moves.add(Arrays.asList(7, 4)); moves.add(Arrays.asList(1, 5));
+        moves.add(Arrays.asList(2, 7)); moves.add(Arrays.asList(5, 6));
+        moves.add(Arrays.asList(4, 7)); moves.add(Arrays.asList(1, 6));
+        moves.add(Arrays.asList(2, 0)); moves.add(Arrays.asList(7, 5));
+        moves.add(Arrays.asList(7, 6)); moves.add(Arrays.asList(3, 0));
+        moves.add(Arrays.asList(0, 7)); moves.add(Arrays.asList(1, 0));
+        moves.add(Arrays.asList(0, 6)); moves.add(Arrays.asList(5, 7));
+        moves.add(Arrays.asList(6, 1)); moves.add(Arrays.asList(7, 0));
+        moves.add(Arrays.asList(6, 0)); moves.add(Arrays.asList(7, 7));
+        moves.add(Arrays.asList(4, 0)); moves.add(Arrays.asList(1, 7));
+        moves.add(Arrays.asList(0, 0)); moves.add(Arrays.asList(1, 1));
+        moves.add(Arrays.asList(6, 7)); moves.add(Arrays.asList(6, 6));
         Reversi game = setMoves(moves);
 
         assertFalse("if the are valid moves", game.areValidMoves());

@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Reversi {
@@ -211,13 +212,13 @@ public class Reversi {
                 dirR -= direction[0];
                 dirC -= direction[1];
                 if (dirR == r && dirC == c) break;
-                tilesToFlip.add(new ArrayList<>(List.of(dirR, dirC)));
+                tilesToFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
             }
         }
 
         playground[r][c] = Player.NONE;
         if (!tilesToFlip.isEmpty()) {
-            tilesToFlip.add(new ArrayList<>(List.of(r, c)));
+            tilesToFlip.add(new ArrayList<>(Arrays.asList(r, c)));
         }
 
         if (tilesToFlip.isEmpty()) {
@@ -286,13 +287,13 @@ public class Reversi {
                         dirR -= direction[0];
                         dirC -= direction[1];
                         if (dirR == r && dirC == c) break;
-                        toFlip.add(new ArrayList<>(List.of(dirR, dirC)));
+                        toFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
                     }
                 }
 
                 playground[r][c] = Player.NONE;
                 if (!toFlip.isEmpty()) {
-                    toFlip.add(new ArrayList<>(List.of(r, c)));
+                    toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
                 }
                 if (toFlip.isEmpty()) continue;
                 String rString = String.valueOf(r);

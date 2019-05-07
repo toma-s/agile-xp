@@ -6,15 +6,13 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Reversi {
 
     int size;
     Player[][] playground;
-    private HashMap<Player, Integer> left = new HashMap<>() {{ put(Player.B, 0); put(Player.W, 0); }};
+    private HashMap<Player, Integer> left = new HashMap<Player, Integer>() {{ put(Player.B, 0); put(Player.W, 0); }};
     private Player[] players = new Player[] { Player.B, Player.W };
     Player onTurn = Player.NONE;
     Player winner = Player.NONE;
@@ -165,7 +163,7 @@ public class Reversi {
             System.out.print(r  + " ");
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] == Player.NONE)
-                    System.out.print("_" + (" ".repeat(String.valueOf(c).length())));
+                    System.out.print("_" + String.join("", Collections.nCopies(String.valueOf(c).length(), " ")));
                 else if (playground[r][c] == Player.B)
                     System.out.print("B ");
                 else
@@ -267,13 +265,13 @@ public class Reversi {
                 r -= direction[0];
                 c -= direction[1];
                 if (r == r0 && c == c0) break;
-                toFlip.add(new ArrayList<>(List.of(r, c)));
+                toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
             }
         }
 
         playground[r0][c0] = Player.NONE;
         if (!toFlip.isEmpty()) {
-            toFlip.add(new ArrayList<>(List.of(r0, c0)));
+            toFlip.add(new ArrayList<>(Arrays.asList(r0, c0)));
         }
         return toFlip;
     }
