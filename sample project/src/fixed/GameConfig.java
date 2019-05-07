@@ -17,6 +17,7 @@ final class GameConfig {
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path game20bInit = new File(gameConfigDir + "game_20_b_init.txt").toPath();
     static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
     static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
     static Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
