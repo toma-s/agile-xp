@@ -23,8 +23,8 @@ public class ReversiTest {
 
         assertEquals("Lines number of game8bInit config file", 3, gameConfig.length);
         assertEquals("1st line of game8bInit config file", "B", gameConfig[0]);
-        assertEquals("2nd line of game8bInit config file", "34 43", gameConfig[1]);
-        assertEquals("3rd line of game8bInit config file", "33 44", gameConfig[2]);
+        assertEquals("2nd line of game8bInit config file", "3 4, 4 3", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "3 3, 4 4", gameConfig[2]);
     }
 
     @Test
@@ -34,8 +34,8 @@ public class ReversiTest {
 
         assertEquals("Lines number of game8wInit config file", 3, gameConfig.length);
         assertEquals("1st line of game8wInit config file", "W", gameConfig[0]);
-        assertEquals("2nd line of game8wInit config file", "34 43", gameConfig[1]);
-        assertEquals("3rd line of game8wInit config file", "33 44", gameConfig[2]);
+        assertEquals("2nd line of game8wInit config file", "3 4, 4 3", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "3 3, 4 4", gameConfig[2]);
     }
 
     @Test
@@ -61,9 +61,9 @@ public class ReversiTest {
 
         assertEquals("Lines number of gameFourLines config file", 4, gameConfig.length);
         assertEquals("1st line of gameFourLines config file", "B", gameConfig[0]);
-        assertEquals("2nd line of gameFourLines config file", "34 43", gameConfig[1]);
-        assertEquals("3rd line of gameFourLines config file", "33 44", gameConfig[2]);
-        assertEquals("4th line of gameFourLines config file", "33 44", gameConfig[3]);
+        assertEquals("2nd line of gameFourLines config file", "3 4, 4 3", gameConfig[1]);
+        assertEquals("3rd line of gameFourLines config file", "3 3, 4 4", gameConfig[2]);
+        assertEquals("4th line of gameFourLines config file", "3 3, 4 4", gameConfig[3]);
     }
 
     @Test
@@ -73,8 +73,8 @@ public class ReversiTest {
 
         assertEquals("Lines number of gameAlpha config file", 3, gameConfig.length);
         assertEquals("1st line of gameAlpha config file", "B", gameConfig[0]);
-        assertEquals("2nd line of gameAlpha config file", "E4 D5", gameConfig[1]);
-        assertEquals("3rd line of gameAlpha config file", "D4 E5", gameConfig[2]);
+        assertEquals("2nd line of gameAlpha config file", "E 4, D 5", gameConfig[1]);
+        assertEquals("3rd line of gameAlpha config file", "D 4, E 5", gameConfig[2]);
     }
 
     @Test
@@ -83,8 +83,8 @@ public class ReversiTest {
         String[] gameConfig = game.readGameConfig(GameConfig.gameNoOnTurn);
 
         assertEquals(2, gameConfig.length);
-        assertEquals("34 43", gameConfig[0]);
-        assertEquals("33 44", gameConfig[1]);
+        assertEquals("3 4, 4 3", gameConfig[0]);
+        assertEquals("3 3, 4 4", gameConfig[1]);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGame8bInit() {
-        String[] gameConfig = new String[] {"B", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"B", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -124,7 +124,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGame8wInit() {
-        String[] gameConfig = new String[] {"W", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"W", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -147,7 +147,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameFourLines() {
-        String[] gameConfig = new String[] {"B", "34 43", "33 44", "33 44"};
+        String[] gameConfig = new String[] {"B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -156,7 +156,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameAlpha() {
-        String[] gameConfig = new String[] {"B", "E4 D5", "D4 E5"};
+        String[] gameConfig = new String[] {"B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -165,7 +165,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameNoOnTurn() {
-        String[] gameConfig = new String[] {"34 43", "33 44"};
+        String[] gameConfig = new String[] {"3 4, 4 3", "3 3, 4 4"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -194,7 +194,7 @@ public class ReversiTest {
 
     @Test
     public void testInitTilesCountInit() {
-        String[] gameConfig = new String[] {"B", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"B", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = initReversi(gameConfig);
         game.initTilesCount();
 

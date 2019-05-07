@@ -256,9 +256,15 @@ public class ReversiTest {
     // isTileInputCorrect
 
     @Test
+    public void testTileInput0_0() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        assertTrue("tile input: 00", game.isTileInputCorrect("0 0"));
+    }
+
+    @Test
     public void testTileInput00() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        assertTrue("tile input: 0 0", game.isTileInputCorrect("0 0"));
+        assertFalse("tile input: 00", game.isTileInputCorrect("00"));
     }
 
     @Test

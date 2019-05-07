@@ -16,8 +16,8 @@ import java.util.List;
 public class Reversi {
 
     int[][] playground;
-    int leftB = 0;
-    int leftW = 0;
+    private int leftB = 0;
+    private int leftW = 0;
     private int[] players = new int[] { 1, 0 };
     int onTurn = -1;
     int winner = -1;
@@ -36,30 +36,6 @@ public class Reversi {
         } catch (Exception e) {
             ended = true;
             System.out.println(e.getMessage());
-        }
-    }
-
-    private void run() {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            String line;
-            while (!ended) {
-                PlaygroundPrinter.printPlayground(playground);
-                System.out.format("Make a move. %s is on turn\n", onTurn);
-                if (winner != -1) break;
-                if ((line = reader.readLine()) == null) break;
-                if (!(line.length() == 2 && line.substring(0, 1).matches("[0-7]") &&  line.substring(1, 2).matches("[0-7]"))) {
-                    System.out.println("Incorrect tile input");
-                    return;
-                }
-                int r = Integer.parseInt(line.substring(0, 1));
-                int c = Integer.parseInt(line.substring(1, 2));
-                move(r, c);
-                printTilesLeftCount();
-            }
-            reader.close();
-        } catch (IOException e) {
-            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -102,14 +78,18 @@ public class Reversi {
                 }
             }
             for (int i = 1; i < 3; i++) {
-                String[] tiles = gameConfig[i].split(" ");
+                String[] tiles = gameConfig[i].split(",");
                 for (String tile : tiles) {
-                    if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
+                    if (!tile.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
                         System.out.println("Incorrect tile input");
                         return;
                     }
-                    int r = Integer.parseInt(tile.substring(1, 2));
-                    int c = Integer.parseInt(tile.substring(0, 1));
+                    String[] coordinates = tile.trim().split(" ");
+                    int r = Integer.parseInt(coordinates[0]);
+                    int c = Integer.parseInt(coordinates[1]);
+                    if (r >= 8 || c >= 8) {
+                        return;
+                    }
                     playground[r][c] = players[i - 1];
                 }
             }
@@ -131,6 +111,31 @@ public class Reversi {
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
             System.out.println("Playground  is not valid" + e.getMessage());
+        }
+    }
+
+    private void run() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String line;
+            while (!ended) {
+                PlaygroundPrinter.printPlayground(playground);
+                System.out.format("Make a move. %s is on turn\n", onTurn);
+                if (winner != -1) break;
+                if ((line = reader.readLine()) == null) break;
+                if (!line.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
+                    System.out.println("Incorrect tile input");
+                    return;
+                }
+                String[] coordinates = line.trim().split(" ");
+                int r = Integer.parseInt(coordinates[0]);
+                int c = Integer.parseInt(coordinates[1]);
+                move(r, c);
+                printTilesLeftCount();
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
         }
     }
 
@@ -198,7 +203,7 @@ public class Reversi {
         }
 
         playground[r][c] = -1;
-        if (tilesToFlip.size() != 0) {
+        if (!tilesToFlip.isEmpty()) {
             tilesToFlip.add(new ArrayList<>(Arrays.asList(r, c)));
         }
 
@@ -276,13 +281,13 @@ public class Reversi {
                 if (!toFlip.isEmpty()) {
                     toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
                 }
-                if (toFlip.size() == 0) continue;
+                if (toFlip.isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
             }
         }
-        return tiles.size() != 0;
+        return !tiles.isEmpty();
     }
 
     public static void main(String[] args) {

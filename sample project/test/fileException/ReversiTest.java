@@ -269,15 +269,21 @@ public class ReversiTest {
     // isTileInputCorrect
 
     @Test
+    public void testTileInput0_0() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        assertTrue("tile input: 00", game.isTileInputCorrect("0 0"));
+    }
+
+    @Test
     public void testTileInput00() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        assertTrue("tile input: 00", game.isTileInputCorrect("00"));
+        assertFalse("tile input: 00", game.isTileInputCorrect("00"));
     }
 
     @Test
     public void testTileInputD3() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        assertFalse("tile input: D3", game.isTileInputCorrect("D3"));
+        assertFalse("tile input: D3", game.isTileInputCorrect("D 3"));
     }
 
 
@@ -355,7 +361,7 @@ public class ReversiTest {
 
     @Test
     public void testFillPlaygroundNoOnTurn() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"8", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"8", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = getRevWithPlayground();
 
         expectedException.expect(IncorrectGameConfigFileException.class);
@@ -420,7 +426,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameFiveLines() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"8", "B", "34 43", "33 44", "33 44"};
+        String[] gameConfig = new String[] {"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
         Reversi game = rev;
 
         expectedException.expect(IncorrectGameConfigFileException.class);
@@ -430,7 +436,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameAlpha() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"8", "B", "E4 D5", "D4 E5"};
+        String[] gameConfig = new String[] {"8", "B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
 
         expectedException.expect(IncorrectGameConfigFileException.class);
@@ -440,7 +446,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameNoSize() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"B", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"B", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = rev;
 
         expectedException.expect(IncorrectGameConfigFileException.class);
@@ -450,7 +456,7 @@ public class ReversiTest {
 
     @Test
     public void testInitGameNoOnTurn() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[] {"8", "34 43", "33 44"};
+        String[] gameConfig = new String[] {"8", "3 4, 4 3", "3 3, 4 4"};
         Reversi game = rev;
 
         expectedException.expect(IncorrectGameConfigFileException.class);

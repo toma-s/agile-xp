@@ -59,7 +59,7 @@ public class Reversi {
         }
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
-                System.out.println("Incorrect size value");
+                System.out.println("Incorrect size input");
                 return;
             }
             size = Integer.parseInt(gameConfig[0]);
@@ -79,14 +79,18 @@ public class Reversi {
                 }
             }
             for (int i = 2; i < 4; i++) {
-                String[] tiles = gameConfig[i].split(" ");
+                String[] tiles = gameConfig[i].split(",");
                 for (String tile : tiles) {
-                    if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-9]+") &&  tile.substring(1, 2).matches("[0-9]+"))) {
+                    if (!tile.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
                         System.out.println("Incorrect tile input");
                         return;
                     }
-                    int r = Integer.parseInt(tile.substring(0, 1));
-                    int c = Integer.parseInt(tile.substring(1, 2));
+                    String[] coordinates = tile.trim().split(" ");
+                    int r = Integer.parseInt(coordinates[0]);
+                    int c = Integer.parseInt(coordinates[1]);
+                    if (r >= size || c >= size) {
+                        return;
+                    }
                     playground[r][c] = players[i - 2];
                 }
             }
@@ -120,12 +124,13 @@ public class Reversi {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
-                if (!(line.length() == 2 && line.substring(0, 1).matches("[0-9]+") &&  line.substring(1, 2).matches("[0-9]+"))) {
+                if (!line.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
                     System.out.println("Incorrect tile input");
                     return;
                 }
-                int r = Integer.parseInt(line.substring(0, 1));
-                int c = Integer.parseInt(line.substring(1, 2));
+                String[] coordinates = line.trim().split(" ");
+                int r = Integer.parseInt(coordinates[0]);
+                int c = Integer.parseInt(coordinates[1]);
                 move(r, c);
                 printTilesLeftCount();
             }

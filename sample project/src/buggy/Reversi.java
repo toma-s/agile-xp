@@ -14,8 +14,8 @@ import java.util.List;
 public class Reversi {
 
     int[][] playground;
-    int leftB = 0;
-    int leftW = 0;
+    private int leftB = 0;
+    private int leftW = 0;
     private int[] players = new int[] { 1, 0 };
     int onTurn = -1;
     int winner = -1;
@@ -59,7 +59,7 @@ public class Reversi {
         }
         try {
             if (gameConfig[0] == null || ! gameConfig[0].matches("[B|W]")) {
-                System.out.println("Incorrect player on turn input.");
+                System.out.println("Incorrect player on turn input");
                 return;
             }
             if ("B".equals(gameConfig[0])) {
@@ -74,19 +74,23 @@ public class Reversi {
                 }
             }
             for (int i = 1; i < 3; i++) {
-                String[] tiles = gameConfig[i].split(" ");
+                String[] tiles = gameConfig[i].split(",");
                 for (String tile : tiles) {
-                    if (!(tile.length() == 2 && tile.substring(0, 1).matches("[0-7]") &&  tile.substring(1, 2).matches("[0-7]"))) {
+                    if (!tile.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
                         System.out.println("Incorrect tile input");
                         return;
                     }
-                    int r = Integer.parseInt(tile.substring(1, 2));
-                    int c = Integer.parseInt(tile.substring(0, 1));
+                    String[] coordinates = tile.trim().split(" ");
+                    int r = Integer.parseInt(coordinates[0]);
+                    int c = Integer.parseInt(coordinates[1]);
+                    if (r >= 8 || c >= 8) {
+                        return;
+                    }
                     playground[r][c] = players[i - 1];
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect.");
+            System.out.println("Game configuration is incorrect");
         }
     }
 
@@ -115,12 +119,13 @@ public class Reversi {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
-                if (!(line.length() == 2 && line.substring(0, 1).matches("[0-7]") &&  line.substring(1, 2).matches("[0-7]"))) {
+                if (!line.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
                     System.out.println("Incorrect tile input");
                     return;
                 }
-                int r = Integer.parseInt(line.substring(0, 1));
-                int c = Integer.parseInt(line.substring(1, 2));
+                String[] coordinates = line.trim().split(" ");
+                int r = Integer.parseInt(coordinates[0]);
+                int c = Integer.parseInt(coordinates[1]);
                 move(r, c);
                 printTilesLeftCount();
             }
@@ -143,15 +148,6 @@ public class Reversi {
     }
 
     void move(int r, int c) {
-        if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
-            System.out.println("Move out of bounds is not permitted");
-            return;
-        }
-        if (playground[r][c] != -1) {
-            System.out.println("Move on not empty tile is not permitted");
-            return;
-        }
-
         if (winner != -1) {
             System.out.println("The game is over. No moves are permitted");
             return;
@@ -172,7 +168,6 @@ public class Reversi {
             if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
-            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];
@@ -189,7 +184,7 @@ public class Reversi {
         }
 
         playground[r][c] = -1;
-        if (tilesToFlip.size() != 0) {
+        if (!tilesToFlip.isEmpty()) {
             tilesToFlip.add(new ArrayList<>(Arrays.asList(r, c)));
         }
 
@@ -267,13 +262,13 @@ public class Reversi {
                 if (!toFlip.isEmpty()) {
                     toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
                 }
-                if (toFlip.size() == 0) continue;
+                if (toFlip.isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
             }
         }
-        return tiles.size() != 0;
+        return !tiles.isEmpty();
     }
 
     public static void main(String[] args) {

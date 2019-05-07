@@ -107,7 +107,7 @@ public class Reversi {
     }
 
     boolean isTileInputCorrect(String tile) {
-        return tile.matches("[ ]*[0-9]+[ ]*[0-9]+[ ]*");
+        return tile.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*");
     }
 
     private int[] getCoordinates(String tile) {

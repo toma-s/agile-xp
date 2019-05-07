@@ -57,43 +57,27 @@ public class Reversi {
             System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
-        setSize(gameConfig[0]);
-        setOnTurn(gameConfig[1]);
-        createPlayground();
-        fillPlayground(gameConfig);
-    }
-
-    void setSize(String size) {
-        if (!size.matches("[0-9]+")) {
-            System.out.println("Incorrect size input");
-            return;
-        }
-        this.size = Integer.parseInt(size);
-    }
-
-    void setOnTurn(String onTurn) {
-        if (onTurn == null || !onTurn.matches("[B|W]")) {
-            System.out.println("Incorrect player on turn input");
-            return;
-        }
-        if ("B".equals(onTurn)) {
-            this.onTurn = Player.B;
-        } else if ("W".equals(onTurn)) {
-            this.onTurn = Player.W;
-        }
-    }
-
-    private void createPlayground() {
-        playground = new Player[size][size];
-        for (int r = 0; r < size; r++) {
-            for (int c = 0; c < size; c++) {
-                playground[r][c] = Player.NONE;
-            }
-        }
-    }
-
-    void fillPlayground(String[] gameConfig) {
         try {
+            if (!gameConfig[0].matches("[0-9]+")) {
+                System.out.println("Incorrect size input");
+                return;
+            }
+            size = Integer.parseInt(gameConfig[0]);
+            if (gameConfig[1] == null || !gameConfig[1].matches("[B|W]")) {
+                System.out.println("Incorrect player on turn input");
+                return;
+            }
+            if ("B".equals(gameConfig[1])) {
+                onTurn = Player.B;
+            } else if ("W".equals(gameConfig[1])) {
+                onTurn = Player.W;
+            }
+            playground = new Player[size][size];
+            for (int r = 0; r < size; r++) {
+                for (int c = 0; c < size; c++) {
+                    playground[r][c] = Player.NONE;
+                }
+            }
             for (int i = 2; i < 4; i++) {
                 String[] tiles = gameConfig[i].split(",");
                 for (String tile : tiles) {
@@ -102,16 +86,21 @@ public class Reversi {
                         return;
                     }
                     int[] coordinates = getCoordinates(tile);
-                    setTile(coordinates, players[i - 2]);
+                    int r = coordinates[0];
+                    int c = coordinates[1];
+                    if (r >= size || c >= size) {
+                        return;
+                    }
+                    playground[r][c] = players[i - 2];
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration file is incorrect");
+            System.out.println("Game configuration is incorrect");
         }
     }
 
     boolean isTileInputCorrect(String tile) {
-        return tile.matches("[ ]*[0-9]+[ ]*[0-9]+[ ]*");
+        return tile.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*");
     }
 
     private int[] getCoordinates(String tile) {
@@ -119,15 +108,6 @@ public class Reversi {
         int r = Integer.parseInt(coordinates[0]);
         int c = Integer.parseInt(coordinates[1]);
         return new int[] {r, c};
-    }
-
-    void setTile(int[] coordinates, Player player) {
-        int r = coordinates[0];
-        int c = coordinates[1];
-        if (r >= size || c >= size) {
-            return;
-        }
-        playground[r][c] = player;
     }
 
     void initTilesCount() {
@@ -155,7 +135,12 @@ public class Reversi {
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
-                execute(line);
+                if (!isTileInputCorrect(line)) {
+                    System.out.println("Incorrect tile input");
+                    return;
+                }
+                int[] coordinates = getCoordinates(line);
+                move(coordinates[0], coordinates[1]);
                 printTilesLeftCount();
             }
             reader.close();
@@ -176,15 +161,6 @@ public class Reversi {
         return leftW;
     }
 
-    void execute(String line) {
-        if (!isTileInputCorrect(line)) {
-            System.out.println("Incorrect tile input");
-            return;
-        }
-        int[] coordinates = getCoordinates(line);
-        move(coordinates[0], coordinates[1]);
-    }
-
     void move(int r, int c) {
         if (!isWithinPlayground(r, c)) {
             System.out.println("Move out of bounds is not permitted");
@@ -199,74 +175,56 @@ public class Reversi {
             return;
         }
 
-        ArrayList<List<Integer>> tilesToFlip = getTilesToFlip(r, c);
-        if (tilesToFlip.isEmpty()) {
-            System.out.println("Move is not permitted");
-            return;
-        }
-        flipTiles(tilesToFlip);
-
-        if (onTurn == Player.W) onTurn = Player.B;
-        else if (onTurn == Player.B) onTurn = Player.W;
-        if (! areValidMoves()) {
-            endGame();
-        }
-    }
-
-    boolean isWithinPlayground(int r, int c) {
-        return r >= 0 && c >= 0 && r < size && c < size;
-    }
-
-    ArrayList<List<Integer>> getTilesToFlip(int r0, int c0) {
-        ArrayList<List<Integer>> toFlip = new ArrayList<>();
-        playground[r0][c0] = onTurn;
+        ArrayList<List<Integer>> tilesToFlip = new ArrayList<>();
+        playground[r][c] = onTurn;
         Player opposite = Player.NONE;
         if (onTurn == Player.W) opposite = Player.B;
         else if (onTurn == Player.B) opposite = Player.W;
 
         int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
         for (int[] direction : directions) {
-            int r = r0;
-            int c = c0;
-            r += direction[0];
-            c += direction[1];
-            if (isWithinPlayground(r, c) && playground[r][c] != opposite) continue;
-            r += direction[0];
-            c += direction[1];
-            if (!isWithinPlayground(r, c)) continue;
-            while (playground[r][c] == opposite) {
-                r += direction[0];
-                c += direction[1];
-                if (!isWithinPlayground(r, c)) break;
+            int dirR = r;
+            int dirC = c;
+            dirR += direction[0];
+            dirC += direction[1];
+            if (isWithinPlayground(dirR, dirC) && playground[dirR][dirC] != opposite) continue;
+            dirR += direction[0];
+            dirC += direction[1];
+            if (!isWithinPlayground(dirR, dirC)) continue;
+            while (playground[dirR][dirC] == opposite) {
+                dirR += direction[0];
+                dirC += direction[1];
+                if (!isWithinPlayground(dirR, dirC)) break;
             }
-            if (!isWithinPlayground(r, c)) continue;
-            if (playground[r][c] != onTurn) continue;
+            if (!isWithinPlayground(dirR, dirC)) continue;
+            if (playground[dirR][dirC] != onTurn) continue;
             while (true) {
-                r -= direction[0];
-                c -= direction[1];
-                if (r == r0 && c == c0) break;
-                toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
+                dirR -= direction[0];
+                dirC -= direction[1];
+                if (dirR == r && dirC == c) break;
+                tilesToFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
             }
         }
 
-        playground[r0][c0] = Player.NONE;
-        if (!toFlip.isEmpty()) {
-            toFlip.add(new ArrayList<>(Arrays.asList(r0, c0)));
+        playground[r][c] = Player.NONE;
+        if (!tilesToFlip.isEmpty()) {
+            tilesToFlip.add(new ArrayList<>(Arrays.asList(r, c)));
         }
-        return toFlip;
-    }
 
-    void flipTiles(List<List<Integer>> tiles) {
-        for (List<Integer> tile : tiles) {
-            int r = tile.get(0);
-            int c = tile.get(1);
-            if (playground[r][c] == onTurn) break;
-            if (playground[r][c] == Player.NONE) {
-                playground[r][c] = onTurn;
+        if (tilesToFlip.isEmpty()) {
+            System.out.println("Move is not permitted");
+            return;
+        }
+        for (List<Integer> tile : tilesToFlip) {
+            int tileR = tile.get(0);
+            int tileC = tile.get(1);
+            if (playground[tileR][tileC] == onTurn) break;
+            if (playground[tileR][tileC] == Player.NONE) {
+                playground[tileR][tileC] = onTurn;
                 if (onTurn == Player.B) leftB++;
                 else if (onTurn == Player.W) leftW++;
             } else {
-                playground[r][c] = onTurn;
+                playground[tileR][tileC] = onTurn;
                 if (onTurn == Player.B) {
                     leftB++;
                     leftW--;
@@ -276,32 +234,68 @@ public class Reversi {
                 }
             }
         }
+
+        if (onTurn == Player.W) onTurn = Player.B;
+        else if (onTurn == Player.B) onTurn = Player.W;
+        if (! areValidMoves()) {
+            printTilesLeftCount();
+            ended = true;
+            if (getLeftB() > getLeftW()) winner = Player.B;
+            else if (getLeftW() > getLeftB()) winner = Player.W;
+        }
+    }
+
+    boolean isWithinPlayground(int r, int c) {
+        return r >= 0 && c >= 0 && r < size && c < size;
     }
 
     boolean areValidMoves() {
-        int movesNum = getPossibleMoves().size();
-        return movesNum != 0;
-    }
-
-    ArrayList<String> getPossibleMoves() {
         ArrayList<String> tiles = new ArrayList<>();
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] != Player.NONE) continue;
-                if (getTilesToFlip(r, c).isEmpty()) continue;
+                ArrayList<List<Integer>> toFlip = new ArrayList<>();
+                playground[r][c] = onTurn;
+                Player opposite  = Player.NONE;
+                if (onTurn == Player.W) opposite = Player.B;
+                else if (onTurn == Player.B) opposite = Player.W;
+
+                int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
+                for (int[] direction : directions) {
+                    int dirR = r;
+                    int dirC = c;
+                    dirR += direction[0];
+                    dirC += direction[1];
+                    if (isWithinPlayground(dirR, dirC) && playground[dirR][dirC] != opposite) continue;
+                    dirR += direction[0];
+                    dirC += direction[1];
+                    if (!isWithinPlayground(dirR, dirC)) continue;
+                    while (playground[dirR][dirC] == opposite) {
+                        dirR += direction[0];
+                        dirC += direction[1];
+                        if (!isWithinPlayground(dirR, dirC)) break;
+                    }
+                    if (!isWithinPlayground(dirR, dirC)) continue;
+                    if (playground[dirR][dirC] != onTurn) continue;
+                    while (true) {
+                        dirR -= direction[0];
+                        dirC -= direction[1];
+                        if (dirR == r && dirC == c) break;
+                        toFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
+                    }
+                }
+
+                playground[r][c] = Player.NONE;
+                if (!toFlip.isEmpty()) {
+                    toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
+                }
+                if (toFlip.isEmpty()) continue;
                 String rString = String.valueOf(r);
                 String cString = String.valueOf(c);
                 tiles.add(cString.concat(rString));
             }
         }
-        return tiles;
-    }
-
-    void endGame() {
-        printTilesLeftCount();
-        ended = true;
-        if (getLeftB() > getLeftW()) winner = Player.B;
-        else if (getLeftW() > getLeftB()) winner = Player.W;
+        return !tiles.isEmpty();
     }
 
     public static void main(String[] args) {
