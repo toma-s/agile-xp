@@ -110,7 +110,7 @@ public class Reversi {
         return tile.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*");
     }
 
-    private int[] getCoordinates(String tile) {
+    int[] getCoordinates(String tile) {
         String[] coordinates = tile.trim().split(" ");
         int r = Integer.parseInt(coordinates[0]);
         int c = Integer.parseInt(coordinates[1]);

@@ -268,13 +268,13 @@ public class ReversiTest {
     // isTileInputCorrect
 
     @Test
-    public void testTileInput0_0() throws IncorrectGameConfigFileException {
+    public void testTileInput00() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
         assertTrue("tile input: 00", game.isTileInputCorrect("0 0"));
     }
 
     @Test
-    public void testTileInput00() throws IncorrectGameConfigFileException {
+    public void testTileInput00NoSpace() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
         assertFalse("tile input: 00", game.isTileInputCorrect("00"));
     }
@@ -283,6 +283,17 @@ public class ReversiTest {
     public void testTileInputD3() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
         assertFalse("tile input: D3", game.isTileInputCorrect("D 3"));
+    }
+
+
+    // testGetCoordinates
+
+    @Test
+    public void testGetCoordinates34() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        int[] expected = new int[] {3, 4};
+        int[] result = game.getCoordinates("3 4");
+        assertArrayEquals(expected, result);
     }
 
 
