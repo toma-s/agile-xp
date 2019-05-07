@@ -1,7 +1,6 @@
 package abstrLevel;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -340,11 +339,7 @@ public class Reversi {
     }
 
     public static void main(String[] args) {
-        String fileName = "game_8_b_init.txt.txt";
-
-        File gameFile = new File("./game_config/" + fileName);
-        Path gameFilePath = gameFile.toPath();
-
+        Path gameFilePath = GameConfig.game8bInit;
         Reversi rev = new Reversi(gameFilePath);
         rev.run();
 
