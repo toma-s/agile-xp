@@ -91,7 +91,7 @@ public class WhiteboxTemp {
         String containerId = DockerController.createContainer(imageId);
         System.out.printf("Container id: %s:\n", containerId);
 
-        String command = "java -jar hw-1.0.jar whitebox-file";
+        String command = "java -jar tester-java-1.0.jar whitebox-file";
         String result = DockerController.execStart(containerId, command);
         System.out.println("Got result");
 

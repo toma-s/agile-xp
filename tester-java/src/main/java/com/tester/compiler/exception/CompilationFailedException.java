@@ -7,4 +7,8 @@ public class CompilationFailedException extends Exception {
         super(message);
     }
 
+    public CompilationFailedException(Throwable cause) {
+        super(cause);
+    }
+
 }

@@ -1,3 +1,5 @@
 com\tester\compiler\exception\CompilationFailedException.class
+com\tester\tester\Tester.class
+com\tester\tester\exception\TestFailedException.class
 com\tester\compiler\Compiler.class
 com\tester\Main.class
