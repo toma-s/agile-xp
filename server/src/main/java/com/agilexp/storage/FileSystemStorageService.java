@@ -9,6 +9,8 @@ import com.agilexp.dbmodel.exercise.ExerciseContent;
 import com.agilexp.dbmodel.exercise.PrivateFile;
 import com.agilexp.dbmodel.solution.SolutionContent;
 import com.agilexp.dbmodel.solution.SolutionFile;
+import com.agilexp.dbmodel.solution.SolutionSource;
+import com.agilexp.dbmodel.solution.SolutionTest;
 import com.agilexp.model.ExerciseFlags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -27,14 +29,9 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(SolutionContent solutionContent, String created) {
+    public void store(SolutionContent solutionContent, String directoryName, String created) {
         String filename = solutionContent.getFilename();
         String code = solutionContent.getContent();
-        String directoryName = "solution_content" + solutionContent.getId();
-        if (solutionContent instanceof SolutionFile) {
-            directoryName = "game_config";
-            // FIXME: 02-Apr-19 when file storage issue is solved
-        }
 
         createFolder(created, null);
         Path directoryLocation = createFolder(directoryName, created);

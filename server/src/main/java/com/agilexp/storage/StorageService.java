@@ -11,7 +11,7 @@ public interface StorageService {
 
     void init();
 
-    void store(SolutionContent solutionContent, String created);
+    void store(SolutionContent solutionContent, String directoryName, String created);
 
     void store(ExerciseContent exerciseContent, String created);
 

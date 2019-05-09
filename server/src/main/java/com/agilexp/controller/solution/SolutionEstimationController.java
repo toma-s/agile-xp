@@ -93,22 +93,22 @@ public class SolutionEstimationController {
         return new Pair<>(solved, getEstimation(publicEstimation, privateEstimation));
     }
 
-    @PostMapping(value = "/solution-estimation/estimate/whitebox-file")
-    public SolutionEstimation getWhiteboxFileEstimation(@RequestBody SolutionItems solutionItems) {
-        Date date = new Date();
-        Timestamp created = new Timestamp(date.getTime());
-
-        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionItems.getSolutionId());
-
-        Pair<Boolean, String> estimation = estimateSourceTestFile(solutionItems);
-        solutionEstimation.setSolved(estimation.getKey());
-        solutionEstimation.setEstimation(estimation.getValue());
-        solutionEstimation.setCreated(created);
-
-        SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
-        System.out.format("Created solution estimation %s\n", _solutionEstimation);
-        return _solutionEstimation;
-    }
+//    @PostMapping(value = "/solution-estimation/estimate/whitebox-file")
+//    public SolutionEstimation getWhiteboxFileEstimation(@RequestBody SolutionItems solutionItems) {
+//        Date date = new Date();
+//        Timestamp created = new Timestamp(date.getTime());
+//
+//        SolutionEstimation solutionEstimation = new SolutionEstimation(solutionItems.getSolutionId());
+//
+//        Pair<Boolean, String> estimation = estimateSourceTestFile(solutionItems);
+//        solutionEstimation.setSolved(estimation.getKey());
+//        solutionEstimation.setEstimation(estimation.getValue());
+//        solutionEstimation.setCreated(created);
+//
+//        SolutionEstimation _solutionEstimation = repository.save(solutionEstimation);
+//        System.out.format("Created solution estimation %s\n", _solutionEstimation);
+//        return _solutionEstimation;
+//    }
 
     private Pair<Boolean, String> estimateSourceTestFile(SolutionItems solutionItems) {
         String directoryName = "12345";
@@ -411,7 +411,7 @@ public class SolutionEstimationController {
 
     private void storeFiles(List<List<? extends SolutionContent>> solutionContent, List<List<? extends ExerciseContent>> exerciseContent, String created) {
         try {
-            solutionContent.forEach(e -> e.forEach(ee -> storageService.store(ee, created)));
+            solutionContent.forEach(e -> e.forEach(ee -> storageService.store(ee, "dummy", created)));
             exerciseContent.forEach(e -> e.forEach(ee -> storageService.store(ee, created)));
         } catch (StorageException e) {
             throw new StorageException(e.getMessage());
