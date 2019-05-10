@@ -11,6 +11,13 @@ public class WhiteBoxEstimation extends Estimation {
     private String errorMessage;
 
     public WhiteBoxEstimation() {
+        compiled = false;
+        compilationResult = "Files were not compiled";
+        tested = false;
+        testsResult = "Tests were not run";
+        solved = false;
+        value = 0;
+        errorMessage = "";
     }
 
     public boolean isCompiled() {

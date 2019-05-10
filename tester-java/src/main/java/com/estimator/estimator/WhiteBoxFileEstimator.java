@@ -25,33 +25,24 @@ public class WhiteBoxFileEstimator extends Estimator {
 
     @Override
     public Estimation estimate() {
-        estimation.setCompiled(compile());
+        compile();
 
         if (!estimation.isCompiled()) {
-            // TODO: 10-May-19 fix
-            estimation.setTested(false);
-            estimation.setTestsResult("Tests were not run");
-            estimation.setValue(0);
-            estimation.setSolved(false);
-            estimation.setErrorMessage("");
             return estimation;
         }
 
-        estimation.setTested(test());
-        estimation.setErrorMessage("");
+        test();
         return estimation;
     }
 
 
-    private boolean compile() {
+    private void compile() {
         try {
             compileFiles();
             estimation.setCompilationResult("Compiled successfully");
-            return true;
+            estimation.setCompiled(true);
         } catch (CompilationFailedException e) {
-            estimation.setCompiled(false);
             estimation.setCompilationResult(e.getMessage());
-            return false;
         }
     }
 
@@ -87,7 +78,7 @@ public class WhiteBoxFileEstimator extends Estimator {
     }
 
 
-    private boolean test() {
+    private void test() {
         try {
             List<String> testsFilenames = getTestsFilenames();
             List<Result> testResults = testFiles(testsFilenames);
@@ -96,12 +87,9 @@ public class WhiteBoxFileEstimator extends Estimator {
             if (estimation.getValue() == 100) {
                 estimation.setSolved(true);
             }
-            return true;
+            estimation.setTested(true);
         } catch (TestFailedException e) {
             estimation.setTestsResult(e.getMessage());
-            estimation.setValue(0);
-            estimation.setSolved(false);
-            return false;
         }
     }
 

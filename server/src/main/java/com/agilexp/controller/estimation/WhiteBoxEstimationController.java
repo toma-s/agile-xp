@@ -13,8 +13,6 @@ import com.agilexp.repository.solution.SolutionEstimationRepository;
 import com.agilexp.storage.StorageException;
 import com.agilexp.storage.StorageService;
 import com.google.gson.Gson;
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,16 +32,16 @@ public class WhiteBoxEstimationController {
 
     private final StorageService storageService;
 
-    @Autowired
-    private SolutionEstimationRepository repository;
-    @Autowired
-    private PrivateTestRepository privateTestRepository;
-    @Autowired
-    private PrivateFileRepository privateFileRepository;
+    private final SolutionEstimationRepository repository;
+    private final PrivateTestRepository privateTestRepository;
+    private final PrivateFileRepository privateFileRepository;
 
     @Autowired
-    public WhiteBoxEstimationController(StorageService storageService) {
+    public WhiteBoxEstimationController(StorageService storageService, SolutionEstimationRepository repository, PrivateTestRepository privateTestRepository, PrivateFileRepository privateFileRepository) {
         this.storageService = storageService;
+        this.repository = repository;
+        this.privateTestRepository = privateTestRepository;
+        this.privateFileRepository = privateFileRepository;
     }
 
     @PostMapping(value = "/solution-estimation/estimate/whitebox-file")
@@ -123,9 +121,9 @@ public class WhiteBoxEstimationController {
     }
 
     private void copyEstimationFiles(String destDirectoryName) {
-            File sourceFolder = new File("docker");
-            File destinationFolder = storageService.load(destDirectoryName).toFile();
-            copyRecursively(sourceFolder, destinationFolder);
+        File sourceFolder = new File("docker");
+        File destinationFolder = storageService.load(destDirectoryName).toFile();
+        copyRecursively(sourceFolder, destinationFolder);
     }
 
     private void copyRecursively(File sourceDirectory, File destinationDirectory) {
@@ -202,34 +200,30 @@ public class WhiteBoxEstimationController {
     }
 
     private String getEstimationContent(WhiteBoxEstimation publicWBEstimation, WhiteBoxEstimation privateWBEstimation) {
-        // TODO: 10-May-19 refactor duplicities
-        return String.format(
-                "Public estimation result:\n" +
+        String publicEstimationContent = getEstimationContent(publicWBEstimation, "Public");
+        String privateEstimationContent = getEstimationContent(privateWBEstimation, "Private");
+        return String.format("Progress: %s%%\n\n" +
+                "%s%s",
+                privateWBEstimation.getValue(),
+                publicEstimationContent,
+                privateEstimationContent
+        );
+    }
+
+    private String getEstimationContent(WhiteBoxEstimation estimation, String type) {
+        return String.format("%s estimation result:\n" +
                 "\n" +
                 "Compilation result:\n" +
                 "Compiled successfully: %s\n" +
                 "%s\n" +
                 "Tests result:\n" +
                 "Tested successfully: %s\n" +
-                "%s\n" +
-                "\n" +
-                "Private estimation result:\n" +
-                "\n" +
-                "Compilation result:\n" +
-                "Compiled successfully: %s\n" +
-                "%s\n" +
-                "Tests result:\n" +
-                "Tested successfully: %s\n" +
-                "%s\n" +
-                "\n",
-                publicWBEstimation.isCompiled(),
-                publicWBEstimation.getCompilationResult(),
-                publicWBEstimation.isTested(),
-                publicWBEstimation.getTestsResult(),
-                privateWBEstimation.isCompiled(),
-                privateWBEstimation.getCompilationResult(),
-                privateWBEstimation.isTested(),
-                privateWBEstimation.getTestsResult()
+                "%s\n",
+                type,
+                estimation.isCompiled(),
+                estimation.getCompilationResult(),
+                estimation.isTested(),
+                estimation.getTestsResult()
         );
     }
 }
