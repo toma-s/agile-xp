@@ -1,13 +1,12 @@
 package com.agilexp.repository.solution;
 
-import com.agilexp.dbmodel.solution.SolutionEstimation;
-import org.springframework.data.jpa.repository.Query;
+import com.agilexp.dbmodel.estimation.Estimation;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface SolutionEstimationRepository extends CrudRepository<SolutionEstimation, Long> {
-    List<SolutionEstimation> findAllBySolutionId(long solutionId);
+public interface SolutionEstimationRepository extends CrudRepository<Estimation, Long> {
+    List<Estimation> findAllBySolutionId(long solutionId);
 
 //    @Query("select solution_content.filename as filename,\n" +
 //            "       solution_content.content as content,\n" +
@@ -30,5 +29,5 @@ public interface SolutionEstimationRepository extends CrudRepository<SolutionEst
 //            "on solution_content.solution_id = solution_estimation.solution_id\n" +
 //            "where solution_estimation.solution_id = ?1",
 //            nativeQuery = true)
-//    List<SolutionEstimation> findSolutionEstimationsBySolutionId(long solutionId);
+//    List<Estimation> findSolutionEstimationsBySolutionId(long solutionId);
 }

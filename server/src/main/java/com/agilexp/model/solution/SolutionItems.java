@@ -1,4 +1,4 @@
-package com.agilexp.model;
+package com.agilexp.model.solution;
 
 import com.agilexp.dbmodel.solution.SolutionFile;
 import com.agilexp.dbmodel.solution.SolutionSource;

@@ -1,11 +1,11 @@
-package com.agilexp.dbmodel.solution;
+package com.agilexp.dbmodel.estimation;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="solution_estimation")
-public class SolutionEstimation {
+@Table(name="estimation")
+public class Estimation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -16,22 +16,24 @@ public class SolutionEstimation {
     @Column(name="estimation")
     private String estimation;
 
+    @Column(name="value")
+    private int value;
+
     @Column(name="solved")
     private boolean solved;
 
     @Column(name="created")
     private Timestamp created;
 
-    public SolutionEstimation() {
+    public Estimation() {
+        value = 0;
+        solved = false;
     }
 
-    public SolutionEstimation(long solutionId) {
-        this.solutionId = solutionId;
-    }
-
-    public SolutionEstimation(long solutionId, String estimation, boolean solved, Timestamp created) {
+    public Estimation(long solutionId, String estimation, int value, boolean solved, Timestamp created) {
         this.solutionId = solutionId;
         this.estimation = estimation;
+        this.value = value;
         this.solved = solved;
         this.created = created;
     }
@@ -76,13 +78,23 @@ public class SolutionEstimation {
         this.created = created;
     }
 
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
     @Override
     public String toString() {
-        return "SolutionEstimation{" +
+        return "Estimation{" +
                 "id=" + id +
                 ", solutionId=" + solutionId +
                 ", estimation='" + estimation + '\'' +
+                ", value=" + value +
                 ", solved=" + solved +
+                ", created=" + created +
                 '}';
     }
 }

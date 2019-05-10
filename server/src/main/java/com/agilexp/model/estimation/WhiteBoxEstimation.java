@@ -6,6 +6,9 @@ public class WhiteBoxEstimation {
     private String compilationResult;
     private boolean tested;
     private String testsResult;
+    private boolean solved;
+    private int value;
+    private String errorMessage;
 
     public WhiteBoxEstimation() {
     }
@@ -40,5 +43,29 @@ public class WhiteBoxEstimation {
 
     public void setTestsResult(String testsResult) {
         this.testsResult = testsResult;
+    }
+
+    public boolean isSolved() {
+        return solved;
+    }
+
+    public void setSolved(boolean solved) {
+        this.solved = solved;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

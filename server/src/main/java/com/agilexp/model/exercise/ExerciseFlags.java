@@ -1,4 +1,4 @@
-package com.agilexp.model;
+package com.agilexp.model.exercise;
 
 import com.agilexp.dbmodel.exercise.ExerciseContent;
 

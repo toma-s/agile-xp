@@ -1,7 +1,9 @@
 package com.estimator;
 
+import com.estimator.estimation.Estimation;
 import com.estimator.estimator.Estimator;
 import com.estimator.estimator.WhiteBoxFileEstimator;
+import com.estimator.utils.JsonWriter;
 
 public class Main {
 
@@ -18,7 +20,7 @@ public class Main {
                 throw new IllegalStateException("Unexpected value: " + mode);
         }
 
-        String estimation = estimator.estimate();
-        System.out.println(estimation);
+        Estimation estimation = estimator.estimate();
+        JsonWriter.write(estimation);
     }
 }

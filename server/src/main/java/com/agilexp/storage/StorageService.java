@@ -13,7 +13,7 @@ public interface StorageService {
 
     void store(SolutionContent solutionContent, String directoryName, String created);
 
-    void store(ExerciseContent exerciseContent, String created);
+    void store(ExerciseContent exerciseContent, String directoryName, String created);
 
     Stream<Path> loadAll();
 

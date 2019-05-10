@@ -66,14 +66,15 @@ create table solution_content (
     content text,
     solution_id int references solutions on delete cascade,
     solution_content_type text,
-    solution_estimation_id int references solution_estimation
+    estimation_id int references estimation
 );
 
-drop table if exists solution_estimation cascade;
-create table solution_estimation (
+drop table if exists estimation cascade;
+create table estimation (
 	id serial primary key,
 	solution_id int,
 	estimation text,
+	value int,
     solved boolean,
     created timestamp
 );
@@ -87,7 +88,8 @@ truncate table
     bugs_number,
     solutions,
     solution_content,
-    solution_estimation
+    solution_estimation,
+    estimation
 restart identity cascade;
 
 INSERT INTO exercise_types (id, name, value)

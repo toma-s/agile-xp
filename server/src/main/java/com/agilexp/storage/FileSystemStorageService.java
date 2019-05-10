@@ -8,10 +8,7 @@ import java.util.stream.Stream;
 import com.agilexp.dbmodel.exercise.ExerciseContent;
 import com.agilexp.dbmodel.exercise.PrivateFile;
 import com.agilexp.dbmodel.solution.SolutionContent;
-import com.agilexp.dbmodel.solution.SolutionFile;
-import com.agilexp.dbmodel.solution.SolutionSource;
-import com.agilexp.dbmodel.solution.SolutionTest;
-import com.agilexp.model.ExerciseFlags;
+import com.agilexp.model.exercise.ExerciseFlags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -39,17 +36,9 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(ExerciseContent exerciseContent, String created) {
+    public void store(ExerciseContent exerciseContent, String directoryName, String created) {
         String filename = exerciseContent.getFilename();
         String code = exerciseContent.getContent();
-        String directoryName = "exercise_content" + exerciseContent.getId();
-        if (exerciseContent instanceof ExerciseFlags) {
-            directoryName = "flags";
-        }
-        if (exerciseContent instanceof PrivateFile) {
-            directoryName = "game_config";
-            // FIXME: 02-Apr-19 when file storage issue is solved
-        }
 
         createFolder(created, null);
         Path directoryLocation = createFolder(directoryName, created);
@@ -58,7 +47,7 @@ public class FileSystemStorageService implements StorageService {
 
     private Path createFolder(String directoryName, String created) {
 
-
+        // TODO: 10-May-19 refactor
         Path directoryLocation;
         try {
             if (created != null) {

@@ -1,6 +1,6 @@
 package com.estimator.estimator;
 
-import com.google.gson.Gson;
+import com.estimator.estimation.Estimation;
 import com.estimator.compiler.Compiler;
 import com.estimator.compiler.exception.CompilationFailedException;
 import com.estimator.estimation.WhiteBoxEstimation;
@@ -24,21 +24,34 @@ public class WhiteBoxFileEstimator extends Estimator {
     }
 
     @Override
-    public String estimate() {
-        compile();
-        test();
-        return getJsonEstimation();
+    public Estimation estimate() {
+        estimation.setCompiled(compile());
+
+        if (!estimation.isCompiled()) {
+            // TODO: 10-May-19 fix
+            estimation.setTested(false);
+            estimation.setTestsResult("Tests were not run");
+            estimation.setValue(0);
+            estimation.setSolved(false);
+            estimation.setErrorMessage("");
+            return estimation;
+        }
+
+        estimation.setTested(test());
+        estimation.setErrorMessage("");
+        return estimation;
     }
 
 
-    private void compile() {
+    private boolean compile() {
         try {
-            estimation.setCompiled(true);
             compileFiles();
             estimation.setCompilationResult("Compiled successfully");
+            return true;
         } catch (CompilationFailedException e) {
             estimation.setCompiled(false);
             estimation.setCompilationResult(e.getMessage());
+            return false;
         }
     }
 
@@ -58,7 +71,7 @@ public class WhiteBoxFileEstimator extends Estimator {
 
     private List<Path> getFilePaths() {
         List<Path> filePaths = new ArrayList<>();
-        String[] directories = new String[] {
+        String[] directories = new String[]{
                 "sources",
                 "tests"};
         for (String directory : directories) {
@@ -74,15 +87,21 @@ public class WhiteBoxFileEstimator extends Estimator {
     }
 
 
-    private void test() {
+    private boolean test() {
         try {
-            estimation.setTested(true);
             List<String> testsFilenames = getTestsFilenames();
             List<Result> testResults = testFiles(testsFilenames);
             estimation.setTestsResult(getResult(testResults));
+            estimation.setValue(getValue(testResults));
+            if (estimation.getValue() == 100) {
+                estimation.setSolved(true);
+            }
+            return true;
         } catch (TestFailedException e) {
-            estimation.setTested(false);
             estimation.setTestsResult(e.getMessage());
+            estimation.setValue(0);
+            estimation.setSolved(false);
+            return false;
         }
     }
 
@@ -115,10 +134,9 @@ public class WhiteBoxFileEstimator extends Estimator {
     private String getResult(List<Result> exerciseTestsResults) {
         StringBuilder result = new StringBuilder();
         exerciseTestsResults.forEach(exerciseTestsResult -> {
-                    result.append(getResultInfo(exerciseTestsResult));
-                    result.append("\n\n");
-                }
-        );
+            result.append(getResultInfo(exerciseTestsResult));
+            result.append("\n\n");
+        });
         return result.toString();
     }
 
@@ -144,9 +162,17 @@ public class WhiteBoxFileEstimator extends Estimator {
         return output;
     }
 
-
-    private String getJsonEstimation() {
-        Gson gson = new Gson();
-        return gson.toJson(estimation);
+    private int getValue(List<Result> testResults) {
+        int testsNumber = 0;
+        int testsFailed = 0;
+        for (Result result : testResults) {
+            testsNumber += result.getRunCount();
+            testsFailed += result.getFailureCount();
+        }
+        if (testsFailed == 0) {
+            return 100;
+        }
+        return 100 - (testsFailed / testsNumber * 100);
     }
+
 }

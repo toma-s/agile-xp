@@ -1,7 +1,9 @@
 package com.estimator.estimator;
 
+import com.estimator.estimation.Estimation;
+
 public abstract class Estimator {
 
-    public abstract String estimate();
+    public abstract Estimation estimate();
 
 }
