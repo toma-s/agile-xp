@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.tester</groupId>
-  <artifactId>tester-java</artifactId>
+  <groupId>com.estimator</groupId>
+  <artifactId>estimator-java</artifactId>
   <version>1.0</version>
   <build>
     <plugins>
@@ -20,7 +20,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>com.tester.Main</mainClass>
+              <mainClass>com.estimator.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -41,7 +41,7 @@
   </build>
   <properties>
     <java.version>8</java.version>
-    <start-class>com.tester.Main</start-class>
+    <start-class>com.estimator.Main</start-class>
   </properties>
 </project>
 

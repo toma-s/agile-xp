@@ -3561,7 +3561,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -5006,7 +5006,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -6769,7 +6769,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -8306,7 +8306,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -10224,7 +10224,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -12147,7 +12147,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -14085,7 +14085,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();

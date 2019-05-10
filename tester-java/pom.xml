@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tester</groupId>
-    <artifactId>tester-java</artifactId>
+    <groupId>com.estimator</groupId>
+    <artifactId>estimator-java</artifactId>
     <version>1.0</version>
 
     <dependencies>
@@ -18,6 +18,11 @@
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
             <version>4.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
         </dependency>
     </dependencies>
 
@@ -39,7 +44,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.tester.Main</mainClass>
+                            <mainClass>com.estimator.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -61,7 +66,7 @@
     </build>
 
     <properties>
-        <start-class>com.tester.Main</start-class>
+        <start-class>com.estimator.Main</start-class>
         <java.version>8</java.version>
     </properties>
 

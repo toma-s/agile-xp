@@ -94,7 +94,7 @@ public class SolutionEstimationController {
     }
 
 //    @PostMapping(value = "/solution-estimation/estimate/whitebox-file")
-//    public SolutionEstimation getWhiteboxFileEstimation(@RequestBody SolutionItems solutionItems) {
+//    public SolutionEstimation getWhiteBoxFileEstimation(@RequestBody SolutionItems solutionItems) {
 //        Date date = new Date();
 //        Timestamp created = new Timestamp(date.getTime());
 //

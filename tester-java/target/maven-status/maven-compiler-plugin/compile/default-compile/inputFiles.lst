@@ -1,5 +1,8 @@
-T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\tester\tester\Tester.java
-T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\tester\compiler\Compiler.java
-T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\tester\Main.java
-T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\tester\compiler\exception\CompilationFailedException.java
-T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\tester\tester\exception\TestFailedException.java
+T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\estimator\estimation\WhiteBoxEstimation.java
+T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\estimator\estimator\Estimator.java
+T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\estimator\tester\Tester.java
+T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\estimator\tester\exception\TestFailedException.java
+T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\estimator\Main.java
+T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\estimator\compiler\Compiler.java
+T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\estimator\compiler\exception\CompilationFailedException.java
+T:\OneDrive - Univerzita Komenskeho v Bratislave\UK\BP\agile-xp\tester-java\src\main\java\com\estimator\estimator\WhiteBoxFileEstimator.java

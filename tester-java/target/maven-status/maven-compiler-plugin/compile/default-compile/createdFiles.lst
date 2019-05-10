@@ -1,5 +1,8 @@
-com\tester\compiler\exception\CompilationFailedException.class
-com\tester\tester\Tester.class
-com\tester\tester\exception\TestFailedException.class
-com\tester\compiler\Compiler.class
-com\tester\Main.class
+com\estimator\Main.class
+com\estimator\compiler\exception\CompilationFailedException.class
+com\estimator\tester\Tester.class
+com\estimator\tester\exception\TestFailedException.class
+com\estimator\estimator\WhiteBoxFileEstimator.class
+com\estimator\estimation\WhiteBoxEstimation.class
+com\estimator\compiler\Compiler.class
+com\estimator\estimator\Estimator.class
