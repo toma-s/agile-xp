@@ -8,6 +8,7 @@ import com.agilexp.model.solution.SolutionItems;
 import com.agilexp.storage.StorageException;
 import com.agilexp.storage.StorageService;
 import com.google.gson.Gson;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.File;
@@ -18,11 +19,14 @@ import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.util.Date;
 
-abstract public class Super {
+abstract public class WhiteBoxEstimationSuper {
 
     final StorageService storageService;
 
-    public Super(StorageService storageService) {
+    private final String publicMode = "public";
+    private final String privateMode = "private";
+
+    public WhiteBoxEstimationSuper(StorageService storageService) {
         this.storageService = storageService;
     }
 
@@ -35,7 +39,7 @@ abstract public class Super {
     private WhiteBoxEstimation getPublicEstimation(SolutionItems solutionItems) {
         try {
             String solutionId = String.valueOf(solutionItems.getSolutionId());
-            String directoryName = "public" + solutionId;
+            String directoryName = publicMode + solutionId;
             storePublicFiles(solutionItems, directoryName);
             String output = executeEstimation(directoryName);
             System.out.println(output);
@@ -50,11 +54,9 @@ abstract public class Super {
 
     abstract void storePublicFiles(SolutionItems solutionItems, String directoryName);
 
-    abstract String executeEstimation(String directoryName) throws DockerControllerException;
-
-    String executeEstimationByMode(String directoryName, String mode) throws DockerControllerException {
+    private String executeEstimation(String directoryName) throws DockerControllerException {
         String containerId = createDockerContainer(directoryName);
-        String command = "java -jar estimator-java-1.0.jar " + mode;
+        String command = "java -jar estimator-java-1.0.jar whitebox";
         DockerController.execStart(containerId, command);
 
         String estimationPath = "/usr/src/app/estimation/estimation.json";
@@ -75,7 +77,7 @@ abstract public class Super {
     private WhiteBoxEstimation getPrivateEstimation(SolutionItems solutionItems) {
         try {
             String solutionId = String.valueOf(solutionItems.getSolutionId());
-            String directoryName = "private" + solutionId;
+            String directoryName = privateMode + solutionId;
             storePrivateFiles(solutionItems, directoryName);
             String output = executeEstimation(directoryName);
             System.out.println(output);
@@ -92,7 +94,8 @@ abstract public class Super {
 
 
     void copyEstimationFiles(String destDirectoryName) {
-        File sourceFolder = new File("docker");
+        String dockerFolderFilename = "docker";
+        File sourceFolder = new File(dockerFolderFilename);
         File destinationFolder = storageService.load(destDirectoryName).toFile();
         copyRecursively(sourceFolder, destinationFolder);
     }
@@ -152,8 +155,8 @@ abstract public class Super {
     }
 
     private String getEstimationContent(WhiteBoxEstimation publicWBEstimation, WhiteBoxEstimation privateWBEstimation) {
-        String publicEstimationContent = getEstimationContent(publicWBEstimation, "Public");
-        String privateEstimationContent = getEstimationContent(privateWBEstimation, "Private");
+        String publicEstimationContent = getEstimationContent(publicWBEstimation, publicMode);
+        String privateEstimationContent = getEstimationContent(privateWBEstimation, privateMode);
         return String.format("Progress: %s%%\n\n" +
                         "%s%s",
                 privateWBEstimation.getValue(),
@@ -162,7 +165,7 @@ abstract public class Super {
         );
     }
 
-    private String getEstimationContent(WhiteBoxEstimation estimation, String type) {
+    private String getEstimationContent(WhiteBoxEstimation estimation, String mode) {
         return String.format("%s estimation result:\n" +
                         "\n" +
                         "Compilation result:\n" +
@@ -171,7 +174,7 @@ abstract public class Super {
                         "Tests result:\n" +
                         "Tested successfully: %s\n" +
                         "%s\n",
-                type,
+                StringUtils.capitalize(mode),
                 estimation.isCompiled(),
                 estimation.getCompilationResult(),
                 estimation.isTested(),

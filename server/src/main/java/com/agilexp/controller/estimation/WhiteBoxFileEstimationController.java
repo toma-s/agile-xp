@@ -21,7 +21,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
-public class WhiteBoxFileEstimationController extends Super {
+public class WhiteBoxFileEstimationController extends WhiteBoxEstimationSuper {
 
     private final SolutionEstimationRepository repository;
     private final PrivateTestRepository privateTestRepository;
@@ -74,11 +74,5 @@ public class WhiteBoxFileEstimationController extends Super {
             storageService.store(privateFile, "files", directoryName);
         }
         copyEstimationFiles(directoryName);
-    }
-
-
-    String executeEstimation(String directoryName) throws DockerControllerException {
-        String mode = "whitebox-file";
-        return super.executeEstimationByMode(directoryName, mode);
     }
 }

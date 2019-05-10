@@ -18,7 +18,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
-public class WhiteBoxEstimationController extends Super {
+public class WhiteBoxEstimationController extends WhiteBoxEstimationSuper {
 
     private final SolutionEstimationRepository repository;
     private final PrivateTestRepository privateTestRepository;
@@ -50,11 +50,6 @@ public class WhiteBoxEstimationController extends Super {
         } catch (StorageException e) {
             throw new StorageException("Storage Exception occurred on storing public files" + e.getMessage());
         }
-    }
-
-    String executeEstimation(String directoryName) throws DockerControllerException {
-        String mode = "whitebox";
-        return super.executeEstimationByMode(directoryName, mode);
     }
 
     void storePrivateFiles(SolutionItems solutionItems, String directoryName) {

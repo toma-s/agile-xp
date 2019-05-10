@@ -15,11 +15,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WhiteBoxFileEstimator extends Estimator {
+public class WhiteBoxEstimator extends Estimator {
 
     private WhiteBoxEstimation estimation;
 
-    public WhiteBoxFileEstimator() {
+    public WhiteBoxEstimator() {
         estimation = new WhiteBoxEstimation();
     }
 
