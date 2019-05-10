@@ -59,22 +59,22 @@ public class EstimationController {
         this.storageService = storageService;
     }
 
-    @GetMapping(value = "/solution-estimation/estimate/whitebox")
-    public Estimation getWhiteboxEstimation(@RequestBody SolutionItems solutionItems) {
-        Date date = new Date();
-        Timestamp created = new Timestamp(date.getTime());
-
-        Estimation solutionEstimation = new Estimation();
-
-        Pair<Boolean, String> estimation = estimateSourceTest(solutionItems);
-        solutionEstimation.setSolved(estimation.getKey());
-        solutionEstimation.setEstimation(estimation.getValue());
-        solutionEstimation.setCreated(created);
-
-        Estimation _solutionEstimation = repository.save(solutionEstimation);
-        System.out.format("Created solution estimation %s\n", _solutionEstimation);
-        return _solutionEstimation;
-    }
+//    @GetMapping(value = "/solution-estimation/estimate/whitebox")
+//    public Estimation getWhiteboxEstimation(@RequestBody SolutionItems solutionItems) {
+//        Date date = new Date();
+//        Timestamp created = new Timestamp(date.getTime());
+//
+//        Estimation solutionEstimation = new Estimation();
+//
+//        Pair<Boolean, String> estimation = estimateSourceTest(solutionItems);
+//        solutionEstimation.setSolved(estimation.getKey());
+//        solutionEstimation.setEstimation(estimation.getValue());
+//        solutionEstimation.setCreated(created);
+//
+//        Estimation _solutionEstimation = repository.save(solutionEstimation);
+//        System.out.format("Created solution estimation %s\n", _solutionEstimation);
+//        return _solutionEstimation;
+//    }
 
     private Pair<Boolean, String> estimateSourceTest(SolutionItems solutionItems) {
         String directoryName = "12345";
