@@ -1,125 +1,60 @@
 package com.estimator.estimator;
 
 import com.estimator.estimation.Estimation;
-import com.estimator.compiler.Compiler;
 import com.estimator.compiler.exception.CompilationFailedException;
-import com.estimator.estimation.WhiteBoxEstimation;
-import com.estimator.tester.Tester;
+import com.estimator.tester.TestResult;
 import com.estimator.tester.exception.TestFailedException;
-import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 public class WhiteBoxEstimator extends Estimator {
 
-    private WhiteBoxEstimation estimation;
-
     public WhiteBoxEstimator() {
-        estimation = new WhiteBoxEstimation();
+        super();
     }
 
     @Override
     public Estimation estimate() {
-        compile();
-
-        if (!estimation.isCompiled()) {
-            return estimation;
-        }
-
-        test();
-        return estimation;
-    }
-
-
-    private void compile() {
         try {
-            compileFiles();
-            estimation.setCompilationResult("Compiled successfully");
-            estimation.setCompiled(true);
+            String[] compilationFilesDirectories = new String[]{"sources", "tests"};
+            compile(compilationFilesDirectories);
+            test();
+            return estimation;
         } catch (CompilationFailedException e) {
             estimation.setCompilationResult(e.getMessage());
-        }
-    }
-
-    private void compileFiles() throws CompilationFailedException {
-        try {
-            List<Path> filePaths = getFilePaths();
-            Path out = Paths.get("").resolve("out");
-            boolean mkdir = out.toFile().mkdir();
-            if (!mkdir) {
-                throw new CompilationFailedException("Failed to create compiler output directory");
-            }
-            Compiler.compile(filePaths, out);
-        } catch (CompilationFailedException e) {
-            throw new CompilationFailedException(e.getMessage());
-        }
-    }
-
-    private List<Path> getFilePaths() {
-        List<Path> filePaths = new ArrayList<>();
-        String[] directories = new String[]{
-                "sources",
-                "tests"};
-        for (String directory : directories) {
-            File directoryFile = Paths.get(directory).toFile();
-            File[] dirListing = directoryFile.listFiles();
-            if (dirListing != null) {
-                for (File file : dirListing) {
-                    filePaths.add(file.toPath());
-                }
-            }
-        }
-        return filePaths;
-    }
-
-
-    private void test() {
-        try {
-            List<String> testsFilenames = getTestsFilenames();
-            List<Result> testResults = testFiles(testsFilenames);
-            estimation.setTestsResult(getResult(testResults));
-            estimation.setValue(getValue(testResults));
-            if (estimation.getValue() == 100) {
-                estimation.setSolved(true);
-            }
-            estimation.setTested(true);
         } catch (TestFailedException e) {
             estimation.setTestsResult(e.getMessage());
         }
+        return estimation;
     }
 
-    private List<String> getTestsFilenames() {
-        List<String> testsFilenames = new ArrayList<>();
-        String testDirectory = "tests";
-        File directoryFile = Paths.get(testDirectory).toFile();
-        File[] dirListing = directoryFile.listFiles();
-        if (dirListing != null) {
-            for (File file : dirListing) {
-                testsFilenames.add(file.getName());
-            }
+    private void test() throws TestFailedException {
+        List<String> testsFilenames = getTestsFilenames();
+        List<TestResult> testResults = testFiles(testsFilenames);
+        estimation.setTestsResult(getResult(testResults));
+        estimation.setValue(getValue(testResults));
+        if (estimation.getValue() == 100) {
+            estimation.setSolved(true);
         }
-        return testsFilenames;
+        estimation.setTested(true);
     }
 
-    private List<Result> testFiles(List<String> testsFilenames) throws TestFailedException {
-        List<Result> testsResults = new ArrayList<>();
-        try {
-            File outPath = Paths.get("out").toFile();
-            for (String testsFilename : testsFilenames) {
-                testsResults.add(Tester.test(outPath, testsFilename));
-            }
-        } catch (TestFailedException e) {
-            throw new TestFailedException(e.getMessage());
+    private int getValue(List<TestResult> testResults) {
+        int testsNumber = 0;
+        int testsFailed = 0;
+        for (TestResult result : testResults) {
+            testsNumber += result.getTestsNumber();
+            testsFailed += result.getFailureCount();
         }
-        return testsResults;
+        System.out.println("tests failed: " + testsFailed + ", tests number: " + testsNumber);
+        if (testsFailed == 0) {
+            return 100;
+        }
+        return 100 - (testsFailed / testsNumber * 100);
     }
 
-    private String getResult(List<Result> exerciseTestsResults) {
+    private String getResult(List<TestResult> exerciseTestsResults) {
         StringBuilder result = new StringBuilder();
         exerciseTestsResults.forEach(exerciseTestsResult -> {
             result.append(getResultInfo(exerciseTestsResult));
@@ -128,9 +63,10 @@ public class WhiteBoxEstimator extends Estimator {
         return result.toString();
     }
 
-    private StringBuffer getResultInfo(Result result) {
+    private StringBuffer getResultInfo(TestResult result) {
         StringBuffer output = new StringBuffer();
         output.append("Test runtime: ").append(result.getRunTime()).append(" ms")
+                .append("\nTests number: ").append(result.getTestsNumber())
                 .append("\nTest success: ").append(result.wasSuccessful())
                 .append("\nFailures count: ").append(result.getFailureCount());
         if (result.getFailureCount() > 0) {
@@ -148,19 +84,6 @@ public class WhiteBoxEstimator extends Estimator {
         }
         output.append("\nIgnored count: ").append(result.getIgnoreCount());
         return output;
-    }
-
-    private int getValue(List<Result> testResults) {
-        int testsNumber = 0;
-        int testsFailed = 0;
-        for (Result result : testResults) {
-            testsNumber += result.getRunCount();
-            testsFailed += result.getFailureCount();
-        }
-        if (testsFailed == 0) {
-            return 100;
-        }
-        return 100 - (testsFailed / testsNumber * 100);
     }
 
 }

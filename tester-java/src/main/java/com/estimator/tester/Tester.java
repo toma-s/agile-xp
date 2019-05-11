@@ -5,13 +5,14 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
 public class Tester {
 
-    public static Result test(File outDir, String testFilename) throws TestFailedException {
+    public static TestResult test(File outDir, String testFilename) throws TestFailedException {
         Class<?> junitTest = getJunit(outDir, testFilename);
         return runTests(junitTest);
     }
@@ -43,9 +44,23 @@ public class Tester {
         return junitTest;
     }
 
-    private static Result runTests(Class<?> junitTest) {
+    private static TestResult runTests(Class<?> junitTest) {
         JUnitCore junit = new JUnitCore();
         Result result = junit.run(junitTest);
-        return result;
+        TestResult testResult = new TestResult(result);
+        int testsNumber = getTestsNumber(junitTest);
+        testResult.setTestsNumber(testsNumber);
+        return testResult;
+    }
+
+    private static int getTestsNumber(Class<?> junitTest) {
+        int testsNumber = 0;
+        Method[] methods = junitTest.getMethods();
+        for (Method method : methods) {
+            if (method.getName().contains("test")) {
+                testsNumber++;
+            }
+        }
+        return testsNumber;
     }
 }

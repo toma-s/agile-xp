@@ -1,23 +1,19 @@
 package com.agilexp.docker;
 
-import com.google.common.io.CharStreams;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
-import com.spotify.docker.client.LogStream;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
 import com.spotify.docker.client.exceptions.DockerException;
-import com.spotify.docker.client.messages.*;
+import com.spotify.docker.client.messages.ContainerConfig;
+import com.spotify.docker.client.messages.ContainerCreation;
+import com.spotify.docker.client.messages.ExecCreation;
 import org.apache.commons.compress.archivers.ArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
-import java.io.*;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 public class DockerController {
 
@@ -63,7 +59,8 @@ public class DockerController {
                     DockerClient.ExecCreateParam.attachStdout(),
                     DockerClient.ExecCreateParam.attachStderr(),
                     DockerClient.ExecCreateParam.tty());
-            dockerClient.execStart(execCreation.id()).readFully();
+            String output = dockerClient.execStart(execCreation.id()).readFully();
+            System.out.println("output: " + output);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DockerControllerException(e.getMessage());

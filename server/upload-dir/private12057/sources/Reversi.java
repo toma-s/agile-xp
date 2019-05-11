@@ -18,8 +18,6 @@ public class Reversi {
     int winner = -1;
     boolean ended = false;
 
-    private BlackBoxSwitcher switcher = new BlackBoxSwitcher();
-
     Reversi() {
     }
 
@@ -147,18 +145,6 @@ public class Reversi {
     }
 
     void move(int r, int c) {
-        if (! switcher.BUGS[0]) {
-            if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
-                System.out.println("Move out of bounds is not permitted");
-                return;
-            }
-        }
-        if (! switcher.BUGS[1]) {
-            if (playground[r][c] != -1) {
-                System.out.println("Move on not empty piece is not permitted");
-                return;
-            }
-        }
         if (winner != -1) {
             System.out.println("The game is over. No moves are permitted");
             return;
@@ -179,9 +165,6 @@ public class Reversi {
             if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
-            if (! switcher.BUGS[2]) {
-                if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
-            }
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];

@@ -1,5 +1,6 @@
 package com.agilexp.storage;
 
+import java.awt.print.Pageable;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.*;
@@ -9,6 +10,7 @@ import com.agilexp.dbmodel.exercise.ExerciseContent;
 import com.agilexp.dbmodel.exercise.PrivateFile;
 import com.agilexp.dbmodel.solution.SolutionContent;
 import com.agilexp.model.exercise.ExerciseFlags;
+import jnr.ffi.annotations.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -26,23 +28,31 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(SolutionContent solutionContent, String directoryName, String created) {
+    public void store(SolutionContent solutionContent, String directoryName, String parentDirectoryName) {
+        // TODO: 10-May-19 refactor (duplicity)
         String filename = solutionContent.getFilename();
         String code = solutionContent.getContent();
 
-        createFolder(created, null);
-        Path directoryLocation = createFolder(directoryName, created);
+        createFolder(parentDirectoryName, null);
+        Path directoryLocation = createFolder(directoryName, parentDirectoryName);
         storeSourceCode(filename, code, directoryLocation);
     }
 
     @Override
-    public void store(ExerciseContent exerciseContent, String directoryName, String created) {
+    public void store(ExerciseContent exerciseContent, String directoryName, String parentDirectoryName) {
         String filename = exerciseContent.getFilename();
         String code = exerciseContent.getContent();
 
-        createFolder(created, null);
-        Path directoryLocation = createFolder(directoryName, created);
+        createFolder(parentDirectoryName, null);
+        Path directoryLocation = createFolder(directoryName, parentDirectoryName);
         storeSourceCode(filename, code, directoryLocation);
+    }
+
+    @Override
+    public void store(int number, String fileName, String parentDirectoryName) {
+        createFolder(parentDirectoryName, null);
+        Path directoryLocation = createFolder(fileName, parentDirectoryName);
+        storeNumber(fileName, number, directoryLocation);
     }
 
     private Path createFolder(String directoryName, String created) {
@@ -75,11 +85,25 @@ public class FileSystemStorageService implements StorageService {
             if (filename.isEmpty()) {
                 throw new StorageException("Failed to store file with empty name");
             }
-            Files.write(directoryLocation.resolve(filename), code.getBytes(), StandardOpenOption.CREATE);
-        }
-        catch (IOException e) {
+            Files.write(directoryLocation.resolve(filename),
+                    code.getBytes(),
+                    StandardOpenOption.CREATE);
+        } catch (IOException e) {
             throw new StorageException("Failed to store file", e);
         }
+    }
+
+    private void storeNumber(String filename, int number, Path directoryLocation) {
+        try {
+            if (filename.isEmpty()) {
+                throw new StorageException("Failed to store file with empty name");
+            }
+            Files.write(directoryLocation.resolve(filename),
+                    String.valueOf(number).getBytes(),
+                    StandardOpenOption.CREATE);
+        } catch (IOException e) {
+                throw new StorageException("Failed to store file", e);
+            }
     }
 
     @Override
@@ -88,8 +112,7 @@ public class FileSystemStorageService implements StorageService {
             return Files.walk(this.rootLocation, 1)
                     .filter(path -> !path.equals(this.rootLocation))
                     .map(this.rootLocation::relativize);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new StorageException("Failed to read stored files", e);
         }
 
@@ -113,8 +136,7 @@ public class FileSystemStorageService implements StorageService {
                         "Could not read file: " + filename);
 
             }
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
         }
     }
@@ -128,8 +150,7 @@ public class FileSystemStorageService implements StorageService {
     public void init() {
         try {
             Files.createDirectories(rootLocation);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }
     }

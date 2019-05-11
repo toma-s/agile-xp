@@ -66,11 +66,11 @@ create table solution_content (
     content text,
     solution_id int references solutions on delete cascade,
     solution_content_type text,
-    estimation_id int references estimation
+    solution_estimation_id int references solution_estimation
 );
 
-drop table if exists estimation cascade;
-create table estimation (
+drop table if exists solution_estimation cascade;
+create table solution_estimation (
 	id serial primary key,
 	solution_id int,
 	estimation text,

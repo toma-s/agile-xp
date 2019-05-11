@@ -1,4 +1,4 @@
-package com.estimator.estimation;
+package com.agilexp.model.estimation;
 
 public class Estimation {
 
@@ -11,13 +11,6 @@ public class Estimation {
     private String errorMessage;
 
     public Estimation() {
-        compiled = false;
-        compilationResult = "Files were not compiled";
-        tested = false;
-        testsResult = "Tests were not run";
-        solved = false;
-        value = 0;
-        errorMessage = "";
     }
 
     public boolean isCompiled() {

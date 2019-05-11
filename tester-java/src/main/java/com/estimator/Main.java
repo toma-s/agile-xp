@@ -1,6 +1,7 @@
 package com.estimator;
 
 import com.estimator.estimation.Estimation;
+import com.estimator.estimator.BlackBoxEstimator;
 import com.estimator.estimator.Estimator;
 import com.estimator.estimator.WhiteBoxEstimator;
 import com.estimator.utils.JsonWriter;
@@ -14,6 +15,10 @@ public class Main {
         switch (mode) {
             case "whitebox": {
                 estimator = new WhiteBoxEstimator();
+                break;
+            }
+            case "blackbox": {
+                estimator = new BlackBoxEstimator();
                 break;
             }
             default:

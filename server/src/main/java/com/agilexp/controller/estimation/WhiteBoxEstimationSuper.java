@@ -1,9 +1,9 @@
 package com.agilexp.controller.estimation;
 
-import com.agilexp.dbmodel.estimation.Estimation;
+import com.agilexp.dbmodel.estimation.SolutionEstimation;
 import com.agilexp.docker.DockerController;
 import com.agilexp.docker.DockerControllerException;
-import com.agilexp.model.estimation.WhiteBoxEstimation;
+import com.agilexp.model.estimation.Estimation;
 import com.agilexp.model.solution.SolutionItems;
 import com.agilexp.storage.StorageException;
 import com.agilexp.storage.StorageService;
@@ -30,13 +30,13 @@ abstract public class WhiteBoxEstimationSuper {
         this.storageService = storageService;
     }
 
-    Estimation getWhiteBoxEstimation(@RequestBody SolutionItems solutionItems) {
-        WhiteBoxEstimation publicEstimation = getPublicEstimation(solutionItems);
-        WhiteBoxEstimation privateEstimation = getPrivateEstimation(solutionItems);
+    SolutionEstimation getWhiteBoxEstimation(@RequestBody SolutionItems solutionItems) {
+        Estimation publicEstimation = getPublicEstimation(solutionItems);
+        Estimation privateEstimation = getPrivateEstimation(solutionItems);
         return getEstimation(solutionItems.getSolutionId(), publicEstimation, privateEstimation);
     }
 
-    private WhiteBoxEstimation getPublicEstimation(SolutionItems solutionItems) {
+    private Estimation getPublicEstimation(SolutionItems solutionItems) {
         try {
             String solutionId = String.valueOf(solutionItems.getSolutionId());
             String directoryName = publicMode + solutionId;
@@ -44,9 +44,9 @@ abstract public class WhiteBoxEstimationSuper {
             String output = executeEstimation(directoryName);
             System.out.println(output);
             Gson gson = new Gson();
-            return gson.fromJson(output, WhiteBoxEstimation.class);
+            return gson.fromJson(output, Estimation.class);
         } catch (StorageException | DockerControllerException e) {
-            WhiteBoxEstimation estimation = new WhiteBoxEstimation();
+            Estimation estimation = new Estimation();
             estimation.setErrorMessage(String.format("Public estimation failed:\n%s", e.getMessage()));
             return estimation;
         }
@@ -74,7 +74,7 @@ abstract public class WhiteBoxEstimationSuper {
     }
 
 
-    private WhiteBoxEstimation getPrivateEstimation(SolutionItems solutionItems) {
+    private Estimation getPrivateEstimation(SolutionItems solutionItems) {
         try {
             String solutionId = String.valueOf(solutionItems.getSolutionId());
             String directoryName = privateMode + solutionId;
@@ -82,9 +82,9 @@ abstract public class WhiteBoxEstimationSuper {
             String output = executeEstimation(directoryName);
             System.out.println(output);
             Gson gson = new Gson();
-            return gson.fromJson(output, WhiteBoxEstimation.class);
+            return gson.fromJson(output, Estimation.class);
         } catch (StorageException | DockerControllerException e) {
-            WhiteBoxEstimation estimation = new WhiteBoxEstimation();
+            Estimation estimation = new Estimation();
             estimation.setErrorMessage(String.format("Private estimation failed:\n%s", e.getMessage()));
             return estimation;
         }
@@ -129,8 +129,8 @@ abstract public class WhiteBoxEstimationSuper {
     }
 
 
-    private Estimation getEstimation(long solutionId, WhiteBoxEstimation publicEstimation, WhiteBoxEstimation privateEstimation) {
-        Estimation estimation = new Estimation();
+    private SolutionEstimation getEstimation(long solutionId, Estimation publicEstimation, Estimation privateEstimation) {
+        SolutionEstimation estimation = new SolutionEstimation();
         Date date = new Date();
         estimation.setCreated(new Timestamp(date.getTime()));
         estimation.setSolutionId(solutionId);
@@ -154,7 +154,7 @@ abstract public class WhiteBoxEstimationSuper {
         return estimation;
     }
 
-    private String getEstimationContent(WhiteBoxEstimation publicWBEstimation, WhiteBoxEstimation privateWBEstimation) {
+    private String getEstimationContent(Estimation publicWBEstimation, Estimation privateWBEstimation) {
         String publicEstimationContent = getEstimationContent(publicWBEstimation, publicMode);
         String privateEstimationContent = getEstimationContent(privateWBEstimation, privateMode);
         return String.format("Progress: %s%%\n\n" +
@@ -165,7 +165,7 @@ abstract public class WhiteBoxEstimationSuper {
         );
     }
 
-    private String getEstimationContent(WhiteBoxEstimation estimation, String mode) {
+    private String getEstimationContent(Estimation estimation, String mode) {
         return String.format("%s estimation result:\n" +
                         "\n" +
                         "Compilation result:\n" +

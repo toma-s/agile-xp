@@ -66,11 +66,11 @@ create table solution_content (
     content text,
     solution_id int references solutions on delete cascade,
     solution_content_type text,
-    estimation_id int references estimation
+    solution_estimation_id int references solution_estimation
 );
 
-drop table if exists estimation cascade;
-create table estimation (
+drop table if exists solution_estimation cascade;
+create table solution_estimation (
 	id serial primary key,
 	solution_id int,
 	estimation text,
@@ -148,9 +148,7 @@ INSERT INTO bugs_number (exercise_id, number)
 VALUES (2, 3);
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_source', 'Reversi.java', 2, 'import sample_black_box.BlackBoxSwitcher;
-
-import java.io.BufferedReader;
+VALUES ('private_source', 'Reversi.java', 2, 'import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -497,7 +495,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config_8/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -963,7 +961,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config_8/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -2191,7 +2189,7 @@ final class GameConfig {
         return INSTANCE;
     }
 
-    private static String gameConfigDir = "./game_config_8/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();

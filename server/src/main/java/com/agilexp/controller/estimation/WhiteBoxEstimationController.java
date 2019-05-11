@@ -1,10 +1,9 @@
 package com.agilexp.controller.estimation;
 
-import com.agilexp.dbmodel.estimation.Estimation;
+import com.agilexp.dbmodel.estimation.SolutionEstimation;
 import com.agilexp.dbmodel.exercise.PrivateTest;
 import com.agilexp.dbmodel.solution.SolutionSource;
 import com.agilexp.dbmodel.solution.SolutionTest;
-import com.agilexp.docker.DockerControllerException;
 import com.agilexp.model.solution.SolutionItems;
 import com.agilexp.repository.exercise.PrivateTestRepository;
 import com.agilexp.repository.solution.SolutionEstimationRepository;
@@ -31,9 +30,9 @@ public class WhiteBoxEstimationController extends WhiteBoxEstimationSuper {
     }
 
     @GetMapping(value = "/solution-estimation/estimate/whitebox")
-    public Estimation getWhiteboxEstimation(@RequestBody SolutionItems solutionItems) {
-        Estimation estimation = super.getWhiteBoxEstimation(solutionItems);
-        Estimation _solutionEstimation = repository.save(estimation);
+    public SolutionEstimation getWhiteboxEstimation(@RequestBody SolutionItems solutionItems) {
+        SolutionEstimation estimation = super.getWhiteBoxEstimation(solutionItems);
+        SolutionEstimation _solutionEstimation = repository.save(estimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
         return _solutionEstimation;
     }
