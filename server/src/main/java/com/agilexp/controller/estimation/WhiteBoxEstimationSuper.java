@@ -182,4 +182,9 @@ abstract public class WhiteBoxEstimationSuper {
         );
     }
 
+    private void removeTempFiles() {
+        storageService.deleteAll(); // clean upload-dir
+        storageService.init();
+    }
+
 }

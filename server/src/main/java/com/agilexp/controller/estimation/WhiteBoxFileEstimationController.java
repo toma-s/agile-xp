@@ -36,7 +36,7 @@ public class WhiteBoxFileEstimationController extends WhiteBoxEstimationSuper {
 
     @PostMapping(value = "/solution-estimation/estimate/whitebox-file")
     public SolutionEstimation getWhiteBoxFileEstimation(@RequestBody SolutionItems solutionItems) {
-        SolutionEstimation estimation = super.getWhiteBoxEstimation(solutionItems);
+        SolutionEstimation estimation = getWhiteBoxEstimation(solutionItems);
         SolutionEstimation _solutionEstimation = repository.save(estimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
         return _solutionEstimation;
