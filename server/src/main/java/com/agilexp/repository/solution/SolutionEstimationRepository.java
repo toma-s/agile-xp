@@ -1,7 +1,6 @@
 package com.agilexp.repository.solution;
 
-import com.agilexp.dbmodel.solution.SolutionEstimation;
-import org.springframework.data.jpa.repository.Query;
+import com.agilexp.dbmodel.estimation.SolutionEstimation;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

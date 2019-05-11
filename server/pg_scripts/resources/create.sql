@@ -74,6 +74,7 @@ create table solution_estimation (
 	id serial primary key,
 	solution_id int,
 	estimation text,
+	value int,
     solved boolean,
     created timestamp
 );

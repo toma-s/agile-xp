@@ -11,7 +11,7 @@ final class GameConfig {
         return INSTANCE;
     }
 
-    private static String gameConfigDir = "./game_config_8/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
