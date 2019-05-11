@@ -139,7 +139,7 @@ public class BlackBoxFileEstimationController extends BlackBoxEstimationSuper {
     private ExerciseSwitcher getExerciseSwitcher() {
         try {
             ExerciseSwitcher switcher = new ExerciseSwitcher();
-            Path switcherFilePath = Paths.get("switcher/BlackBoxSwitcher.java");
+            Path switcherFilePath = Paths.get("assets/switcher/BlackBoxSwitcher.java");
             String switcherContent = new String(Files.readAllBytes(switcherFilePath), StandardCharsets.UTF_8);
             switcher.setContent(switcherContent);
             switcher.setFilename("BlackBoxSwitcher.java");
