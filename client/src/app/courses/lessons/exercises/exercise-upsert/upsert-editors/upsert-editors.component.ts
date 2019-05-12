@@ -4,11 +4,11 @@ import { Lesson } from '../../../shared/lesson.model';
 import { Exercise } from '../../shared/exercise/exercise/exercise.model';
 
 @Component({
-  selector: 'create-editors',
-  templateUrl: './create-editors.component.html',
-  styleUrls: ['./create-editors.component.scss']
+  selector: 'upsert-editors',
+  templateUrl: './upsert-editors.component.html',
+  styleUrls: ['./upsert-editors.component.scss']
 })
-export class CreateEditorsComponent implements OnInit {
+export class UpsertEditorsComponent implements OnInit {
 
   @Input() exerciseFormGroup: FormGroup;
   exerciseType: string;

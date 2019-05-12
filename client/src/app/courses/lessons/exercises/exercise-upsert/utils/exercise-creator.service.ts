@@ -20,7 +20,7 @@ import { PublicSource } from '../../shared/public/public-source/public-source.mo
 @Injectable({
   providedIn: 'root'
 })
-export class ExerciseCreaterService extends ExerciseSaverService {
+export class ExerciseCreatorService extends ExerciseSaverService {
 
   protected form: FormGroup;
   protected exercise: Exercise;

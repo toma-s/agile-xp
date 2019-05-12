@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Exercise } from '../shared/exercise/exercise/exercise.model';
-import { ExerciseService } from '../shared/exercise/exercise/exercise.service';
+import { Exercise } from '../../shared/exercise/exercise/exercise.model';
+import { ExerciseService } from '../../shared/exercise/exercise/exercise.service';
 import { ActivatedRoute } from '@angular/router';
 import { ControlContainer, FormGroup } from '@angular/forms';
 
