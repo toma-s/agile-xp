@@ -7,8 +7,11 @@ button {
 .card {
   padding: 20px;
 
+  mat-expansion-panel-header {
+    padding: 12px;
+  }
+
   .lessons {
-    margin: 20px 0;
     
     .lesson {
       font-size: 1.1em;
