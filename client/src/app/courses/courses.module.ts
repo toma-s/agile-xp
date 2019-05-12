@@ -18,6 +18,9 @@ import { CreateCourseComponent } from './upsert/create-course/create-course.comp
 import { CreateLessonComponent } from './upsert/create-lesson/create-lesson.component';
 import { EditCourseComponent } from './upsert/edit-course/edit-course.component';
 import { EditLessonComponent } from './upsert/edit-lesson/edit-lesson.component';
+import { ManageCoursesComponent } from './manage/manage-courses/manage-courses.component';
+import { ManageLessonsComponent } from './manage/manage-lessons/manage-lessons.component';
+import { ManageExercisesComponent } from './manage/manage-exercises/manage-exercises.component';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { EditLessonComponent } from './upsert/edit-lesson/edit-lesson.component'
     CreateCourseComponent,
     CreateLessonComponent,
     EditCourseComponent,
-    EditLessonComponent
+    EditLessonComponent,
+    ManageLessonsComponent,
+    ManageExercisesComponent,
+    ManageCoursesComponent
   ],
   imports: [
     CommonModule,

@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { ManageComponent } from '../manage.component';
 import { Title } from '@angular/platform-browser';
 import { CourseService } from 'src/app/courses/shared/course.service';
-import { LessonService } from '../../shared/lesson.service';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from 'src/app/courses/shared/course.model';
-import { Lesson } from '../../shared/lesson.model';
 import { forkJoin } from 'rxjs';
+import { Lesson } from '../../lessons/shared/lesson.model';
+import { LessonService } from '../../lessons/shared/lesson.service';
 
 @Component({
   selector: 'manage-lessons',
@@ -16,11 +16,13 @@ import { forkJoin } from 'rxjs';
 export class ManageLessonsComponent extends ManageComponent {
 
   protected module = 'lessons';
-  protected routerLink = '../';
+  protected routerLinkBack = '../';
   protected parent: Course;
   protected content: Array<Lesson>;
-  protected parentName;
-  protected contentName;
+  protected parentName = 'course';
+  protected contentName = 'lesson';
+  protected reorderable = true;
+  protected routerLinkCreate: any;
 
   constructor(
     protected titleService: Title,
@@ -30,13 +32,6 @@ export class ManageLessonsComponent extends ManageComponent {
   ) {
     super(titleService, route);
   }
-
-
-  setNames() {
-    this.parentName = 'course';
-    this.contentName = 'lesson';
-  }
-
 
   async readParams() {
     this.parent = await this.getCourse();
@@ -64,6 +59,11 @@ export class ManageLessonsComponent extends ManageComponent {
         error => reject(error)
       );
     });
+  }
+
+
+  getRouterLinkCreate() {
+    this.routerLinkCreate = `create/${this.contentName}/${this.index}`;
   }
 
 

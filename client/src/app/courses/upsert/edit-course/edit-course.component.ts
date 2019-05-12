@@ -17,7 +17,7 @@ export class EditCourseComponent extends UpsertComponent {
 
   protected module = 'course';
   protected mode = 'edit';
-  protected routerLink = '../..';
+  protected routerLink = '../../../';
   protected formGroup: FormGroup;
   protected content: Course;
   protected submitted = false;

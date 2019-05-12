@@ -9,11 +9,13 @@ import { Title } from '@angular/platform-browser';
 export abstract class ManageComponent implements OnInit {
 
   protected abstract module: string;
-  protected abstract routerLink: string;
+  protected abstract routerLinkBack: string;
   protected abstract parent;
   protected abstract content;
   protected abstract parentName;
   protected abstract contentName;
+  protected abstract reorderable;
+  protected abstract routerLinkCreate;
   index: number;
 
   constructor(
@@ -23,8 +25,8 @@ export abstract class ManageComponent implements OnInit {
 
   async ngOnInit() {
     this.setTitle();
-    this.setNames();
     this.load();
+    this.getRouterLinkCreate();
   }
 
   async load() {
@@ -37,8 +39,6 @@ export abstract class ManageComponent implements OnInit {
     this.titleService.setTitle(`Manage ${this.module} | AgileXP`);
   }
 
-  protected abstract setNames();
-
   protected abstract async readParams();
 
   protected abstract async getContent();
@@ -46,6 +46,8 @@ export abstract class ManageComponent implements OnInit {
   getIndex() {
     this.index = this.content.length;
   }
+
+  protected abstract getRouterLinkCreate();
 
 
   drop(event: CdkDragDrop<string[]>) {

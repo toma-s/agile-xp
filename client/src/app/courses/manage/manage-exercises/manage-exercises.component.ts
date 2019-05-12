@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ManageComponent } from '../manage.component';
 import { Title } from '@angular/platform-browser';
-import { LessonService } from '../../shared/lesson.service';
-import { ExerciseService } from '../../exercises/shared/exercise/exercise/exercise.service';
 import { ActivatedRoute } from '@angular/router';
-import { Lesson } from '../../shared/lesson.model';
-import { Exercise } from '../../exercises/shared/exercise/exercise/exercise.model';
 import { forkJoin } from 'rxjs';
+import { Lesson } from '../../lessons/shared/lesson.model';
+import { Exercise } from '../../lessons/exercises/shared/exercise/exercise/exercise.model';
+import { LessonService } from '../../lessons/shared/lesson.service';
+import { ExerciseService } from '../../lessons/exercises/shared/exercise/exercise/exercise.service';
 
 @Component({
   selector: 'manage-exercises',
@@ -16,11 +16,13 @@ import { forkJoin } from 'rxjs';
 export class ManageExercisesComponent extends ManageComponent {
 
   protected module = 'exercises';
-  protected routerLink = '../../';
+  protected routerLinkBack = '../../';
   protected parent: Lesson;
   protected content: Array<Exercise>;
-  protected parentName;
-  protected contentName;
+  protected parentName = 'lesson';
+  protected contentName = 'exercise';
+  protected reorderable = true;
+  protected routerLinkCreate: string;
 
   constructor(
     protected titleService: Title,
@@ -29,12 +31,6 @@ export class ManageExercisesComponent extends ManageComponent {
     private exerciseService: ExerciseService
   ) {
     super(titleService, route);
-  }
-
-
-  setNames() {
-    this.parentName = 'lesson';
-    this.contentName = 'exercise';
   }
 
 
@@ -66,6 +62,10 @@ export class ManageExercisesComponent extends ManageComponent {
     });
   }
 
+
+  getRouterLinkCreate() {
+    this.routerLinkCreate = `create/${this.contentName}/${this.index}`;
+  }
 
   reorder(newExercisesArray) {
     const observables = [];
