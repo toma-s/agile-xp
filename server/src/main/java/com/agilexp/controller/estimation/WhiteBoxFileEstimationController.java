@@ -53,7 +53,7 @@ public class WhiteBoxFileEstimationController extends WhiteBoxEstimationSuper {
             for (SolutionFile solutionFile : solutionItems.getSolutionFiles()) {
                 storageService.store(solutionFile, "files", directoryName);
             }
-            copyEstimationFiles(directoryName);
+            storageService.copy("docker", directoryName);
         } catch (StorageException e) {
             throw new StorageException("Storage Exception occurred on storing public files" + e.getMessage());
         }
@@ -72,6 +72,6 @@ public class WhiteBoxFileEstimationController extends WhiteBoxEstimationSuper {
         for (PrivateFile privateFile : privateFiles) {
             storageService.store(privateFile, "files", directoryName);
         }
-        copyEstimationFiles(directoryName);
+        storageService.copy("docker", directoryName);
     }
 }

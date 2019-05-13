@@ -63,7 +63,7 @@ public class BlackBoxEstimationController extends BlackBoxEstimationSuper {
             storageService.store(controllingFlags, "control-flags", directoryName);
             ExerciseSwitcher exerciseSwitcher = getExerciseSwitcher();
             storageService.store(exerciseSwitcher, "switcher", directoryName);
-            copyEstimationFiles(directoryName);
+            storageService.copy("docker", directoryName);
         } catch (StorageException e) {
             throw new StorageException("Storage Exception occurred on storing public files" + e.getMessage());
         }

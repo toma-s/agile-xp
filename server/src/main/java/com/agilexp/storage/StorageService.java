@@ -26,4 +26,8 @@ public interface StorageService {
     Resource loadAsResource(String filename);
 
     void deleteAll();
+
+    void clear(String directoryName);
+
+    void copy(String sourceDirectoryName, String destinationDirectoryName);
 }

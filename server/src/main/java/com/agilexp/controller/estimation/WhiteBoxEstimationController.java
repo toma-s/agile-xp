@@ -45,7 +45,7 @@ public class WhiteBoxEstimationController extends WhiteBoxEstimationSuper {
             for (SolutionTest solutionTest : solutionItems.getSolutionTests()) {
                 storageService.store(solutionTest, "tests", directoryName);
             }
-            copyEstimationFiles(directoryName);
+            storageService.copy("docker", directoryName);
         } catch (StorageException e) {
             throw new StorageException("Storage Exception occurred on storing public files" + e.getMessage());
         }
@@ -60,7 +60,7 @@ public class WhiteBoxEstimationController extends WhiteBoxEstimationSuper {
         for (PrivateTest privateTest : privateTests) {
             storageService.store(privateTest, "tests", directoryName);
         }
-        copyEstimationFiles(directoryName);
+        storageService.copy("docker", directoryName);
     }
 
 }
