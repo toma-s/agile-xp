@@ -8,8 +8,8 @@ public class SolutionTest extends SolutionContent {
     public SolutionTest() {
     }
 
-    public SolutionTest(long solutionId, String filename, String content, long solutionEstimationId) {
-        super(solutionId, filename, content, solutionEstimationId);
+    public SolutionTest(long solutionId, String filename, String content) {
+        super(solutionId, filename, content);
     }
 
     @Override

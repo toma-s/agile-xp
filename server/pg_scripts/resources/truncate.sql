@@ -7,7 +7,6 @@ truncate table
     bugs_number,
     solutions,
     solution_content,
-    solution_estimation,
-    estimation
+    solution_estimation
 restart identity cascade;
 

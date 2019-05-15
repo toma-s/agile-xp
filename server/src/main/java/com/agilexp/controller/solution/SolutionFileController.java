@@ -25,8 +25,7 @@ public class SolutionFileController {
         SolutionFile _solutionFile = repository.save(new SolutionFile(
                 solutionFile.getSolutionId(),
                 solutionFile.getFilename(),
-                solutionFile.getContent(),
-                solutionFile.getSolutionEstimationId()
+                solutionFile.getContent()
         ));
         System.out.format("Created solution file %s\n", _solutionFile);
         return _solutionFile;
