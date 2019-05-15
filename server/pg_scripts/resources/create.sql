@@ -66,7 +66,6 @@ create table solution_content (
     content text,
     solution_id int references solutions on delete cascade,
     solution_content_type text
---     solution_estimation_id int references solution_estimation
 );
 
 drop table if exists solution_estimation cascade;
