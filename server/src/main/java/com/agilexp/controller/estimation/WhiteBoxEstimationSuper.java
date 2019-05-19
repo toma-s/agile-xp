@@ -5,17 +5,12 @@ import com.agilexp.docker.DockerController;
 import com.agilexp.docker.DockerControllerException;
 import com.agilexp.model.estimation.Estimation;
 import com.agilexp.model.solution.SolutionItems;
-import com.agilexp.storage.StorageException;
+import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
 import com.google.gson.Gson;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -30,7 +25,7 @@ abstract public class WhiteBoxEstimationSuper {
         this.storageService = storageService;
     }
 
-    SolutionEstimation getWhiteBoxEstimation(@RequestBody SolutionItems solutionItems) {
+    SolutionEstimation getWhiteBoxEstimation(SolutionItems solutionItems) {
         Estimation publicEstimation = getPublicEstimation(solutionItems);
         Estimation privateEstimation = getPrivateEstimation(solutionItems);
         return getEstimation(solutionItems.getSolutionId(), publicEstimation, privateEstimation);
@@ -44,6 +39,7 @@ abstract public class WhiteBoxEstimationSuper {
             String output = executeEstimation(directoryName);
             System.out.println(output);
             Gson gson = new Gson();
+            removeTempFiles(solutionId);
             return gson.fromJson(output, Estimation.class);
         } catch (StorageException | DockerControllerException e) {
             Estimation estimation = new Estimation();
@@ -91,43 +87,6 @@ abstract public class WhiteBoxEstimationSuper {
     }
 
     abstract void storePrivateFiles(SolutionItems solutionItems, String directoryName);
-
-
-    void copyEstimationFiles(String destDirectoryName) {
-        String dockerFolderFilename = "docker";
-        File sourceFolder = new File(dockerFolderFilename);
-        File destinationFolder = storageService.load(destDirectoryName).toFile();
-        copyRecursively(sourceFolder, destinationFolder);
-    }
-
-    private void copyRecursively(File sourceDirectory, File destinationDirectory) {
-        if (sourceDirectory.isDirectory()) {
-            if (!destinationDirectory.exists()) {
-                boolean mkdir = destinationDirectory.mkdir();
-                if (!mkdir) {
-                    throw new StorageException("Failed to copy estimation files: " +
-                            "failed to create destination directory");
-                }
-            }
-            String[] files = sourceDirectory.list();
-            if (files == null) {
-                throw new StorageException("Failed to copy estimation files: " +
-                        "listing the source folder files returned null");
-            }
-            for (String file : files) {
-                File srcFile = new File(sourceDirectory, file);
-                File destFile = new File(destinationDirectory, file);
-                copyRecursively(srcFile, destFile);
-            }
-        } else {
-            try {
-                Files.copy(sourceDirectory.toPath(), destinationDirectory.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                throw new StorageException("Failed to copy estimation files: " + e.getMessage());
-            }
-        }
-    }
-
 
     private SolutionEstimation getEstimation(long solutionId, Estimation publicEstimation, Estimation privateEstimation) {
         SolutionEstimation estimation = new SolutionEstimation();
@@ -182,9 +141,8 @@ abstract public class WhiteBoxEstimationSuper {
         );
     }
 
-    private void removeTempFiles() {
-        storageService.deleteAll(); // clean upload-dir
-        storageService.init();
+    private void removeTempFiles(String solutionId) {
+        storageService.clear(publicMode + solutionId);
+        storageService.clear(privateMode + solutionId);
     }
-
 }

@@ -10,7 +10,7 @@ import com.agilexp.model.solution.SolutionItems;
 import com.agilexp.repository.exercise.BugsNumberRepository;
 import com.agilexp.repository.exercise.PrivateSourceRepository;
 import com.agilexp.repository.solution.SolutionEstimationRepository;
-import com.agilexp.storage.StorageException;
+import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +63,7 @@ public class BlackBoxEstimationController extends BlackBoxEstimationSuper {
             storageService.store(controllingFlags, "control-flags", directoryName);
             ExerciseSwitcher exerciseSwitcher = getExerciseSwitcher();
             storageService.store(exerciseSwitcher, "switcher", directoryName);
-            copyEstimationFiles(directoryName);
+            storageService.copy("docker", directoryName);
         } catch (StorageException e) {
             throw new StorageException("Storage Exception occurred on storing public files" + e.getMessage());
         }

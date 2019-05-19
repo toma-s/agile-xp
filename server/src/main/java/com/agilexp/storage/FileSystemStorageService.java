@@ -1,16 +1,15 @@
 package com.agilexp.storage;
 
-import java.awt.print.Pageable;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.*;
 import java.util.stream.Stream;
 
 import com.agilexp.dbmodel.exercise.ExerciseContent;
-import com.agilexp.dbmodel.exercise.PrivateFile;
 import com.agilexp.dbmodel.solution.SolutionContent;
-import com.agilexp.model.exercise.ExerciseFlags;
-import jnr.ffi.annotations.In;
+import com.agilexp.storage.exception.StorageException;
+import com.agilexp.storage.exception.StorageFileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -153,5 +152,47 @@ public class FileSystemStorageService implements StorageService {
         } catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }
+    }
+
+    public void copy(String sourceDirectoryName, String destinationDirectoryName) {
+        File sourceFolder = new File(sourceDirectoryName);
+        File destinationFolder = this.load(destinationDirectoryName).toFile();
+        copyRecursively(sourceFolder, destinationFolder);
+    }
+
+    private void copyRecursively(File sourceDirectory, File destinationDirectory) {
+        if (sourceDirectory.isDirectory()) {
+            if (!destinationDirectory.exists()) {
+                boolean mkdir = destinationDirectory.mkdir();
+                if (!mkdir) {
+                    throw new StorageException("Failed to copy estimation files: " +
+                            "failed to create destination directory");
+                }
+            }
+            String[] files = sourceDirectory.list();
+            if (files == null) {
+                throw new StorageException("Failed to copy estimation files: " +
+                        "listing the source folder files returned null");
+            }
+            for (String file : files) {
+                File srcFile = new File(sourceDirectory, file);
+                File destFile = new File(destinationDirectory, file);
+                copyRecursively(srcFile, destFile);
+            }
+        } else {
+            try {
+                Files.copy(sourceDirectory.toPath(), destinationDirectory.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new StorageException("Failed to copy estimation files: " + e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void clear(String directoryName) {
+        System.out.println(directoryName);
+        System.out.println("EXISTS: " + load(directoryName).toFile().exists());
+        boolean deleted = FileSystemUtils.deleteRecursively(load(directoryName).toFile());
+        System.out.println("DELETED: " + deleted);
     }
 }

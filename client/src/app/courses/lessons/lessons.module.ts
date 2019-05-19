@@ -12,14 +12,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { LessonsRoutingModule } from './lessons-routing.module';
 import { ExercisesModule } from './exercises/exercises.module';
-import { ManageLessonsComponent } from './manage/manage-lessons/manage-lessons.component';
-import { ManageExercisesComponent } from './manage/manage-exercises/manage-exercises.component';
 
 
 @NgModule({
   declarations: [
-    ManageLessonsComponent,
-    ManageExercisesComponent
   ],
   imports: [
     CommonModule,

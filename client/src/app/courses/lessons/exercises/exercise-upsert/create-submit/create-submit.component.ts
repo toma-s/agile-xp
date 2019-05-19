@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ExerciseCreaterService } from '../utils/exercise-creater.service';
+import { ExerciseCreatorService } from '../utils/exercise-creator.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ExerciseUpdaterService } from '../utils/exercise-updater.service';
 
@@ -14,7 +14,7 @@ export class CreateSubmitComponent implements OnInit {
   @Input() exerciseFormGroup: FormGroup;
 
   constructor(
-    private exerciseCreaterService: ExerciseCreaterService,
+    private exerciseCreaterService: ExerciseCreatorService,
     private exerciseUpdaterService: ExerciseUpdaterService
   ) { }
 

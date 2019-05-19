@@ -1,35 +1,24 @@
 package com.agilexp.controller.solution;
 
-import com.agilexp.dbmodel.solution.Solution;
 import com.agilexp.dbmodel.solution.SolutionFile;
-import com.agilexp.repository.solution.SolutionFileRepository;
-import com.agilexp.repository.solution.SolutionRepository;
+import com.agilexp.service.solution.SolutionFileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class SolutionFileController {
-    @Autowired
-    SolutionFileRepository repository;
 
     @Autowired
-    SolutionRepository solutionRepository;
+    SolutionFileServiceImpl service;
 
     @PostMapping(value = "/solution-files/create")
-    public SolutionFile postSolutionFile(@RequestBody SolutionFile solutionFile) {
-        SolutionFile _solutionFile = repository.save(new SolutionFile(
-                solutionFile.getSolutionId(),
-                solutionFile.getFilename(),
-                solutionFile.getContent(),
-                solutionFile.getSolutionEstimationId()
-        ));
-        System.out.format("Created solution file %s\n", _solutionFile);
-        return _solutionFile;
+    public ResponseEntity<SolutionFile> postSolutionFile(@RequestBody SolutionFile solutionFile) {
+        SolutionFile newSolutionFile = service.create(solutionFile);
+        return new ResponseEntity<>(newSolutionFile, HttpStatus.CREATED);
     }
 
 

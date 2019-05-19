@@ -20,17 +20,13 @@ public abstract class SolutionContent {
     @Column(name="content")
     private String content;
 
-    @Column(name="solution_estimation_id")
-    private long solutionEstimationId;
-
     SolutionContent() {
     }
 
-    public SolutionContent(long solutionId, String filename, String content, long solutionEstimationId) {
+    SolutionContent(long solutionId, String filename, String content) {
         this.solutionId = solutionId;
         this.filename = filename;
         this.content = content;
-        this.solutionEstimationId = solutionEstimationId;
     }
 
     public long getId() {
@@ -63,14 +59,6 @@ public abstract class SolutionContent {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public long getSolutionEstimationId() {
-        return solutionEstimationId;
-    }
-
-    public void setSolutionEstimationId(long solutionEstimationId) {
-        this.solutionEstimationId = solutionEstimationId;
     }
 
     @Override

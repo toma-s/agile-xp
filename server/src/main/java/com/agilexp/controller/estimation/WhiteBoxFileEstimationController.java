@@ -10,7 +10,7 @@ import com.agilexp.model.solution.SolutionItems;
 import com.agilexp.repository.exercise.PrivateFileRepository;
 import com.agilexp.repository.exercise.PrivateTestRepository;
 import com.agilexp.repository.solution.SolutionEstimationRepository;
-import com.agilexp.storage.StorageException;
+import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +53,7 @@ public class WhiteBoxFileEstimationController extends WhiteBoxEstimationSuper {
             for (SolutionFile solutionFile : solutionItems.getSolutionFiles()) {
                 storageService.store(solutionFile, "files", directoryName);
             }
-            copyEstimationFiles(directoryName);
+            storageService.copy("docker", directoryName);
         } catch (StorageException e) {
             throw new StorageException("Storage Exception occurred on storing public files" + e.getMessage());
         }
@@ -72,6 +72,6 @@ public class WhiteBoxFileEstimationController extends WhiteBoxEstimationSuper {
         for (PrivateFile privateFile : privateFiles) {
             storageService.store(privateFile, "files", directoryName);
         }
-        copyEstimationFiles(directoryName);
+        storageService.copy("docker", directoryName);
     }
 }

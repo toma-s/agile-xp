@@ -1,0 +1,94 @@
+@import "src/variables.scss";
+
+.card {
+  padding: 20px;
+
+  h2 {
+    text-transform: capitalize;
+  }
+}
+
+.droplist__list {
+  border: solid 1px $grey-mid;
+  min-height: 60px;
+  display: block;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 20px;
+}
+
+.droplist__box {
+  padding: 10px 5px;
+  border-bottom: solid 1px $grey-mid;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+
+  .droplist__content {
+    width: 100%;
+
+    .droplist__name {
+      float: left;
+    }
+
+    .droplist__button {
+      float: right;
+      margin: 5px 10px;
+    }
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+.list__list {
+  border: solid 1px $grey-mid;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 20px;
+}
+
+.list__box {
+  padding: 10px 5px;
+  color: rgba(0, 0, 0, 0.87);
+
+  .list__content {
+    width: 100%;
+
+    .list__name {
+      float: left;
+    }
+
+    .list__button {
+      float: right;
+      margin: 5px 10px;
+    }
+  }
+}

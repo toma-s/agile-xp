@@ -1,81 +1,53 @@
 package com.agilexp.controller;
 
 import com.agilexp.dbmodel.Lesson;
-import com.agilexp.repository.LessonRepository;
+import com.agilexp.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class LessonController {
+
     @Autowired
-    LessonRepository repository;
+    private LessonService service;
 
     @PostMapping(value = "/lessons/create")
-    public Lesson postCourse(@RequestBody Lesson lesson) {
-        Date date = new Date();
-        Timestamp created = new Timestamp(date.getTime());
-        Lesson _lesson = repository.save(new Lesson(
-                lesson.getName(),
-                lesson.getIndex(),
-                lesson.getCourseId(),
-                created,
-                lesson.getDescription()));
-        System.out.format("Created lesson %s at %s from course #%s", lesson.getName(), created,
-                lesson.getCourseId());
-        return _lesson;
+    public ResponseEntity<Lesson> createLesson(@RequestBody Lesson lesson) {
+        service.create(lesson);
+        return new ResponseEntity<>(lesson, HttpStatus.CREATED);
     }
 
     @GetMapping(value="/lessons/{id}")
-    public Lesson getLessonById(@PathVariable("id") long id) {
-        System.out.println("Get lesson with id " + id + "...");
-
-        Optional<Lesson> taskDataOptional = repository.findById(id);
-        return taskDataOptional.orElse(null);
+    public ResponseEntity<Lesson> getLessonById(@PathVariable("id") long id) {
+        Lesson lesson = service.getById(id);
+        return new ResponseEntity<>(lesson, HttpStatus.OK);
     }
 
     @GetMapping(value="/lessons/course/{courseId}")
-    public List<Lesson> getLessonsByCourseId(@PathVariable("courseId") long courseId) {
-        System.out.println("Get lessons with course id " + courseId + "...");
+    public ResponseEntity<List<Lesson>> getLessonsByCourseId(@PathVariable("courseId") long courseId) {
+        List<Lesson> courses = service.getByCourseId(courseId);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
 
-        List<Lesson> lessons = new ArrayList<>(repository.findByCourseId(courseId));
-        return lessons;
+    @PutMapping("/lessons/{id}")
+    public ResponseEntity updateLesson(@PathVariable("id") long id, @RequestBody Lesson lesson) {
+        if (service.update(id, lesson)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/lessons/{id}")
     public ResponseEntity<String> deleteLesson(@PathVariable("id") long id) {
-        System.out.println("Delete Lesson with ID = " + id + "...");
-
-        repository.deleteById(id);
-
-        return new ResponseEntity<>("Lesson has been deleted!", HttpStatus.OK);
-    }
-
-    @PutMapping("/lessons/{id}")
-    public ResponseEntity<Lesson> updateLesson(@PathVariable("id") long id, @RequestBody Lesson lesson) {
-        System.out.println("Update Lesson with ID = " + id + "...");
-
-        Optional<Lesson> lessonData = repository.findById(id);
-
-        if (lessonData.isPresent()) {
-            Lesson _lesson = lessonData.get();
-            _lesson.setName(lesson.getName());
-            _lesson.setCourseId(lesson.getCourseId());
-            _lesson.setIndex(lesson.getIndex());
-            _lesson.setCreated(lesson.getCreated());
-            _lesson.setDescription(lesson.getDescription());
-            return new ResponseEntity<>(repository.save(_lesson), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        service.delete(id);
+        return new ResponseEntity<>(
+                String.format("Lesson with id %s has been deleted", id),
+                HttpStatus.OK);
     }
 }

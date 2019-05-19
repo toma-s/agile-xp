@@ -1,0 +1,55 @@
+<a mat-button color="primary" [routerLink]="[routerLinkBack]" routerLinkActive="active" mat-button>Back</a>
+
+<div class="mat-elevation-z2 card">
+
+  <div *ngIf="parent">
+    <h1>Manage {{parentName}} {{module}}</h1>
+
+    <p><strong>Title: </strong>{{parent.name}}</p>
+
+    <p><strong>Description: </strong>{{parent.description}}</p>
+  </div>
+
+  <div *ngIf="content">
+    <h2>{{module}}:</h2>
+
+    <div *ngIf="reorderable; then dropList; else list"></div>
+
+    <ng-template #dropList>
+      <div cdkDropList class="droplist__list" (cdkDropListDropped)="drop($event)">
+        <div class="droplist__box" *ngFor="let contentItem of content" cdkDrag>
+          <div class="droplist__content">
+            <p class="droplist__name">{{contentItem.name}}</p>
+            <button class="droplist__button" mat-raised-button color="primary" (click)="delete(contentItem.id)">Delete
+              {{contentName}}</button>
+            <button class="droplist__button" mat-raised-button color="primary"
+              [routerLink]="[contentItem.id, 'edit', contentName]" routerLinkActive="active">Edit
+              {{contentName}}</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #list>
+      <mat-list class="list__list">
+        <mat-list-item class="list__box" *ngFor="let contentItem of content">
+          <div class="list__content">
+            <p class="list__name">{{contentItem.name}}</p>
+            <button class="list__button" mat-raised-button color="primary" (click)="delete(contentItem.id)">Delete
+              {{contentName}}</button>
+            <button class="list__button" mat-raised-button color="primary"
+              [routerLink]="[contentItem.id, 'edit', contentName]" routerLinkActive="active">Edit
+              {{contentName}}</button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </ng-template>
+  </div>
+
+  <div *ngIf="routerLinkCreate">
+    <button mat-raised-button color="primary" [routerLink]="[routerLinkCreate]" routerLinkActive="active">
+      Add {{contentName}}
+    </button>
+  </div>
+
+</div>

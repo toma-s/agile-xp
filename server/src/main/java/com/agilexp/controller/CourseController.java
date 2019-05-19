@@ -1,85 +1,55 @@
 package com.agilexp.controller;
 
 import com.agilexp.dbmodel.Course;
-import com.agilexp.repository.CourseRepository;
+import com.agilexp.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class CourseController {
+
     @Autowired
-    CourseRepository repository;
+    private CourseService service;
+
+    @PostMapping(value = "/courses/create")
+    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
+        Course newCourse = service.create(course);
+        return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
+    }
 
     @GetMapping(value="/courses/{id}")
-    public Course getCourseById(@PathVariable("id") long id) {
-        System.out.println("Get course with id " + id + "...");
-
-        Optional<Course> taskDataOptional = repository.findById(id);
-        return taskDataOptional.orElse(null);
+    public ResponseEntity<Course> getCourseById(@PathVariable("id") long id) {
+        Course course = service.getById(id);
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
     @GetMapping("/courses")
-    public List<Course> getAllCourses() {
-        System.out.println("Get all courses...");
-
-        List<Course> courses = new ArrayList<>();
-        repository.findAll().forEach(courses::add);
-
-        return courses;
+    public ResponseEntity<List<Course>> getAllCourses() {
+        List<Course> courses = service.getAll();
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/courses/create")
-    public Course postCourse(@RequestBody Course course) {
-        Date date = new Date();
-        Timestamp created = new Timestamp(date.getTime());
-        Course _course = repository.save(new Course(course.getName(), created, course.getDescription()));
-        System.out.format("Created course %s at %s", course.getName(), created);
-        return _course;
+    @PutMapping("/courses/{id}")
+    public ResponseEntity updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
+        if (service.update(id, course)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable("id") long id) {
-        System.out.println("Delete Course with ID = " + id + "...");
-
-        repository.deleteById(id);
-
-        return new ResponseEntity<>("Course has been deleted!", HttpStatus.OK);
+        service.delete(id);
+        return new ResponseEntity<>(
+                String.format("Course with id %s has been deleted", id),
+                HttpStatus.OK);
     }
 
-    @DeleteMapping("/courses/delete")
-    public ResponseEntity<String> deleteAllCourses() {
-        System.out.println("Delete All Courses...");
-
-        repository.deleteAll();
-
-        return new ResponseEntity<>("All Courses have been deleted!", HttpStatus.OK);
-    }
-
-    @PutMapping("/courses/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
-        System.out.println("Update Course with ID = " + id + "...");
-
-        Optional<Course> courseData = repository.findById(id);
-
-        if (courseData.isPresent()) {
-            Course _course = courseData.get();
-            _course.setName(course.getName());
-            _course.setCreated(course.getCreated());
-            _course.setDescription(course.getDescription());
-            return new ResponseEntity<>(repository.save(_course), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 
 }

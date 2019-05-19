@@ -8,8 +8,8 @@ public class SolutionSource extends SolutionContent {
 
     public SolutionSource() {}
 
-    public SolutionSource(long solutionId, String filename, String content, long solutionEstimationId) {
-        super(solutionId, filename, content, solutionEstimationId);
+    public SolutionSource(long solutionId, String filename, String content) {
+        super(solutionId, filename, content);
     }
 
     @Override

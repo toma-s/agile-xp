@@ -7,17 +7,15 @@ import com.agilexp.model.estimation.Estimation;
 import com.agilexp.model.exercise.ExerciseFlags;
 import com.agilexp.model.exercise.ExerciseSwitcher;
 import com.agilexp.model.solution.SolutionItems;
-import com.agilexp.storage.StorageException;
+import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,13 +38,18 @@ public abstract class BlackBoxEstimationSuper {
             System.out.println(output);
             Gson gson = new Gson();
             Estimation estimation = gson.fromJson(output, Estimation.class);
-            removeTempFiles();
+            removeTempFiles(solutionItems);
             return estimation;
         } catch (StorageException | DockerControllerException e) {
             Estimation estimation = new Estimation();
             estimation.setErrorMessage(String.format("Public estimation failed:\n%s", e.getMessage()));
             return estimation;
         }
+    }
+
+    private void removeTempFiles(SolutionItems solutionItems) {
+        String solutionId = String.valueOf(solutionItems.getSolutionId());
+        storageService.clear(solutionId);
     }
 
     abstract void storeFiles(SolutionItems solutionItems, String directoryName);
@@ -88,41 +91,6 @@ public abstract class BlackBoxEstimationSuper {
             return switcher;
         } catch (IOException e) {
             throw new StorageException("Storage Exception occurred on reading switcher content" + e.getMessage());
-        }
-    }
-
-    void copyEstimationFiles(String destDirectoryName) {
-        String dockerFolderFilename = "docker";
-        File sourceFolder = new File(dockerFolderFilename);
-        File destinationFolder = storageService.load(destDirectoryName).toFile();
-        copyRecursively(sourceFolder, destinationFolder);
-    }
-
-    private void copyRecursively(File sourceDirectory, File destinationDirectory) {
-        if (sourceDirectory.isDirectory()) {
-            if (!destinationDirectory.exists()) {
-                boolean mkdir = destinationDirectory.mkdir();
-                if (!mkdir) {
-                    throw new StorageException("Failed to copy estimation files: " +
-                            "failed to create destination directory");
-                }
-            }
-            String[] files = sourceDirectory.list();
-            if (files == null) {
-                throw new StorageException("Failed to copy estimation files: " +
-                        "listing the source folder files returned null");
-            }
-            for (String file : files) {
-                File srcFile = new File(sourceDirectory, file);
-                File destFile = new File(destinationDirectory, file);
-                copyRecursively(srcFile, destFile);
-            }
-        } else {
-            try {
-                Files.copy(sourceDirectory.toPath(), destinationDirectory.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                throw new StorageException("Failed to copy estimation files: " + e.getMessage());
-            }
         }
     }
 
@@ -180,11 +148,6 @@ public abstract class BlackBoxEstimationSuper {
                 estimation.isTested(),
                 estimation.getTestsResult()
         );
-    }
-
-    private void removeTempFiles() {
-        storageService.deleteAll(); // clean upload-dir
-        storageService.init();
     }
 
 }

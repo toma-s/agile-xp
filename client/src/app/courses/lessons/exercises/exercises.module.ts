@@ -17,7 +17,7 @@ import { QuillModule } from 'ngx-quill';
 
 import { ExerciseSolveComponent } from './exercise-solve/exercise-solve.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ToolbarComponent } from './exercise-solve/toolbar/toolbar.component';
 import { SolveIntroComponent } from './exercise-solve/solve-intro/solve-intro.component';
 import { SolveRunComponent } from './exercise-solve/solve-run/solve-run.component';
 import { SolveEditorComponent } from './exercise-solve/solve-editor/solve-editor.component';
@@ -27,11 +27,10 @@ import { ExerciseCreateComponent } from './exercise-upsert/exercise-create/exerc
 import { ExerciseEditComponent } from './exercise-upsert/exercise-edit/exercise-edit.component';
 import { DialogComponent } from './exercise-upsert/dialog/dialog.component';
 import { CreateIntroComponent } from './exercise-upsert/create-intro/create-intro.component';
-import { CreateEditorsComponent } from './exercise-upsert/create-editors/create-editors.component';
+import { UpsertEditorsComponent } from './exercise-upsert/upsert-editors/upsert-editors.component';
 import { CreateSubmitComponent } from './exercise-upsert/create-submit/create-submit.component';
 import { ErrorComponent } from './exercise-upsert/error/error.component';
 import { EditorComponent } from './exercise-upsert/editor/editor.component';
-import { ExerciseCreaterService } from './exercise-upsert/utils/exercise-creater.service';
 
 
 @NgModule({
@@ -46,7 +45,7 @@ import { ExerciseCreaterService } from './exercise-upsert/utils/exercise-creater
     SolveRunComponent,
     CreateIntroComponent,
     DialogComponent,
-    CreateEditorsComponent,
+    UpsertEditorsComponent,
     CreateSubmitComponent,
     EditorComponent,
     SolveEditorComponent,

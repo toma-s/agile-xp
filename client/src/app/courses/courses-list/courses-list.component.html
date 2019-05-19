@@ -1,4 +1,4 @@
-<h2>Courses overview</h2>
+<h2>Courses</h2>
 
 <div *ngIf="dataSource">
   <mat-table [dataSource]="dataSource" class="mat-elevation-z2 table">
@@ -45,9 +45,9 @@
 </div>
 
 <div class="link">
-  <a [routerLink]="['create', 'course']" routerLinkActive="active">
+  <a [routerLink]="['manageCourses']" routerLinkActive="active">
     <button mat-raised-button type="button" mat-stroked-button color="primary">
-      Create course
+      Manage courses
     </button>
   </a>
 </div>
