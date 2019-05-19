@@ -1,29 +1,24 @@
 package com.agilexp.controller.solution;
 
 import com.agilexp.dbmodel.solution.Solution;
-import com.agilexp.repository.solution.SolutionRepository;
+import com.agilexp.service.solution.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.util.Date;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class SolutionController {
+
     @Autowired
-    SolutionRepository repository;
+    SolutionService service;
 
     @PostMapping(value = "/solutions/create")
-    public Solution postSolution(@RequestBody Solution solution) {
-        Date date = new Date();
-        Timestamp created = new Timestamp(date.getTime());
-        Solution _solution = repository.save(new Solution(
-                solution.getExerciseId(),
-                created
-        ));
-        System.out.format("Created solution %s\n", _solution);
-        return _solution;
+    public ResponseEntity<Solution> postSolution(@RequestBody Solution solution) {
+        Solution newSolution = service.create(solution);
+        return new ResponseEntity<>(newSolution, HttpStatus.CREATED);
     }
 }
