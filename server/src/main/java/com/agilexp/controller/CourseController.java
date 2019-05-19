@@ -15,29 +15,29 @@ import java.util.List;
 public class CourseController {
 
     @Autowired
-    CourseService courseService;
+    private CourseService service;
 
     @PostMapping(value = "/courses/create")
     public ResponseEntity<Course> createCourse(@RequestBody Course course) {
-        Course newCourse = courseService.create(course);
+        Course newCourse = service.create(course);
         return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
     }
 
     @GetMapping(value="/courses/{id}")
     public ResponseEntity<Course> getCourseById(@PathVariable("id") long id) {
-        Course course = courseService.getById(id);
+        Course course = service.getById(id);
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
     @GetMapping("/courses")
     public ResponseEntity<List<Course>> getAllCourses() {
-        List<Course> courses = courseService.getAll();
+        List<Course> courses = service.getAll();
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
     @PutMapping("/courses/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
-        if (courseService.update(id, course)) {
+    public ResponseEntity updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
+        if (service.update(id, course)) {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -45,7 +45,7 @@ public class CourseController {
 
     @DeleteMapping("/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable("id") long id) {
-        courseService.delete(id);
+        service.delete(id);
         return new ResponseEntity<>(
                 String.format("Course with id %s has been deleted", id),
                 HttpStatus.OK);

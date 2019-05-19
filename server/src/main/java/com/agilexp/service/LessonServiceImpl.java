@@ -15,7 +15,7 @@ import java.util.Optional;
 public class LessonServiceImpl implements LessonService {
 
     @Autowired
-    LessonRepository repository;
+    private LessonRepository repository;
 
     @Override
     public Lesson create(Lesson lesson) {

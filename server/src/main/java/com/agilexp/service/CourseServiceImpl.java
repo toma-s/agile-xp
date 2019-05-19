@@ -12,7 +12,7 @@ import java.util.*;
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
-    CourseRepository repository;
+    private CourseRepository repository;
 
     @Override
     public Course create(Course course) {

@@ -13,36 +13,37 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ExerciseController {
+
     @Autowired
-    ExerciseService exerciseService;
+    private ExerciseService service;
 
     @PostMapping(value = "/exercises/create")
     public ResponseEntity<Exercise> createExercise(@RequestBody Exercise exercise) {
-        Exercise newExercise = exerciseService.create(exercise);
+        Exercise newExercise = service.create(exercise);
         return new ResponseEntity<>(newExercise, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/exercises/{id}")
     public ResponseEntity<Exercise> getExerciseById(@PathVariable("id") long id) {
-        Exercise exercise = exerciseService.getById(id);
+        Exercise exercise = service.getById(id);
         return new ResponseEntity<>(exercise, HttpStatus.OK);
     }
 
     @GetMapping(value = "/exercises/lesson/{lessonId}")
     public ResponseEntity<List<Exercise>> getExercisesByLessonId(@PathVariable("lessonId") long lessonId) {
-        List<Exercise> exercises = exerciseService.getByLessonId(lessonId);
+        List<Exercise> exercises = service.getByLessonId(lessonId);
         return new ResponseEntity<>(exercises, HttpStatus.OK);
     }
 
     @GetMapping("/exercises")
     public ResponseEntity<List<Exercise>> getAllExercises() {
-        List<Exercise> exercises = exerciseService.getAll();
+        List<Exercise> exercises = service.getAll();
         return new ResponseEntity<>(exercises, HttpStatus.OK);
     }
 
     @PutMapping("/exercises/{id}")
-    public ResponseEntity<Exercise> updateExercise(@PathVariable("id") long id, @RequestBody Exercise exercise) {
-        if (exerciseService.update(id, exercise)) {
+    public ResponseEntity updateExercise(@PathVariable("id") long id, @RequestBody Exercise exercise) {
+        if (service.update(id, exercise)) {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -50,7 +51,7 @@ public class ExerciseController {
 
     @DeleteMapping("/exercises/{id}")
     public ResponseEntity<String> deleteExercise(@PathVariable("id") long id) {
-        exerciseService.delete(id);
+        service.delete(id);
         return new ResponseEntity<>(
                 String.format("Exercise with id %s has been deleted", id),
                 HttpStatus.OK);

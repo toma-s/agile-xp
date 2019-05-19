@@ -46,8 +46,10 @@
     </ng-template>
   </div>
 
-  <button mat-raised-button color="primary" [routerLink]="[routerLinkCreate]" routerLinkActive="active">
-    Add {{contentName}}
-  </button>
+  <div *ngIf="routerLinkCreate">
+    <button mat-raised-button color="primary" [routerLink]="[routerLinkCreate]" routerLinkActive="active">
+      Add {{contentName}}
+    </button>
+  </div>
 
 </div>

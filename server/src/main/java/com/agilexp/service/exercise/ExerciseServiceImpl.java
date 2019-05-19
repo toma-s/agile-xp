@@ -15,7 +15,7 @@ import java.util.Optional;
 public class ExerciseServiceImpl implements ExerciseService {
 
     @Autowired
-    ExerciseRepository repository;
+    private ExerciseRepository repository;
 
     @Override
     public Exercise create(Exercise exercise) {

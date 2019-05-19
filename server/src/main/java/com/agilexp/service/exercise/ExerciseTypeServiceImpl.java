@@ -13,7 +13,7 @@ import java.util.Optional;
 public class ExerciseTypeServiceImpl implements ExerciseTypeService {
 
     @Autowired
-    ExerciseTypeRepository repository;
+    private ExerciseTypeRepository repository;
 
     @Override
     public ExerciseType getById(long id) {

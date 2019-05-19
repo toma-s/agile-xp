@@ -1,8 +1,7 @@
 package com.agilexp.controller.exercise;
 
 import com.agilexp.dbmodel.exercise.PrivateSource;
-import com.agilexp.repository.exercise.PrivateSourceRepository;
-import com.agilexp.storage.StorageService;
+import com.agilexp.service.exercise.PrivateSourceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,58 +15,33 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class PrivateSourceController {
+
     @Autowired
-    PrivateSourceRepository repository;
+    private PrivateSourceServiceImpl service;
 
     @PostMapping(value = "/private-sources/create")
-    public PrivateSource postPrivateSource(@RequestBody PrivateSource sourceCode) {
-
-        PrivateSource _sourceCode = repository.save(new PrivateSource(
-                sourceCode.getExerciseId(),
-                sourceCode.getFilename(),
-                sourceCode.getContent()
-
-        ));
-
-        System.out.format("Created PrivateSource %s for exercise #%s\n", sourceCode.getFilename(), sourceCode.getExerciseId());
-        return _sourceCode;
+    public ResponseEntity<PrivateSource> postPrivateSource(@RequestBody PrivateSource privateSource) {
+        PrivateSource newPrivateSource = service.create(privateSource);
+        return new ResponseEntity<>(newPrivateSource, HttpStatus.CREATED);
     }
 
     @GetMapping(value="/private-sources/exercise/{exerciseId}")
-    public List<PrivateSource> getPrivateSourcesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
-        System.out.println("Get exercise sources with exercise id " + exerciseId + "...");
-
-        List<PrivateSource> exerciseSources = new ArrayList<>(repository.findPrivateSourcesByExerciseId(exerciseId));
-        return exerciseSources;
+    public ResponseEntity<List<PrivateSource>> getPrivateSourcesByExerciseId(@PathVariable("exerciseId") long exerciseId) {
+        List<PrivateSource> privateSources = service.getByExerciseId(exerciseId);
+        return new ResponseEntity<>(privateSources, HttpStatus.OK);
     }
 
     @PutMapping("/private-sources/{id}")
     public ResponseEntity<PrivateSource> updatePrivateSource(@PathVariable("id") long id, @RequestBody PrivateSource privateSource) {
-        System.out.println("Update PublicSource with ID = " + id + "...");
-
-        Optional<PrivateSource> privateSourceData = repository.findById(id);
-
-        if (privateSourceData.isPresent()) {
-            PrivateSource _privateSource = privateSourceData.get();
-            _privateSource.setFilename(privateSource.getFilename());
-            _privateSource.setExerciseId(privateSource.getExerciseId());
-            _privateSource.setContent(privateSource.getContent());
-            return new ResponseEntity<>(repository.save(_privateSource), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (service.update(id, privateSource)) {
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/private-sources/{exerciseId}")
     public ResponseEntity<String> deleteByExerciseId(@PathVariable("exerciseId") long exerciseId) {
-        System.out.println("Delete PrivateSource with exercise ID = " + exerciseId + "...");
-
-        List<PrivateSource> privateSources = repository.findPrivateSourcesByExerciseId(exerciseId);
-        privateSources.forEach(privateSource -> {
-            repository.delete(privateSource);
-        });
-
-
-        return new ResponseEntity<>("Private sources have been deleted!", HttpStatus.OK);
+        service.deleteByExerciseId(exerciseId);
+        return new ResponseEntity<>(String.format("Private sources from exercise id %s have been deleted", exerciseId), HttpStatus.OK);
     }
 }

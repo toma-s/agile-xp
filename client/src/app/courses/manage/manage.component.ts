@@ -25,7 +25,7 @@ export abstract class ManageComponent implements OnInit {
 
   async ngOnInit() {
     this.setTitle();
-    this.load();
+    await this.load();
     this.getRouterLinkCreate();
   }
 
