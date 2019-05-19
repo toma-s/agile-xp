@@ -17,7 +17,7 @@ export class ExerciseTypeService {
   }
 
   getExerciseTypeByValue(type: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/type/${type}`);
+    return this.http.get(`${this.baseUrl}/value/${type}`);
   }
 
   getExerciseTypeById(id: number): Observable<any> {

@@ -1,4 +1,4 @@
-package com.agilexp.service;
+package com.agilexp.service.exercise;
 
 import com.agilexp.dbmodel.exercise.Exercise;
 import com.agilexp.repository.exercise.ExerciseRepository;
