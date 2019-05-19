@@ -1,29 +1,28 @@
-package com.agilexp.controller.estimation;
+package com.agilexp.service.estimator;
 
 import com.agilexp.dbmodel.estimation.SolutionEstimation;
 import com.agilexp.docker.DockerController;
 import com.agilexp.docker.DockerControllerException;
 import com.agilexp.model.estimation.Estimation;
 import com.agilexp.model.solution.SolutionItems;
-import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
+import com.agilexp.storage.exception.StorageException;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.Date;
 
-abstract public class WhiteBoxEstimationSuper {
+public abstract class WhiteBoxEstimatorSuper {
 
-    final StorageService storageService;
+    @Autowired
+    private StorageService storageService;
 
     private final String publicMode = "public";
     private final String privateMode = "private";
 
-    public WhiteBoxEstimationSuper(StorageService storageService) {
-        this.storageService = storageService;
-    }
 
     SolutionEstimation getWhiteBoxEstimation(SolutionItems solutionItems) {
         Estimation publicEstimation = getPublicEstimation(solutionItems);
