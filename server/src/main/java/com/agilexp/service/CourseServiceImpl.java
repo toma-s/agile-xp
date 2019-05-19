@@ -15,54 +15,49 @@ public class CourseServiceImpl implements CourseService {
     CourseRepository repository;
 
     @Override
-    public Course createCourse(Course course) {
+    public Course create(Course course) {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
-        Course _course = repository.save(new Course(course.getName(), created, course.getDescription()));
-        System.out.format("Created course %s at %s", course.getName(), created);
-        return _course;
+        Course newCourse = repository.save(new Course(course.getName(), created, course.getDescription()));
+        System.out.format("Created course %s\n", newCourse.getName());
+        return newCourse;
     }
 
     @Override
-    public Course getCourseById(long id) {
-        System.out.println("Get course with id " + id + "...");
+    public Course getById(long id) {
         Optional<Course> taskDataOptional = repository.findById(id);
+        System.out.format("Got course with id %s\n", id);
         return taskDataOptional.orElse(null);
     }
 
     @Override
-    public List<Course> getCourses() {
-        System.out.println("Get all courses...");
+    public List<Course> getAll() {
         List<Course> courses = new ArrayList<>();
         repository.findAll().forEach(courses::add);
+        System.out.println("Got all courses");
         return courses;
     }
 
     @Override
-    public boolean updateCourse(long id, Course course) {
-        System.out.println("Update Course with ID = " + id + "...");
+    public boolean update(long id, Course course) {
         Optional<Course> courseData = repository.findById(id);
         if (courseData.isPresent()) {
-            Course _course = courseData.get();
-            _course.setName(course.getName());
-            _course.setCreated(course.getCreated());
-            _course.setDescription(course.getDescription());
-            repository.save(_course);
+            Course updatedCourse = courseData.get();
+            updatedCourse.setName(course.getName());
+            updatedCourse.setCreated(course.getCreated());
+            updatedCourse.setDescription(course.getDescription());
+            repository.save(updatedCourse);
+            System.out.format("Updates course with id %s\n", id);
             return true;
         }
+        System.out.format("Failed to update course with id %s\n", id);
         return false;
     }
 
     @Override
-    public void deleteCourse(long id) {
-        System.out.println("Delete Course with ID = " + id + "...");
+    public void delete(long id) {
         repository.deleteById(id);
-    }
-
-    @Override
-    public void deleteAllCourses() {
-        System.out.println("Delete All Courses...");
-        repository.deleteAll();
+        System.out.format("Deleted course with id %s\n", id);
     }
 
 }
