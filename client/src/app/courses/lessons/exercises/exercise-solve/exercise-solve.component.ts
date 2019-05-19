@@ -197,7 +197,7 @@ export class ExerciseSolveComponent implements OnInit {
       this.exerciseService.updateExercise(this.exercise.id, this.exercise).subscribe(
           data => {
             console.log(data);
-            this.exercise = <Exercise> data;
+            this.exercise = data;
           },
           error => console.log(error)
       );

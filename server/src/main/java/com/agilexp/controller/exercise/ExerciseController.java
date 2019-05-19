@@ -1,6 +1,7 @@
 package com.agilexp.controller.exercise;
 
 import com.agilexp.dbmodel.exercise.Exercise;
+import com.agilexp.dbmodel.exercise.ExerciseContent;
 import com.agilexp.service.exercise.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,8 @@ public class ExerciseController {
     @PutMapping("/exercises/{id}")
     public ResponseEntity updateExercise(@PathVariable("id") long id, @RequestBody Exercise exercise) {
         if (service.update(id, exercise)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            Exercise updatedExercise = service.getById(id);
+            return new ResponseEntity<>(updatedExercise, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
