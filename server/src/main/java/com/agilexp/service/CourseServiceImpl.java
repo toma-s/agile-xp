@@ -25,9 +25,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getById(long id) {
-        Optional<Course> taskDataOptional = repository.findById(id);
+        Optional<Course> optional = repository.findById(id);
         System.out.format("Got course with id %s\n", id);
-        return taskDataOptional.orElse(null);
+        return optional.orElse(null);
     }
 
     @Override
@@ -40,18 +40,18 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean update(long id, Course course) {
-        Optional<Course> courseData = repository.findById(id);
-        if (courseData.isPresent()) {
-            Course updatedCourse = courseData.get();
-            updatedCourse.setName(course.getName());
-            updatedCourse.setCreated(course.getCreated());
-            updatedCourse.setDescription(course.getDescription());
-            repository.save(updatedCourse);
-            System.out.format("Updates course with id %s\n", id);
-            return true;
+        Optional<Course> optional = repository.findById(id);
+        if (!optional.isPresent()) {
+            System.out.format("Failed to update course with id %s\n", id);
+            return false;
         }
-        System.out.format("Failed to update course with id %s\n", id);
-        return false;
+        Course updatedCourse = optional.get();
+        updatedCourse.setName(course.getName());
+        updatedCourse.setCreated(course.getCreated());
+        updatedCourse.setDescription(course.getDescription());
+        repository.save(updatedCourse);
+        System.out.format("Updates course with id %s\n", id);
+        return true;
     }
 
     @Override

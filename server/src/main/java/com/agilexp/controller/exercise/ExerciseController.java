@@ -2,6 +2,7 @@ package com.agilexp.controller.exercise;
 
 import com.agilexp.dbmodel.exercise.Exercise;
 import com.agilexp.repository.exercise.ExerciseRepository;
+import com.agilexp.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,77 +19,45 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class ExerciseController {
     @Autowired
-    ExerciseRepository repository;
+    ExerciseService exerciseService;
 
     @PostMapping(value = "/exercises/create")
-    public Exercise postExercise(@RequestBody Exercise exercise) {
-        Date date = new Date();
-        Timestamp created = new Timestamp(date.getTime());
-        Exercise _exercise = repository.save(new Exercise(
-                exercise.getName(),
-                exercise.getIndex(),
-                exercise.getLessonId(),
-                exercise.getTypeId(),
-                created,
-                exercise.getDescription(),
-                false));
-        System.out.format("Created exercise with id %s named %s at %s for lesson #%s", _exercise.getId(), exercise.getName(), created, exercise.getLessonId());
-        return _exercise;
-    }
-
-    @GetMapping("/exercises")
-    public List<Exercise> getAllExercises() {
-        System.out.println("Get all exercises...");
-
-        List<Exercise> exercises = new ArrayList<>(repository.findAllByOrderByIndex());
-
-        System.out.println(exercises);
-        return exercises;
-    }
-
-    @GetMapping(value = "/exercises/lesson/{lessonId}")
-    public List<Exercise> getExercisesByLessonId(@PathVariable("lessonId") long lessonId) {
-        System.out.println("Get exercises with lesson id " + lessonId + "...");
-
-        List<Exercise> exercises = new ArrayList<>(repository.findAllByLessonIdOrderByIndex(lessonId));
-        return exercises;
+    public ResponseEntity<Exercise> createExercise(@RequestBody Exercise exercise) {
+        Exercise newExercise = exerciseService.create(exercise);
+        return new ResponseEntity<>(newExercise, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/exercises/{id}")
-    public Exercise getExerciseById(@PathVariable("id") long id) {
-        System.out.println("Get exercise with id " + id + "...");
-
-        Optional<Exercise> taskDataOptional = repository.findById(id);
-        return taskDataOptional.orElse(null);
+    public ResponseEntity<Exercise> getExerciseById(@PathVariable("id") long id) {
+        Exercise exercise = exerciseService.getById(id);
+        return new ResponseEntity<>(exercise, HttpStatus.OK);
     }
 
-    @DeleteMapping("/exercises/{id}")
-    public ResponseEntity<String> deleteExercise(@PathVariable("id") long id) {
-        System.out.println("Delete Exercise with ID = " + id + "...");
+    @GetMapping(value = "/exercises/lesson/{lessonId}")
+    public ResponseEntity<List<Exercise>> getExercisesByLessonId(@PathVariable("lessonId") long lessonId) {
+        List<Exercise> exercises = exerciseService.getByLessonId(lessonId);
+        return new ResponseEntity<>(exercises, HttpStatus.OK);
+    }
 
-        repository.deleteById(id);
-
-        return new ResponseEntity<>("Exercise has been deleted!", HttpStatus.OK);
+    @GetMapping("/exercises")
+    public ResponseEntity<List<Exercise>> getAllExercises() {
+        List<Exercise> exercises = exerciseService.getAll();
+        return new ResponseEntity<>(exercises, HttpStatus.OK);
     }
 
     @PutMapping("/exercises/{id}")
     public ResponseEntity<Exercise> updateExercise(@PathVariable("id") long id, @RequestBody Exercise exercise) {
-        System.out.println("Update Exercise with ID = " + id + "...");
-
-        Optional<Exercise> exerciseData = repository.findById(id);
-
-        if (exerciseData.isPresent()) {
-            Exercise _exercise = exerciseData.get();
-            _exercise.setName(exercise.getName());
-            _exercise.setIndex(exercise.getIndex());
-            _exercise.setLessonId(exercise.getLessonId());
-            _exercise.setTypeId(exercise.getTypeId());
-            _exercise.setCreated(exercise.getCreated());
-            _exercise.setDescription(exercise.getDescription());
-            _exercise.setSolved(exercise.isSolved());
-            return new ResponseEntity<>(repository.save(_exercise), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (exerciseService.update(id, exercise)) {
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/exercises/{id}")
+    public ResponseEntity<String> deleteExercise(@PathVariable("id") long id) {
+        exerciseService.delete(id);
+        return new ResponseEntity<>(
+                String.format("Exercise with id %s has been deleted", id),
+                HttpStatus.OK);
     }
 }

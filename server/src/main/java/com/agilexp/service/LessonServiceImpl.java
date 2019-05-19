@@ -32,32 +32,32 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public Lesson getById(long id) {
-        Optional<Lesson> taskDataOptional = repository.findById(id);
+        Optional<Lesson> optional = repository.findById(id);
         System.out.format("Got lesson with id %s\n", id);
-        return taskDataOptional.orElse(null);
+        return optional.orElse(null);
     }
 
     @Override
     public List<Lesson> getByCourseId(long courseId) {
         List<Lesson> lessons = repository.findByCourseId(courseId);
-        System.out.format("Got lessons course id %s\n", courseId);
+        System.out.format("Got lessons with course id %s\n", courseId);
         return lessons;
     }
 
     @Override
     public boolean update(long id, Lesson lesson) {
         Optional<Lesson> lessonData = repository.findById(id);
-        if (lessonData.isPresent()) {
-            Lesson updatedLesson = lessonData.get();
-            updatedLesson.setName(lesson.getName());
-            updatedLesson.setCreated(lesson.getCreated());
-            updatedLesson.setDescription(lesson.getDescription());
-            repository.save(updatedLesson);
-            System.out.format("Updates lesson with id %s\n", id);
-            return true;
+        if (!lessonData.isPresent()) {
+            System.out.format("Failed to update lesson with id %s\n", id);
+            return false;
         }
-        System.out.format("Failed to update lesson with id %s\n", id);
-        return false;
+        Lesson updatedLesson = lessonData.get();
+        updatedLesson.setName(lesson.getName());
+        updatedLesson.setCreated(lesson.getCreated());
+        updatedLesson.setDescription(lesson.getDescription());
+        repository.save(updatedLesson);
+        System.out.format("Updates lesson with id %s\n", id);
+        return true;
     }
 
     @Override
