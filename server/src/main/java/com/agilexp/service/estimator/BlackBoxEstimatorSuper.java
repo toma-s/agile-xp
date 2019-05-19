@@ -1,4 +1,4 @@
-package com.agilexp.controller.estimation;
+package com.agilexp.service.estimator;
 
 import com.agilexp.dbmodel.estimation.SolutionEstimation;
 import com.agilexp.docker.DockerController;
@@ -7,9 +7,10 @@ import com.agilexp.model.estimation.Estimation;
 import com.agilexp.model.exercise.ExerciseFlags;
 import com.agilexp.model.exercise.ExerciseSwitcher;
 import com.agilexp.model.solution.SolutionItems;
-import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
+import com.agilexp.storage.exception.StorageException;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -22,13 +23,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public abstract class BlackBoxEstimationSuper {
+public abstract class BlackBoxEstimatorSuper {
 
-    final StorageService storageService;
-
-    public BlackBoxEstimationSuper(StorageService storageService) {
-        this.storageService = storageService;
-    }
+    @Autowired
+    private StorageService storageService;
 
     Estimation getBlackBoxEstimation(SolutionItems solutionItems) {
         try {
@@ -149,5 +147,4 @@ public abstract class BlackBoxEstimationSuper {
                 estimation.getTestsResult()
         );
     }
-
 }

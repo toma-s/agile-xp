@@ -1,41 +1,34 @@
-package com.agilexp.controller.estimation;
+package com.agilexp.service.estimator;
 
 import com.agilexp.dbmodel.estimation.SolutionEstimation;
-import com.agilexp.dbmodel.exercise.PrivateFile;
 import com.agilexp.dbmodel.exercise.PrivateTest;
-import com.agilexp.dbmodel.solution.SolutionFile;
 import com.agilexp.dbmodel.solution.SolutionSource;
 import com.agilexp.dbmodel.solution.SolutionTest;
 import com.agilexp.model.solution.SolutionItems;
-import com.agilexp.repository.exercise.PrivateFileRepository;
 import com.agilexp.repository.exercise.PrivateTestRepository;
 import com.agilexp.repository.solution.SolutionEstimationRepository;
-import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
+import com.agilexp.storage.exception.StorageException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
-@RestController
-@RequestMapping("/api")
-public class WhiteBoxFileEstimationController extends WhiteBoxEstimationSuper {
-
-    private final SolutionEstimationRepository repository;
-    private final PrivateTestRepository privateTestRepository;
-    private final PrivateFileRepository privateFileRepository;
+@Service
+public class WhiteBoxEstimatorServiceImpl extends WhiteBoxEstimatorSuper implements EstimatorService  {
 
     @Autowired
-    public WhiteBoxFileEstimationController(StorageService storageService, SolutionEstimationRepository repository, PrivateTestRepository privateTestRepository, PrivateFileRepository privateFileRepository) {
-        super(storageService);
-        this.repository = repository;
-        this.privateTestRepository = privateTestRepository;
-        this.privateFileRepository = privateFileRepository;
-    }
+    SolutionEstimationRepository repository;
 
-    @PostMapping(value = "/solution-estimation/estimate/whitebox-file")
-    public SolutionEstimation getWhiteBoxFileEstimation(@RequestBody SolutionItems solutionItems) {
+    @Autowired
+    PrivateTestRepository privateTestRepository;
+
+    @Autowired
+    StorageService storageService;
+
+
+    @Override
+    public SolutionEstimation getEstimation(SolutionItems solutionItems) {
         SolutionEstimation estimation = getWhiteBoxEstimation(solutionItems);
         SolutionEstimation _solutionEstimation = repository.save(estimation);
         System.out.format("Created solution estimation %s\n", _solutionEstimation);
@@ -49,9 +42,6 @@ public class WhiteBoxFileEstimationController extends WhiteBoxEstimationSuper {
             }
             for (SolutionTest solutionTest : solutionItems.getSolutionTests()) {
                 storageService.store(solutionTest, "tests", directoryName);
-            }
-            for (SolutionFile solutionFile : solutionItems.getSolutionFiles()) {
-                storageService.store(solutionFile, "files", directoryName);
             }
             storageService.copy("docker", directoryName);
         } catch (StorageException e) {
@@ -68,10 +58,7 @@ public class WhiteBoxFileEstimationController extends WhiteBoxEstimationSuper {
         for (PrivateTest privateTest : privateTests) {
             storageService.store(privateTest, "tests", directoryName);
         }
-        List<PrivateFile> privateFiles = privateFileRepository.findPrivateFilesByExerciseId(exerciseId);
-        for (PrivateFile privateFile : privateFiles) {
-            storageService.store(privateFile, "files", directoryName);
-        }
         storageService.copy("docker", directoryName);
     }
+
 }
