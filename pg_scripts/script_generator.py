@@ -4,7 +4,7 @@ import json
 class ScriptGenerator:
 
     def __init__(self):
-        self.script_filename = 'script.sql'
+        self.script_filename = 'output/script.sql'
 
     def make_script(self):
         self.load_general()

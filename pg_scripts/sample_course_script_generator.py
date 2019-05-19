@@ -1,9 +1,9 @@
 import os
 
-from pg_scripts.script_generator import ScriptGenerator
+from script_generator import ScriptGenerator
 
 
-class SampleCourseGenerator(ScriptGenerator):
+class SampleCourseScriptGenerator(ScriptGenerator):
     def __init__(self):
         super().__init__()
         self.root = 'resources/sample_course'
@@ -111,5 +111,5 @@ class SampleCourseGenerator(ScriptGenerator):
 
 
 if __name__ == '__main__':
-    sg = SampleCourseGenerator()
+    sg = SampleCourseScriptGenerator()
     sg.make_script()
