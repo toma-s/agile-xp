@@ -6,6 +6,7 @@ import com.estimator.tester.TestResult;
 import com.estimator.tester.exception.TestFailedException;
 import com.estimator.utils.FilesUtils;
 import com.estimator.utils.exception.FilesUtilsException;
+import javafx.util.Pair;
 import org.junit.runner.Result;
 
 import java.io.File;
@@ -85,6 +86,7 @@ public class BlackBoxEstimator extends Estimator {
 
     private static void storeFlags(Path flags) throws CompilationFailedException {
         try {
+            Pair<String, Integer> x = new Pair<>("", 2);
             Path flagsDirectory = Paths.get("flags");
             FilesUtils.prepareDirectory(flagsDirectory.toFile());
             Path flagsFile = flagsDirectory.resolve("flags.txt");

@@ -21,6 +21,7 @@ create table exercise_types (
 	id serial primary key,
 	name text,
 	value text,
+	constraint unique_name unique (name),
 	constraint unique_value unique (value)
 );
 
@@ -49,7 +50,8 @@ drop table if exists bugs_number cascade;
 create table bugs_number (
     id serial primary key,
     exercise_id int references exercises on delete cascade,
-    number int
+    number int,
+    constraint unique_exercise_id unique (exercise_id)
 );
 
 drop table if exists solutions cascade;

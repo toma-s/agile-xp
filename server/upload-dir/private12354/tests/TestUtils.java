@@ -7,6 +7,7 @@ class TestUtils {
         return game.playground[r0][c0];
     }
 
+
     static Reversi setMoves(List<List<Integer>> moves) {
         Reversi game = new Reversi(GameConfig.game8bInit);
         for (List<Integer> move  : moves) {

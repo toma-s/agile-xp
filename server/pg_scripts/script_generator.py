@@ -12,7 +12,6 @@ class ScriptGenerator:
     def load_general(self):
         with open(self.script_filename, mode='w', encoding='UTF-8') as script_file:
             script_file.write(self.read_text_file('resources/create.sql'))
-            script_file.write(self.read_text_file('resources/truncate.sql'))
             script_file.write(self.read_text_file('resources/exercise_types.sql'))
 
     @staticmethod

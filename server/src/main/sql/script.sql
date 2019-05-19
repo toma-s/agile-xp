@@ -1,3 +1,15 @@
+truncate table
+    courses,
+    lessons,
+    exercise_types,
+    exercises,
+    exercise_content,
+    bugs_number,
+    solutions,
+    solution_content,
+    solution_estimation
+restart identity cascade;
+
 drop table if exists courses CASCADE;
 create table courses (
 	id serial primary key,
@@ -21,7 +33,7 @@ create table exercise_types (
 	id serial primary key,
 	name text,
 	value text,
-	constraint unique_name unique (name),
+	constraint unique_value unique (name),
 	constraint unique_value unique (value)
 );
 

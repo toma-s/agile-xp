@@ -2,128 +2,44 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class InitGameTest {
 
     private Reversi rev = new Reversi();
 
 
-    // createPlayground
+    // isPieceInputCorrect
 
     @Test
-    public void testCreatePlayground() {
-        Reversi game = TestUtils.getRevWithPlayground();
-
-        assertArrayEquals("create empty playground", TestUtils.getEmptyPlayground(), game.playground);
-    }
-
-
-    // initGame
-
-    @Test
-    public void testInitGame8bInit() {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertEquals("init playground on initial game config", 8, game.size);
-        Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+    public void testPieceInput00() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        assertTrue("piece input: 00", game.isPieceInputCorrect("0 0"));
     }
 
     @Test
-    public void testInitGame8wInit() {
-        String[] gameConfig = new String[]{"8", "W", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertEquals("init playground on initial game config", 8, game.size);
-        Assert.assertEquals("init playground on initial game config", Player.W, game.onTurn);
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+    public void testPieceInput00NoSpace() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        assertFalse("piece input: 00", game.isPieceInputCorrect("00"));
     }
 
     @Test
-    public void testInitGame10bInit() {
-        String[] gameConfig = new String[]{"10", "B", "4 5, 5 4", "4 4, 5 5"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertEquals("init playground on initial game config", 10, game.size);
-        Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 5));
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 5, 4));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 5, 5));
+    public void testPieceInputD3() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        assertFalse("piece input: D3", game.isPieceInputCorrect("D 3"));
     }
+
+
+    // testGetCoordinates
 
     @Test
-    public void testInitGameEmpty() {
-        String[] gameConfig = new String[]{};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
+    public void testGetCoordinates34() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        int[] expected = new int[] {3, 4};
+        int[] result = game.getCoordinates("3 4");
+        assertArrayEquals(expected, result);
     }
-
-    @Test
-    public void testInitGameFiveLines() {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameAlpha() {
-        String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(TestUtils.getEmptyPlayground(), game.playground);
-    }
-
-    @Test
-    public void testInitGameNoSize() {
-        String[] gameConfig = new String[]{"B", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoOnTurn() {
-        String[] gameConfig = new String[]{"8", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoPieces() {
-        String[] gameConfig = new String[]{"8", "B"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNull() {
-        Reversi game = rev;
-        game.initGame(null);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
+    
 
     // initPiecesCount
 
@@ -276,5 +192,121 @@ public class InitGameTest {
         assertEquals(Player.NONE, game.onTurn);
         assertFalse(game.ended);
         assertEquals(Player.NONE, game.winner);
+    }
+
+
+    // createPlayground
+
+    @Test
+    public void testCreatePlayground() {
+        Reversi game = TestUtils.getRevWithPlayground();
+
+        assertArrayEquals("create empty playground", TestUtils.getEmptyPlayground(), game.playground);
+    }
+
+    // initGame
+
+    @Test
+    public void testInitGame8bInit() {
+        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertEquals("init playground on initial game config", 8, game.size);
+        Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+    }
+
+    @Test
+    public void testInitGame8wInit() {
+        String[] gameConfig = new String[]{"8", "W", "3 4, 4 3", "3 3, 4 4"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertEquals("init playground on initial game config", 8, game.size);
+        Assert.assertEquals("init playground on initial game config", Player.W, game.onTurn);
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+    }
+
+    @Test
+    public void testInitGame10bInit() {
+        String[] gameConfig = new String[]{"10", "B", "4 5, 5 4", "4 4, 5 5"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertEquals("init playground on initial game config", 10, game.size);
+        Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 5));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 5, 4));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 5, 5));
+    }
+
+    @Test
+    public void testInitGameEmpty() {
+        String[] gameConfig = new String[]{};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameFiveLines() {
+        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameAlpha() {
+        String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertArrayEquals(TestUtils.getEmptyPlayground(), game.playground);
+    }
+
+    @Test
+    public void testInitGameNoSize() {
+        String[] gameConfig = new String[]{"B", "3 4, 4 3", "3 3, 4 4"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameNoOnTurn() {
+        String[] gameConfig = new String[]{"8", "3 4, 4 3", "3 3, 4 4"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameNoPieces() {
+        String[] gameConfig = new String[]{"8", "B"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameNull() {
+        Reversi game = rev;
+        game.initGame(null);
+
+        Assert.assertArrayEquals(null, game.playground);
     }
 }

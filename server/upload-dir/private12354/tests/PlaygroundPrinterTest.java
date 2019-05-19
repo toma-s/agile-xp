@@ -81,26 +81,26 @@ public class PlaygroundPrinterTest {
         PlaygroundPrinter.printPlayground(game.playground, game.size);
         String expected =
                 "   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 " + System.lineSeparator() +
-                        " 0 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        " 1 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        " 2 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        " 3 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        " 4 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        " 5 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        " 6 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        " 7 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        " 8 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        " 9 _  _  _  _  _  _  _  _  _  W  B  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "10 _  _  _  _  _  _  _  _  _  B  W  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "11 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "12 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "13 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "14 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "15 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "16 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "17 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "18 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                        "19 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator();
+                " 0 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 1 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 2 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 3 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 4 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 5 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 6 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 7 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 8 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 9 _  _  _  _  _  _  _  _  _  W  B  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "10 _  _  _  _  _  _  _  _  _  B  W  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "11 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "12 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "13 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "14 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "15 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "16 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "17 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "18 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "19 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator();
         assertEquals(expected, outContent.toString());
     }
 
