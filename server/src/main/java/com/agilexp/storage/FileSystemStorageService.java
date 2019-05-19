@@ -1,6 +1,5 @@
 package com.agilexp.storage;
 
-import java.awt.print.Pageable;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -8,10 +7,9 @@ import java.nio.file.*;
 import java.util.stream.Stream;
 
 import com.agilexp.dbmodel.exercise.ExerciseContent;
-import com.agilexp.dbmodel.exercise.PrivateFile;
 import com.agilexp.dbmodel.solution.SolutionContent;
-import com.agilexp.model.exercise.ExerciseFlags;
-import jnr.ffi.annotations.In;
+import com.agilexp.storage.exception.StorageException;
+import com.agilexp.storage.exception.StorageFileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

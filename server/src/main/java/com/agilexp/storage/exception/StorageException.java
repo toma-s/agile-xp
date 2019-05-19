@@ -1,4 +1,4 @@
-package com.agilexp.storage;
+package com.agilexp.storage.exception;
 
 public class StorageException extends RuntimeException {
 

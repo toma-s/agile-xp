@@ -7,7 +7,7 @@ import com.agilexp.model.estimation.Estimation;
 import com.agilexp.model.exercise.ExerciseFlags;
 import com.agilexp.model.exercise.ExerciseSwitcher;
 import com.agilexp.model.solution.SolutionItems;
-import com.agilexp.storage.StorageException;
+import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
 import com.google.gson.Gson;
 

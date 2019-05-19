@@ -10,7 +10,7 @@ import com.agilexp.model.solution.SolutionItems;
 import com.agilexp.repository.exercise.PrivateFileRepository;
 import com.agilexp.repository.exercise.PrivateTestRepository;
 import com.agilexp.repository.solution.SolutionEstimationRepository;
-import com.agilexp.storage.StorageException;
+import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

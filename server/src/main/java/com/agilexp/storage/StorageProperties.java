@@ -8,7 +8,6 @@ public class StorageProperties {
     /**
      * Folder location for storing files
      */
-//    private String location = "T:\\Projects\\Prototype\\Prototype-Server\\upload-dir";
     private String location = "T:/OneDrive - Univerzita Komenskeho v Bratislave/UK/BP/agile-xp/server/upload-dir";
 
     public String getLocation() {

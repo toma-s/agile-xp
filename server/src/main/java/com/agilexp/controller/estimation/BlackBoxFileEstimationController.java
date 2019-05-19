@@ -13,7 +13,7 @@ import com.agilexp.repository.exercise.BugsNumberRepository;
 import com.agilexp.repository.exercise.PrivateFileRepository;
 import com.agilexp.repository.exercise.PrivateSourceRepository;
 import com.agilexp.repository.solution.*;
-import com.agilexp.storage.StorageException;
+import com.agilexp.storage.exception.StorageException;
 import com.agilexp.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
