@@ -59,6 +59,13 @@ public class SolutionEstimationController {
         return new ResponseEntity<>(estimation, HttpStatus.OK);
     }
 
+    @GetMapping(value="/solution-estimation/exercise/{exerciseId}")
+    public ResponseEntity<SolutionEstimation> getSolutionEstimationsByExerciseId(
+            @PathVariable("exerciseId") long exerciseId) {
+        SolutionEstimation estimation = service.getSolutionEstimationByExerciseId(exerciseId);
+        return new ResponseEntity<>(estimation, HttpStatus.OK);
+    }
+
     @GetMapping(value="/solution-estimation/exercise/{exerciseId}/source/{pageNumber}/{pageSize}")
     public ResponseEntity<List<SolutionItems>> getSolutionEstimationsByExerciseIdAndTypeSource(
             @PathVariable("exerciseId") long exerciseId,

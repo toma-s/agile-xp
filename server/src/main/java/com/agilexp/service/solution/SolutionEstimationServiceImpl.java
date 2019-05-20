@@ -80,6 +80,17 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
         return solutionItems;
     }
 
+    @Override
+    public SolutionEstimation getSolutionEstimationByExerciseId(long exerciseId) {
+        Solution lastSolution = solutionRepository.findFirstByExerciseIdOrderByCreatedDesc(exerciseId);
+        if (lastSolution == null) {
+            return new SolutionEstimation();
+        }
+        SolutionEstimation estimation = solutionEstimationRepository.findFirstBySolutionId(lastSolution.getId());
+        System.out.format("Found last estimation of exercise %s\n", exerciseId);
+        return estimation;
+    }
+
 
     private List<Solution> getSolutions(long exerciseId, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
@@ -89,7 +100,7 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
 
     private SolutionItems setSolutionItems(long exerciseId, Solution solution) {
         SolutionItems newSolutionItems = new SolutionItems();
-        SolutionEstimation solutionEstimation = solutionEstimationRepository.findAllBySolutionId(solution.getId()).get(0);
+        SolutionEstimation solutionEstimation = solutionEstimationRepository.findFirstBySolutionId(solution.getId());
         newSolutionItems.setSolutionId(solution.getId());
         newSolutionItems.setExerciseId(exerciseId);
         newSolutionItems.setCreated(solutionEstimation.getCreated());

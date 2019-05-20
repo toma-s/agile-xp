@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface SolutionRepository extends CrudRepository<Solution, Long> {
     List<Solution> findSolutionsByExerciseIdOrderByCreatedDesc(Pageable pageable, long exerciseId);
+
+    Solution findFirstByExerciseIdOrderByCreatedDesc(long exerciseId);
 }

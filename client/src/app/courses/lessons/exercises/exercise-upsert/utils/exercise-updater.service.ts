@@ -58,7 +58,6 @@ export class ExerciseUpdaterService extends ExerciseSaverService {
     exercise.typeId = exerciseData.get('type').value['id'];
     exercise.index = exerciseData.get('index').value;
     exercise.lessonId = exerciseData.get('lessonId').value;
-    exercise.solved = this.toBoolean(exerciseData.get('name').value);
     exercise.created = new Date(exerciseData.get('created').value);
     return exercise;
   }

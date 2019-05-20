@@ -10,6 +10,8 @@ import { Course } from '../shared/course.model';
 import { Lesson } from '../lessons/shared/lesson.model';
 import { ExerciseTypeService } from '../lessons/exercises/shared/exercise/exercise-type/exercise-type.service';
 import { ExerciseType } from '../lessons/exercises/shared/exercise/exercise-type/exercise-type.model';
+import { SolutionEstimation } from '../lessons/exercises/shared/solution/solution-estimation/solution-estimation.model';
+import { SolutionEstimationService } from '../lessons/exercises/shared/solution/solution-estimation/solution-estimation.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -22,6 +24,7 @@ export class CourseDetailComponent implements OnInit {
   course: Course;
   lessons: Array<Lesson>;
   exercises: Map<number, Array<Exercise>>;
+  // estimations: Map<number, SolutionEstimation>;
   exerciseTypes: Array<ExerciseType>;
   wasDeleted = false;
 
@@ -31,6 +34,7 @@ export class CourseDetailComponent implements OnInit {
     private lessonService: LessonService,
     private exerciseService: ExerciseService,
     private exerciseTypeService: ExerciseTypeService,
+    // private solutionEstimationService: SolutionEstimationService,
     private route: ActivatedRoute
   ) {  }
 
@@ -38,7 +42,10 @@ export class CourseDetailComponent implements OnInit {
     await this.setCourse();
     this.setTitle();
     await this.setLessons();
-    this.getExercises();
+    this.exercises = await this.getExercises();
+    console.log(this.exercises);
+    // this.estimations = await this.getEstimations();
+    // console.log(this.estimations);
     this.getExerciseTypes();
   }
 
@@ -87,11 +94,12 @@ export class CourseDetailComponent implements OnInit {
 
 
   getExercises() {
-    this.exercises = new Map();
+    const exercises = new Map();
     this.lessons.forEach(async lesson => {
-      const exercises = await this.getExercisesArrayByLessonId(lesson.id);
-      this.exercises.set(lesson.id, exercises);
+      const loadedExercises = await this.getExercisesArrayByLessonId(lesson.id);
+      exercises.set(lesson.id, loadedExercises);
     });
+    return exercises;
   }
 
   getExercisesArrayByLessonId(lessonId: number): Promise<Array<Exercise>> {
@@ -102,6 +110,22 @@ export class CourseDetailComponent implements OnInit {
       );
     });
   }
+
+
+  // getEstimations() {
+  //   const estimations = new Map();
+  //   console.log(this.exercises);
+  //   this.exercises.forEach((value: Array<Exercise>, key: number) => {
+  //     console.log(key);
+  //     console.log(value);
+  //     console.log('wwww');
+  //     value.forEach(exercise => {
+  //       console.log(exercise);
+  //       estimations.set(exercise.id, new SolutionEstimation());
+  //     });
+  //   });
+  //   return estimations;
+  // }
 
 
   getExerciseTypes() {

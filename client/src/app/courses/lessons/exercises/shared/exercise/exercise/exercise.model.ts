@@ -6,5 +6,4 @@ export class Exercise {
     typeId: number;
     created: Date;
     description: string;
-    solved: boolean;
 }

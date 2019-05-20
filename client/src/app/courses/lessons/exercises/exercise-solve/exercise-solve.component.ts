@@ -49,8 +49,6 @@ export class ExerciseSolveComponent implements OnInit {
     this.exerciseType = await this.getExerciseType();
     await this.getSolutionItems();
     this.createForm();
-    this.setSolvedListener();
-    this.setSolved();
   }
 
   resetFormGroup() {
@@ -162,13 +160,6 @@ export class ExerciseSolveComponent implements OnInit {
     );
   }
 
-  setSolved() {
-    if (this.exercise.solved || this.exerciseType.value === 'theory') {
-      this.solutionFormGroup.get('intro').get('solved').setValue(true);
-    }
-    return false;
-  }
-
   setSolutionControl(solutionType: string, intialSolution) {
     this.solutionFormGroup.addControl(
       `${solutionType}Control`, this.fb.group({
@@ -190,19 +181,6 @@ export class ExerciseSolveComponent implements OnInit {
       fgs.push(fg);
     });
     return fgs;
-  }
-
-  setSolvedListener() {
-    this.solutionFormGroup.get('intro').get('solved').valueChanges.subscribe(value => {
-      this.exercise.solved = value;
-      this.exerciseService.updateExercise(this.exercise.id, this.exercise).subscribe(
-          data => {
-            console.log(data);
-            this.exercise = data;
-          },
-          error => console.log(error)
-      );
-    });
   }
 
 }
