@@ -14,6 +14,7 @@ export class ToolbarComponent implements OnInit {
   currentIndex: number;
   exercises: Array<Exercise>;
   solved: boolean;
+  value: string;
   maxIndex: number;
   previousIndex: number;
   previousExerciseId: number;
@@ -38,6 +39,7 @@ export class ToolbarComponent implements OnInit {
 
   async reload() {
     this.currentIndex = this.form.get('exerciseIndex').value;
+    this.value = this.form.get('value').value;
     this.solved = this.form.get('solved').value;
     this.getIndexes();
   }

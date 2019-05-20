@@ -156,7 +156,8 @@ export class ExerciseSolveComponent implements OnInit {
         exerciseName: [this.exercise.name],
         exerciseDescription: [this.exercise.description],
         exerciseType: [this.exerciseType.value],
-        solved: [false]
+        solved: [false],
+        value: ['0%']
       })
     );
   }

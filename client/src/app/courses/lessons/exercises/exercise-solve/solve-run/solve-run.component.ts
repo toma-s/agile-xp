@@ -94,6 +94,7 @@ export class SolveRunComponent implements OnInit {
   showEstimation() {
     this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue(this.estimation.estimation);
     this.solutionFormGroup.get('intro').get('solved').setValue(this.estimation.solved);
+    this.solutionFormGroup.get('intro').get('value').setValue(this.estimation.value + '%');
   }
 
   async saveSolution() {
