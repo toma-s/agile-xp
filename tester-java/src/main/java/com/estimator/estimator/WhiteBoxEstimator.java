@@ -48,10 +48,10 @@ public class WhiteBoxEstimator extends Estimator {
             testsFailed += result.getFailureCount();
         }
         System.out.println("tests failed: " + testsFailed + ", tests number: " + testsNumber);
-        if (testsFailed == 0) {
+        if (testsNumber == 0) {
             return 100;
         }
-        return 100 - (testsFailed / testsNumber * 100);
+        return 100 - (int) ((double)testsFailed / testsNumber * 100);
     }
 
     private String getResult(List<TestResult> exerciseTestsResults) {
