@@ -24,7 +24,7 @@ export class CourseDetailComponent implements OnInit {
   course: Course;
   lessons: Array<Lesson>;
   exercises: Map<number, Array<Exercise>>;
-  // estimations: Map<number, SolutionEstimation>;
+  estimations: Map<number, SolutionEstimation>;
   exerciseTypes: Array<ExerciseType>;
   wasDeleted = false;
 
@@ -34,7 +34,7 @@ export class CourseDetailComponent implements OnInit {
     private lessonService: LessonService,
     private exerciseService: ExerciseService,
     private exerciseTypeService: ExerciseTypeService,
-    // private solutionEstimationService: SolutionEstimationService,
+    private solutionEstimationService: SolutionEstimationService,
     private route: ActivatedRoute
   ) {  }
 
@@ -42,10 +42,9 @@ export class CourseDetailComponent implements OnInit {
     await this.setCourse();
     this.setTitle();
     await this.setLessons();
-    this.exercises = await this.getExercises();
+    await this.getExercises();
     console.log(this.exercises);
-    // this.estimations = await this.getEstimations();
-    // console.log(this.estimations);
+    console.log(this.estimations);
     this.getExerciseTypes();
   }
 
@@ -93,13 +92,17 @@ export class CourseDetailComponent implements OnInit {
   }
 
 
-  getExercises() {
-    const exercises = new Map();
-    this.lessons.forEach(async lesson => {
+  async getExercises() {
+    this.exercises = new Map<number, Array<Exercise>>();
+    this.estimations = new Map<number, SolutionEstimation>();
+    await this.lessons.forEach(async lesson => {
       const loadedExercises = await this.getExercisesArrayByLessonId(lesson.id);
-      exercises.set(lesson.id, loadedExercises);
+      this.exercises.set(lesson.id, loadedExercises);
+      loadedExercises.forEach(async exercise => {
+        const loadedEstimation = await this.getEstimations(exercise);
+        this.estimations.set(exercise.id, loadedEstimation);
+      });
     });
-    return exercises;
   }
 
   getExercisesArrayByLessonId(lessonId: number): Promise<Array<Exercise>> {
@@ -112,20 +115,14 @@ export class CourseDetailComponent implements OnInit {
   }
 
 
-  // getEstimations() {
-  //   const estimations = new Map();
-  //   console.log(this.exercises);
-  //   this.exercises.forEach((value: Array<Exercise>, key: number) => {
-  //     console.log(key);
-  //     console.log(value);
-  //     console.log('wwww');
-  //     value.forEach(exercise => {
-  //       console.log(exercise);
-  //       estimations.set(exercise.id, new SolutionEstimation());
-  //     });
-  //   });
-  //   return estimations;
-  // }
+  getEstimations(exercise: Exercise) {
+    return new Promise<SolutionEstimation>((resolve, reject) => {
+      this.solutionEstimationService.getSolutionEstimationByExerciseId(exercise.id).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
+  }
 
 
   getExerciseTypes() {
@@ -140,6 +137,10 @@ export class CourseDetailComponent implements OnInit {
 
   getExercisesByLessonId(lessonId: number): Array<Exercise> {
     return this.exercises.get(lessonId);
+  }
+
+  getEstimationByExerciseId(exerciseId: number): SolutionEstimation {
+    return this.estimations.get(exerciseId);
   }
 
   getExerciseTypeName(typeId: number) {

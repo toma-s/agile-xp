@@ -39,21 +39,23 @@ button {
         width: 30%;
         font-weight: 300;
       }
+
+      .exercise__progress {
+        width: 20%;
+      }
     
       .exercise__is_solved,
       .exercise__not_solved {
         text-align: right;
-        width: 20%;
+        font-weight: 300;
       }
     
       .exercise__is_solved {
         color: $green-dark;
-        font-weight: 300;
       }
     
       .exercise__not_solved {
         color: $accent-dark;
-        font-weight: 300;
       }
     }
   }
