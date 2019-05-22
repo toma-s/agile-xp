@@ -6,7 +6,6 @@ import com.estimator.tester.TestResult;
 import com.estimator.tester.exception.TestFailedException;
 import com.estimator.utils.FilesUtils;
 import com.estimator.utils.exception.FilesUtilsException;
-import javafx.util.Pair;
 import org.junit.runner.Result;
 
 import java.io.File;
@@ -86,7 +85,6 @@ public class BlackBoxEstimator extends Estimator {
 
     private static void storeFlags(Path flags) throws CompilationFailedException {
         try {
-            Pair<String, Integer> x = new Pair<>("", 2);
             Path flagsDirectory = Paths.get("flags");
             FilesUtils.prepareDirectory(flagsDirectory.toFile());
             Path flagsFile = flagsDirectory.resolve("flags.txt");
@@ -101,8 +99,8 @@ public class BlackBoxEstimator extends Estimator {
         int resultFailures = 0;
         int controllingResultFailures = 0;
         for (int j = 0; j < testResults.size(); j++) {
-            Result result = testResults.get(j);
-            Result controllingResult = controllingTestResults.get(j);
+            TestResult result = testResults.get(j);
+            TestResult controllingResult = controllingTestResults.get(j);
             resultFailures += result.getFailureCount();
             controllingResultFailures += controllingResult.getFailureCount();
         }
@@ -113,7 +111,7 @@ public class BlackBoxEstimator extends Estimator {
         estimation.setTestsResult(String.format("Bugs found: %d/%d", bugsFound, bugsNumber));
         estimation.setTested(true);
         estimation.setSolved(bugsNumber == bugsFound);
-        estimation.setValue(bugsFound / bugsNumber * 100);
+        estimation.setValue((int)((double) bugsFound / bugsNumber * 100));
     }
 
 }
