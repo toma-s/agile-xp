@@ -1,0 +1,28 @@
+.card {
+  margin: 15px 0;
+
+  .mark {
+
+    .mark__button {
+      text-align: center;
+      width: 100%;
+      font-size: 1.5em;
+      padding: 8px;
+    }
+
+    .mark__output {
+      white-space: pre-line;
+      font-family: monospace;
+
+      p {
+        resize: none;
+        border: none;
+        padding: 4px;
+        width: calc(100% - 8px);
+        height: 250px;
+        overflow: auto;
+        margin: 0;
+      }
+    }
+  }
+}

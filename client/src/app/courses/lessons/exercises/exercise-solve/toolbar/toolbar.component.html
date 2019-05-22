@@ -18,15 +18,15 @@
 
     <span class="space"></span>
 
-    <p *ngIf="solved; then isSolved; else notSolved"></p>
+    <div *ngIf="solved; then isSolved; else notSolved"></div>
     <ng-template #isSolved>
-      <div>
+      <div class="exercise__progress">
         <a mat-button [disabled]="true" class="exercise__is_solved">Solved</a>
       </div>
     </ng-template>
     <ng-template #notSolved>
-      <div>
-        <a mat-button [disabled]="true" class="exercise__not_solved">Not solved</a>
+      <div class="exercise__progress">
+        <a mat-button [disabled]="true" class="exercise__not_solved">Not solved ({{value}})</a>
       </div>
     </ng-template>
 

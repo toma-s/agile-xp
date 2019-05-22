@@ -24,18 +24,21 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <mat-nav-list *ngIf="exercises && exerciseTypes">
+          <mat-nav-list *ngIf="exercises && estimations && exerciseTypes">
             <mat-list-item *ngFor="let exercise of getExercisesByLessonId(lesson.id)" class="exercise"
               [routerLink]="['lesson', lesson.id, 'exerciseSolve', exercise.id]" routerLinkActive="active">
               <p class="exercise__name">{{ exercise.name }}</p>
               <p class="exercise__type">{{ getExerciseTypeName(exercise.typeId) }}</p>
-              <p *ngIf="exercise.solved; then isSolved; else notSolved"></p>
-              <ng-template #isSolved>
-                <p class="exercise__is_solved">Solved</p>
-              </ng-template>
-              <ng-template #notSolved>
-                <p class="exercise__not_solved">Not solved</p>
-              </ng-template>
+              <div *ngIf="getEstimationByExerciseId(exercise.id)" class="exercise__progress">
+                <p *ngIf="getEstimationByExerciseId(exercise.id).solved;
+              then isSolved; else notSolved"></p>
+                <ng-template #isSolved>
+                  <p class="exercise__is_solved">Solved</p>
+                </ng-template>
+                <ng-template #notSolved>
+                  <p class="exercise__not_solved">Not solved ({{getEstimationByExerciseId(exercise.id).value}}%)</p>
+                </ng-template>
+              </div>
             </mat-list-item>
           </mat-nav-list>
 
@@ -53,7 +56,7 @@
         </button>
       </a>
     </div>
-    
+
   </div>
 </ng-template>
 

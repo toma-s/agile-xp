@@ -27,8 +27,7 @@ public class ExerciseServiceImpl implements ExerciseService {
                 exercise.getLessonId(),
                 exercise.getTypeId(),
                 created,
-                exercise.getDescription(),
-                false));
+                exercise.getDescription()));
         System.out.format("Created exercise %s from lesson %s\n", newExercise.getName(), newExercise.getLessonId());
         return newExercise;
     }
@@ -69,7 +68,6 @@ public class ExerciseServiceImpl implements ExerciseService {
         _exercise.setTypeId(exercise.getTypeId());
         _exercise.setCreated(exercise.getCreated());
         _exercise.setDescription(exercise.getDescription());
-        _exercise.setSolved(exercise.isSolved());
         System.out.format("Updates exercise with id %s\n", id);
         return true;
     }

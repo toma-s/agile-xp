@@ -9,6 +9,10 @@
     flex: 1 1 auto;
   }
 
+  .exercise__progress {
+    width: 20%;
+  }
+
   .exercise__is_solved {
     color: $green-dark;
     text-align: right;

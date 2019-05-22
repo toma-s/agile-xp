@@ -74,8 +74,7 @@ export abstract class ExerciseUpsertComponent implements OnInit {
       type: exerciseType,
       lessonId: exercise.lessonId,
       created: exercise.created,
-      index: exercise.index,
-      solved: exercise.solved
+      index: exercise.index
     });
   }
 

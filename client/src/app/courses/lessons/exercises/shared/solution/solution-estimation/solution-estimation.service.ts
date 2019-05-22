@@ -17,6 +17,18 @@ export class SolutionEstimationService {
     return this.http.post(`${this.baseUrl}/estimate/${exerciseType}`, solutionItems);
   }
 
+  markSolved(solutionId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/mark-solved/${solutionId}`);
+  }
+
+  markNotSolved(solutionId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/mark-not-solved/${solutionId}`);
+  }
+
+  getSolutionEstimationByExerciseId(exerciseId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exercise/${exerciseId}`);
+  }
+
   getSolutionEstimationsByExerciseIdAndType(exerciseId: number, solutionType: string, pageNumber, pageSize): Observable<any> {
     return this.http.get(`${this.baseUrl}/exercise/${exerciseId}/${solutionType}/${pageNumber}/${pageSize}`);
   }

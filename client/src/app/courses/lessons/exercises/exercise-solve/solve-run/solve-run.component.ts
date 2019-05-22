@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Solution } from '../../shared/solution/solution/solution.model';
-import { SolutonService } from '../../shared/solution/solution/soluton.service';
+import { SolutionService } from '../../shared/solution/solution/solution.service';
 import { SolutonSourceService } from '../../shared/solution/solution-source/solution-source.service';
 import { SolutonTestService } from '../../shared/solution/solution-test/solution-test.service';
 import { SolutionEstimationService } from '../../shared/solution/solution-estimation/solution-estimation.service';
@@ -30,7 +30,7 @@ export class SolveRunComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private solutionService: SolutonService,
+    private solutionService: SolutionService,
     private solutionSourceService: SolutonSourceService,
     private solutionTestService: SolutonTestService,
     private solutionFileService: SolutionFileService,
@@ -94,6 +94,7 @@ export class SolveRunComponent implements OnInit {
   showEstimation() {
     this.solutionFormGroup.get('solutionEstimation').get('estimation').setValue(this.estimation.estimation);
     this.solutionFormGroup.get('intro').get('solved').setValue(this.estimation.solved);
+    this.solutionFormGroup.get('intro').get('value').setValue(this.estimation.value + '%');
   }
 
   async saveSolution() {

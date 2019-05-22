@@ -31,7 +31,9 @@ export class CreateSubmitComponent implements OnInit {
       result = await this.exerciseUpdaterService.save(this.exerciseFormGroup);
     }
     console.log(result);
-    this.setErrorMessage(result.error);
+    if (!result.success) {
+      this.setErrorMessage(result.success);
+    }
     this.setSuccess(result.success);
   }
 
@@ -39,14 +41,8 @@ export class CreateSubmitComponent implements OnInit {
     this.exerciseFormGroup.get('params').get('success').setValue(success);
   }
 
-  setErrorMessage(error: HttpErrorResponse) {
-    if (error === null) {
-      return;
-    }
-    const message = `Error name: ${error.name}\n
-      Url: ${error.url}\n
-      Status text: ${error.statusText}\n
-      Status: ${error.status}`;
+  setErrorMessage(success: boolean) {
+    const message = 'Error occured during exercise creation';
     this.exerciseFormGroup.get('error').get('errorMessage').setValue(message);
   }
 

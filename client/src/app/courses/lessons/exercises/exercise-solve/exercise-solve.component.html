@@ -10,6 +10,9 @@
         <solve-intro [solutionFormGroup]="solutionFormGroup"></solve-intro>
 
         <div [ngSwitch]="exerciseType.value">
+          <div *ngSwitchCase="'theory'">
+            <solve-mark formGroupName="intro"></solve-mark>
+          </div>
           <div *ngSwitchCase="'whitebox'">
             <solve-run [solutionFormGroup]="solutionFormGroup"></solve-run>
             <solve-editor [solutionFormGroup]="solutionFormGroup" formGroupName=sourceControl></solve-editor>
