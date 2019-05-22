@@ -36,10 +36,7 @@ export abstract class ExerciseSaverService {
   }
 
   async save(form: FormGroup) {
-    const result = {
-      success: true,
-      error: null
-    };
+    const result = {success: true};
 
     this.form = form;
     console.log(form);
@@ -48,7 +45,7 @@ export abstract class ExerciseSaverService {
       .then(data => this.exercise = data)
       .catch(error => {
         result.success = false;
-        result.error = error;
+        console.log(error);
       });
     if (!result.success) {
       return result;
@@ -57,7 +54,7 @@ export abstract class ExerciseSaverService {
     await this.saveExerciseItems()
       .catch(error => {
         result.success = false;
-        result.error = error;
+        console.log(error);
       });
     return result;
   }
