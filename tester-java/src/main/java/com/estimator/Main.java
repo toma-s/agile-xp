@@ -9,21 +9,22 @@ import com.estimator.utils.JsonWriter;
 public class Main {
 
     public static void main(String[] args) {
-        String mode = args[0];
+//        String mode = args[0];
         Estimator estimator;
 
-        switch (mode) {
-            case "whitebox": {
-                estimator = new WhiteBoxEstimator();
-                break;
-            }
-            case "blackbox": {
-                estimator = new BlackBoxEstimator();
-                break;
-            }
-            default:
-                throw new IllegalStateException("Unexpected value: " + mode);
-        }
+//        switch (mode) {
+//            case "whitebox": {
+//                estimator = new WhiteBoxEstimator();
+//                break;
+//            }
+//            case "blackbox": {
+//                estimator = new BlackBoxEstimator();
+//                break;
+//            }
+//            default:
+//                throw new IllegalStateException("Unexpected value: " + mode);
+//        }
+        estimator = new BlackBoxEstimator();
 
         Estimation estimation = estimator.estimate();
         JsonWriter.write(estimation);
