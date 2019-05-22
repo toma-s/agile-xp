@@ -1,11 +1,18 @@
 @import "src/variables.scss";
 
+.button {
+  margin: 0 10px;
+}
+
 .solution {
+  padding: 8px 12px;
+  // font-size: 1.1em;
+
   .solution__title {
     width: 15%;
   }
 
-  .solution__dscription {
+  .solution__description {
     width: 85%;
   }
 
