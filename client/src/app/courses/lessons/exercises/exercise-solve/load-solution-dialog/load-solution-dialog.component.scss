@@ -34,6 +34,7 @@
   margin: 20px 0;
   background: $grey-light;
   border-radius: 6px;
+  padding: 8px;
 }
 
 .content__filename {
@@ -45,7 +46,6 @@
   width: 75%;
   height: 100%;
   white-space: pre-wrap;
-  padding: 15px;
 }
 
 .paginator {
