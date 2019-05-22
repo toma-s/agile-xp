@@ -31,9 +31,22 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
     const exercise = new Exercise();
     exercise.index = this.route.snapshot.params['index'];
     exercise.lessonId = this.route.snapshot.params['lessonId'];
+    const et = new ExerciseType();
+    et.id = null;
+    et.name = null;
+    et.value = null;
     return this.fb.group({
-      exercise: this.getGroupForExercise(exercise, new ExerciseType()),
+      // exercise: this.getGroupForExercise(exercise, this.getExerciseTypeGroup()),
+      exercise: this.getGroupForExercise(exercise, et),
       mode: 'create'
+    });
+  }
+
+  getExerciseTypeGroup() {
+    return this.fb.group({
+      id: null,
+      name: null,
+      value: null
     });
   }
 

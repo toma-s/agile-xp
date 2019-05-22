@@ -71,8 +71,17 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     this.publicTests = await this.getPublicTests();
     this.publicFiles = await this.getPublicFiles();
     return this.fb.group({
+      // exercise: this.getGroupForExercise(this.exercise, this.getExerciseTypeGroup(this.exerciseType)),
       exercise: this.getGroupForExercise(this.exercise, this.exerciseType),
       mode: 'edit'
+    });
+  }
+
+  getExerciseTypeGroup(exerciseType: ExerciseType) {
+    return this.fb.group({
+      id: exerciseType.id,
+      name: exerciseType.name,
+      value: exerciseType.value
     });
   }
 

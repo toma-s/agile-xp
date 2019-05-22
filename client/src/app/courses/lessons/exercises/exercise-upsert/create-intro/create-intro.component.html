@@ -9,11 +9,12 @@
         [formControl]="exerciseFormGroup.controls.intro.controls.exercise.controls.name" maxlength="35">
     </mat-form-field>
 
-    <div *ngIf="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value; then onEdit; else onCreate">
+    <div *ngIf="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value.name; then onEdit; else onCreate">
     </div>
     <ng-template #onCreate>
       <mat-form-field class="intro__field">
-        <mat-select placeholder="Exercise type" [formControl]="exerciseFormGroup.controls.exercise.controls.intro.controls.type">
+        <mat-label>Exercise type</mat-label>
+        <mat-select [formControl]="exerciseFormGroup.controls.intro.controls.exercise.controls.type">
           <mat-option *ngFor="let type of types" [value]="type">
             {{type.name}}
           </mat-option>
