@@ -111,7 +111,7 @@ public class BlackBoxEstimator extends Estimator {
         estimation.setTestsResult(String.format("Bugs found: %d/%d", bugsFound, bugsNumber));
         estimation.setTested(true);
         estimation.setSolved(bugsNumber == bugsFound);
-        estimation.setValue(bugsFound / bugsNumber * 100);
+        estimation.setValue((int)((double) bugsFound / bugsNumber * 100));
     }
 
 }
