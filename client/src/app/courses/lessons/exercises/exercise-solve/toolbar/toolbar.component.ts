@@ -32,7 +32,7 @@ export class ToolbarComponent implements OnInit {
     this.form = <FormGroup>this.controlContainer.control;
     this.exercises = await this.getExercises();
     this.reload();
-    this.form.get('solved').valueChanges.subscribe(() => {
+    this.form.get('value').valueChanges.subscribe(() => {
       this.reload();
     });
   }
