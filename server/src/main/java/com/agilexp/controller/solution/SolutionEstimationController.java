@@ -34,6 +34,16 @@ public class SolutionEstimationController {
     @Autowired
     BlackBoxFileEstimatorServiceImpl blackBoxFileEstimatorService;
 
+    @GetMapping(value = "/solution-estimation/mark-solved/{solutionId}")
+    public ResponseEntity<SolutionEstimation> markSolved(@PathVariable long solutionId) {
+        SolutionEstimation estimation = service.markSolved(solutionId);
+        return new ResponseEntity<>(estimation, HttpStatus.OK);
+    }
+    @GetMapping(value = "/solution-estimation/mark-not-solved/{solutionId}")
+    public ResponseEntity<SolutionEstimation> markNotSolved(@PathVariable long solutionId) {
+        SolutionEstimation estimation = service.markNotSolved(solutionId);
+        return new ResponseEntity<>(estimation, HttpStatus.OK);
+    }
 
     @GetMapping(value = "/solution-estimation/estimate/whitebox")
     public ResponseEntity<SolutionEstimation> getWhiteboxEstimation(@RequestBody SolutionItems solutionItems) {

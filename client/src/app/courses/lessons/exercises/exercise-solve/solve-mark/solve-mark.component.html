@@ -1,0 +1,13 @@
+<div class="mat-elevation-z2 card">
+
+  <div class="mark">
+    <div *ngIf="this.form.controls.solved.value === true; then markNotSolvedButton; else markSolvedButton"></div>
+    <ng-template #markSolvedButton>
+      <button mat-button color="accent" class="mark__button" (click)="markSolved()">Mark as solved</button>
+    </ng-template>
+    <ng-template #markNotSolvedButton>
+      <button mat-button color="accent" class="mark__button" (click)="markNotSolved()">Mark as not solved</button>
+    </ng-template>
+  </div>
+
+</div>

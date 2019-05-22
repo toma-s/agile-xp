@@ -12,6 +12,8 @@ import { SolutionSource } from '../shared/solution/solution-source/solution-sour
 import { SolutionTest } from '../shared/solution/solution-test/solution-test.model';
 import { SolutionFile } from '../shared/solution/solution-file/solution-file.model';
 import { Title } from '@angular/platform-browser';
+import { SolutionEstimation } from '../shared/solution/solution-estimation/solution-estimation.model';
+import { SolutionEstimationService } from '../shared/solution/solution-estimation/solution-estimation.service';
 
 @Component({
   selector: 'exercise-solve',
@@ -26,6 +28,7 @@ export class ExerciseSolveComponent implements OnInit {
   solutionSources: Array<SolutionSource> = new Array<SolutionSource>();
   solutionTests: Array<SolutionTest> = new Array<SolutionTest>();
   solutionFiles: Array<SolutionFile> = new Array<SolutionFile>();
+  estimation: SolutionEstimation;
 
   constructor(
     private titleService: Title,
@@ -35,6 +38,7 @@ export class ExerciseSolveComponent implements OnInit {
     private publicTestService: PublicTestService,
     private publicFileService: PublicFileService,
     private exerciseTypeService: ExerciseTypeService,
+    private solutionEstimationService: SolutionEstimationService,
     private fb: FormBuilder
   ) { }
 
@@ -45,6 +49,8 @@ export class ExerciseSolveComponent implements OnInit {
   async reload() {
     this.resetFormGroup();
     this.exercise = await this.getExercise();
+    this.estimation = await this.getInitEstimation();
+    console.log(this.estimation);
     this.setTitle();
     this.exerciseType = await this.getExerciseType();
     await this.getSolutionItems();
@@ -62,6 +68,15 @@ export class ExerciseSolveComponent implements OnInit {
           data => resolve(data),
           error => reject(error)
         )
+      );
+    });
+  }
+
+  getInitEstimation(): Promise<SolutionEstimation> {
+    return new Promise<SolutionEstimation>((resolve, reject) => {
+      this.solutionEstimationService.getSolutionEstimationByExerciseId(this.exercise.id).subscribe(
+        data => resolve(data),
+        error => reject(error)
       );
     });
   }
@@ -154,8 +169,8 @@ export class ExerciseSolveComponent implements OnInit {
         exerciseName: [this.exercise.name],
         exerciseDescription: [this.exercise.description],
         exerciseType: [this.exerciseType.value],
-        solved: [false],
-        value: ['0%']
+        solved: [this.estimation.solved],
+        value: [`${this.estimation.value}%`]
       })
     );
   }

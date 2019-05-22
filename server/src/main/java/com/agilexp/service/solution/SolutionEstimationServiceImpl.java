@@ -5,7 +5,6 @@ import com.agilexp.dbmodel.solution.Solution;
 import com.agilexp.dbmodel.solution.SolutionFile;
 import com.agilexp.dbmodel.solution.SolutionSource;
 import com.agilexp.dbmodel.solution.SolutionTest;
-import com.agilexp.model.estimation.Estimation;
 import com.agilexp.model.solution.SolutionItems;
 import com.agilexp.repository.solution.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,6 +35,32 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
     @Autowired
     SolutionEstimationRepository solutionEstimationRepository;
 
+
+    @Override
+    public SolutionEstimation markSolved(long solutionId) {
+        Date date = new Date();
+        SolutionEstimation estimation = new SolutionEstimation();
+        estimation.setSolutionId(solutionId);
+        estimation.setEstimation("Marked as solved");
+        estimation.setSolved(true);
+        estimation.setCreated(new Timestamp(date.getTime()));
+        estimation.setValue(100);
+        System.out.format("Marked solution %s as solved\n", solutionId);
+        return solutionEstimationRepository.save(estimation);
+    }
+
+    @Override
+    public SolutionEstimation markNotSolved(long solutionId) {
+        Date date = new Date();
+        SolutionEstimation estimation = new SolutionEstimation();
+        estimation.setSolutionId(solutionId);
+        estimation.setEstimation("Marked as not solved");
+        estimation.setSolved(false);
+        estimation.setCreated(new Timestamp(date.getTime()));
+        estimation.setValue(0);
+        System.out.format("Marked solution %s as solved\n", solutionId);
+        return solutionEstimationRepository.save(estimation);
+    }
 
     @Override
     public List<SolutionItems> getSolutionEstimationsByExerciseIdAndTypeSource(long exerciseId, int pageNumber, int pageSize) {

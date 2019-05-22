@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SolutonService {
+export class SolutionService {
 
   private baseUrl = `${environment.baseUrl}solutions`;
 
