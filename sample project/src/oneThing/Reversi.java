@@ -279,8 +279,7 @@ public class Reversi {
     }
 
     boolean areValidMoves() {
-        int movesNum = getPossibleMoves().size();
-        return movesNum != 0;
+        return !getPossibleMoves().isEmpty();
     }
 
     ArrayList<String> getPossibleMoves() {

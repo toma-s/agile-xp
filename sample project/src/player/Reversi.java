@@ -237,11 +237,15 @@ public class Reversi {
     }
 
     boolean areValidMoves() {
-        ArrayList<String> pieces = new ArrayList<>();
+        return !getPossibleMoves().isEmpty();
+    }
+
+    List<String> getPossibleMoves() {
+        List<String> pieces = new ArrayList<>();
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] != Player.NONE) continue;
-                ArrayList<List<Integer>> toFlip = new ArrayList<>();
+                List<List<Integer>> toFlip = new ArrayList<>();
                 playground[r][c] = onTurn;
                 Player opposite  = Player.NONE;
                 if (onTurn == Player.W) opposite = Player.B;
@@ -282,7 +286,7 @@ public class Reversi {
                 pieces.add(rString + " " + cString);
             }
         }
-        return !pieces.isEmpty();
+        return pieces;
     }
 
     public static void main(String[] args) {

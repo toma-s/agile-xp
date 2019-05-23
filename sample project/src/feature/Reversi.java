@@ -120,6 +120,7 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
+//                PlaygroundPrinter.printHints(playground);
                 PlaygroundPrinter.printPlayground(playground);
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != -1) break;
@@ -237,11 +238,15 @@ public class Reversi {
     }
 
     boolean areValidMoves() {
-        ArrayList<String> pieces = new ArrayList<>();
+        return !getPossibleMoves().isEmpty();
+    }
+
+    List<String> getPossibleMoves() {
+        List<String> pieces = new ArrayList<>();
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] != -1) continue;
-                ArrayList<List<Integer>> toFlip = new ArrayList<>();
+                List<List<Integer>> toFlip = new ArrayList<>();
                 playground[r][c] = onTurn;
                 int opposite  = -1;
                 if (onTurn == 0) opposite = 1;
@@ -282,7 +287,7 @@ public class Reversi {
                 pieces.add(rString + " " + cString);
             }
         }
-        return !pieces.isEmpty();
+        return pieces;
     }
 
     public static void main(String[] args) {
