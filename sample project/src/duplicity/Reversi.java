@@ -48,10 +48,6 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        if (gameConfig == null) {
-            System.out.println("Game configuration is null");
-            return;
-        }
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
             System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");

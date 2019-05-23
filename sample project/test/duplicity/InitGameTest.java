@@ -303,12 +303,4 @@ public class InitGameTest {
 
         Assert.assertArrayEquals(null, game.playground);
     }
-
-    @Test
-    public void testInitGameNull() {
-        Reversi game = rev;
-        game.initGame(null);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
 }

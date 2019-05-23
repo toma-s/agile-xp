@@ -24,6 +24,7 @@ public class Reversi {
     Reversi(Path gameFilePath) throws IncorrectGameConfigFileException {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            checkLength(gameConfig);
             initGame(gameConfig);
             initPiecesCount();
         } catch (IncorrectGameConfigFileException e) {
@@ -44,14 +45,14 @@ public class Reversi {
         return gameConfig;
     }
 
-    void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
-        if (gameConfig == null) {
-            throw new IncorrectGameConfigFileException("Game configuration is null");
-        }
+    void checkLength(String[] gameConfig) throws IncorrectGameConfigFileException {
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
             throw new IncorrectGameConfigFileException("Game configuration must contain " + configFileLinesNumber + " lines");
         }
+    }
+
+    void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
         setSize(gameConfig[0]);
         setOnTurn(gameConfig[1]);
         createPlayground();
