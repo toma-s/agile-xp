@@ -1,22 +1,23 @@
 package feature;
 
 import java.util.Collections;
+import java.util.List;
 
 class PlaygroundPrinter {
 
-    static void printPlayground(int[][] playground) {
-        printUpperEnumeration(8);
-        for (int r = 0; r < 8; r++) {
-            printLeftEnumeration(r, 8);
-            for (int c = 0; c <= 7; c++) {
+    static void printPlayground(int[][] playground, int size) {
+        printUpperEnumeration(size);
+        for (int r = 0; r < size; r++) {
+            printLeftEnumeration(r, size);
+            for (int c = 0; c < size; c++) {
                 if (playground[r][c] == -1) {
-                    printPiece("_", 8);
+                    printPiece("_", size);
                 }
                 else if (playground[r][c] == 1) {
-                    printPiece("B", 8);
+                    printPiece("B", size);
                 }
                 else if (playground[r][c] == 0) {
-                    printPiece("W", 8);
+                    printPiece("W", size);
                 }
             }
             System.out.println();
@@ -39,5 +40,27 @@ class PlaygroundPrinter {
 
     private static void printPiece(String piece, int size) {
         System.out.print(piece + String.join("", Collections.nCopies(String.valueOf(size - 1).length(), " ")));
+    }
+
+    static void printHints(int[][] playground, int size, List<String> possibleMoves) {
+        System.out.println("Possible moves:");
+        printUpperEnumeration(size);
+        for (int r = 0; r < size; r++) {
+            printLeftEnumeration(r, size);
+            for (int c = 0; c < size; c++) {
+                if (possibleMoves.contains(String.format("%d %d", r, c))) {
+                    System.out.print("o ");
+                } else if (playground[r][c] == -1) {
+                    printPiece("_", size);
+                }
+                else if (playground[r][c] == 1) {
+                    printPiece("B", size);
+                }
+                else if (playground[r][c] == 0) {
+                    printPiece("W", size);
+                }
+            }
+            System.out.println();
+        }
     }
 }

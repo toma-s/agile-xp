@@ -120,8 +120,8 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
-//                PlaygroundPrinter.printHints(playground);
-                PlaygroundPrinter.printPlayground(playground);
+                PlaygroundPrinter.printHints(playground, size, getPossibleMoves());
+                PlaygroundPrinter.printPlayground(playground, size);
                 System.out.format("Make a move. %s is on turn\n", onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
