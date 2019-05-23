@@ -12,6 +12,52 @@ import static org.junit.Assert.*;
 public class MoveTest {
 
 
+    // isWithinPlayground
+
+    @Test
+    public void testIsWithinPlayground00() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.size = 8;
+
+        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground77() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
+    }
+
+    @Test
+    public void testIsWithinPlaygroundNeg10() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground0Neg1() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
+    }
+
+    @Test
+    public void testIsWithinPlayground80() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground08() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
+    }
+
+
     // getPiecesToFlip
 
     @Test
