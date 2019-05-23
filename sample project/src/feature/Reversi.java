@@ -167,7 +167,7 @@ public class Reversi {
             return;
         }
 
-        ArrayList<List<Integer>> piecesToFlip = new ArrayList<>();
+        List<List<Integer>> piecesToFlip = new ArrayList<>();
         playground[r][c] = onTurn;
         int opposite = -1;
         if (onTurn == 0) opposite = 1;

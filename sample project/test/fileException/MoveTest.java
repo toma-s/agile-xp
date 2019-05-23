@@ -112,7 +112,7 @@ public class MoveTest {
     @Test
     public void testGetPiecesToFlipInit00() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        ArrayList<List<Integer>> pieces = game.getPiecesToFlip(0, 0);
+        List<List<Integer>> pieces = game.getPiecesToFlip(0, 0);
 
         assertEquals("pieces to flip on onit - (0, 0)", 0, pieces.size());
     }
@@ -137,7 +137,7 @@ public class MoveTest {
     @Test
     public void testGetPossibleMoves8bInit() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        ArrayList<String> pieces = game.getPossibleMoves();
+        List<String> pieces = game.getPossibleMoves();
 
         assertEquals("valid length", 4, pieces.size());
         assertEquals("valid moves", "2 3", pieces.get(0));
@@ -149,7 +149,7 @@ public class MoveTest {
     @Test
     public void testGetPossibleMovesEmpty() {
         Reversi game = TestUtils.getRevWithPlayground();
-        ArrayList<String> pieces = game.getPossibleMoves();
+        List<String> pieces = game.getPossibleMoves();
 
         assertEquals("valid length", 0, pieces.size());
     }

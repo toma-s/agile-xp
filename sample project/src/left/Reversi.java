@@ -204,7 +204,7 @@ public class Reversi {
             return;
         }
 
-        ArrayList<List<Integer>> piecesToFlip = getPiecesToFlip(r, c);
+        List<List<Integer>> piecesToFlip = getPiecesToFlip(r, c);
         if (piecesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
@@ -229,8 +229,8 @@ public class Reversi {
         return winner != Player.NONE;
     }
 
-    ArrayList<List<Integer>> getPiecesToFlip(int r0, int c0) {
-        ArrayList<List<Integer>> toFlip = new ArrayList<>();
+    List<List<Integer>> getPiecesToFlip(int r0, int c0) {
+        List<List<Integer>> toFlip = new ArrayList<>();
         playground[r0][c0] = onTurn;
         Player opposite = Player.NONE;
         if (onTurn == Player.W) opposite = Player.B;
@@ -291,8 +291,8 @@ public class Reversi {
         return movesNum != 0;
     }
 
-    ArrayList<String> getPossibleMoves() {
-        ArrayList<String> pieces = new ArrayList<>();
+    List<String> getPossibleMoves() {
+        List<String> pieces = new ArrayList<>();
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] != Player.NONE) continue;

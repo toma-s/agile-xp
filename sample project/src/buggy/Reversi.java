@@ -153,7 +153,7 @@ public class Reversi {
             return;
         }
 
-        ArrayList<List<Integer>> piecesToFlip = new ArrayList<>();
+        List<List<Integer>> piecesToFlip = new ArrayList<>();
         playground[r][c] = onTurn;
         int opposite = -1;
         if (onTurn == 0) opposite = 1;
@@ -223,11 +223,11 @@ public class Reversi {
     }
 
     boolean areValidMoves() {
-        ArrayList<String> pieces = new ArrayList<>();
+        List<String> pieces = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != -1) continue;
-                ArrayList<List<Integer>> toFlip = new ArrayList<>();
+                List<List<Integer>> toFlip = new ArrayList<>();
                 playground[r][c] = onTurn;
                 int opposite  = -1;
                 if (onTurn == 0) opposite = 1;
