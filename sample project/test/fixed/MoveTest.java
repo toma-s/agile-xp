@@ -7,10 +7,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MoveTest {
+
+    // getPossibleMoves
+
+    @Test
+    public void testGetPossibleMoves8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        List<String> pieces = game.getPossibleMoves();
+
+        assertEquals("valid length", 4, pieces.size());
+        assertEquals("valid moves", "2 3", pieces.get(0));
+        assertEquals("valid moves", "3 2", pieces.get(1));
+        assertEquals("valid moves", "4 5", pieces.get(2));
+        assertEquals("valid moves", "5 4", pieces.get(3));
+    }
+
+    @Test
+    public void testGetPossibleMovesEmpty() {
+        Reversi game = TestUtils.getRevWithPlayground();
+        List<String> pieces = game.getPossibleMoves();
+
+        assertEquals("valid length", 0, pieces.size());
+    }
 
 
     // areValidMoves
