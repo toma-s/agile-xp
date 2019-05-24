@@ -124,6 +124,12 @@ public class Reversi {
                 int c = Integer.parseInt(coordinates[1]);
                 move(r, c);
                 printPiecesLeftCount();
+                if (! areValidMoves()) {
+                    printPiecesLeftCount();
+                    ended = true;
+                    if (getLeftB() > getLeftW()) winner = 1;
+                    else if (getLeftW() > getLeftB()) winner = 0;
+                }
             }
             reader.close();
         } catch (IOException e) {
@@ -210,12 +216,6 @@ public class Reversi {
 
         if (onTurn == 0) onTurn = 1;
         else if (onTurn == 1) onTurn = 0;
-        if (! areValidMoves()) {
-            printPiecesLeftCount();
-            ended = true;
-            if (getLeftB() > getLeftW()) winner = 1;
-            else if (getLeftW() > getLeftB()) winner = 0;
-        }
     }
 
     boolean areValidMoves() {

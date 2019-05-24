@@ -139,6 +139,12 @@ public class Reversi {
                 int[] coordinates = getCoordinates(line);
                 move(coordinates[0], coordinates[1]);
                 printPiecesLeftCount();
+                if (! areValidMoves()) {
+                    printPiecesLeftCount();
+                    ended = true;
+                    if (getLeftB() > getLeftW()) winner = Player.B;
+                    else if (getLeftW() > getLeftB()) winner = Player.W;
+                }
             }
             reader.close();
         } catch (IOException e) {
@@ -234,12 +240,6 @@ public class Reversi {
 
         if (onTurn == Player.W) onTurn = Player.B;
         else if (onTurn == Player.B) onTurn = Player.W;
-        if (! areValidMoves()) {
-            printPiecesLeftCount();
-            ended = true;
-            if (getLeftB() > getLeftW()) winner = Player.B;
-            else if (getLeftW() > getLeftB()) winner = Player.W;
-        }
     }
 
     boolean isWithinPlayground(int r, int c) {

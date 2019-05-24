@@ -171,6 +171,9 @@ public class Reversi {
         }
         int[] coordinates = getCoordinates(line);
         move(coordinates[0], coordinates[1]);
+        if (! areValidMoves()) {
+            endGame();
+        }
     }
 
     private void printPiecesLeftCount() {
@@ -207,9 +210,6 @@ public class Reversi {
         flipPieces(piecesToFlip);
 
         swapPlayerOnTurn();
-        if (! areValidMoves()) {
-            endGame();
-        }
     }
 
     boolean isWithinPlayground(int r, int c) {
