@@ -97,15 +97,16 @@ public class Reversi {
 
     void fillPlayground(String[] gameConfig) {
         try {
-            for (int i = 2; i < 4; i++) {
-                String[] pieces = gameConfig[i].split(",");
+            int[] piecesPositions = new int[] {2, 3};
+            for (int piecePosition : piecesPositions) {
+                String[] pieces = gameConfig[piecePosition].split(",");
                 for (String piece : pieces) {
                     if (!isPieceInputCorrect(piece)) {
                         System.out.println("Incorrect piece input");
                         return;
                     }
                     int[] coordinates = getCoordinates(piece);
-                    setPiece(coordinates, players[i - 2]);
+                    setPiece(coordinates, players[piecePosition - 2]);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {

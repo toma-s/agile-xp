@@ -72,8 +72,9 @@ public class Reversi {
                     playground[r][c] = -1;
                 }
             }
-            for (int i = 1; i < 3; i++) {
-                String[] pieces = gameConfig[i].split(",");
+            int[] piecesPositions = new int[] {1, 2};
+            for (int piecePosition : piecesPositions) {
+                String[] pieces = gameConfig[piecePosition].split(",");
                 for (String piece : pieces) {
                     if (!piece.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
                         System.out.println("Incorrect piece input");
@@ -85,7 +86,7 @@ public class Reversi {
                     if (r >= 8 || c >= 8) {
                         return;
                     }
-                    playground[r][c] = players[i - 1];
+                    playground[r][c] = players[piecePosition - 1];
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
