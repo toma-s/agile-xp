@@ -292,9 +292,7 @@ public class Reversi {
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] != Player.NONE) continue;
                 if (getPiecesToFlip(r, c).isEmpty()) continue;
-                String rString = String.valueOf(r);
-                String cString = String.valueOf(c);
-                pieces.add(rString + " " + cString);
+                pieces.add(String.format("%s %s", r,  c));
             }
         }
         return pieces;

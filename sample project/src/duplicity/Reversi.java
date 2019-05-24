@@ -291,9 +291,7 @@ public class Reversi {
                     toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
                 }
                 if (toFlip.isEmpty()) continue;
-                String rString = String.valueOf(r);
-                String cString = String.valueOf(c);
-                pieces.add(rString + " " + cString);
+                pieces.add(String.format("%s %s", r,  c));
             }
         }
         return pieces;
