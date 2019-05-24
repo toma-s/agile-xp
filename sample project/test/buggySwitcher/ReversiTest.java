@@ -6,8 +6,6 @@ import static org.junit.Assert.assertArrayEquals;
 
 public class ReversiTest {
 
-    private Reversi rev = new Reversi();
-
 
     // bug 1  (1)
 

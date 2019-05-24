@@ -40,4 +40,12 @@ class PlaygroundPrinter {
     private static void printPiece(String piece, int size) {
         System.out.print(piece + String.join("", Collections.nCopies(String.valueOf(size - 1).length(), " ")));
     }
+
+    static void printMoveOnTurn(int onTurn) {
+        System.out.format("Make a move. %s is on turn%n", onTurn);
+    }
+
+    static void printPiecesNumber(int leftB, int leftW) {
+        System.out.printf("Number of pieces: B: %s; W: %s%n%n", leftB, leftW);
+    }
 }

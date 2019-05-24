@@ -267,4 +267,34 @@ public class PlaygroundPrinterTest {
                 "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
         assertTrue(outContent.toString().contains(expected));
     }
+
+
+    // printMoveOnTurn
+
+    @Test
+    public void testPrintMoveOnTurn8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
+        String expected = "Make a move. B is on turn" + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintMoveOnTurn8wInit() {
+        Reversi game = new Reversi(GameConfig.game8wInit);
+        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
+        String expected = "Make a move. W is on turn" + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+
+    // printPiecesNumber
+
+    @Test
+    public void testPrintPiecesNumber8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printPiecesNumber(game.getLeftB(), game.getLeftW());
+        String expected = "Number of pieces: B: 2; W: 2" + System.lineSeparator() + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
 }

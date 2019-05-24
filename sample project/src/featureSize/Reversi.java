@@ -117,7 +117,7 @@ public class Reversi {
             String line;
             while (!ended) {
                 PlaygroundPrinter.printPlayground(playground, size);
-                System.out.format("Make a move. %s is on turn\n", onTurn);
+                PlaygroundPrinter.printMoveOnTurn(onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
                 if (!line.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
@@ -137,7 +137,7 @@ public class Reversi {
     }
 
     private void printPiecesLeftCount() {
-        System.out.printf("Number of pieces: B: %s; W: %s\n\n", getLeftB(), getLeftW());
+        PlaygroundPrinter.printPiecesNumber(getLeftB(), getLeftW());
     }
 
     int getLeftB() {

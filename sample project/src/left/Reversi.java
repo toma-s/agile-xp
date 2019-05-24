@@ -137,11 +137,10 @@ public class Reversi {
         try {
             for (int r = 0; r < size; r++) {
                 for (int c = 0; c < size; c++) {
-                    if (playground[r][c] == Player.B) {
-                        left.put(Player.B, left.get(Player.B) + 1);
-                    } else if (playground[r][c] == Player.W) {
-                        left.put(Player.W, left.get(Player.W) + 1);
+                    if (playground[r][c] == Player.NONE) {
+                        continue;
                     }
+                    left.put(playground[r][c], left.get(playground[r][c]) + 1);
                 }
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
@@ -156,7 +155,7 @@ public class Reversi {
             while (!ended) {
                 PlaygroundPrinter.printHints(playground, size, getPossibleMoves());
                 PlaygroundPrinter.printPlayground(playground, size);
-                System.out.format("Make a move. %s is on turn\n", onTurn);
+                PlaygroundPrinter.printMoveOnTurn(onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
                 execute(line);
@@ -178,7 +177,7 @@ public class Reversi {
     }
 
     private void printPiecesLeftCount() {
-        System.out.printf("Number of pieces: B: %s; W: %s\n\n", getLeftB(), getLeftW());
+        PlaygroundPrinter.printPiecesNumber(getLeftB(), getLeftW());
     }
 
     int getLeftB() {

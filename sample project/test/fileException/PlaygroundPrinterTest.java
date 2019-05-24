@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.nio.file.Path;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -266,5 +267,52 @@ public class PlaygroundPrinterTest {
                 "6 _ _ o _ _ _ _ _ " + System.lineSeparator() +
                 "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
         assertTrue(outContent.toString().contains(expected));
+    }
+
+
+    // printMoveOnTurn
+
+    @Test
+    public void testPrintMoveOnTurn8bInit() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
+        String expected = "Make a move. B is on turn" + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintMoveOnTurn8wInit() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game8wInit);
+        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
+        String expected = "Make a move. W is on turn" + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+
+    // printPiecesNumber
+
+    @Test
+    public void testPrintPiecesNumber8bInit() throws IncorrectGameConfigFileException {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printPiecesNumber(game.getLeftB(), game.getLeftW());
+        String expected = "Number of pieces: B: 2; W: 2" + System.lineSeparator() + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+
+    // IncorrectConfig
+
+    @Test
+    public void testPrintIncorrectConfig8bInit() {
+        Path gameFilePath = GameConfig.gameNoPieces;
+        Reversi rev;
+        try {
+            rev = new Reversi(gameFilePath);
+            rev.run();
+        } catch (IncorrectGameConfigFileException e) {
+            PlaygroundPrinter.printIncorrectConfig(e);
+        }
+        String expected = "Incorrect game config: Game configuration must contain 4 lines" + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
     }
 }

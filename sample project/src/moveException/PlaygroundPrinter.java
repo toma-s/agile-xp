@@ -63,4 +63,21 @@ class PlaygroundPrinter {
             System.out.println();
         }
     }
+
+    static void printMoveOnTurn(Player onTurn) {
+        System.out.format("Make a move. %s is on turn%n", onTurn);
+    }
+
+    static void printPiecesNumber(int leftB, int leftW) {
+        System.out.printf("Number of pieces: B: %s; W: %s%n%n", leftB, leftW);
+    }
+
+    static void printIncorrectConfig(IncorrectGameConfigFileException e) {
+        System.out.println("Incorrect game config: " + e.getMessage());
+    }
+
+    static void printNotPermittedMove(NotPermittedMoveException e) {
+        System.out.println(e.getMessage());
+        System.out.println("Try again");
+    }
 }
