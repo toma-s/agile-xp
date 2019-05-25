@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Exercise } from '../../shared/exercise/exercise/exercise.model';
 import { ExerciseType } from '../../shared/exercise/exercise-type/exercise-type.model';
 import { ExerciseTypeService } from '../../shared/exercise/exercise-type/exercise-type.service';
+import { BugsNumber } from '../../shared/exercise/bugs-number/bugs-number.model';
 
 @Component({
   selector: 'exercise-create',
@@ -35,14 +36,10 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
     exercise.index = this.route.snapshot.params['index'];
     exercise.lessonId = this.route.snapshot.params['lessonId'];
     return this.fb.group({
-      exercise: this.getGroupForExercise(exercise, this.getNewExerciseType()),
-      mode: 'create'
+      exercise: this.getGroupForExercise(exercise, this.types[0]),
+      mode: 'create',
+      bugsNumber: new BugsNumber()
     });
-  }
-
-  getNewExerciseType(): ExerciseType {
-    console.log(this.types);
-    return this.types[0];
   }
 
   getExerciseGroup(exerciseType: string) {

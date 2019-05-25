@@ -15,6 +15,7 @@ export class CreateIntroComponent implements OnInit {
   @ViewChild('typeSelect') typeSelect: MatSelect;
   form: FormGroup;
   types = new Array<ExerciseType>();
+  requireBugsNumber = ['blackbox', 'blackbox-file'];
 
   constructor(
     private exerciseTypeServise: ExerciseTypeService,
@@ -38,6 +39,11 @@ export class CreateIntroComponent implements OnInit {
 
   setDefaultSelected() {
     this.typeSelect.compareWith = (o1: ExerciseType, o2: ExerciseType) => o1 && o2 && o1.id === o2.id;
+  }
+
+  showBugsNumberField() {
+    const exerciseType = this.form.get('exercise').get('type').value;
+    return this.requireBugsNumber.includes(exerciseType.value);
   }
 
 }

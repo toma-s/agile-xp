@@ -15,6 +15,8 @@ import { PublicSource } from '../../shared/public/public-source/public-source.mo
 import { PrivateTest } from '../../shared/exercise/private-test/private-test.model';
 import { PrivateFile } from '../../shared/exercise/private-file/private-file.model';
 import { PublicFile } from '../../shared/public/public-file/public-file.model';
+import { BugsNumberService } from '../../shared/exercise/bugs-number/bugs-number.service';
+import { BugsNumber } from '../../shared/exercise/bugs-number/bugs-number.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,7 @@ export abstract class ExerciseSaverService {
 
   constructor(
     protected exerciseService: ExerciseService,
+    protected bugsNumberService: BugsNumberService,
     protected privateSourceService: PrivateSourceService,
     protected privateTestService: PrivateTestService,
     protected privateFileService: PrivateFileService,
@@ -79,12 +82,14 @@ export abstract class ExerciseSaverService {
         break;
       }
       case 'blackbox': {
+        await this.saveBugsNumber().then().catch(error => Promise.reject(error));
         await this.savePrivateSources().then().catch(error => Promise.reject(error));
         const publicTests: Array<PublicTest> = this.form.get('testControl').get('publicControl').get('tabContent').value;
         await this.savePublicTests(publicTests).then().catch(error => Promise.reject(error));
         break;
       }
       case 'blackbox-file': {
+        await this.saveBugsNumber().then().catch(error => Promise.reject(error));
         await this.savePrivateSources().then().catch(error => Promise.reject(error));
         const publicTests: Array<PublicTest> = this.form.get('testControl').get('publicControl').get('tabContent').value;
         await this.savePublicTests(publicTests).then().catch(error => Promise.reject(error));
@@ -96,6 +101,16 @@ export abstract class ExerciseSaverService {
         console.log('defaut: Solution type was not found');
       }
     }
+  }
+
+  saveBugsNumber(): Promise<{}> {
+    const bugsNumber = this.form.get('intro').get('bugsNumber').value;
+    return new Promise((resolve, reject) => {
+      this.bugsNumberService.saveBugsNumber(this.exercise.id, bugsNumber).subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
   }
 
   protected abstract savePrivateSources(): Promise<{}>;

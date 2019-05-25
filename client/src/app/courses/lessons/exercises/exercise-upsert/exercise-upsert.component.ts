@@ -132,6 +132,7 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   }
 
   setBlackboxValidators() {
+    this.setBugsNumberValidator();
     this.setContentValidators('sourceControl', 'privateControl');
     this.clearContentValidators('testControl', 'privateControl');
     this.setContentValidators('testControl', 'publicControl');
@@ -142,6 +143,7 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   }
 
   setTheoryValidators() {
+    this.clearBugsNumberValidators();
     this.clearContentValidators('sourceControl', 'privateControl');
     this.clearContentValidators('sourceControl', 'publicControl');
     this.clearContentValidators('testControl', 'privateControl');
@@ -160,6 +162,16 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   unsetFileValidators() {
     this.viewInput['private-files'] = false;
     this.viewInput['public-files'] = false;
+  }
+
+  setBugsNumberValidator() {
+    this.exerciseFormGroup.get('intro').get('bugsNumber').setValidators([Validators.required, Validators.min(1)]);
+    this.exerciseFormGroup.get('intro').get('bugsNumber').updateValueAndValidity();
+  }
+
+  clearBugsNumberValidators() {
+    this.exerciseFormGroup.get('intro').get('bugsNumber').clearValidators();
+    this.exerciseFormGroup.get('intro').get('bugsNumber').updateValueAndValidity();
   }
 
   setContentValidators(controlType: string, publicitypControl: string) {

@@ -5,8 +5,7 @@
     <h2><span class="capitalise">{{form.controls.mode.value}}</span> exercise</h2>
 
     <mat-form-field class="intro__field">
-      <input matInput placeholder="Title"
-        [formControl]="form.controls.exercise.controls.name" maxlength="35">
+      <input matInput placeholder="Title" [formControl]="form.controls.exercise.controls.name" maxlength="35">
     </mat-form-field>
 
     <mat-form-field class="intro__field">
@@ -17,6 +16,13 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <div *ngIf="showBugsNumberField()">
+      <mat-form-field class="intro__field">
+        <input type="number" matInput placeholder="Bugs number" [formControl]="form.controls.bugsNumber" 
+        [value]="form.controls.bugsNumber.value?.number">
+      </mat-form-field>
+    </div>
 
     <div>
       <h4>Description</h4>

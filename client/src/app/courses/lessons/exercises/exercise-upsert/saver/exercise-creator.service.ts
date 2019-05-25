@@ -16,6 +16,7 @@ import { PrivateFile } from '../../shared/exercise/private-file/private-file.mod
 import { ExerciseSaverService } from './exercise-saver.service';
 import { PublicFile } from '../../shared/public/public-file/public-file.model';
 import { PublicSource } from '../../shared/public/public-source/public-source.model';
+import { BugsNumberService } from '../../shared/exercise/bugs-number/bugs-number.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class ExerciseCreatorService extends ExerciseSaverService {
 
   constructor(
     protected exerciseService: ExerciseService,
+    protected bugsNumberService: BugsNumberService,
     protected privateSourceService: PrivateSourceService,
     protected privateTestService: PrivateTestService,
     protected privateFileService: PrivateFileService,
@@ -34,7 +36,7 @@ export class ExerciseCreatorService extends ExerciseSaverService {
     protected publicTestService: PublicTestService,
     protected publicFileService: PublicFileService
   ) {
-    super(exerciseService, privateSourceService, privateTestService, privateFileService,
+    super(exerciseService, bugsNumberService, privateSourceService, privateTestService, privateFileService,
       publicSourceService, publicTestService, publicFileService);
   }
 
