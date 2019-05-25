@@ -1,3 +1,5 @@
+package duplicity;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,6 +27,10 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 4;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -46,15 +52,6 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        if (gameConfig == null) {
-            System.out.println("Game configuration is null");
-            return;
-        }
-        int configFileLinesNumber = 4;
-        if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
-            return;
-        }
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
                 System.out.println("Incorrect size input");
@@ -76,25 +73,37 @@ public class Reversi {
                     playground[r][c] = Player.NONE;
                 }
             }
-            for (int i = 2; i < 4; i++) {
-                String[] pieces = gameConfig[i].split(",");
+            int[] piecesPositions = new int[] {2, 3};
+            for (int piecePosition : piecesPositions) {
+                String[] pieces = gameConfig[piecePosition].split(",");
                 for (String piece : pieces) {
-                    if (!piece.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
+                    if (!isPieceInputCorrect(piece)) {
                         System.out.println("Incorrect piece input");
                         return;
                     }
-                    String[] coordinates = piece.trim().split(" ");
-                    int r = Integer.parseInt(coordinates[0]);
-                    int c = Integer.parseInt(coordinates[1]);
+                    int[] coordinates = getCoordinates(piece);
+                    int r = coordinates[0];
+                    int c = coordinates[1];
                     if (r >= size || c >= size) {
                         return;
                     }
-                    playground[r][c] = players[i - 2];
+                    playground[r][c] = players[piecePosition - 2];
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             System.out.println("Game configuration is incorrect");
         }
+    }
+
+    boolean isPieceInputCorrect(String piece) {
+        return piece.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*");
+    }
+
+    int[] getCoordinates(String piece) {
+        String[] coordinates = piece.trim().split(" ");
+        int r = Integer.parseInt(coordinates[0]);
+        int c = Integer.parseInt(coordinates[1]);
+        return new int[] {r, c};
     }
 
     void initPiecesCount() {
@@ -118,19 +127,24 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
+                PlaygroundPrinter.printHints(playground, size, getPossibleMoves());
                 PlaygroundPrinter.printPlayground(playground, size);
-                System.out.format("Make a move. %s is on turn\n", onTurn);
+                PlaygroundPrinter.printMoveOnTurn(onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
-                if (!line.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
+                if (!isPieceInputCorrect(line)) {
                     System.out.println("Incorrect piece input");
                     return;
                 }
-                String[] coordinates = line.trim().split(" ");
-                int r = Integer.parseInt(coordinates[0]);
-                int c = Integer.parseInt(coordinates[1]);
-                move(r, c);
+                int[] coordinates = getCoordinates(line);
+                move(coordinates[0], coordinates[1]);
                 printPiecesLeftCount();
+                if (! areValidMoves()) {
+                    printPiecesLeftCount();
+                    ended = true;
+                    if (getLeftB() > getLeftW()) winner = Player.B;
+                    else if (getLeftW() > getLeftB()) winner = Player.W;
+                }
             }
             reader.close();
         } catch (IOException e) {
@@ -139,7 +153,7 @@ public class Reversi {
     }
 
     private void printPiecesLeftCount() {
-        System.out.printf("Number of pieces: B: %s; W: %s\n\n", getLeftB(), getLeftW());
+        PlaygroundPrinter.printPiecesNumber(getLeftB(), getLeftW());
     }
 
     int getLeftB() {
@@ -151,7 +165,7 @@ public class Reversi {
     }
 
     void move(int r, int c) {
-        if (!(r >= 0 && c >= 0 && r < size && c < size)) {
+        if (!isWithinPlayground(r, c)) {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
@@ -164,7 +178,7 @@ public class Reversi {
             return;
         }
 
-        ArrayList<List<Integer>> piecesToFlip = new ArrayList<>();
+        List<List<Integer>> piecesToFlip = new ArrayList<>();
         playground[r][c] = onTurn;
         Player opposite = Player.NONE;
         if (onTurn == Player.W) opposite = Player.B;
@@ -176,16 +190,16 @@ public class Reversi {
             int dirC = c;
             dirR += direction[0];
             dirC += direction[1];
-            if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
+            if (isWithinPlayground(dirR, dirC) && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
-            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+            if (!isWithinPlayground(dirR, dirC)) continue;
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];
-                if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
+                if (!isWithinPlayground(dirR, dirC)) break;
             }
-            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+            if (!isWithinPlayground(dirR, dirC)) continue;
             if (playground[dirR][dirC] != onTurn) continue;
             while (true) {
                 dirR -= direction[0];
@@ -226,20 +240,22 @@ public class Reversi {
 
         if (onTurn == Player.W) onTurn = Player.B;
         else if (onTurn == Player.B) onTurn = Player.W;
-        if (! areValidMoves()) {
-            printPiecesLeftCount();
-            ended = true;
-            if (getLeftB() > getLeftW()) winner = Player.B;
-            else if (getLeftW() > getLeftB()) winner = Player.W;
-        }
+    }
+
+    boolean isWithinPlayground(int r, int c) {
+        return r >= 0 && c >= 0 && r < size && c < size;
     }
 
     boolean areValidMoves() {
-        ArrayList<String> pieces = new ArrayList<>();
+        return !getPossibleMoves().isEmpty();
+    }
+
+    List<String> getPossibleMoves() {
+        List<String> pieces = new ArrayList<>();
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] != Player.NONE) continue;
-                ArrayList<List<Integer>> toFlip = new ArrayList<>();
+                List<List<Integer>> toFlip = new ArrayList<>();
                 playground[r][c] = onTurn;
                 Player opposite  = Player.NONE;
                 if (onTurn == Player.W) opposite = Player.B;
@@ -251,16 +267,16 @@ public class Reversi {
                     int dirC = c;
                     dirR += direction[0];
                     dirC += direction[1];
-                    if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
+                    if (isWithinPlayground(dirR, dirC) && playground[dirR][dirC] != opposite) continue;
                     dirR += direction[0];
                     dirC += direction[1];
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+                    if (!isWithinPlayground(dirR, dirC)) continue;
                     while (playground[dirR][dirC] == opposite) {
                         dirR += direction[0];
                         dirC += direction[1];
-                        if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
+                        if (!isWithinPlayground(dirR, dirC)) break;
                     }
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+                    if (!isWithinPlayground(dirR, dirC)) continue;
                     if (playground[dirR][dirC] != onTurn) continue;
                     while (true) {
                         dirR -= direction[0];
@@ -275,12 +291,10 @@ public class Reversi {
                     toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
                 }
                 if (toFlip.isEmpty()) continue;
-                String rString = String.valueOf(r);
-                String cString = String.valueOf(c);
-                pieces.add(rString + " " + cString);
+                pieces.add(String.format("%s %s", r,  c));
             }
         }
-        return !pieces.isEmpty();
+        return pieces;
     }
 
     public static void main(String[] args) {

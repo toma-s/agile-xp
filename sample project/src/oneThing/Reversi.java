@@ -27,6 +27,7 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            checkLength(gameConfig);
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -47,16 +48,14 @@ public class Reversi {
         return gameConfig;
     }
 
-    void initGame(String[] gameConfig) {
-        if (gameConfig == null) {
-            System.out.println("Game configuration is null");
-            return;
-        }
+    void checkLength(String[] gameConfig) throws Exception {
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
-            return;
+            throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
         }
+    }
+
+    void initGame(String[] gameConfig) {
         setSize(gameConfig[0]);
         setOnTurn(gameConfig[1]);
         createPlayground();
@@ -94,15 +93,16 @@ public class Reversi {
 
     void fillPlayground(String[] gameConfig) {
         try {
-            for (int i = 2; i < 4; i++) {
-                String[] pieces = gameConfig[i].split(",");
+            int[] piecesPositions = new int[] {2, 3};
+            for (int piecePosition : piecesPositions) {
+                String[] pieces = gameConfig[piecePosition].split(",");
                 for (String piece : pieces) {
                     if (!isPieceInputCorrect(piece)) {
                         System.out.println("Incorrect piece input");
                         return;
                     }
                     int[] coordinates = getCoordinates(piece);
-                    setPiece(coordinates, players[i - 2]);
+                    setPiece(coordinates, players[piecePosition - 2]);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
@@ -151,8 +151,9 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
+                PlaygroundPrinter.printHints(playground, size, getPossibleMoves());
                 PlaygroundPrinter.printPlayground(playground, size);
-                System.out.format("Make a move. %s is on turn\n", onTurn);
+                PlaygroundPrinter.printMoveOnTurn(onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
                 execute(line);
@@ -171,10 +172,13 @@ public class Reversi {
         }
         int[] coordinates = getCoordinates(line);
         move(coordinates[0], coordinates[1]);
+        if (! areValidMoves()) {
+            endGame();
+        }
     }
 
     private void printPiecesLeftCount() {
-        System.out.printf("Number of pieces: B: %s; W: %s\n\n", getLeftB(), getLeftW());
+        PlaygroundPrinter.printPiecesNumber(getLeftB(), getLeftW());
     }
 
     int getLeftB() {
@@ -199,7 +203,7 @@ public class Reversi {
             return;
         }
 
-        ArrayList<List<Integer>> piecesToFlip = getPiecesToFlip(r, c);
+        List<List<Integer>> piecesToFlip = getPiecesToFlip(r, c);
         if (piecesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
@@ -208,17 +212,14 @@ public class Reversi {
 
         if (onTurn == Player.W) onTurn = Player.B;
         else if (onTurn == Player.B) onTurn = Player.W;
-        if (! areValidMoves()) {
-            endGame();
-        }
     }
 
     boolean isWithinPlayground(int r, int c) {
         return r >= 0 && c >= 0 && r < size && c < size;
     }
 
-    ArrayList<List<Integer>> getPiecesToFlip(int r0, int c0) {
-        ArrayList<List<Integer>> toFlip = new ArrayList<>();
+    List<List<Integer>> getPiecesToFlip(int r0, int c0) {
+        List<List<Integer>> toFlip = new ArrayList<>();
         playground[r0][c0] = onTurn;
         Player opposite = Player.NONE;
         if (onTurn == Player.W) opposite = Player.B;
@@ -279,19 +280,16 @@ public class Reversi {
     }
 
     boolean areValidMoves() {
-        int movesNum = getPossibleMoves().size();
-        return movesNum != 0;
+        return !getPossibleMoves().isEmpty();
     }
 
-    ArrayList<String> getPossibleMoves() {
-        ArrayList<String> pieces = new ArrayList<>();
+    List<String> getPossibleMoves() {
+        List<String> pieces = new ArrayList<>();
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] != Player.NONE) continue;
                 if (getPiecesToFlip(r, c).isEmpty()) continue;
-                String rString = String.valueOf(r);
-                String cString = String.valueOf(c);
-                pieces.add(rString + " " + cString);
+                pieces.add(String.format("%s %s", r,  c));
             }
         }
         return pieces;

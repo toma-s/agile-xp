@@ -1,12 +1,80 @@
 package abstrLevel;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 
 public class ReadGameConfigTest {
 
     private Reversi rev = new Reversi();
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+
+    // checkGameConfig
+
+    @Test
+    public void testCheckGameConfig8bInit() throws Exception {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
+        game.checkLength(gameConfig);
+    }
+
+    @Test
+    public void testCheckGameConfigEmpty() throws Exception {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
+
+        expectedException.expect(Exception.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.checkLength(gameConfig);
+    }
+
+    @Test
+    public void testCheckGameConfigFiveLines() throws Exception {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameFiveLines);
+
+        expectedException.expect(Exception.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.checkLength(gameConfig);
+    }
+
+    @Test
+    public void testCheckGameConfigNoSize() throws Exception {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoSize);
+
+        expectedException.expect(Exception.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.checkLength(gameConfig);
+    }
+
+    @Test
+    public void testCheckGameConfigNoOnTurn() throws Exception {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoOnTurn);
+
+        expectedException.expect(Exception.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.checkLength(gameConfig);
+    }
+
+
+    // readGameConfig
+
+    @Test
+    public void testCheckGameConfigNoPieces() throws Exception {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoPieces);
+
+        expectedException.expect(Exception.class);
+        expectedException.expectMessage("Game configuration must contain 4 lines");
+        game.checkLength(gameConfig);
+    }
 
     @Test
     public void testReadGameConfig8bInit() {

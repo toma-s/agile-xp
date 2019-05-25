@@ -1,3 +1,5 @@
+package fixed;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -5,10 +7,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MoveTest {
+
+    // getPossibleMoves
+
+    @Test
+    public void testGetPossibleMoves8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        List<String> pieces = game.getPossibleMoves();
+
+        assertEquals("valid length", 4, pieces.size());
+        assertEquals("valid moves", "2 3", pieces.get(0));
+        assertEquals("valid moves", "3 2", pieces.get(1));
+        assertEquals("valid moves", "4 5", pieces.get(2));
+        assertEquals("valid moves", "5 4", pieces.get(3));
+    }
+
+    @Test
+    public void testGetPossibleMovesEmpty() {
+        Reversi game = TestUtils.getRevWithPlayground();
+        List<String> pieces = game.getPossibleMoves();
+
+        assertEquals("valid length", 0, pieces.size());
+    }
 
 
     // areValidMoves
@@ -191,7 +215,6 @@ public class MoveTest {
         Assert.assertFalse("if the are valid moves", game.areValidMoves());
         Assert.assertEquals("W left", 39, game.getLeftW());
         Assert.assertEquals("B left", 25, game.getLeftB());
-        Assert.assertEquals("winner", 0, game.winner);
     }
 
     @Test
@@ -262,6 +285,5 @@ public class MoveTest {
         Assert.assertFalse("if the are valid moves", game.areValidMoves());
         Assert.assertEquals("W left", 28, game.getLeftW());
         Assert.assertEquals("B left", 36, game.getLeftB());
-        Assert.assertEquals("winner", 1, game.winner);
     }
 }

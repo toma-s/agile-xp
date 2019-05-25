@@ -299,26 +299,6 @@ public class InitGameTest {
     }
 
     @Test
-    public void testInitGameEmpty() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[]{};
-        Reversi game = rev;
-
-        expectedException.expect(IncorrectGameConfigFileException.class);
-        expectedException.expectMessage("Game configuration must contain 4 lines");
-        game.initGame(gameConfig);
-    }
-
-    @Test
-    public void testInitGameFiveLines() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
-        Reversi game = rev;
-
-        expectedException.expect(IncorrectGameConfigFileException.class);
-        expectedException.expectMessage("Game configuration must contain 4 lines");
-        game.initGame(gameConfig);
-    }
-
-    @Test
     public void testInitGameAlpha() throws IncorrectGameConfigFileException {
         String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
@@ -326,45 +306,6 @@ public class InitGameTest {
         expectedException.expect(IncorrectGameConfigFileException.class);
         expectedException.expectMessage("Incorrect piece input");
         game.initGame(gameConfig);
-    }
-
-    @Test
-    public void testInitGameNoSize() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[]{"B", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-
-        expectedException.expect(IncorrectGameConfigFileException.class);
-        expectedException.expectMessage("Game configuration must contain 4 lines");
-        game.initGame(gameConfig);
-    }
-
-    @Test
-    public void testInitGameNoOnTurn() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[]{"8", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-
-        expectedException.expect(IncorrectGameConfigFileException.class);
-        expectedException.expectMessage("Game configuration must contain 4 lines");
-        game.initGame(gameConfig);
-    }
-
-    @Test
-    public void testInitGameNoPieces() throws IncorrectGameConfigFileException {
-        String[] gameConfig = new String[]{"8", "B"};
-        Reversi game = rev;
-
-        expectedException.expect(IncorrectGameConfigFileException.class);
-        expectedException.expectMessage("Game configuration must contain 4 lines");
-        game.initGame(gameConfig);
-    }
-
-    @Test
-    public void testInitGameNull() throws IncorrectGameConfigFileException {
-        Reversi game = rev;
-
-        expectedException.expect(IncorrectGameConfigFileException.class);
-        expectedException.expectMessage("Game configuration is null");
-        game.initGame(null);
     }
 
     // initPiecesCount

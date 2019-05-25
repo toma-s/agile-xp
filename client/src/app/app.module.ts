@@ -22,8 +22,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { QuillModule } from 'ngx-quill';
 
+
 import { CoursesModule } from './courses/courses.module';
 import { NotFoundComponent } from './not-found/not-found.component';
+
 
 const quillConfig = {
   modules: {

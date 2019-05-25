@@ -27,6 +27,7 @@ public class Reversi {
     Reversi(Path gameFilePath) throws IncorrectGameConfigFileException {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            checkLength(gameConfig);
             initGame(gameConfig);
             initPiecesCount();
         } catch (IncorrectGameConfigFileException e) {
@@ -47,14 +48,14 @@ public class Reversi {
         return gameConfig;
     }
 
-    void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
-        if (gameConfig == null) {
-            throw new IncorrectGameConfigFileException("Game configuration is null");
-        }
+    void checkLength(String[] gameConfig) throws IncorrectGameConfigFileException {
         int configFileLinesNumber = 4;
         if (gameConfig.length != configFileLinesNumber) {
             throw new IncorrectGameConfigFileException("Game configuration must contain " + configFileLinesNumber + " lines");
         }
+    }
+
+    void initGame(String[] gameConfig) throws IncorrectGameConfigFileException {
         setSize(gameConfig[0]);
         setOnTurn(gameConfig[1]);
         createPlayground();
@@ -94,14 +95,15 @@ public class Reversi {
 
     void fillPlayground(String[] gameConfig) throws IncorrectGameConfigFileException {
         try {
-            for (int i = 2; i < 4; i++) {
-                String[] pieces = gameConfig[i].split(",");
+            int[] piecesPositions = new int[] {2, 3};
+            for (int piecePosition : piecesPositions) {
+                String[] pieces = gameConfig[piecePosition].split(",");
                 for (String piece : pieces) {
                     if (!isPieceInputCorrect(piece)) {
                         throw new IncorrectGameConfigFileException("Incorrect piece input");
                     }
                     int[] coordinates = getCoordinates(piece);
-                    setPiece(coordinates, players[i - 2]);
+                    setPiece(coordinates, players[piecePosition - 2]);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
@@ -133,11 +135,10 @@ public class Reversi {
         try {
             for (int r = 0; r < size; r++) {
                 for (int c = 0; c < size; c++) {
-                    if (playground[r][c] == Player.B) {
-                        left.put(Player.B, left.get(Player.B) + 1);
-                    } else if (playground[r][c] == Player.W) {
-                        left.put(Player.W, left.get(Player.W) + 1);
+                    if (playground[r][c] == Player.NONE) {
+                        continue;
                     }
+                    left.put(playground[r][c], left.get(playground[r][c]) + 1);
                 }
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
@@ -145,13 +146,14 @@ public class Reversi {
         }
     }
 
-    private void run() throws IncorrectGameConfigFileException {
+    void run() throws IncorrectGameConfigFileException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
             String line;
             while (!ended) {
+                PlaygroundPrinter.printHints(playground, size, getPossibleMoves());
                 PlaygroundPrinter.printPlayground(playground, size);
-                System.out.format("Make a move. %s is on turn\n", onTurn);
+                PlaygroundPrinter.printMoveOnTurn(onTurn);
                 if (winner != Player.NONE) break;
                 if ((line = reader.readLine()) == null) break;
                 execute(line);
@@ -170,10 +172,13 @@ public class Reversi {
         }
         int[] coordinates = getCoordinates(line);
         move(coordinates[0], coordinates[1]);
+        if (! areValidMoves()) {
+            endGame();
+        }
     }
 
     private void printPiecesLeftCount() {
-        System.out.printf("Number of pieces: B: %s; W: %s\n\n", getLeftB(), getLeftW());
+        PlaygroundPrinter.printPiecesNumber(getLeftB(), getLeftW());
     }
 
     int getLeftB() {
@@ -198,7 +203,7 @@ public class Reversi {
             return;
         }
 
-        ArrayList<List<Integer>> piecesToFlip = getPiecesToFlip(r, c);
+        List<List<Integer>> piecesToFlip = getPiecesToFlip(r, c);
         if (piecesToFlip.isEmpty()) {
             System.out.println("Move is not permitted");
             return;
@@ -206,9 +211,6 @@ public class Reversi {
         flipPieces(piecesToFlip);
 
         swapPlayerOnTurn();
-        if (! areValidMoves()) {
-            endGame();
-        }
     }
 
     boolean isWithinPlayground(int r, int c) {
@@ -223,8 +225,8 @@ public class Reversi {
         return winner != Player.NONE;
     }
 
-    ArrayList<List<Integer>> getPiecesToFlip(int r0, int c0) {
-        ArrayList<List<Integer>> toFlip = new ArrayList<>();
+    List<List<Integer>> getPiecesToFlip(int r0, int c0) {
+        List<List<Integer>> toFlip = new ArrayList<>();
         playground[r0][c0] = onTurn;
         Player opposite = Player.NONE;
         if (onTurn == Player.W) opposite = Player.B;
@@ -285,15 +287,13 @@ public class Reversi {
         return movesNum != 0;
     }
 
-    ArrayList<String> getPossibleMoves() {
-        ArrayList<String> pieces = new ArrayList<>();
+    List<String> getPossibleMoves() {
+        List<String> pieces = new ArrayList<>();
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
                 if (playground[r][c] != Player.NONE) continue;
                 if (getPiecesToFlip(r, c).isEmpty()) continue;
-                String rString = String.valueOf(r);
-                String cString = String.valueOf(c);
-                pieces.add(rString + " " + cString);
+                pieces.add(String.format("%s %s", r,  c));
             }
         }
         return pieces;
@@ -313,7 +313,7 @@ public class Reversi {
             rev = new Reversi(gameFilePath);
             rev.run();
         } catch (IncorrectGameConfigFileException e) {
-            System.out.println(e.getMessage());
+            PlaygroundPrinter.printIncorrectConfig(e);
         }
 
     }

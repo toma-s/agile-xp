@@ -1,3 +1,5 @@
+package fixed;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -87,6 +89,36 @@ public class PlaygroundPrinterTest {
                         "5 B B W W B W W B " + System.lineSeparator() +
                         "6 B B B B B B W B " + System.lineSeparator() +
                         "7 W W W W W W W W " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+
+    // printMoveOnTurn
+
+    @Test
+    public void testPrintMoveOnTurn8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
+        String expected = "Make a move. 1 is on turn" + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintMoveOnTurn8wInit() {
+        Reversi game = new Reversi(GameConfig.game8wInit);
+        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
+        String expected = "Make a move. 0 is on turn" + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+
+    // printPiecesNumber
+
+    @Test
+    public void testPrintPiecesNumber8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printPiecesNumber(game.getLeftB(), game.getLeftW());
+        String expected = "Number of pieces: B: 2; W: 2" + System.lineSeparator() + System.lineSeparator();
         assertEquals(expected, outContent.toString());
     }
 }

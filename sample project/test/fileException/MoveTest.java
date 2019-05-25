@@ -112,7 +112,7 @@ public class MoveTest {
     @Test
     public void testGetPiecesToFlipInit00() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        ArrayList<List<Integer>> pieces = game.getPiecesToFlip(0, 0);
+        List<List<Integer>> pieces = game.getPiecesToFlip(0, 0);
 
         assertEquals("pieces to flip on onit - (0, 0)", 0, pieces.size());
     }
@@ -137,7 +137,7 @@ public class MoveTest {
     @Test
     public void testGetPossibleMoves8bInit() throws IncorrectGameConfigFileException {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        ArrayList<String> pieces = game.getPossibleMoves();
+        List<String> pieces = game.getPossibleMoves();
 
         assertEquals("valid length", 4, pieces.size());
         assertEquals("valid moves", "2 3", pieces.get(0));
@@ -149,7 +149,7 @@ public class MoveTest {
     @Test
     public void testGetPossibleMovesEmpty() {
         Reversi game = TestUtils.getRevWithPlayground();
-        ArrayList<String> pieces = game.getPossibleMoves();
+        List<String> pieces = game.getPossibleMoves();
 
         assertEquals("valid length", 0, pieces.size());
     }
@@ -366,7 +366,6 @@ public class MoveTest {
         Assert.assertFalse("if the are valid moves", game.areValidMoves());
         Assert.assertEquals("W left", 39, game.getLeftW());
         Assert.assertEquals("B left", 25, game.getLeftB());
-        Assert.assertEquals("winner", Player.W, game.winner);
     }
 
     @Test
@@ -437,6 +436,5 @@ public class MoveTest {
         Assert.assertFalse("if the are valid moves", game.areValidMoves());
         Assert.assertEquals("W left", 28, game.getLeftW());
         Assert.assertEquals("B left", 36, game.getLeftB());
-        Assert.assertEquals("winner", Player.B, game.winner);
     }
 }

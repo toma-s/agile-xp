@@ -290,65 +290,12 @@ public class InitGameTest {
     }
 
     @Test
-    public void testInitGameEmpty() {
-        String[] gameConfig = new String[]{};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameFiveLines() {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
     public void testInitGameAlpha() {
         String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
         Assert.assertArrayEquals(TestUtils.getEmptyPlayground(), game.playground);
-    }
-
-    @Test
-    public void testInitGameNoSize() {
-        String[] gameConfig = new String[]{"B", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoOnTurn() {
-        String[] gameConfig = new String[]{"8", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoPieces() {
-        String[] gameConfig = new String[]{"8", "B"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNull() {
-        Reversi game = rev;
-        game.initGame(null);
-
-        Assert.assertArrayEquals(null, game.playground);
     }
 
 
@@ -437,71 +384,12 @@ public class InitGameTest {
     }
 
     @Test
-    public void testEmpty() {
-        Reversi game = new Reversi(GameConfig.gameEmpty);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
     public void testNotExisting() {
         Reversi game = new Reversi(GameConfig.gameNotExisting);
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testFiveLines() {
-        Reversi game = new Reversi(GameConfig.gameFiveLines);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testAlpha() {
-        Reversi game = new Reversi(GameConfig.gameAlpha);
-
-        assertArrayEquals(TestUtils.getEmptyPlayground(), game.playground);
-        assertFalse(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testNoSize() {
-        Reversi game = new Reversi(GameConfig.gameNoSize);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testNoOnTurn() {
-        Reversi game = new Reversi(GameConfig.gameNoOnTurn);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testNoPieces() {
-        Reversi game = new Reversi(GameConfig.gameNoPieces);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 }
