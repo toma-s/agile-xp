@@ -41,7 +41,7 @@ const quillConfig = {
       [{ 'font': [] }],
       [{ 'align': [] }],
       ['clean'],                                         // remove formatting button
-      []                         // link and image, video
+      ['link', 'image', 'video']                         // link and image, video
     ]
   }
 };
