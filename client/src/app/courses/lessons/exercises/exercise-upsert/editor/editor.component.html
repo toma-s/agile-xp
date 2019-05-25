@@ -8,9 +8,11 @@
             <button mat-icon-button type="button">
               <mat-icon (click)="editFilename(test.controls.filename)">edit</mat-icon>
             </button>
-            <button mat-icon-button type="button">
-              <mat-icon (click)="remove(i)">clear</mat-icon>
-            </button>
+            <div *ngIf="form.controls.tabContent.controls.length > 1">
+              <button mat-icon-button type="button">
+                <mat-icon (click)="remove(i)">clear</mat-icon>
+              </button>
+            </div>
           </ng-template>
           <ng-template matTabContent>
             <div class="env__container">
