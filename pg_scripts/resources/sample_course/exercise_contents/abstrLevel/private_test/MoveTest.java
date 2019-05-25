@@ -364,7 +364,6 @@ public class MoveTest {
         Assert.assertFalse("if the are valid moves", game.areValidMoves());
         Assert.assertEquals("W left", 39, game.getLeftW());
         Assert.assertEquals("B left", 25, game.getLeftB());
-        Assert.assertEquals("winner", Player.W, game.winner);
     }
 
     @Test
@@ -435,6 +434,5 @@ public class MoveTest {
         Assert.assertFalse("if the are valid moves", game.areValidMoves());
         Assert.assertEquals("W left", 28, game.getLeftW());
         Assert.assertEquals("B left", 36, game.getLeftB());
-        Assert.assertEquals("winner", Player.B, game.winner);
     }
 }

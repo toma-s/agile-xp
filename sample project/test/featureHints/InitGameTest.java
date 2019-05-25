@@ -1,3 +1,5 @@
+package featureHints;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -113,14 +115,6 @@ public class InitGameTest {
         String[] gameConfig = new String[]{"8", "B"};
         Reversi game = rev;
         game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNull() {
-        Reversi game = rev;
-        game.initGame(null);
 
         Assert.assertArrayEquals(null, game.playground);
     }

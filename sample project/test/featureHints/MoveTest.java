@@ -1,4 +1,4 @@
-package feature;
+package featureHints;
 
 import org.junit.Assert;
 import org.junit.Test;

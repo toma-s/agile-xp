@@ -1,4 +1,4 @@
-package feature;
+package featureHints;
 
 import java.util.List;
 

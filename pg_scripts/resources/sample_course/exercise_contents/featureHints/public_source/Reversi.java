@@ -1,5 +1,3 @@
-package feature;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -117,7 +115,6 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
-                PlaygroundPrinter.printHints(playground, size, getPossibleMoves());
                 PlaygroundPrinter.printPlayground(playground, size);
                 PlaygroundPrinter.printMoveOnTurn(onTurn);
                 if (winner != -1) break;
@@ -170,7 +167,7 @@ public class Reversi {
             return;
         }
 
-        List<List<Integer>> piecesToFlip = new ArrayList<>();
+        ArrayList<List<Integer>> piecesToFlip = new ArrayList<>();
         playground[r][c] = onTurn;
         int opposite = -1;
         if (onTurn == 0) opposite = 1;

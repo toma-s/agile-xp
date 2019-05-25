@@ -10,6 +10,52 @@ import static org.junit.Assert.*;
 public class MoveTest {
 
 
+    // isWithinPlayground
+
+    @Test
+    public void testIsWithinPlayground00() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.size = 8;
+
+        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground77() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
+    }
+
+    @Test
+    public void testIsWithinPlaygroundNeg10() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground0Neg1() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
+    }
+
+    @Test
+    public void testIsWithinPlayground80() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground08() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
+    }
+
+
     // getPiecesToFlip
 
     @Test
@@ -30,7 +76,7 @@ public class MoveTest {
     @Test
     public void testGetPiecesToFlipInit00() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        ArrayList<List<Integer>> pieces = game.getPiecesToFlip(0, 0);
+        List<List<Integer>> pieces = game.getPiecesToFlip(0, 0);
 
         assertEquals("pieces to flip on onit - (0, 0)", 0, pieces.size());
     }
@@ -55,7 +101,7 @@ public class MoveTest {
     @Test
     public void testGetPossibleMoves8bInit() {
         Reversi game = new Reversi(GameConfig.game8bInit);
-        ArrayList<String> pieces = game.getPossibleMoves();
+        List<String> pieces = game.getPossibleMoves();
 
         assertEquals("valid length", 4, pieces.size());
         assertEquals("valid moves", "2 3", pieces.get(0));
@@ -67,7 +113,7 @@ public class MoveTest {
     @Test
     public void testGetPossibleMovesEmpty() {
         Reversi game = TestUtils.getRevWithPlayground();
-        ArrayList<String> pieces = game.getPossibleMoves();
+        List<String> pieces = game.getPossibleMoves();
 
         assertEquals("valid length", 0, pieces.size());
     }
@@ -264,7 +310,6 @@ public class MoveTest {
         Assert.assertFalse("if the are valid moves", game.areValidMoves());
         Assert.assertEquals("W left", 39, game.getLeftW());
         Assert.assertEquals("B left", 25, game.getLeftB());
-        Assert.assertEquals("winner", Player.W, game.winner);
     }
 
     @Test
@@ -335,6 +380,5 @@ public class MoveTest {
         Assert.assertFalse("if the are valid moves", game.areValidMoves());
         Assert.assertEquals("W left", 28, game.getLeftW());
         Assert.assertEquals("B left", 36, game.getLeftB());
-        Assert.assertEquals("winner", Player.B, game.winner);
     }
 }

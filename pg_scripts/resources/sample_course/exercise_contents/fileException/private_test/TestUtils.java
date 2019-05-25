@@ -1,5 +1,6 @@
 import java.util.List;
 
+
 class TestUtils {
 
     static Player getPiece(Reversi game, int r0, int c0) {

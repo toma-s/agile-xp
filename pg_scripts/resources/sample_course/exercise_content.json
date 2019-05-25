@@ -67,7 +67,49 @@
     "file": "game_config_8"
   },
   {
-    "directory": "feature",
+    "directory": "featureHints",
+    "source_test": [
+      {
+        "exercise_content_type": "'public_source'",
+        "filename": "'Reversi.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
+        "filename": "'PlaygroundPrinter.java'"
+      },
+      {
+        "exercise_content_type": "'public_source'",
+        "filename": "'GameConfig.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'ReadGameConfigTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'InitGameTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'PlaygroundPrinterTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'MoveTest.java'"
+      },
+      {
+        "exercise_content_type": "'private_test'",
+        "filename": "'TestUtils.java'"
+      },
+      {
+        "exercise_content_type": "'public_test'",
+        "filename": "'ReversiTest.java'"
+      }
+    ],
+    "file": "game_config"
+  },
+  {
+    "directory": "featureSize",
     "source_test": [
       {
         "exercise_content_type": "'public_source'",

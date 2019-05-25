@@ -220,6 +220,10 @@ public class Reversi {
     }
 
     boolean areValidMoves() {
+        return !getPossibleMoves().isEmpty();
+    }
+
+    List<String> getPossibleMoves() {
         List<String> pieces = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
@@ -263,14 +267,13 @@ public class Reversi {
                 pieces.add(String.format("%s %s", r,  c));
             }
         }
-        return !pieces.isEmpty();
+        return pieces;
     }
 
     public static void main(String[] args) {
         Path gameFilePath = GameConfig.game8bInit;
         Reversi rev = new Reversi(gameFilePath);
         rev.run();
-
     }
 
 }

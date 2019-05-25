@@ -1,4 +1,4 @@
-package feature;
+package featureHints;
 
 import org.junit.After;
 import org.junit.Before;
