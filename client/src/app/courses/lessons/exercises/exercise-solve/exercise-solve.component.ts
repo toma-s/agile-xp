@@ -14,6 +14,8 @@ import { SolutionFile } from '../shared/solution/solution-file/solution-file.mod
 import { Title } from '@angular/platform-browser';
 import { SolutionEstimation } from '../shared/solution/solution-estimation/solution-estimation.model';
 import { SolutionEstimationService } from '../shared/solution/solution-estimation/solution-estimation.service';
+import { Lesson } from '../../shared/lesson.model';
+import { LessonService } from '../../shared/lesson.service';
 
 @Component({
   selector: 'exercise-solve',
@@ -23,6 +25,7 @@ import { SolutionEstimationService } from '../shared/solution/solution-estimatio
 export class ExerciseSolveComponent implements OnInit {
 
   exercise: Exercise;
+  lesson: Lesson;
   exerciseType: ExerciseType;
   solutionFormGroup: FormGroup;
   solutionSources: Array<SolutionSource> = new Array<SolutionSource>();
@@ -34,6 +37,7 @@ export class ExerciseSolveComponent implements OnInit {
     private titleService: Title,
     private route: ActivatedRoute,
     private exerciseService: ExerciseService,
+    private lessonService: LessonService,
     private publicSourceService: PublicSourceService,
     private publicTestService: PublicTestService,
     private publicFileService: PublicFileService,
@@ -49,6 +53,7 @@ export class ExerciseSolveComponent implements OnInit {
   async reload() {
     this.resetFormGroup();
     this.exercise = await this.getExercise();
+    this.lesson = await this.getLesson();
     this.estimation = await this.getInitEstimation();
     console.log(this.estimation);
     this.setTitle();
@@ -65,6 +70,17 @@ export class ExerciseSolveComponent implements OnInit {
     return new Promise<Exercise>((resolve, reject) => {
       this.route.params.subscribe(params =>
         this.exerciseService.getExerciseById(params['exerciseId']).subscribe(
+          data => resolve(data),
+          error => reject(error)
+        )
+      );
+    });
+  }
+
+  getLesson(): Promise<Lesson> {
+    return new Promise<Lesson>((resolve, reject) => {
+      this.route.params.subscribe(params =>
+        this.lessonService.getLessonById(params['lessonId']).subscribe(
           data => resolve(data),
           error => reject(error)
         )
@@ -169,6 +185,7 @@ export class ExerciseSolveComponent implements OnInit {
         exerciseName: [this.exercise.name],
         exerciseDescription: [this.exercise.description],
         exerciseType: [this.exerciseType.value],
+        exerciseLessonName: [this.lesson.name],
         solved: [this.estimation.solved],
         value: [`${this.estimation.value}%`]
       })

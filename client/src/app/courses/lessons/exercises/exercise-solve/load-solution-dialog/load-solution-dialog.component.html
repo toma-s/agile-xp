@@ -12,8 +12,8 @@
       </ng-template>
     </mat-form-field>
 
-    <button mat-button [mat-dialog-close]="chosen">Done</button>
-    <button mat-button (click)="onCloseClick()">Cancel</button>
+    <button mat-raised-button color="primary" type="button" [mat-dialog-close]="chosen" class="button">Done</button>
+    <button mat-raised-button color="primary" type="button" (click)="onCloseClick()" class="button">Cancel</button>
   </div>
 
   <mat-accordion>
@@ -23,7 +23,7 @@
         <mat-panel-title class="solution__title">
           <p>{{ solution.created | date:'MM.d.y HH:mm' }}</p>
         </mat-panel-title>
-        <mat-panel-description class="solution__dscription">
+        <mat-panel-description class="solution__description">
           <p *ngIf="solution.solved; then isSolved; else notSolved"></p>
           <ng-template #isSolved>
             <p class="solution__solved--true">Solved</p>
@@ -37,9 +37,11 @@
       </mat-expansion-panel-header>
 
       <mat-nav-list *ngIf="currentContent">
-        <mat-list-item *ngFor="let item of currentContent[i]" (click)="choose(item)">
-          <p class="content__filename">{{ (item.filename.length > 20)? (item.filename | slice:0:20) + '...':(item.filename) }}</p>
-          <p class="content__content">{{ (item.content.length > 250)? (item.content | slice:0:250) + '...':(item.content) }}</p>
+        <mat-list-item *ngFor="let item of currentContent[i]" (click)="choose(item)" class="item">
+          <!-- <p class="content__filename">{{ (item.filename.length > 20)? (item.filename | slice:0:20) + '...':(item.filename) }}</p> -->
+          <p class="content__filename">{{ item.filename }}</p>
+          <!-- <p class="content__content">{{ (item.content.length > 250)? (item.content | slice:0:250) + '...':(item.content) }}</p> -->
+          <pre class="content__content">{{ item.content }}</pre>
         </mat-list-item>
       </mat-nav-list>
 
@@ -47,7 +49,7 @@
   </mat-accordion>
 
   <div class="paginator">
-    <button class="paginator__button" mat-button (click)="loadMore()">Load more</button>
+    <button mat-raised-button color="primary" type="button" class="paginator__button" (click)="loadMore()">Load more</button>
 
     <div class="paginator__element">
       <mat-paginator (page)="pageEvent = pageChangeEvent($event)" [pageSize]="pageSize" [length]="length">

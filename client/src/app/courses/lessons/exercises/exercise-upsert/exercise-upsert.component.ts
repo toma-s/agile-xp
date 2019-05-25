@@ -66,12 +66,12 @@ export abstract class ExerciseUpsertComponent implements OnInit {
 
   protected abstract async getIntroGroup();
 
-  getGroupForExercise(exercise: Exercise, exerciseType: ExerciseType) {
+  getGroupForExercise(exercise: Exercise, exerciseTypeGroup: any) {
     return this.fb.group({
       id: exercise.id,
       name: exercise.name,
       description: exercise.description,
-      type: exerciseType,
+      type: exerciseTypeGroup,
       lessonId: exercise.lessonId,
       created: exercise.created,
       index: exercise.index

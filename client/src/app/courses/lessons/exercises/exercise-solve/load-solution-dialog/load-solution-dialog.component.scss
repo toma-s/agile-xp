@@ -1,11 +1,17 @@
 @import "src/variables.scss";
 
+.button {
+  margin: 0 10px;
+}
+
 .solution {
+  padding: 8px 12px;
+
   .solution__title {
     width: 15%;
   }
 
-  .solution__dscription {
+  .solution__description {
     width: 85%;
   }
 
@@ -21,12 +27,25 @@
 
 }
 
+.item {
+  height: 220px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: 20px 0;
+  background: $grey-light;
+  border-radius: 6px;
+  padding: 8px;
+}
+
 .content__filename {
   width: 25%;
+  word-wrap: break-word;
 }
 
 .content__content {
   width: 75%;
+  height: 100%;
+  white-space: pre-wrap;
 }
 
 .paginator {

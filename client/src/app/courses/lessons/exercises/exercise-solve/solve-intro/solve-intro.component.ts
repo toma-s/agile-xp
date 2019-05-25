@@ -13,6 +13,7 @@ export class SolveIntroComponent implements OnInit {
   @Input() solutionFormGroup: FormGroup;
   exerciseName: string;
   exerciseDescription: string;
+  lessonName: string;
   html;
 
   constructor(
@@ -28,6 +29,7 @@ export class SolveIntroComponent implements OnInit {
   getValues() {
     this.exerciseName = this.solutionFormGroup.get('intro').get('exerciseName').value;
     this.exerciseDescription = this.solutionFormGroup.get('intro').get('exerciseDescription').value;
+    this.lessonName = this.solutionFormGroup.get('intro').get('exerciseLessonName').value;
   }
 
   sanitize() {
