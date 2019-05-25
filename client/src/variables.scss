@@ -107,6 +107,7 @@ $green: mat-palette($mat-xp-green);
 $theme: mat-light-theme($primary, $accent);
 
 $grey-light: mat-color(mat-palette($mat-grey), lighter);
+$grey-mid-light: mat-color(mat-palette($mat-grey), A400);
 $grey-mid: mat-color(mat-palette($mat-grey), default);
 $grey-dark: mat-color(mat-palette($mat-grey), darker);
 
