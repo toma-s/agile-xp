@@ -35,7 +35,7 @@
     <div>
       <h4>Description</h4>
       <quill-editor [formControl]="exerciseFormGroup.controls.intro.controls.exercise.controls.description"
-        [style]="{height: '500px'}">
+        [style]="{height: '500px'}" [sanitize]="true" class="editor">
       </quill-editor>
     </div>
 

@@ -1,6 +1,13 @@
 .card {
   padding: 20px;
 
+  .editor {
+    .ql-font-monospace {
+      color: aqua;
+      font-family: monospace;
+    }
+  }
+
   .capitalise {
     text-transform: capitalize;
   }
@@ -14,3 +21,5 @@
   }
 
 }
+
+
