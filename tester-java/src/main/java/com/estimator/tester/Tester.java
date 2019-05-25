@@ -1,6 +1,7 @@
 package com.estimator.tester;
 
 import com.estimator.tester.exception.TestFailedException;
+import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
@@ -12,12 +13,7 @@ import java.net.URLClassLoader;
 
 public class Tester {
 
-    public static TestResult test(File outDir, String testFilename) throws TestFailedException {
-        Class<?> junitTest = getJunit(outDir, testFilename);
-        return runTests(junitTest);
-    }
-
-    private static Class<?> getJunit(File outDir, String testFilename) throws TestFailedException {
+    public static Class<?> getJunit(File outDir, String testFilename) throws TestFailedException {
         URL outUrl;
         try {
             outUrl = outDir.toURI().toURL();
@@ -44,7 +40,7 @@ public class Tester {
         return junitTest;
     }
 
-    private static TestResult runTests(Class<?> junitTest) {
+    public static TestResult runTests(Class<?> junitTest) {
         JUnitCore junit = new JUnitCore();
         Result result = junit.run(junitTest);
         TestResult testResult = new TestResult(result);
@@ -53,11 +49,11 @@ public class Tester {
         return testResult;
     }
 
-    private static int getTestsNumber(Class<?> junitTest) {
+    public static int getTestsNumber(Class<?> junitTest) {
         int testsNumber = 0;
         Method[] methods = junitTest.getMethods();
         for (Method method : methods) {
-            if (method.getName().contains("test")) {
+            if (method.isAnnotationPresent(Test.class)) {
                 testsNumber++;
             }
         }

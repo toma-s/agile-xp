@@ -8,8 +8,10 @@ import com.estimator.tester.Tester;
 import com.estimator.tester.exception.TestFailedException;
 import com.estimator.utils.FilesUtils;
 import com.estimator.utils.exception.FilesUtilsException;
+import org.junit.Test;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -70,7 +72,12 @@ public abstract class Estimator {
             List<TestResult> testsResults = new ArrayList<>();
             File outPath = Paths.get("out").toFile();
             for (String testsFilename : testsFilenames) {
-                testsResults.add(Tester.test(outPath, testsFilename));
+                Class<?> junitTest = Tester.getJunit(outPath, testsFilename);
+                if (Tester.getTestsNumber(junitTest) == 0) {
+                    continue;
+                }
+                TestResult testResult = Tester.runTests(junitTest);
+                testsResults.add(testResult);
             }
             return testsResults;
         } catch (TestFailedException e) {

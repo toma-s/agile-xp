@@ -75,4 +75,17 @@ public class Estimation {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
+    @Override
+    public String toString() {
+        return "Estimation{" +
+                "compiled=" + compiled +
+                ", compilationResult='" + compilationResult + '\'' +
+                ", tested=" + tested +
+                ", testsResult='" + testsResult + '\'' +
+                ", solved=" + solved +
+                ", value=" + value +
+                ", errorMessage='" + errorMessage + '\'' +
+                '}';
+    }
 }
