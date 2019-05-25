@@ -3,7 +3,7 @@
   <div *ngIf="shown; then hideElement; else showElement"></div>
 
   <ng-template #showElement>
-    <button mat-button color="accent" class="toggle__button" (click)="show()">Show instructions</button>
+    <button mat-button color="primary" class="toggle__button" (click)="show()">Show instructions</button>
   </ng-template>
 
   <ng-template #hideElement>
@@ -51,7 +51,7 @@
         </mat-accordion>
       </div>
 
-      <button mat-button color="accent" class="toggle__button" (click)="hide()">Hide instructions</button>
+      <button mat-button color="primary" class="toggle__button" (click)="hide()">Hide instructions</button>
     </div>
   </ng-template>
 
