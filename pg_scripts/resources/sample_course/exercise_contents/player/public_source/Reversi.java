@@ -1,3 +1,5 @@
+package featureHints;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,6 +27,10 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 4;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -46,11 +52,6 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        int configFileLinesNumber = 4;
-        if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
-            return;
-        }
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
                 System.out.println("Incorrect size input");

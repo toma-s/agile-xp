@@ -139,7 +139,10 @@ INSERT INTO bugs_number (exercise_id, number)
 VALUES (2, 3);
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_source', 'Reversi.java', 2, 'import sample_black_box.BlackBoxSwitcher;
+VALUES ('private_source', 'Reversi.java', 2, 'package buggySwitcher;
+
+
+import sample_black_box.BlackBoxSwitcher;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -169,6 +172,10 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 3;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -190,11 +197,6 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        int configFileLinesNumber = 3;
-        if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
-            return;
-        }
         try {
             if (gameConfig[0] == null || ! gameConfig[0].matches("[B|W]")) {
                 System.out.println("Incorrect player on turn input");
@@ -664,7 +666,10 @@ VALUES ('game_no_pieces.txt', 'B
 ', 2, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 3, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 3, 'package buggy;
+
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -690,6 +695,10 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 3;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -711,11 +720,6 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        int configFileLinesNumber = 3;
-        if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
-            return;
-        }
         try {
             if (gameConfig[0] == null || ! gameConfig[0].matches("[B|W]")) {
                 System.out.println("Incorrect player on turn input");
@@ -1115,7 +1119,9 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 3, 'import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 3, 'package fixed;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -1174,15 +1180,6 @@ public class InitGameTest {
     }
 
     @Test
-    public void testInitGameFourLines() {
-        String[] gameConfig = new String[]{"B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
     public void testInitGameAlpha() {
         String[] gameConfig = new String[]{"B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
@@ -1194,15 +1191,6 @@ public class InitGameTest {
     @Test
     public void testInitGameNoOnTurn() {
         String[] gameConfig = new String[]{"3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoPieces() {
-        String[] gameConfig = new String[]{"B"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -1291,7 +1279,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -1301,7 +1289,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -1311,7 +1299,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -1330,7 +1318,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -1340,7 +1328,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 }');
@@ -1974,7 +1962,9 @@ VALUES ('game_no_pieces.txt', 'B
 ', 3, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 4, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 4, 'package featureSize;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -2001,6 +1991,10 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 4;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -2022,11 +2016,6 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        int configFileLinesNumber = 4;
-        if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
-            return;
-        }
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
                 System.out.println("Incorrect size input");
@@ -2467,7 +2456,9 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 4, 'import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 4, 'package featureHints;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -2542,15 +2533,6 @@ public class InitGameTest {
     }
 
     @Test
-    public void testInitGameFiveLines() {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
     public void testInitGameAlpha() {
         String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
@@ -2571,15 +2553,6 @@ public class InitGameTest {
     @Test
     public void testInitGameNoOnTurn() {
         String[] gameConfig = new String[]{"8", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoPieces() {
-        String[] gameConfig = new String[]{"8", "B"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -2677,7 +2650,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -2687,7 +2660,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -2697,7 +2670,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -2716,7 +2689,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -2726,7 +2699,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -2736,7 +2709,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -3552,7 +3525,9 @@ VALUES ('game_no_size.txt', 'B
 ', 4, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 5, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 5, 'package fixed;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -3578,6 +3553,10 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 3;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -3601,11 +3580,6 @@ public class Reversi {
     void initGame(String[] gameConfig) {
         if (gameConfig == null) {
             System.out.println("Game configuration is null");
-            return;
-        }
-        int configFileLinesNumber = 3;
-        if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
             return;
         }
         try {
@@ -4049,7 +4023,9 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 5, 'import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 5, 'package featureSize;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -4123,15 +4099,6 @@ public class InitGameTest {
     }
 
     @Test
-    public void testInitGameFiveLines() {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
     public void testInitGameAlpha() {
         String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
@@ -4152,15 +4119,6 @@ public class InitGameTest {
     @Test
     public void testInitGameNoOnTurn() {
         String[] gameConfig = new String[]{"8", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoPieces() {
-        String[] gameConfig = new String[]{"8", "B"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -4258,7 +4216,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -4268,7 +4226,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -4278,7 +4236,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -4297,7 +4255,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -4307,7 +4265,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -4317,7 +4275,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -5004,7 +4962,9 @@ VALUES ('game_no_size.txt', 'B
 ', 5, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 6, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 6, 'package featureHints;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -5031,6 +4991,10 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 4;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -5052,11 +5016,6 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        int configFileLinesNumber = 4;
-        if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
-            return;
-        }
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
                 System.out.println("Incorrect size input");
@@ -5540,7 +5499,9 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 6, 'import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 6, 'package player;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -5615,15 +5576,6 @@ public class InitGameTest {
     }
 
     @Test
-    public void testInitGameFiveLines() {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
     public void testInitGameAlpha() {
         String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
@@ -5644,15 +5596,6 @@ public class InitGameTest {
     @Test
     public void testInitGameNoOnTurn() {
         String[] gameConfig = new String[]{"8", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoPieces() {
-        String[] gameConfig = new String[]{"8", "B"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -5749,7 +5692,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -5759,7 +5702,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -5769,7 +5712,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -5788,7 +5731,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -5798,7 +5741,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -5808,7 +5751,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 }');
@@ -6670,7 +6613,9 @@ VALUES ('game_no_size.txt', 'B
 ', 6, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 7, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 7, 'package duplicity;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -6697,6 +6642,10 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 4;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -6718,11 +6667,6 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        int configFileLinesNumber = 4;
-        if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
-            return;
-        }
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
                 System.out.println("Incorrect size input");
@@ -8635,7 +8579,9 @@ VALUES ('game_no_size.txt', 'B
 ', 7, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 8, 'import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 8, 'package player;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -8662,6 +8608,10 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 4;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
             initGame(gameConfig);
             initPiecesCount();
         } catch (Exception e) {
@@ -8682,12 +8632,7 @@ public class Reversi {
         return gameConfig;
     }
 
-    void initGame(String[] gameConfig) {
-        int configFileLinesNumber = 4;
-        if (gameConfig.length != configFileLinesNumber) {
-            System.out.println("Game configuration must contain " + configFileLinesNumber + " lines");
-            return;
-        }
+    void initGame(String[] gameConfig){
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
                 System.out.println("Incorrect size input");
@@ -9183,7 +9128,9 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 8, 'import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 8, 'package duplicity;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -9316,7 +9263,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -9326,7 +9273,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -9336,7 +9283,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -9355,7 +9302,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -9365,7 +9312,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -9375,7 +9322,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(Player.NONE, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(Player.NONE, game.winner);
     }
 
@@ -9443,48 +9390,12 @@ public class InitGameTest {
     }
 
     @Test
-    public void testInitGameFiveLines() {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
     public void testInitGameAlpha() {
         String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
         Assert.assertArrayEquals(TestUtils.getEmptyPlayground(), game.playground);
-    }
-
-    @Test
-    public void testInitGameNoSize() {
-        String[] gameConfig = new String[]{"B", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoOnTurn() {
-        String[] gameConfig = new String[]{"8", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoPieces() {
-        String[] gameConfig = new String[]{"8", "B"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
     }
 }');
 

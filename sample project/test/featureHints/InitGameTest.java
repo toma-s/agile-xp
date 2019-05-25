@@ -75,15 +75,6 @@ public class InitGameTest {
     }
 
     @Test
-    public void testInitGameFiveLines() {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
     public void testInitGameAlpha() {
         String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
         Reversi game = rev;
@@ -104,15 +95,6 @@ public class InitGameTest {
     @Test
     public void testInitGameNoOnTurn() {
         String[] gameConfig = new String[]{"8", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameNoPieces() {
-        String[] gameConfig = new String[]{"8", "B"};
         Reversi game = rev;
         game.initGame(gameConfig);
 
@@ -210,7 +192,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -220,7 +202,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -230,7 +212,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -249,7 +231,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -259,7 +241,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
@@ -269,7 +251,7 @@ public class InitGameTest {
 
         assertArrayEquals(null, game.playground);
         assertEquals(-1, game.onTurn);
-        assertFalse(game.ended);
+        assertTrue(game.ended);
         assertEquals(-1, game.winner);
     }
 
