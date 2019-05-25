@@ -1,0 +1,27 @@
+@import "src/variables.scss";
+
+.card {
+  margin: 20px 0;
+
+  .toggle__button {
+    text-align: center;
+    width: 100%;
+    font-size: 1.5em;
+    padding: 8px;
+  }
+
+  .hiddenContent {
+    padding: 20px;
+
+    .accordion {
+      margin: 20px 0;
+    }
+  
+    pre {
+      background-color: $grey-light;
+      white-space: pre-wrap;
+      padding: 10px;
+      font-family: monospace;
+    }
+  } 
+}
