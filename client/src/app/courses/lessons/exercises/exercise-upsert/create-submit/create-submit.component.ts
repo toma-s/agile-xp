@@ -24,7 +24,6 @@ export class CreateSubmitComponent implements OnInit {
   async submit() {
     this.resetErrorMessage();
     const mode = this.exerciseFormGroup.get('intro').get('mode').value;
-    console.log(mode);
     let result;
     if (mode === 'create') {
       result = await this.exerciseCreaterService.save(this.exerciseFormGroup);

@@ -44,7 +44,8 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
   constructor(
     protected titleService: Title,
     protected fb: FormBuilder,
-    protected route: ActivatedRoute,
+    protected exerciseTypeServise: ExerciseTypeService,
+    private route: ActivatedRoute,
     private exerciseService: ExerciseService,
     private exerciseTypeService: ExerciseTypeService,
     private privateSourceService: PrivateSourceService,
@@ -54,7 +55,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     private publicTestService: PublicTestService,
     private publicFileService: PublicFileService
   ) {
-    super(titleService, fb, route);
+    super(titleService, fb, exerciseTypeServise);
   }
 
   setTitle() {

@@ -5,6 +5,7 @@ import { ExerciseUpsertComponent } from '../exercise-upsert.component';
 import { ActivatedRoute } from '@angular/router';
 import { Exercise } from '../../shared/exercise/exercise/exercise.model';
 import { ExerciseType } from '../../shared/exercise/exercise-type/exercise-type.model';
+import { ExerciseTypeService } from '../../shared/exercise/exercise-type/exercise-type.service';
 
 @Component({
   selector: 'exercise-create',
@@ -14,13 +15,15 @@ import { ExerciseType } from '../../shared/exercise/exercise-type/exercise-type.
 export class ExerciseCreateComponent extends ExerciseUpsertComponent {
 
   protected mode = 'create';
+  protected types;
 
   constructor(
     protected titleService: Title,
     protected fb: FormBuilder,
-    protected route: ActivatedRoute
+    protected exerciseTypeServise: ExerciseTypeService,
+    private route: ActivatedRoute
   ) {
-    super(titleService,  fb, route);
+    super(titleService, fb, exerciseTypeServise);
   }
 
   setTitle() {
@@ -31,23 +34,15 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
     const exercise = new Exercise();
     exercise.index = this.route.snapshot.params['index'];
     exercise.lessonId = this.route.snapshot.params['lessonId'];
-    const et = new ExerciseType();
-    et.id = null;
-    et.name = null;
-    et.value = null;
     return this.fb.group({
-      // exercise: this.getGroupForExercise(exercise, this.getExerciseTypeGroup()),
-      exercise: this.getGroupForExercise(exercise, et),
+      exercise: this.getGroupForExercise(exercise, this.getNewExerciseType()),
       mode: 'create'
     });
   }
 
-  getExerciseTypeGroup() {
-    return this.fb.group({
-      id: null,
-      name: null,
-      value: null
-    });
+  getNewExerciseType(): ExerciseType {
+    console.log(this.types);
+    return this.types[0];
   }
 
   getExerciseGroup(exerciseType: string) {
@@ -73,6 +68,6 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
   }
 
 
-  setupValidatorsOnInit() {}
+  setupValidatorsOnInit() { }
 
 }
