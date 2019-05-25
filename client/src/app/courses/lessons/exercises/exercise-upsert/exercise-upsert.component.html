@@ -15,6 +15,9 @@
 
         <div *ngIf="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value"
           [ngSwitch]="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value.value">
+
+          <instructions></instructions>
+
           <div *ngSwitchCase="'whitebox'">
             <upsert-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=sourceControl></upsert-editors>
             <upsert-editors [exerciseFormGroup]="exerciseFormGroup" formGroupName=testControl></upsert-editors>

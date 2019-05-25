@@ -1,8 +1,3 @@
-package buggySwitcher;
-
-
-import sample_black_box.BlackBoxSwitcher;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

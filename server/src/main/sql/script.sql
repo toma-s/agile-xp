@@ -140,12 +140,7 @@ INSERT INTO bugs_number (exercise_id, number)
 VALUES (2, 3);
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_source', 'Reversi.java', 2, 'package buggySwitcher;
-
-
-import sample_black_box.BlackBoxSwitcher;
-
-import java.io.BufferedReader;
+VALUES ('private_source', 'Reversi.java', 2, 'import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -499,7 +494,7 @@ import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config_8/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -517,9 +512,7 @@ class GameConfig {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 2, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 2, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -667,10 +660,7 @@ VALUES ('game_no_pieces.txt', 'B
 ', 2, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 3, 'package buggy;
-
-
-import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 3, 'import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -948,9 +938,7 @@ public class Reversi {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'PlaygroundPrinter.java', 3, 'package buggy;
-
-import java.util.Collections;
+VALUES ('public_source', 'PlaygroundPrinter.java', 3, 'import java.util.Collections;
 
 class PlaygroundPrinter {
 
@@ -1002,14 +990,12 @@ class PlaygroundPrinter {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'GameConfig.java', 3, 'package buggy;
-
-import java.io.File;
+VALUES ('public_source', 'GameConfig.java', 3, 'import java.io.File;
 import java.nio.file.Path;
 
 class GameConfig {
 
-    private static String gameConfigDir = "./game_config_8/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -1027,9 +1013,7 @@ class GameConfig {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReadGameConfigTest.java', 3, 'package fixed;
-
-import org.junit.Test;
+VALUES ('private_test', 'ReadGameConfigTest.java', 3, 'import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -1120,9 +1104,7 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 3, 'package fixed;
-
-import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 3, 'import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -1335,9 +1317,7 @@ public class InitGameTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'PlaygroundPrinterTest.java', 3, 'package fixed;
-
-import org.junit.After;
+VALUES ('private_test', 'PlaygroundPrinterTest.java', 3, 'import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -1462,9 +1442,7 @@ public class PlaygroundPrinterTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'MoveTest.java', 3, 'package fixed;
-
-import org.junit.Assert;
+VALUES ('private_test', 'MoveTest.java', 3, 'import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -1753,9 +1731,7 @@ public class MoveTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'TestUtils.java', 3, 'package fixed;
-
-import java.util.List;
+VALUES ('private_test', 'TestUtils.java', 3, 'import java.util.List;
 
 
 class TestUtils {
@@ -1813,9 +1789,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 3, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 3, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -1963,9 +1937,7 @@ VALUES ('game_no_pieces.txt', 'B
 ', 3, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 4, 'package featureSize;
-
-import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 4, 'import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -2457,9 +2429,7 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 4, 'package featureHints;
-
-import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 4, 'import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -3318,9 +3288,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 4, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 4, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -3526,9 +3494,7 @@ VALUES ('game_no_size.txt', 'B
 ', 4, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 5, 'package fixed;
-
-import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 5, 'import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -3885,7 +3851,7 @@ final class GameConfig {
         return INSTANCE;
     }
 
-    private static String gameConfigDir = "./game_config_8/";
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
@@ -4024,9 +3990,7 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 5, 'package featureSize;
-
-import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 5, 'import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -4755,9 +4719,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 5, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 5, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -4963,9 +4925,7 @@ VALUES ('game_no_size.txt', 'B
 ', 5, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 6, 'package featureHints;
-
-import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 6, 'import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -5500,9 +5460,7 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 6, 'package player;
-
-import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 6, 'import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -6351,7 +6309,7 @@ INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, cont
 VALUES ('private_test', 'TestUtils.java', 6, 'import java.util.List;
 
 
-class TestUtils {
+public class TestUtils {
 
     static Player getPiece(Reversi game, int r0, int c0) {
         return game.playground[r0][c0];
@@ -6406,9 +6364,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 6, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 6, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -6614,9 +6570,7 @@ VALUES ('game_no_size.txt', 'B
 ', 6, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 7, 'package duplicity;
-
-import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 7, 'import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -8372,9 +8326,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 7, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 7, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -8580,9 +8532,7 @@ VALUES ('game_no_size.txt', 'B
 ', 7, 'public_file');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 8, 'package player;
-
-import java.io.BufferedReader;
+VALUES ('public_source', 'Reversi.java', 8, 'import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -9129,9 +9079,7 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 8, 'package duplicity;
-
-import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 8, 'import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10096,9 +10044,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 8, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 8, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -12170,9 +12116,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 9, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 9, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -12823,9 +12767,7 @@ class GameConfig {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'PlayerTest.java', 10, 'package left;
-
-import org.junit.Test;
+VALUES ('private_test', 'PlayerTest.java', 10, 'import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13030,9 +12972,7 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 10, 'package left;
-
-import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 10, 'import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13733,9 +13673,7 @@ public class PlaygroundPrinterTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'MoveTest.java', 10, 'package left;
-
-import org.junit.Assert;
+VALUES ('private_test', 'MoveTest.java', 10, 'import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14175,9 +14113,7 @@ public class MoveTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ExecuteTest.java', 10, 'package left;
-
-import org.junit.Assert;
+VALUES ('private_test', 'ExecuteTest.java', 10, 'import org.junit.Assert;
 import org.junit.Test;
 
 public class ExecuteTest {
@@ -14260,9 +14196,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 10, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 10, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -16428,9 +16362,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 11, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 11, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -18639,9 +18571,7 @@ class TestUtils {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 12, 'package init;
-
-import org.junit.Rule;
+VALUES ('public_test', 'ReversiTest.java', 12, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 

@@ -1,7 +1,7 @@
 import java.util.List;
 
 
-class TestUtils {
+public class TestUtils {
 
     static Player getPiece(Reversi game, int r0, int c0) {
         return game.playground[r0][c0];
