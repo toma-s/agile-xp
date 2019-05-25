@@ -61,13 +61,14 @@ public class ExerciseServiceImpl implements ExerciseService {
             System.out.format("Failed to update exercise with id %s\n", id);
             return false;
         }
-        Exercise _exercise = exerciseData.get();
-        _exercise.setName(exercise.getName());
-        _exercise.setIndex(exercise.getIndex());
-        _exercise.setLessonId(exercise.getLessonId());
-        _exercise.setTypeId(exercise.getTypeId());
-        _exercise.setCreated(exercise.getCreated());
-        _exercise.setDescription(exercise.getDescription());
+        Exercise updatedExercise = exerciseData.get();
+        updatedExercise.setName(exercise.getName());
+        updatedExercise.setIndex(exercise.getIndex());
+        updatedExercise.setLessonId(exercise.getLessonId());
+        updatedExercise.setTypeId(exercise.getTypeId());
+        updatedExercise.setCreated(exercise.getCreated());
+        updatedExercise.setDescription(exercise.getDescription());
+        repository.save(updatedExercise);
         System.out.format("Updates exercise with id %s\n", id);
         return true;
     }

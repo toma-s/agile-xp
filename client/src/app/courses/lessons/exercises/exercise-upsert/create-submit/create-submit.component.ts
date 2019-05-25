@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ExerciseCreatorService } from '../utils/exercise-creator.service';
+import { ExerciseCreatorService } from '../saver/exercise-creator.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ExerciseUpdaterService } from '../utils/exercise-updater.service';
+import { ExerciseUpdaterService } from '../saver/exercise-updater.service';
 
 @Component({
   selector: 'create-submit',
@@ -24,6 +24,7 @@ export class CreateSubmitComponent implements OnInit {
   async submit() {
     this.resetErrorMessage();
     const mode = this.exerciseFormGroup.get('intro').get('mode').value;
+    console.log(mode);
     let result;
     if (mode === 'create') {
       result = await this.exerciseCreaterService.save(this.exerciseFormGroup);

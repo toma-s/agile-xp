@@ -1,20 +1,20 @@
 <div [formGroup]="exerciseFormGroup" class="mat-elevation-z2 card">
 
-  <div class="intro" *ngIf="exerciseFormGroup.controls.intro">
+  <div class="intro" *ngIf="form">
 
-    <h2><span class="capitalise">{{exerciseFormGroup.controls.intro.controls.mode.value}}</span> exercise</h2>
+    <h2><span class="capitalise">{{form.controls.mode.value}}</span> exercise</h2>
 
     <mat-form-field class="intro__field">
       <input matInput placeholder="Title"
-        [formControl]="exerciseFormGroup.controls.intro.controls.exercise.controls.name" maxlength="35">
+        [formControl]="form.controls.exercise.controls.name" maxlength="35">
     </mat-form-field>
 
-    <div *ngIf="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value.name; then onEdit; else onCreate">
+    <div *ngIf="form.controls.exercise.controls.type.value.name; then onEdit; else onCreate">
     </div>
     <ng-template #onCreate>
       <mat-form-field class="intro__field">
         <mat-label>Exercise type</mat-label>
-        <mat-select [formControl]="exerciseFormGroup.controls.intro.controls.exercise.controls.type">
+        <mat-select [formControl]="form.controls.exercise.controls.type">
           <mat-option *ngFor="let type of types" [value]="type">
             {{type.name}}
           </mat-option>
@@ -23,8 +23,8 @@
     </ng-template>
     <ng-template #onEdit>
       <mat-form-field class="intro__field">
-        <mat-select [placeholder]="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value.name"
-          [formControl]="exerciseFormGroup.controls.intro.controls.exercise.controls.type">
+        <mat-select [placeholder]="form.controls.exercise.controls.type.value.name"
+          [formControl]="form.controls.exercise.controls.type">
           <mat-option *ngFor="let type of types" [value]="type">
             {{type.name}}
           </mat-option>
@@ -34,8 +34,8 @@
 
     <div>
       <h4>Description</h4>
-      <quill-editor [formControl]="exerciseFormGroup.controls.intro.controls.exercise.controls.description"
-        [style]="{height: '500px'}" [sanitize]="true" class="editor">
+      <quill-editor [formControl]="form.controls.exercise.controls.description"
+        [style]="{height: '500px'}" [sanitize]="true">
       </quill-editor>
     </div>
 

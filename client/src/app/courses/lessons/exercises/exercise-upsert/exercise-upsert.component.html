@@ -9,9 +9,10 @@
 
     <form [formGroup]="exerciseFormGroup">
 
-      <create-intro [exerciseFormGroup]="exerciseFormGroup"></create-intro>
-
       <div *ngIf="exerciseFormGroup.controls.intro">
+
+        <create-intro [exerciseFormGroup]="exerciseFormGroup" formGroupName=intro></create-intro>
+
         <div *ngIf="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value"
           [ngSwitch]="exerciseFormGroup.controls.intro.controls.exercise.controls.type.value.value">
           <div *ngSwitchCase="'whitebox'">
@@ -43,7 +44,6 @@
         <ng-template #error>
           <error formGroupName=error></error>
         </ng-template>
-
 
       </div>
     </form>

@@ -39,16 +39,17 @@ public class PublicSourceServiceImpl implements ExerciseContentService {
     @Override
     public boolean update(long id, ExerciseContent exerciseContent) {
         Optional<PublicSource> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            PublicSource updatedExerciseContent = optional.get();
-            updatedExerciseContent.setFilename(exerciseContent.getFilename());
-            updatedExerciseContent.setExerciseId(exerciseContent.getExerciseId());
-            updatedExerciseContent.setContent(exerciseContent.getContent());
-            System.out.format("Updated %s with id %s\n", contentType, id);
-            return true;
+        if (!optional.isPresent()) {
+            System.out.format("Failed to %s with id %s\n", contentType, id);
+            return false;
         }
-        System.out.format("Failed to %s with id %s\n", contentType, id);
-        return false;
+        PublicSource updatedExerciseContent = optional.get();
+        updatedExerciseContent.setFilename(exerciseContent.getFilename());
+        updatedExerciseContent.setExerciseId(exerciseContent.getExerciseId());
+        updatedExerciseContent.setContent(exerciseContent.getContent());
+        repository.save(updatedExerciseContent);
+        System.out.format("Updated %s with id %s\n", contentType, id);
+        return true;
     }
 
     @Override
