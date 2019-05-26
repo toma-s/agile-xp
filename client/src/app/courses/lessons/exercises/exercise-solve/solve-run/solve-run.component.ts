@@ -70,9 +70,9 @@ export class SolveRunComponent implements OnInit {
   }
 
   setSolutionItems() {
-    this.solutionSources = this.solutionFormGroup.get('sourceControl').get('solutionControl').value;
-    this.solutionTests = this.solutionFormGroup.get('testControl').get('solutionControl').value;
-    this.solutionFiles = this.solutionFormGroup.get('fileControl').get('solutionControl').value;
+    this.solutionSources = this.solutionFormGroup.get('sourceControl').get('solutionControl').get('tabContent').value;
+    this.solutionTests = this.solutionFormGroup.get('testControl').get('solutionControl').get('tabContent').value;
+    this.solutionFiles = this.solutionFormGroup.get('fileControl').get('solutionControl').get('tabContent').value;
   }
 
   getEstimation() {

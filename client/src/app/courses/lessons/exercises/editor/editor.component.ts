@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, ControlContainer, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '../exercise-upsert/dialog/dialog.component';
 import { MatDialogRef, MatDialog } from '@angular/material';
 
 @Component({
@@ -10,7 +10,6 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 })
 export class EditorComponent implements OnInit {
 
-  @Input() type: string;
   @Input() editorOptions;
   form: FormGroup;
   dialogRef: MatDialogRef<DialogComponent>;

@@ -114,6 +114,9 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
             return new SolutionEstimation();
         }
         SolutionEstimation estimation = solutionEstimationRepository.findFirstBySolutionId(lastSolution.getId());
+        if (estimation == null) {
+            return new SolutionEstimation();
+        }
         System.out.format("Found last estimation of exercise %s\n", exerciseId);
         return estimation;
     }

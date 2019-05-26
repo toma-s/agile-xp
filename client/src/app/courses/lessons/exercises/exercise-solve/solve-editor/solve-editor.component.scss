@@ -6,18 +6,9 @@
   clear: both;
 
   .editor {
-    height: 80vh;
+    height: calc(80vh - 20px);
     width: 75%;
     float: left;
-
-    .editor__container {
-      height: calc(80vh - 48px);
-
-      .editor__monaco {
-        height: 100%;
-        overflow: hidden;
-      }
-    }
   }
 
   .sidebar {

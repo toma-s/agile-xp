@@ -45,7 +45,7 @@ export class SolveEditorComponent implements OnInit {
   }
 
   setEditorOptions() {
-    if (this.form.get('solutionType').value.search('file') !== -1) {
+    if (this.form.get('solutionControl').get('solutionType').value.search('file') !== -1) {
       this.editorOptions.language = 'text';
     } else {
       this.editorOptions.language = 'java';
