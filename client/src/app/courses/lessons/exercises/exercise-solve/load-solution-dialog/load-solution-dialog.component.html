@@ -36,11 +36,9 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <mat-nav-list *ngIf="currentContent">
+      <mat-nav-list *ngIf="currentContent" class="content">
         <mat-list-item *ngFor="let item of currentContent[i]" (click)="choose(item)" class="item">
-          <!-- <p class="content__filename">{{ (item.filename.length > 20)? (item.filename | slice:0:20) + '...':(item.filename) }}</p> -->
           <p class="content__filename">{{ item.filename }}</p>
-          <!-- <p class="content__content">{{ (item.content.length > 250)? (item.content | slice:0:250) + '...':(item.content) }}</p> -->
           <pre class="content__content">{{ item.content }}</pre>
         </mat-list-item>
       </mat-nav-list>
