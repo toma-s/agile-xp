@@ -1,0 +1,58 @@
+<div class="mat-elevation-z2 card">
+
+  <div *ngIf="shown; then hideElement; else showElement"></div>
+
+  <ng-template #showElement>
+    <button mat-button color="primary" class="toggle__button" (click)="show()">Show instructions</button>
+  </ng-template>
+
+  <ng-template #hideElement>
+    <div class="hiddenContent">
+      <p>Instuctions on writing the exercises of different types</p>
+
+      <div class="accordion">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                General: Files
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div>
+              <h3>Path</h3>
+              <p>The files are placed in "files" directory.</p>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Black Box (with Files)
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div>
+              <h3>Description</h3>
+              <p>Description should contain a number of bugs in the hidden source code. Also it should contain code
+                structure or functions names, or any kind of information to give a student needed knowledge about the
+                hidden code. So the student would be able to call necessary functions from his tests.</p>
+
+              <h3>Hidden source code</h3>
+              <p>Hidden source code is used for controlling, it should be compilable and contain several logical
+                mistakes.
+                It should be designed in a special way, so it would be used correctly.</p>
+              <p>The source code should initialise a switcher, which would turn on and off single bugs:</p>
+              <pre>private BlackBoxSwitcher switcher = new BlackBoxSwitcher();</pre>
+              <p>It should be used to wrap the bugs, so they would be toggled. Here is an example:</p>
+              <pre [innerHTML]="switcherBugCode"></pre>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <button mat-button color="primary" class="toggle__button" (click)="hide()">Hide instructions</button>
+    </div>
+  </ng-template>
+
+</div>

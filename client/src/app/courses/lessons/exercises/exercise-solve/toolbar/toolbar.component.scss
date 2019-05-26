@@ -9,17 +9,25 @@
     flex: 1 1 auto;
   }
 
-  .exercise__progress {
+  .nav__back {
     width: 20%;
   }
 
-  .exercise__is_solved {
-    color: $green-dark;
-    text-align: right;
-  }
+  .exercise__progress {
+    width: 20%;
 
-  .exercise__not_solved {
-    color: $accent-dark;
-    text-align: right;
+    a {
+      width: 100%;
+    }
+
+    .exercise__is_solved {
+      color: $green-dark;
+      text-align: right;
+    }
+  
+    .exercise__not_solved {
+      color: $accent-dark;
+      text-align: right;
+    }
   }
 }

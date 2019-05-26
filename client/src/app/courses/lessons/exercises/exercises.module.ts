@@ -30,8 +30,9 @@ import { CreateIntroComponent } from './exercise-upsert/create-intro/create-intr
 import { UpsertEditorsComponent } from './exercise-upsert/upsert-editors/upsert-editors.component';
 import { CreateSubmitComponent } from './exercise-upsert/create-submit/create-submit.component';
 import { ErrorComponent } from './exercise-upsert/error/error.component';
-import { EditorComponent } from './exercise-upsert/editor/editor.component';
+import { EditorComponent } from './editor/editor.component';
 import { SolveMarkComponent } from './exercise-solve/solve-mark/solve-mark.component';
+import { InstructionsComponent } from './exercise-upsert/instructions/instructions.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { SolveMarkComponent } from './exercise-solve/solve-mark/solve-mark.compo
     LoadSolutionDialogComponent,
     ExerciseCreateComponent,
     ExerciseEditComponent,
-    SolveMarkComponent
+    SolveMarkComponent,
+    InstructionsComponent
   ],
   imports: [
     CommonModule,

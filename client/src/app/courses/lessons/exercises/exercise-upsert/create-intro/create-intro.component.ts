@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ControlContainer } from '@angular/forms';
 import { ExerciseTypeService } from '../../shared/exercise/exercise-type/exercise-type.service';
 import { ExerciseType } from '../../shared/exercise/exercise-type/exercise-type.model';
+import { MatSelect } from '@angular/material';
 
 @Component({
   selector: 'create-intro',
@@ -11,16 +12,20 @@ import { ExerciseType } from '../../shared/exercise/exercise-type/exercise-type.
 export class CreateIntroComponent implements OnInit {
 
   @Input() exerciseFormGroup: FormGroup;
+  @ViewChild('typeSelect') typeSelect: MatSelect;
+  form: FormGroup;
   types = new Array<ExerciseType>();
+  requireBugsNumber = ['blackbox', 'blackbox-file'];
 
   constructor(
     private exerciseTypeServise: ExerciseTypeService,
-    private fb: FormBuilder,
+    public controlContainer: ControlContainer
   ) { }
 
   async ngOnInit() {
+    this.form = <FormGroup>this.controlContainer.control;
     this.types = await this.getExerciseTypes();
-    // this.setExerciseIntro();
+    this.setDefaultSelected();
   }
 
   getExerciseTypes(): any {
@@ -32,14 +37,13 @@ export class CreateIntroComponent implements OnInit {
     });
   }
 
-  // setExerciseIntro() {
-  //   this.exerciseFormGroup.addControl(
-  //     'intro', this.fb.group({
-  //       name: [null, Validators.compose([Validators.required])],
-  //       description: [null, Validators.compose([Validators.required])],
-  //       type: [null, Validators.compose([Validators.required])]
-  //     })
-  //   );
-  // }
+  setDefaultSelected() {
+    this.typeSelect.compareWith = (o1: ExerciseType, o2: ExerciseType) => o1 && o2 && o1.id === o2.id;
+  }
+
+  showBugsNumberField() {
+    const exerciseType = this.form.get('exercise').get('type').value;
+    return this.requireBugsNumber.includes(exerciseType.value);
+  }
 
 }

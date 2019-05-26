@@ -22,7 +22,7 @@ import { SolutionEstimationService } from '../lessons/exercises/shared/solution/
 export class CourseDetailComponent implements OnInit {
 
   course: Course;
-  lessons: Array<Lesson>;
+  lessons: Promise<Array<Lesson>>;
   exercises: Map<number, Array<Exercise>>;
   estimations: Map<number, SolutionEstimation>;
   exerciseTypes: Array<ExerciseType>;
@@ -79,7 +79,7 @@ export class CourseDetailComponent implements OnInit {
         this.lessonService.getLessonsByCourseId(Number(params.get('id')))
       )
     );
-    this.lessons = await this.getLessons(lessons$);
+    this.lessons = this.getLessons(lessons$);
   }
 
   getLessons(lessons$) {
@@ -95,12 +95,14 @@ export class CourseDetailComponent implements OnInit {
   async getExercises() {
     this.exercises = new Map<number, Array<Exercise>>();
     this.estimations = new Map<number, SolutionEstimation>();
-    await this.lessons.forEach(async lesson => {
-      const loadedExercises = await this.getExercisesArrayByLessonId(lesson.id);
-      this.exercises.set(lesson.id, loadedExercises);
-      loadedExercises.forEach(async exercise => {
-        const loadedEstimation = await this.getEstimations(exercise);
-        this.estimations.set(exercise.id, loadedEstimation);
+    await this.lessons.then(data => {
+      data.forEach(async lesson => {
+        const loadedExercises = await this.getExercisesArrayByLessonId(lesson.id);
+        this.exercises.set(lesson.id, loadedExercises);
+        loadedExercises.forEach(async exercise => {
+          const loadedEstimation = await this.getEstimations(exercise);
+          this.estimations.set(exercise.id, loadedEstimation);
+        });
       });
     });
   }
@@ -126,13 +128,10 @@ export class CourseDetailComponent implements OnInit {
 
 
   getExerciseTypes() {
-    this.exerciseTypeService.getExericseTypesList()
-      .subscribe(
-        data => {
-          this.exerciseTypes = data;
-        },
-        error => console.log(error)
-      );
+    this.exerciseTypeService.getExericseTypesList().subscribe(
+      data => this.exerciseTypes = data,
+      error => console.log(error)
+    );
   }
 
   getExercisesByLessonId(lessonId: number): Array<Exercise> {
@@ -146,26 +145,4 @@ export class CourseDetailComponent implements OnInit {
   getExerciseTypeName(typeId: number) {
     return this.exerciseTypes.filter(et => et.id === typeId)[0].name;
   }
-
-
-  deleteCourse() {
-    this.courseService.deleteCourse(this.course.id).subscribe(
-      data => {
-        console.log(data);
-        this.wasDeleted = true;
-      },
-      error => console.log(error)
-    );
-  }
-
-  deleteLesson(lesson: Lesson) {
-    this.lessonService.deleteLesson(lesson.id).subscribe(
-      data => {
-        this.setLessons();
-      },
-      error => console.log(error)
-    );
-  }
-
-
 }

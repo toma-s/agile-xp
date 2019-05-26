@@ -1,5 +1,3 @@
-package buggy;
-
 import java.util.Collections;
 
 class PlaygroundPrinter {

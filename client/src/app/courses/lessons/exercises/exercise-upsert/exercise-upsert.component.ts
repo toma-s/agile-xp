@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Exercise } from '../shared/exercise/exercise/exercise.model';
 import { ExerciseType } from '../shared/exercise/exercise-type/exercise-type.model';
+import { ExerciseTypeService } from '../shared/exercise/exercise-type/exercise-type.service';
 
 @Component({
   selector: 'exercise-upsert'
@@ -13,23 +14,35 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   submitted = false;
   exerciseFormGroup: FormGroup;
   viewInput = new Map<string, boolean>();
+  protected types = new Array<ExerciseType>();
 
   constructor(
     protected titleService: Title,
     protected fb: FormBuilder,
-    protected route: ActivatedRoute
+    protected exerciseTypeServise: ExerciseTypeService
   ) { }
 
   async ngOnInit() {
     this.setTitle();
+    this.types = await this.getExerciseTypes();
     this.initViewInput();
     await this.createForm();
     console.log(this.exerciseFormGroup);
     this.listenToTypeChange();
+    this.setupDefaultValidators();
     this.setupValidatorsOnInit();
   }
 
   protected abstract setTitle();
+
+  getExerciseTypes(): any {
+    return new Promise((resolve, reject) => {
+      this.exerciseTypeServise.getExericseTypesList().subscribe(
+        data => resolve(data),
+        error => reject(error)
+      );
+    });
+  }
 
   initViewInput() {
     this.viewInput = new Map<string, boolean>();
@@ -110,8 +123,8 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   }
 
   setWhiteboxValidators() {
-    this.clearValidators('sourceControl', 'privateControl');
-    this.setValidators('testControl', 'privateControl');
+    this.clearContentValidators('sourceControl', 'privateControl');
+    this.setContentValidators('testControl', 'privateControl');
     this.viewInput['private-sources'] = false;
     this.viewInput['public-sources'] = true;
     this.viewInput['private-tests'] = true;
@@ -119,9 +132,10 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   }
 
   setBlackboxValidators() {
-    this.setValidators('sourceControl', 'privateControl');
-    this.clearValidators('testControl', 'privateControl');
-    this.setValidators('testControl', 'publicControl');
+    this.setBugsNumberValidator();
+    this.setContentValidators('sourceControl', 'privateControl');
+    this.clearContentValidators('testControl', 'privateControl');
+    this.setContentValidators('testControl', 'publicControl');
     this.viewInput['private-sources'] = true;
     this.viewInput['public-sources'] = false;
     this.viewInput['private-tests'] = false;
@@ -129,10 +143,11 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   }
 
   setTheoryValidators() {
-    this.clearValidators('sourceControl', 'privateControl');
-    this.clearValidators('sourceControl', 'publicControl');
-    this.clearValidators('testControl', 'privateControl');
-    this.clearValidators('testControl', 'publicControl');
+    this.clearBugsNumberValidators();
+    this.clearContentValidators('sourceControl', 'privateControl');
+    this.clearContentValidators('sourceControl', 'publicControl');
+    this.clearContentValidators('testControl', 'privateControl');
+    this.clearContentValidators('testControl', 'publicControl');
     this.viewInput['private-sources'] = false;
     this.viewInput['public-sources'] = false;
     this.viewInput['private-tests'] = false;
@@ -149,7 +164,17 @@ export abstract class ExerciseUpsertComponent implements OnInit {
     this.viewInput['public-files'] = false;
   }
 
-  setValidators(controlType: string, publicitypControl: string) {
+  setBugsNumberValidator() {
+    this.exerciseFormGroup.get('intro').get('bugsNumber').setValidators([Validators.required, Validators.min(1)]);
+    this.exerciseFormGroup.get('intro').get('bugsNumber').updateValueAndValidity();
+  }
+
+  clearBugsNumberValidators() {
+    this.exerciseFormGroup.get('intro').get('bugsNumber').clearValidators();
+    this.exerciseFormGroup.get('intro').get('bugsNumber').updateValueAndValidity();
+  }
+
+  setContentValidators(controlType: string, publicitypControl: string) {
     const array = this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent') as FormArray;
     array.setValidators(Validators.required);
     array.updateValueAndValidity();
@@ -159,7 +184,7 @@ export abstract class ExerciseUpsertComponent implements OnInit {
     });
   }
 
-  clearValidators(controlType: string, publicitypControl: string) {
+  clearContentValidators(controlType: string, publicitypControl: string) {
     const array = this.exerciseFormGroup.get(controlType).get(publicitypControl).get('tabContent') as FormArray;
     array.clearValidators();
     array.updateValueAndValidity();
@@ -171,6 +196,15 @@ export abstract class ExerciseUpsertComponent implements OnInit {
 
   setViewInputConrol() {
     this.exerciseFormGroup.get('params').get('viewInput').setValue(this.viewInput);
+  }
+
+  setupDefaultValidators() {
+    this.exerciseFormGroup.get('intro').get('exercise').get('name').setValidators(Validators.required);
+    this.exerciseFormGroup.get('intro').get('exercise').get('name').updateValueAndValidity();
+    this.exerciseFormGroup.get('intro').get('exercise').get('type').setValidators(Validators.required);
+    // this.exerciseFormGroup.get('intro').get('exercise').get('type').get('value').updateValueAndValidity();
+    this.exerciseFormGroup.get('intro').get('exercise').get('description').setValidators(Validators.required);
+    this.exerciseFormGroup.get('intro').get('exercise').get('description').updateValueAndValidity();
   }
 
   protected abstract setupValidatorsOnInit();

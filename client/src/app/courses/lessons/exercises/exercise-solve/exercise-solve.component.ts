@@ -91,7 +91,10 @@ export class ExerciseSolveComponent implements OnInit {
   getInitEstimation(): Promise<SolutionEstimation> {
     return new Promise<SolutionEstimation>((resolve, reject) => {
       this.solutionEstimationService.getSolutionEstimationByExerciseId(this.exercise.id).subscribe(
-        data => resolve(data),
+        data => {
+          resolve(data);
+          console.log(data);
+        },
         error => reject(error)
       );
     });
@@ -195,8 +198,10 @@ export class ExerciseSolveComponent implements OnInit {
   setSolutionControl(solutionType: string, intialSolution) {
     this.solutionFormGroup.addControl(
       `${solutionType}Control`, this.fb.group({
-        solutionType: solutionType,
-        solutionControl: this.fb.array(this.getGroup(intialSolution))
+        solutionControl: this.fb.group({
+          solutionType: solutionType,
+          tabContent: this.fb.array(this.getGroup(intialSolution))
+        })
       })
     );
   }

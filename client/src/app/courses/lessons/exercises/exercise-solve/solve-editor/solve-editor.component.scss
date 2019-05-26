@@ -6,18 +6,9 @@
   clear: both;
 
   .editor {
-    height: 80vh;
+    height: calc(80vh - 20px);
     width: 75%;
     float: left;
-
-    .editor__container {
-      height: calc(80vh - 48px);
-
-      .editor__monaco {
-        height: 100%;
-        overflow: hidden;
-      }
-    }
   }
 
   .sidebar {
@@ -26,6 +17,16 @@
     height: calc(80vh - 20px);
     overflow-y: auto;
     padding: 10px;
+
+    .mat-expansion-panel-header {
+      background-color: $grey-light;
+      padding: 8px 18px;
+    }
+
+    /deep/ .mat-expansion-panel-body {
+      padding: 0;
+      background-color: $grey-light;
+    }
 
     .sidebar__button {
       padding-bottom: 10px;
@@ -37,7 +38,7 @@
         padding-top: 0;
 
         .loader__exercise {
-          margin-left: 20px;
+          margin: 6px 0;
           font-size: 16px;
         }
       }

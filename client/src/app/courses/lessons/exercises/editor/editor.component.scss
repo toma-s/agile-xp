@@ -1,0 +1,17 @@
+@import "src/variables.scss";
+
+.env {
+  padding: 10px;
+  background-color: $grey-light;
+
+  .env__container {
+    overflow: hidden;
+    height: calc(80vh - 48px - 10px - 12px);
+    
+    .env__editor {
+      border: 1px solid $grey-light;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

@@ -8,7 +8,7 @@
     <h4>Hidden {{exerciseType}}</h4>
     
     <div>
-      <editor formGroupName="privateControl" [type]="private" [editorOptions]="editorOptions"></editor>
+      <editor formGroupName="privateControl" [editorOptions]="editorOptions"></editor>
     </div>
 
     <div *ngIf="viewPublicInput">
@@ -22,7 +22,7 @@
       </mat-form-field>
 
       <div *ngIf="form.controls.publicType.controls.chosen.value === 'custom'">
-        <editor formGroupName="publicControl" [type]="public" [editorOptions]="editorOptions"></editor>
+        <editor formGroupName="publicControl" [editorOptions]="editorOptions"></editor>
       </div>
     </div>
   </ng-template>
@@ -31,7 +31,7 @@
     <div *ngIf="viewPublicInput">
       <h4>Shown {{exerciseType}}</h4>
       <div>
-        <editor formGroupName="publicControl" [type]="public" [editorOptions]="editorOptions"></editor>
+        <editor formGroupName="publicControl" [editorOptions]="editorOptions"></editor>
       </div>
     </div>
   </ng-template>

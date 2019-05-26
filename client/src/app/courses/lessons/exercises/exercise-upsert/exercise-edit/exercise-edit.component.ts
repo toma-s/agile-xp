@@ -22,6 +22,8 @@ import { PrivateFile } from '../../shared/exercise/private-file/private-file.mod
 import { PublicSource } from '../../shared/public/public-source/public-source.model';
 import { PublicTest } from '../../shared/public/public-test/public-test.model';
 import { PublicFile } from '../../shared/public/public-file/public-file.model';
+import { BugsNumber } from '../../shared/exercise/bugs-number/bugs-number.model';
+import { BugsNumberService } from '../../shared/exercise/bugs-number/bugs-number.service';
 
 @Component({
   selector: 'exercise-edit',
@@ -33,6 +35,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
   protected mode = 'edit';
 
   private exercise: Exercise;
+  private bugsNumber: BugsNumber;
   private exerciseType: ExerciseType;
   private privateSources: Array<PrivateSource>;
   private privateTests: Array<PrivateTest>;
@@ -44,8 +47,10 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
   constructor(
     protected titleService: Title,
     protected fb: FormBuilder,
-    protected route: ActivatedRoute,
+    protected exerciseTypeServise: ExerciseTypeService,
+    private route: ActivatedRoute,
     private exerciseService: ExerciseService,
+    private bugsNumberService: BugsNumberService,
     private exerciseTypeService: ExerciseTypeService,
     private privateSourceService: PrivateSourceService,
     private privateTestService: PrivateTestService,
@@ -54,7 +59,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     private publicTestService: PublicTestService,
     private publicFileService: PublicFileService
   ) {
-    super(titleService, fb, route);
+    super(titleService, fb, exerciseTypeServise);
   }
 
   setTitle() {
@@ -63,6 +68,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
 
   async getIntroGroup() {
     this.exercise = await this.getExercise();
+    this.bugsNumber = await this.getBugsNumber();
     this.exerciseType = await this.getExerciseType();
     this.privateSources = await this.getPrivateSources();
     this.privateTests = await this.getPrivateTests();
@@ -71,9 +77,9 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     this.publicTests = await this.getPublicTests();
     this.publicFiles = await this.getPublicFiles();
     return this.fb.group({
-      // exercise: this.getGroupForExercise(this.exercise, this.getExerciseTypeGroup(this.exerciseType)),
       exercise: this.getGroupForExercise(this.exercise, this.exerciseType),
-      mode: 'edit'
+      mode: 'edit',
+      bugsNumber: this.bugsNumber
     });
   }
 
@@ -89,6 +95,15 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
     const exerciseId = this.route.snapshot.params['exerciseId'];
     return new Promise<Exercise>((resolve, reject) => {
       this.exerciseService.getExerciseById(exerciseId).subscribe(
+        data => resolve(data),
+        error => reject (error)
+      );
+    });
+  }
+
+  getBugsNumber(): Promise<BugsNumber> {
+    return new Promise<BugsNumber>((resolve, reject) => {
+      this.bugsNumberService.getBugsNumberByExerciseId(this.exercise.id).subscribe(
         data => resolve(data),
         error => reject (error)
       );
@@ -166,7 +181,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
         tabContent: this.fb.array(this.getGroupForContents(this.getPrivate(exerciseType))),
       }),
       publicType: this.fb.group({
-        chosen: ['same', Validators.compose([Validators.required])]
+        chosen: ['same', Validators.required]
       }),
       publicControl: this.fb.group({
         tabContent: this.fb.array(this.getGroupForContents(this.getPublic(exerciseType))),

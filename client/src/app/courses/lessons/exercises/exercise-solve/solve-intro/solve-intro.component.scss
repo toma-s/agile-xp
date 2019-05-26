@@ -15,17 +15,57 @@
     .intro__description {
       padding: 30px 60px;
       line-height: 1.5em;
-
-      pre {
-        background-color: $grey-light;
-        white-space: pre-wrap;
-        padding: 10px;
-      }
-
-      blockquote{
-        border-left: 5px solid $grey-light;
-        padding-left: 10px;
-      }
     }
   }
+}
+
+
+// quill editor formatting
+
+blockquote{
+  border-left: 5px solid $grey-light;
+  padding-left: 10px;
+}
+
+pre {
+  background-color: $grey-light;
+  white-space: pre-wrap;
+  padding: 10px;
+  font-family: monospace;
+}
+
+.ql-font-monospace {
+  font-family: monospace;
+}
+
+.ql-font-serif {
+  font-family: serif;
+}
+
+.ql-indent-1 {
+  text-indent: 1em;
+}
+
+.ql-align-right {
+  text-align: right;
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-direction-rtl {
+  direction: rtl;
+}
+
+.ql-size-small {
+  font-size: small;
+}
+
+.ql-size-large {
+  font-size: x-large;
+}
+
+.ql-size-huge {
+  font-size: xx-large;
 }

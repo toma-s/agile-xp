@@ -2,19 +2,19 @@
   "1": [
     {
       "name": "'Intro'",
-      "type_id": 5,
+      "type_id": 1,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "intro"
     },
     {
       "name": "'Finding the Bugs in Legacy Program'",
-      "type_id": 4,
+      "type_id": 5,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "buggy"
     },
     {
       "name": "'Debugging the Legacy Program'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "fixed"
     }
@@ -22,13 +22,13 @@
   "2": [
     {
       "name": "'Adding New Feature: Board Size'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "featureSize"
     },
     {
       "name": "'Adding New Feature: Show Hints'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "featureHints"
     }
@@ -36,43 +36,43 @@
   "3": [
     {
       "name": "'Constants versus Enums'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "player"
     },
     {
       "name": "'No Duplication'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "duplicity"
     },
     {
       "name": "'Do One Thing'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "oneThing"
     },
     {
       "name": "'One Level of Abstraction per Function'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "abstrLevel"
     },
     {
       "name": "'Small!'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "left"
     },
     {
       "name": "'Error Handling I'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "fileException"
     },
     {
       "name": "'Error Handling II'",
-      "type_id": 2,
+      "type_id": 3,
       "created": "'2019-03-28 11:08:09.851'",
       "directory": "moveException"
     }

@@ -44,38 +44,4 @@ export class CoursesListComponent implements OnInit {
       error => console.log('error: ' + error)
     );
   }
-
-  delete(course) {
-    this.courseService.deleteCourse(course.id).subscribe(
-      data => {
-        console.log(data);
-        this.getData();
-      },
-      error => console.log('error: ' + error)
-    );
-  }
-
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  removeSelectedRows() {
-
-    this.selection.selected.forEach(item => {
-      const index: number = this.data.findIndex(d => d === item);
-      console.log(this.data.findIndex(d => d === item));
-      this.data.splice(index, 1);
-      this.dataSource = new MatTableDataSource<Element>(this.data);
-    });
-    this.selection = new SelectionModel<Element>(true, []);
-  }
-
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
 }

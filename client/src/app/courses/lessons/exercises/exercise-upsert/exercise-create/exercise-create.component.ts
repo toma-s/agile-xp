@@ -5,6 +5,8 @@ import { ExerciseUpsertComponent } from '../exercise-upsert.component';
 import { ActivatedRoute } from '@angular/router';
 import { Exercise } from '../../shared/exercise/exercise/exercise.model';
 import { ExerciseType } from '../../shared/exercise/exercise-type/exercise-type.model';
+import { ExerciseTypeService } from '../../shared/exercise/exercise-type/exercise-type.service';
+import { BugsNumber } from '../../shared/exercise/bugs-number/bugs-number.model';
 
 @Component({
   selector: 'exercise-create',
@@ -14,13 +16,15 @@ import { ExerciseType } from '../../shared/exercise/exercise-type/exercise-type.
 export class ExerciseCreateComponent extends ExerciseUpsertComponent {
 
   protected mode = 'create';
+  protected types;
 
   constructor(
     protected titleService: Title,
     protected fb: FormBuilder,
-    protected route: ActivatedRoute
+    protected exerciseTypeServise: ExerciseTypeService,
+    private route: ActivatedRoute
   ) {
-    super(titleService,  fb, route);
+    super(titleService, fb, exerciseTypeServise);
   }
 
   setTitle() {
@@ -31,22 +35,10 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
     const exercise = new Exercise();
     exercise.index = this.route.snapshot.params['index'];
     exercise.lessonId = this.route.snapshot.params['lessonId'];
-    const et = new ExerciseType();
-    et.id = null;
-    et.name = null;
-    et.value = null;
     return this.fb.group({
-      // exercise: this.getGroupForExercise(exercise, this.getExerciseTypeGroup()),
-      exercise: this.getGroupForExercise(exercise, et),
-      mode: 'create'
-    });
-  }
-
-  getExerciseTypeGroup() {
-    return this.fb.group({
-      id: null,
-      name: null,
-      value: null
+      exercise: this.getGroupForExercise(exercise, this.types[0]),
+      mode: 'create',
+      bugsNumber: new BugsNumber()
     });
   }
 
@@ -57,7 +49,7 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
         tabContent: this.fb.array([this.create()], Validators.required)
       }),
       publicType: this.fb.group({
-        chosen: ['same', Validators.compose([Validators.required])]
+        chosen: ['same', Validators.required]
       }),
       publicControl: this.fb.group({
         tabContent: this.fb.array([this.create()], Validators.required)
@@ -73,6 +65,6 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
   }
 
 
-  setupValidatorsOnInit() {}
+  setupValidatorsOnInit() { }
 
 }

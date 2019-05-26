@@ -1,22 +1,6 @@
 <div [formGroup]="form" class="mat-elevation-z2 card">
 
-  <div formArrayName="solutionControl" class="editor">
-    <mat-tab-group>
-      <mat-tab *ngFor="let file of form.controls.solutionControl.controls; let i = index;">
-        <div [formGroupName]="i">
-          <ng-template mat-tab-label>
-            {{ file.value.filename }}
-          </ng-template>
-          <ng-template matTabContent>
-            <div class="editor__container">
-              <ngx-monaco-editor [options]="editorOptions" formControlName="content" class="editor__monaco">
-              </ngx-monaco-editor>
-            </div>
-          </ng-template>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
+  <editor formGroupName="solutionControl" [editorOptions]="editorOptions" class="editor"></editor>
 
   <aside class="sidebar">
 
@@ -42,17 +26,24 @@
         <p>Load from exercise:</p>
       </mat-list-item>
 
-      <ng-container *ngFor="let lesson of lessons">
-        <mat-list-item mat-line>{{ lesson.name }}</mat-list-item>
-
-        <mat-action-list class="loader__exercises">
-          <div *ngFor="let exercise of exercises[lesson.id]">
-            <button mat-list-item class="loader__exercise" (click)="showLoadSolutionDialog(exercise)">
-              <p>{{ exercise.name }}</p>
-            </button>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let lesson of lessons">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ lesson.name }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <mat-action-list class="loader__exercises">
+              <div *ngFor="let exercise of exercises[lesson.id]">
+                <button mat-list-item class="loader__exercise" (click)="showLoadSolutionDialog(exercise)">
+                  <p>{{ exercise.name }}</p>
+                </button>
+              </div>
+            </mat-action-list>
           </div>
-        </mat-action-list>
-      </ng-container>
+        </mat-expansion-panel>
+      </mat-accordion>
     </mat-list>
 
   </aside>
