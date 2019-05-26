@@ -9,12 +9,12 @@
     <p><strong>Created: </strong>{{ course.created | date:'EEEE, MMMM d, y. HH:mm zzzz' }}</p>
     <p><strong>Description: </strong>{{ course.description }}</p>
 
-    <div *ngIf="lessons" class="lessons">
+    <div class="lessons">
 
       <h2>Syllabus</h2>
 
       <mat-accordion>
-        <mat-expansion-panel *ngFor="let lesson of lessons">
+        <mat-expansion-panel *ngFor="let lesson of lessons | async">
           <mat-expansion-panel-header class="lesson">
             <mat-panel-title class="lesson__name">
               <p>{{ lesson.name }}</p>
@@ -27,8 +27,10 @@
           <mat-nav-list *ngIf="exercises && estimations && exerciseTypes">
             <mat-list-item *ngFor="let exercise of getExercisesByLessonId(lesson.id)" class="exercise"
               [routerLink]="['lesson', lesson.id, 'exerciseSolve', exercise.id]" routerLinkActive="active">
+
               <p class="exercise__name">{{ exercise.name }}</p>
               <p class="exercise__type">{{ getExerciseTypeName(exercise.typeId) }}</p>
+              
               <div *ngIf="getEstimationByExerciseId(exercise.id)" class="exercise__progress">
                 <p *ngIf="getEstimationByExerciseId(exercise.id).solved;
               then isSolved; else notSolved"></p>

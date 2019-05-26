@@ -181,7 +181,7 @@ export class ExerciseEditComponent extends ExerciseUpsertComponent {
         tabContent: this.fb.array(this.getGroupForContents(this.getPrivate(exerciseType))),
       }),
       publicType: this.fb.group({
-        chosen: ['same', Validators.compose([Validators.required])]
+        chosen: ['same', Validators.required]
       }),
       publicControl: this.fb.group({
         tabContent: this.fb.array(this.getGroupForContents(this.getPublic(exerciseType))),

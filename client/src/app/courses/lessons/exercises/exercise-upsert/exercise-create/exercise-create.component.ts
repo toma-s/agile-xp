@@ -49,7 +49,7 @@ export class ExerciseCreateComponent extends ExerciseUpsertComponent {
         tabContent: this.fb.array([this.create()], Validators.required)
       }),
       publicType: this.fb.group({
-        chosen: ['same', Validators.compose([Validators.required])]
+        chosen: ['same', Validators.required]
       }),
       publicControl: this.fb.group({
         tabContent: this.fb.array([this.create()], Validators.required)
