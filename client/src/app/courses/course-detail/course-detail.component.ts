@@ -39,29 +39,19 @@ export class CourseDetailComponent implements OnInit {
   ) {  }
 
   async ngOnInit() {
-    await this.setCourse();
+    this.course = await this.getCourse();
     this.setTitle();
-    await this.setLessons();
+    this.lessons = this.getLessons();
     await this.getExercises();
-    console.log(this.exercises);
-    console.log(this.estimations);
     this.getExerciseTypes();
   }
 
-  async setCourse() {
+  async getCourse() {
     const course$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.courseService.getCourseById(Number(params.get('id')))
       )
     );
-    this.course = await this.getCourse(course$);
-  }
-
-  setTitle() {
-    this.titleService.setTitle(`${this.course.name} | AgileXP`);
-  }
-
-  getCourse(course$): Promise<Course> {
     return new Promise<Course>((resolve, reject) => {
       course$.subscribe(
         data => {
@@ -73,16 +63,17 @@ export class CourseDetailComponent implements OnInit {
   }
 
 
-  async setLessons() {
+  setTitle() {
+    this.titleService.setTitle(`${this.course.name} | AgileXP`);
+  }
+
+
+  async getLessons() {
     const lessons$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.lessonService.getLessonsByCourseId(Number(params.get('id')))
       )
     );
-    this.lessons = this.getLessons(lessons$);
-  }
-
-  getLessons(lessons$) {
     return new Promise<Array<Lesson>>((resolve, reject) => {
       lessons$.subscribe(
         data => resolve(data),
