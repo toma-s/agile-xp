@@ -131,10 +131,10 @@ INSERT INTO exercises (name, type_id, created, id, index, lesson_id, description
 VALUES ('Small!', 3, '2019-03-28 11:08:09.851', 10, 4, 3, '<h2>Objective</h2><blockquote><em>The first rule of functions is that they should be small. The second rule of functions is that they should be smaller than that.<br>(Robert C. Martin.&nbsp;Clean Code: A Handbook of Agile Software Craftsmanship)</em></blockquote><p>Most of the large code was refactored in previous steps because of extracting the function from large ones. But there are more ways to reduce function size without lost of readability.</p><p>Make the code functions a way more readable with changing the structure of variable <em>left</em>.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use map <em>left </em>to store the values of variables <em>leftB </em>and <em>leftW</em>.</li></ul>', False);
 
 INSERT INTO exercises (name, type_id, created, id, index, lesson_id, description, solved)
-VALUES ('Error Handling I', 3, '2019-03-28 11:08:09.851', 11, 5, 3, '<h2>Objective</h2><p>This exercise focuses on handling exceptions. Errors handling not only makes code robust, but also clean.</p><p>In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;<em>try/catch/finally</em>&nbsp;block. Use custom <em>IncorrectGameConfigFileException</em> instead and add pass it a message, which is originally printed to the console when an error occurs.</p><p>Function <em>checkLength</em> throws an unspecific Exception, which tells nothing about the error, so should be avoided. Use a custom <em>IncorrectGameConfigFileException </em>instead<em>.</em></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException</em> to handle errors when reading game configuration file</li></ul>', False);
+VALUES ('Error Handling I', 3, '2019-03-28 11:08:09.851', 11, 5, 3, '<h2>Objective</h2><p>This exercise focuses on handling exceptions. Errors handling not only makes code robust, but also clean.</p><p>In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;<em>try/catch/finally</em>&nbsp;block. Use custom <em>IncorrectGameConfigFileException</em> instead and add pass it a message, which is originally printed to the console when an error occurs.</p><p>Function <em>checkLength</em> throws an unspecific Exception, which tells nothing about the error, so should be avoided. Use a custom <em>IncorrectGameConfigFileException </em>instead<em>.</em></p><p>When error is caught at a high level of interaction with user, an error message is printed to console. Create a function <em>printIncorrectConfig</em> at PlaygroundPrinter to print this message.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException</em> to handle errors when reading game configuration file</li></ul>', False);
 
 INSERT INTO exercises (name, type_id, created, id, index, lesson_id, description, solved)
-VALUES ('Error Handling II', 3, '2019-03-28 11:08:09.851', 12, 6, 3, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">This exercise focuses on handling exceptions, as well as previous one.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;</span><em style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">try/catch/finally</em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;block.</span></p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException </em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;to handle errors on user input</span></li></ul>', False);
+VALUES ('Error Handling II', 3, '2019-03-28 11:08:09.851', 12, 6, 3, '<h2>Objective</h2><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">This exercise focuses on handling exceptions, as well as previous one.</span></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">In the legacy code, when an error occurs, the message is printed out to console right where it was occurred. Errors should be thrown instead and handled on higher level, with the use of&nbsp;</span><em style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">try/catch/finally</em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;block.</span></p><p>When error is caught at a high level of interaction with user, an error message is printed to console. Create a function <em>printNotPermittedMove</em> at PlaygroundPrinter to print this message.</p><p>Keep the original core structure of the code. You should write own tests so the program would maintain functional and new features would be implemented correctly. The program should pass all your and hidden tests.</p><p></p><h3><strong>User stories</strong></h3><ul><li>Use custom exception <em>IncorrectGameConfigFileException </em><span style=\"background-color: rgb(255, 255, 255); color: rgb(36, 41, 46);\">&nbsp;to handle errors on user input</span></li></ul>', False);
 
 INSERT INTO bugs_number (exercise_id, number)
 VALUES (2, 3);
@@ -1949,7 +1949,6 @@ import java.util.List;
 
 public class Reversi {
 
-    int size;
     int[][] playground;
     private int leftB = 0;
     private int leftW = 0;
@@ -1964,7 +1963,7 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
-            int configFileLinesNumber = 4;
+            int configFileLinesNumber = 3;
             if (gameConfig.length != configFileLinesNumber) {
                 throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
             }
@@ -1989,28 +1988,27 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
+        if (gameConfig == null) {
+            System.out.println("Game configuration is null");
+            return;
+        }
         try {
-            if (!gameConfig[0].matches("[0-9]+")) {
-                System.out.println("Incorrect size input");
-                return;
-            }
-            size = Integer.parseInt(gameConfig[0]);
-            if (gameConfig[1] == null || !gameConfig[1].matches("[B|W]")) {
+            if (gameConfig[0] == null || ! gameConfig[0].matches("[B|W]")) {
                 System.out.println("Incorrect player on turn input");
                 return;
             }
-            if ("B".equals(gameConfig[1])) {
+            if ("B".equals(gameConfig[0])) {
                 onTurn = 1;
-            } else if ("W".equals(gameConfig[1])) {
+            } else if ("W".equals(gameConfig[0])) {
                 onTurn = 0;
             }
-            playground = new int[size][size];
-            for (int r = 0; r < size; r++) {
-                for (int c = 0; c < size; c++) {
+            playground = new int[8][8];
+            for (int r = 0; r < 8; r++) {
+                for (int c = 0; c < 8; c++) {
                     playground[r][c] = -1;
                 }
             }
-            int[] piecesPositions = new int[] {2, 3};
+            int[] piecesPositions = new int[] {1, 2};
             for (int piecePosition : piecesPositions) {
                 String[] pieces = gameConfig[piecePosition].split(",");
                 for (String piece : pieces) {
@@ -2021,10 +2019,10 @@ public class Reversi {
                     String[] coordinates = piece.trim().split(" ");
                     int r = Integer.parseInt(coordinates[0]);
                     int c = Integer.parseInt(coordinates[1]);
-                    if (r >= size || c >= size) {
+                    if (r >= 8 || c >= 8) {
                         return;
                     }
-                    playground[r][c] = players[piecePosition - 2];
+                    playground[r][c] = players[piecePosition - 1];
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
@@ -2034,8 +2032,8 @@ public class Reversi {
 
     void initPiecesCount() {
         try {
-            for (int r = 0; r < size; r++) {
-                for (int c = 0; c < size; c++) {
+            for (int r = 0; r < 8; r++) {
+                for (int c = 0; c <= 7; c++) {
                     if (playground[r][c] == 1) {
                         leftB++;
                     } else if (playground[r][c] == 0) {
@@ -2053,7 +2051,7 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
-                PlaygroundPrinter.printPlayground(playground, size);
+                PlaygroundPrinter.printPlayground(playground);
                 PlaygroundPrinter.printMoveOnTurn(onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
@@ -2092,7 +2090,7 @@ public class Reversi {
     }
 
     void move(int r, int c) {
-        if (!(r >= 0 && c >= 0 && r < size && c < size)) {
+        if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
@@ -2105,7 +2103,7 @@ public class Reversi {
             return;
         }
 
-        ArrayList<List<Integer>> piecesToFlip = new ArrayList<>();
+        List<List<Integer>> piecesToFlip = new ArrayList<>();
         playground[r][c] = onTurn;
         int opposite = -1;
         if (onTurn == 0) opposite = 1;
@@ -2117,16 +2115,16 @@ public class Reversi {
             int dirC = c;
             dirR += direction[0];
             dirC += direction[1];
-            if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
+            if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
-            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];
-                if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
+                if (!(dirR >= 0 && dirC >= 0 && dirR <= 7 && dirC < 8)) break;
             }
-            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
             if (playground[dirR][dirC] != onTurn) continue;
             while (true) {
                 dirR -= direction[0];
@@ -2175,8 +2173,8 @@ public class Reversi {
 
     List<String> getPossibleMoves() {
         List<String> pieces = new ArrayList<>();
-        for (int r = 0; r < size; r++) {
-            for (int c = 0; c < size; c++) {
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
                 if (playground[r][c] != -1) continue;
                 List<List<Integer>> toFlip = new ArrayList<>();
                 playground[r][c] = onTurn;
@@ -2190,16 +2188,16 @@ public class Reversi {
                     int dirC = c;
                     dirR += direction[0];
                     dirC += direction[1];
-                    if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
+                    if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
                     dirR += direction[0];
                     dirC += direction[1];
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+                    if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
                     while (playground[dirR][dirC] == opposite) {
                         dirR += direction[0];
                         dirC += direction[1];
-                        if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
+                        if (!(dirR >= 0 && dirC >= 0 && dirR <= 7 && dirC <= 7)) break;
                     }
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+                    if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
                     if (playground[dirR][dirC] != onTurn) continue;
                     while (true) {
                         dirR -= direction[0];
@@ -2232,23 +2230,22 @@ public class Reversi {
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'PlaygroundPrinter.java', 4, 'import java.util.Collections;
-import java.util.List;
 
 class PlaygroundPrinter {
 
-    static void printPlayground(int[][] playground, int size) {
-        printUpperEnumeration(size);
-        for (int r = 0; r < size; r++) {
-            printLeftEnumeration(r, size);
-            for (int c = 0; c < size; c++) {
+    static void printPlayground(int[][] playground) {
+        printUpperEnumeration(8);
+        for (int r = 0; r < 8; r++) {
+            printLeftEnumeration(r, 8);
+            for (int c = 0; c <= 7; c++) {
                 if (playground[r][c] == -1) {
-                    printPiece("_", size);
+                    printPiece("_", 8);
                 }
                 else if (playground[r][c] == 1) {
-                    printPiece("B", size);
+                    printPiece("B", 8);
                 }
                 else if (playground[r][c] == 0) {
-                    printPiece("W", size);
+                    printPiece("W", 8);
                 }
             }
             System.out.println();
@@ -2280,7 +2277,6 @@ class PlaygroundPrinter {
     static void printPiecesNumber(int leftB, int leftW) {
         System.out.printf("Number of pieces: B: %s; W: %s%n%n", leftB, leftW);
     }
-
 }
 ');
 
@@ -2288,16 +2284,24 @@ INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, cont
 VALUES ('public_source', 'GameConfig.java', 4, 'import java.io.File;
 import java.nio.file.Path;
 
-class GameConfig {
+final class GameConfig {
 
-    private static String gameConfigDir = "./files/";;
+    private static final GameConfig INSTANCE = new GameConfig();
+
+    GameConfig() {}
+
+    public static GameConfig getInstance() {
+        return INSTANCE;
+    }
+
+    private static String gameConfigDir = "./files/";
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
     static Path game20bInit = new File(gameConfigDir + "game_20_b_init.txt").toPath();
     static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
     static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
     static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
     static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
     static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
@@ -2433,7 +2437,6 @@ VALUES ('private_test', 'InitGameTest.java', 4, 'import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class InitGameTest {
 
@@ -2695,7 +2698,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class PlaygroundPrinterTest {
 
@@ -2781,133 +2783,6 @@ public class PlaygroundPrinterTest {
     }
 
 
-    // hints
-
-    @Test
-    public void testPrintHints8bInit() {
-        Reversi reversi = new Reversi(GameConfig.game8bInit);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ _ o _ _ _ _ " + System.lineSeparator() +
-                "3 _ _ o W B _ _ _ " + System.lineSeparator() +
-                "4 _ _ _ B W o _ _ " + System.lineSeparator() +
-                "5 _ _ _ _ o _ _ _ " + System.lineSeparator() +
-                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHints8wInit() {
-        Reversi reversi = new Reversi(GameConfig.game8wInit);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ _ _ o _ _ _ " + System.lineSeparator() +
-                "3 _ _ _ W B o _ _ " + System.lineSeparator() +
-                "4 _ _ o B W _ _ _ " + System.lineSeparator() +
-                "5 _ _ _ o _ _ _ _ " + System.lineSeparator() +
-                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHints10bInit() {
-        Reversi reversi = new Reversi(GameConfig.game10bInit);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 8 9 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "3 _ _ _ _ o _ _ _ _ _ " + System.lineSeparator() +
-                "4 _ _ _ o W B _ _ _ _ " + System.lineSeparator() +
-                "5 _ _ _ _ B W o _ _ _ " + System.lineSeparator() +
-                "6 _ _ _ _ _ o _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "8 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "9 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHints8bAlmostComplete() {
-        Reversi reversi = new Reversi(GameConfig.game8bAlmostComplete);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 B W B B W W B B " + System.lineSeparator() +
-                "1 W W B W B W W W " + System.lineSeparator() +
-                "2 B W B W B B W B " + System.lineSeparator() +
-                "3 W W B B o W W B " + System.lineSeparator() +
-                "4 B B B W B B B B " + System.lineSeparator() +
-                "5 W W B W W W W W " + System.lineSeparator() +
-                "6 B B B W B B W B " + System.lineSeparator() +
-                "7 W B W W B W B W " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHints8bComplete() {
-        Reversi reversi = new Reversi(GameConfig.game8bComplete);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 B B B B B B B B " + System.lineSeparator() +
-                "1 B W W W W W W B " + System.lineSeparator() +
-                "2 B W W B W B W B " + System.lineSeparator() +
-                "3 B B W W B W B B " + System.lineSeparator() +
-                "4 B B B W B B W B " + System.lineSeparator() +
-                "5 B B W W B W W B " + System.lineSeparator() +
-                "6 B B B B B B W B " + System.lineSeparator() +
-                "7 W W W W W W W W " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHintsExecuteB54() {
-        Reversi reversi = new Reversi(GameConfig.game8bInit);
-        reversi.move(5, 4);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "3 _ _ _ W B o _ _ " + System.lineSeparator() +
-                "4 _ _ _ B B _ _ _ " + System.lineSeparator() +
-                "5 _ _ _ o B o _ _ " + System.lineSeparator() +
-                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertTrue(outContent.toString().contains(expected));
-    }
-
-    @Test
-    public void testPrintHintsExecuteB54W53() {
-        Reversi reversi = new Reversi(GameConfig.game8bInit);
-        reversi.move(5, 4);
-        reversi.move(5, 3);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ o _ _ _ _ _ " + System.lineSeparator() +
-                "3 _ _ o W B _ _ _ " + System.lineSeparator() +
-                "4 _ _ o W B _ _ _ " + System.lineSeparator() +
-                "5 _ _ o W B _ _ _ " + System.lineSeparator() +
-                "6 _ _ o _ _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertTrue(outContent.toString().contains(expected));
-    }
-
-
     // printMoveOnTurn
 
     @Test
@@ -2948,7 +2823,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class MoveTest {
 
@@ -3506,6 +3380,7 @@ import java.util.List;
 
 public class Reversi {
 
+    int size;
     int[][] playground;
     private int leftB = 0;
     private int leftW = 0;
@@ -3520,7 +3395,7 @@ public class Reversi {
     Reversi(Path gameFilePath) {
         try {
             String[] gameConfig = readGameConfig(gameFilePath);
-            int configFileLinesNumber = 3;
+            int configFileLinesNumber = 4;
             if (gameConfig.length != configFileLinesNumber) {
                 throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
             }
@@ -3545,27 +3420,28 @@ public class Reversi {
     }
 
     void initGame(String[] gameConfig) {
-        if (gameConfig == null) {
-            System.out.println("Game configuration is null");
-            return;
-        }
         try {
-            if (gameConfig[0] == null || ! gameConfig[0].matches("[B|W]")) {
+            if (!gameConfig[0].matches("[0-9]+")) {
+                System.out.println("Incorrect size input");
+                return;
+            }
+            size = Integer.parseInt(gameConfig[0]);
+            if (gameConfig[1] == null || !gameConfig[1].matches("[B|W]")) {
                 System.out.println("Incorrect player on turn input");
                 return;
             }
-            if ("B".equals(gameConfig[0])) {
+            if ("B".equals(gameConfig[1])) {
                 onTurn = 1;
-            } else if ("W".equals(gameConfig[0])) {
+            } else if ("W".equals(gameConfig[1])) {
                 onTurn = 0;
             }
-            playground = new int[8][8];
-            for (int r = 0; r < 8; r++) {
-                for (int c = 0; c < 8; c++) {
+            playground = new int[size][size];
+            for (int r = 0; r < size; r++) {
+                for (int c = 0; c < size; c++) {
                     playground[r][c] = -1;
                 }
             }
-            int[] piecesPositions = new int[] {1, 2};
+            int[] piecesPositions = new int[] {2, 3};
             for (int piecePosition : piecesPositions) {
                 String[] pieces = gameConfig[piecePosition].split(",");
                 for (String piece : pieces) {
@@ -3576,10 +3452,10 @@ public class Reversi {
                     String[] coordinates = piece.trim().split(" ");
                     int r = Integer.parseInt(coordinates[0]);
                     int c = Integer.parseInt(coordinates[1]);
-                    if (r >= 8 || c >= 8) {
+                    if (r >= size || c >= size) {
                         return;
                     }
-                    playground[r][c] = players[piecePosition - 1];
+                    playground[r][c] = players[piecePosition - 2];
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
@@ -3589,8 +3465,8 @@ public class Reversi {
 
     void initPiecesCount() {
         try {
-            for (int r = 0; r < 8; r++) {
-                for (int c = 0; c <= 7; c++) {
+            for (int r = 0; r < size; r++) {
+                for (int c = 0; c < size; c++) {
                     if (playground[r][c] == 1) {
                         leftB++;
                     } else if (playground[r][c] == 0) {
@@ -3608,7 +3484,7 @@ public class Reversi {
         try {
             String line;
             while (!ended) {
-                PlaygroundPrinter.printPlayground(playground);
+                PlaygroundPrinter.printPlayground(playground, size);
                 PlaygroundPrinter.printMoveOnTurn(onTurn);
                 if (winner != -1) break;
                 if ((line = reader.readLine()) == null) break;
@@ -3647,7 +3523,7 @@ public class Reversi {
     }
 
     void move(int r, int c) {
-        if (!(r >= 0 && c >= 0 && r <= 7 && c < 8)) {
+        if (!(r >= 0 && c >= 0 && r < size && c < size)) {
             System.out.println("Move out of bounds is not permitted");
             return;
         }
@@ -3660,7 +3536,7 @@ public class Reversi {
             return;
         }
 
-        List<List<Integer>> piecesToFlip = new ArrayList<>();
+        ArrayList<List<Integer>> piecesToFlip = new ArrayList<>();
         playground[r][c] = onTurn;
         int opposite = -1;
         if (onTurn == 0) opposite = 1;
@@ -3672,16 +3548,16 @@ public class Reversi {
             int dirC = c;
             dirR += direction[0];
             dirC += direction[1];
-            if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
+            if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
             dirR += direction[0];
             dirC += direction[1];
-            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
+            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
             while (playground[dirR][dirC] == opposite) {
                 dirR += direction[0];
                 dirC += direction[1];
-                if (!(dirR >= 0 && dirC >= 0 && dirR <= 7 && dirC < 8)) break;
+                if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
             }
-            if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
+            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
             if (playground[dirR][dirC] != onTurn) continue;
             while (true) {
                 dirR -= direction[0];
@@ -3730,8 +3606,8 @@ public class Reversi {
 
     List<String> getPossibleMoves() {
         List<String> pieces = new ArrayList<>();
-        for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++) {
+        for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size; c++) {
                 if (playground[r][c] != -1) continue;
                 List<List<Integer>> toFlip = new ArrayList<>();
                 playground[r][c] = onTurn;
@@ -3745,16 +3621,16 @@ public class Reversi {
                     int dirC = c;
                     dirR += direction[0];
                     dirC += direction[1];
-                    if (dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8 && playground[dirR][dirC] != opposite) continue;
+                    if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
                     dirR += direction[0];
                     dirC += direction[1];
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
+                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
                     while (playground[dirR][dirC] == opposite) {
                         dirR += direction[0];
                         dirC += direction[1];
-                        if (!(dirR >= 0 && dirC >= 0 && dirR <= 7 && dirC <= 7)) break;
+                        if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
                     }
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < 8 && dirC < 8)) continue;
+                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
                     if (playground[dirR][dirC] != onTurn) continue;
                     while (true) {
                         dirR -= direction[0];
@@ -3787,22 +3663,23 @@ public class Reversi {
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
 VALUES ('public_source', 'PlaygroundPrinter.java', 5, 'import java.util.Collections;
+import java.util.List;
 
 class PlaygroundPrinter {
 
-    static void printPlayground(int[][] playground) {
-        printUpperEnumeration(8);
-        for (int r = 0; r < 8; r++) {
-            printLeftEnumeration(r, 8);
-            for (int c = 0; c <= 7; c++) {
+    static void printPlayground(int[][] playground, int size) {
+        printUpperEnumeration(size);
+        for (int r = 0; r < size; r++) {
+            printLeftEnumeration(r, size);
+            for (int c = 0; c < size; c++) {
                 if (playground[r][c] == -1) {
-                    printPiece("_", 8);
+                    printPiece("_", size);
                 }
                 else if (playground[r][c] == 1) {
-                    printPiece("B", 8);
+                    printPiece("B", size);
                 }
                 else if (playground[r][c] == 0) {
-                    printPiece("W", 8);
+                    printPiece("W", size);
                 }
             }
             System.out.println();
@@ -3834,6 +3711,7 @@ class PlaygroundPrinter {
     static void printPiecesNumber(int leftB, int leftW) {
         System.out.printf("Number of pieces: B: %s; W: %s%n%n", leftB, leftW);
     }
+
 }
 ');
 
@@ -3841,24 +3719,16 @@ INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, cont
 VALUES ('public_source', 'GameConfig.java', 5, 'import java.io.File;
 import java.nio.file.Path;
 
-final class GameConfig {
+class GameConfig {
 
-    private static final GameConfig INSTANCE = new GameConfig();
-
-    GameConfig() {}
-
-    public static GameConfig getInstance() {
-        return INSTANCE;
-    }
-
-    private static String gameConfigDir = "./files/";
+    private static String gameConfigDir = "./files/";;
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
     static Path game20bInit = new File(gameConfigDir + "game_20_b_init.txt").toPath();
     static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
     static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
     static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
     static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
     static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
@@ -3994,6 +3864,7 @@ VALUES ('private_test', 'InitGameTest.java', 5, 'import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class InitGameTest {
 
@@ -4255,6 +4126,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PlaygroundPrinterTest {
 
@@ -4340,6 +4212,133 @@ public class PlaygroundPrinterTest {
     }
 
 
+    // hints
+
+    @Test
+    public void testPrintHints8bInit() {
+        Reversi reversi = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ _ o _ _ _ _ " + System.lineSeparator() +
+                "3 _ _ o W B _ _ _ " + System.lineSeparator() +
+                "4 _ _ _ B W o _ _ " + System.lineSeparator() +
+                "5 _ _ _ _ o _ _ _ " + System.lineSeparator() +
+                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHints8wInit() {
+        Reversi reversi = new Reversi(GameConfig.game8wInit);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ _ _ o _ _ _ " + System.lineSeparator() +
+                "3 _ _ _ W B o _ _ " + System.lineSeparator() +
+                "4 _ _ o B W _ _ _ " + System.lineSeparator() +
+                "5 _ _ _ o _ _ _ _ " + System.lineSeparator() +
+                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHints10bInit() {
+        Reversi reversi = new Reversi(GameConfig.game10bInit);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 8 9 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "3 _ _ _ _ o _ _ _ _ _ " + System.lineSeparator() +
+                "4 _ _ _ o W B _ _ _ _ " + System.lineSeparator() +
+                "5 _ _ _ _ B W o _ _ _ " + System.lineSeparator() +
+                "6 _ _ _ _ _ o _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "8 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "9 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHints8bAlmostComplete() {
+        Reversi reversi = new Reversi(GameConfig.game8bAlmostComplete);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 B W B B W W B B " + System.lineSeparator() +
+                "1 W W B W B W W W " + System.lineSeparator() +
+                "2 B W B W B B W B " + System.lineSeparator() +
+                "3 W W B B o W W B " + System.lineSeparator() +
+                "4 B B B W B B B B " + System.lineSeparator() +
+                "5 W W B W W W W W " + System.lineSeparator() +
+                "6 B B B W B B W B " + System.lineSeparator() +
+                "7 W B W W B W B W " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHints8bComplete() {
+        Reversi reversi = new Reversi(GameConfig.game8bComplete);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 B B B B B B B B " + System.lineSeparator() +
+                "1 B W W W W W W B " + System.lineSeparator() +
+                "2 B W W B W B W B " + System.lineSeparator() +
+                "3 B B W W B W B B " + System.lineSeparator() +
+                "4 B B B W B B W B " + System.lineSeparator() +
+                "5 B B W W B W W B " + System.lineSeparator() +
+                "6 B B B B B B W B " + System.lineSeparator() +
+                "7 W W W W W W W W " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHintsExecuteB54() {
+        Reversi reversi = new Reversi(GameConfig.game8bInit);
+        reversi.move(5, 4);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "3 _ _ _ W B o _ _ " + System.lineSeparator() +
+                "4 _ _ _ B B _ _ _ " + System.lineSeparator() +
+                "5 _ _ _ o B o _ _ " + System.lineSeparator() +
+                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertTrue(outContent.toString().contains(expected));
+    }
+
+    @Test
+    public void testPrintHintsExecuteB54W53() {
+        Reversi reversi = new Reversi(GameConfig.game8bInit);
+        reversi.move(5, 4);
+        reversi.move(5, 3);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ o _ _ _ _ _ " + System.lineSeparator() +
+                "3 _ _ o W B _ _ _ " + System.lineSeparator() +
+                "4 _ _ o W B _ _ _ " + System.lineSeparator() +
+                "5 _ _ o W B _ _ _ " + System.lineSeparator() +
+                "6 _ _ o _ _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertTrue(outContent.toString().contains(expected));
+    }
+
+
     // printMoveOnTurn
 
     @Test
@@ -4380,6 +4379,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MoveTest {
 
@@ -6621,6 +6621,1724 @@ public class Reversi {
         return gameConfig;
     }
 
+    void initGame(String[] gameConfig){
+        try {
+            if (!gameConfig[0].matches("[0-9]+")) {
+                System.out.println("Incorrect size input");
+                return;
+            }
+            size = Integer.parseInt(gameConfig[0]);
+            if (gameConfig[1] == null || !gameConfig[1].matches("[B|W]")) {
+                System.out.println("Incorrect player on turn input");
+                return;
+            }
+            if ("B".equals(gameConfig[1])) {
+                onTurn = Player.B;
+            } else if ("W".equals(gameConfig[1])) {
+                onTurn = Player.W;
+            }
+            playground = new Player[size][size];
+            for (int r = 0; r < size; r++) {
+                for (int c = 0; c < size; c++) {
+                    playground[r][c] = Player.NONE;
+                }
+            }
+            int[] piecesPositions = new int[] {2, 3};
+            for (int piecePosition : piecesPositions) {
+                String[] pieces = gameConfig[piecePosition].split(",");
+                for (String piece : pieces) {
+                    if (!piece.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
+                        System.out.println("Incorrect piece input");
+                        return;
+                    }
+                    String[] coordinates = piece.trim().split(" ");
+                    int r = Integer.parseInt(coordinates[0]);
+                    int c = Integer.parseInt(coordinates[1]);
+                    if (r >= size || c >= size) {
+                        return;
+                    }
+                    playground[r][c] = players[piecePosition - 2];
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            System.out.println("Game configuration is incorrect");
+        }
+    }
+
+    void initPiecesCount() {
+        try {
+            for (int r = 0; r < size; r++) {
+                for (int c = 0; c < size; c++) {
+                    if (playground[r][c] == Player.B) {
+                        leftB++;
+                    } else if (playground[r][c] == Player.W) {
+                        leftW++;
+                    }
+                }
+            }
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Playground  is not valid" + e.getMessage());
+        }
+    }
+
+    private void run() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String line;
+            while (!ended) {
+                PlaygroundPrinter.printHints(playground, size, getPossibleMoves());
+                PlaygroundPrinter.printPlayground(playground, size);
+                PlaygroundPrinter.printMoveOnTurn(onTurn);
+                if (winner != Player.NONE) break;
+                if ((line = reader.readLine()) == null) break;
+                if (!line.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
+                    System.out.println("Incorrect piece input");
+                    return;
+                }
+                String[] coordinates = line.trim().split(" ");
+                int r = Integer.parseInt(coordinates[0]);
+                int c = Integer.parseInt(coordinates[1]);
+                move(r, c);
+                printPiecesLeftCount();
+                if (! areValidMoves()) {
+                    printPiecesLeftCount();
+                    ended = true;
+                    if (getLeftB() > getLeftW()) winner = Player.B;
+                    else if (getLeftW() > getLeftB()) winner = Player.W;
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
+        }
+    }
+
+    private void printPiecesLeftCount() {
+        PlaygroundPrinter.printPiecesNumber(getLeftB(), getLeftW());
+    }
+
+    int getLeftB() {
+        return leftB;
+    }
+
+    int getLeftW() {
+        return leftW;
+    }
+
+    void move(int r, int c) {
+        if (!(r >= 0 && c >= 0 && r < size && c < size)) {
+            System.out.println("Move out of bounds is not permitted");
+            return;
+        }
+        if (playground[r][c] != Player.NONE) {
+            System.out.println("Move on not empty piece is not permitted");
+            return;
+        }
+        if (winner != Player.NONE) {
+            System.out.println("The game is over. No moves are permitted");
+            return;
+        }
+
+        List<List<Integer>> piecesToFlip = new ArrayList<>();
+        playground[r][c] = onTurn;
+        Player opposite = Player.NONE;
+        if (onTurn == Player.W) opposite = Player.B;
+        else if (onTurn == Player.B) opposite = Player.W;
+
+        int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
+        for (int[] direction : directions) {
+            int dirR = r;
+            int dirC = c;
+            dirR += direction[0];
+            dirC += direction[1];
+            if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
+            dirR += direction[0];
+            dirC += direction[1];
+            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+            while (playground[dirR][dirC] == opposite) {
+                dirR += direction[0];
+                dirC += direction[1];
+                if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
+            }
+            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+            if (playground[dirR][dirC] != onTurn) continue;
+            while (true) {
+                dirR -= direction[0];
+                dirC -= direction[1];
+                if (dirR == r && dirC == c) break;
+                piecesToFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
+            }
+        }
+
+        playground[r][c] = Player.NONE;
+        if (!piecesToFlip.isEmpty()) {
+            piecesToFlip.add(new ArrayList<>(Arrays.asList(r, c)));
+        }
+
+        if (piecesToFlip.isEmpty()) {
+            System.out.println("Move is not permitted");
+            return;
+        }
+        for (List<Integer> piece : piecesToFlip) {
+            int pieceR = piece.get(0);
+            int pieceC = piece.get(1);
+            if (playground[pieceR][pieceC] == onTurn) break;
+            if (playground[pieceR][pieceC] == Player.NONE) {
+                playground[pieceR][pieceC] = onTurn;
+                if (onTurn == Player.B) leftB++;
+                else if (onTurn == Player.W) leftW++;
+            } else {
+                playground[pieceR][pieceC] = onTurn;
+                if (onTurn == Player.B) {
+                    leftB++;
+                    leftW--;
+                } else {
+                    leftW++;
+                    leftB--;
+                }
+            }
+        }
+
+        if (onTurn == Player.W) onTurn = Player.B;
+        else if (onTurn == Player.B) onTurn = Player.W;
+    }
+
+    boolean areValidMoves() {
+        return !getPossibleMoves().isEmpty();
+    }
+
+    List<String> getPossibleMoves() {
+        List<String> pieces = new ArrayList<>();
+        for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size; c++) {
+                if (playground[r][c] != Player.NONE) continue;
+                List<List<Integer>> toFlip = new ArrayList<>();
+                playground[r][c] = onTurn;
+                Player opposite  = Player.NONE;
+                if (onTurn == Player.W) opposite = Player.B;
+                else if (onTurn == Player.B) opposite = Player.W;
+
+                int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
+                for (int[] direction : directions) {
+                    int dirR = r;
+                    int dirC = c;
+                    dirR += direction[0];
+                    dirC += direction[1];
+                    if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
+                    dirR += direction[0];
+                    dirC += direction[1];
+                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+                    while (playground[dirR][dirC] == opposite) {
+                        dirR += direction[0];
+                        dirC += direction[1];
+                        if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
+                    }
+                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
+                    if (playground[dirR][dirC] != onTurn) continue;
+                    while (true) {
+                        dirR -= direction[0];
+                        dirC -= direction[1];
+                        if (dirR == r && dirC == c) break;
+                        toFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
+                    }
+                }
+
+                playground[r][c] = Player.NONE;
+                if (!toFlip.isEmpty()) {
+                    toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
+                }
+                if (toFlip.isEmpty()) continue;
+                pieces.add(String.format("%s %s", r,  c));
+            }
+        }
+        return pieces;
+    }
+
+    public static void main(String[] args) {
+        Path gameFilePath = GameConfig.game8bInit;
+        Reversi rev = new Reversi(gameFilePath);
+        rev.run();
+
+    }
+
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'PlaygroundPrinter.java', 7, 'import java.util.Collections;
+import java.util.List;
+
+class PlaygroundPrinter {
+
+    static void printPlayground(Player[][] playground, int size) {
+        printUpperEnumeration(size);
+        for (int r = 0; r < size; r++) {
+            printLeftEnumeration(r, size);
+            for (int c = 0; c < size; c++) {
+                if (playground[r][c] == Player.NONE) {
+                    printPiece("_", size);
+                }
+                else if (playground[r][c] == Player.B) {
+                    printPiece("B", size);
+                }
+                else if (playground[r][c] == Player.W) {
+                    printPiece("W", size);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private static void printUpperEnumeration(int size) {
+        int length = String.valueOf(size - 1).length() + 1;
+        System.out.print(String.join("", Collections.nCopies(length, " ")));
+        for (int i = 0; i < size; i++) {
+            System.out.print(String.format("%-" + (length) + "d", i));
+        }
+        System.out.print(System.lineSeparator());
+    }
+
+    private static void printLeftEnumeration(int r, int size) {
+        int length = String.valueOf(size - 1).length();
+        System.out.print(String.format("%" + length + "d ", r));
+    }
+
+    private static void printPiece(String piece, int size) {
+        System.out.print(piece + String.join("", Collections.nCopies(String.valueOf(size - 1).length(), " ")));
+    }
+
+    static void printHints(Player[][] playground, int size, List<String> possibleMoves) {
+        System.out.println("Possible moves:");
+        printUpperEnumeration(size);
+        for (int r = 0; r < size; r++) {
+            printLeftEnumeration(r, size);
+            for (int c = 0; c < size; c++) {
+                if (possibleMoves.contains(String.format("%d %d", r, c))) {
+                    System.out.print("o ");
+                } else if (playground[r][c] == Player.NONE) {
+                    printPiece("_", size);
+                }
+                else if (playground[r][c] == Player.B) {
+                    printPiece("B", size);
+                }
+                else if (playground[r][c] == Player.W) {
+                    printPiece("W", size);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    static void printMoveOnTurn(Player onTurn) {
+        System.out.format("Make a move. %s is on turn%n", onTurn);
+    }
+
+    static void printPiecesNumber(int leftB, int leftW) {
+        System.out.printf("Number of pieces: B: %s; W: %s%n%n", leftB, leftW);
+    }
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'Player.java', 7, 'public enum Player {
+    B(1), W(0), NONE(-1);
+
+    private final int value;
+
+    Player(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'GameConfig.java', 7, 'import java.io.File;
+import java.nio.file.Path;
+
+class GameConfig {
+
+    private static String gameConfigDir = "./files/";;
+    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
+    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
+    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
+    static Path game20bInit = new File(gameConfigDir + "game_20_b_init.txt").toPath();
+    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
+    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
+    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
+    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
+    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
+    static Path gameNoPieces = new File(gameConfigDir + "game_no_pieces.txt").toPath();
+    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
+    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'PlayerTest.java', 7, 'import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class PlayerTest {
+
+    @Test
+    public void testPlayerValueOf() {
+        assertEquals("Value of Player B", Player.B, Player.valueOf("B"));
+        assertEquals("Value of Player W", Player.W, Player.valueOf("W"));
+        assertEquals("Value of Player NONE", Player.NONE, Player.valueOf("NONE"));
+    }
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'ReadGameConfigTest.java', 7, 'import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class ReadGameConfigTest {
+
+    private Reversi rev = new Reversi();
+
+    @Test
+    public void testReadGameConfig8bInit() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
+
+        assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game8bInit config file", "3 4, 4 3", gameConfig[2]);
+        assertEquals("4th line of game8bInit config file", "3 3, 4 4", gameConfig[3]);
+    }
+
+    @Test
+    public void testReadGameConfig8wInit() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
+
+        assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
+        assertEquals("2nd line of game8wInit config file", "W", gameConfig[1]);
+        assertEquals("3rd line of game8wInit config file", "3 4, 4 3", gameConfig[2]);
+        assertEquals("4th line of game8wInit config file", "3 3, 4 4", gameConfig[3]);
+    }
+
+    @Test
+    public void testReadGameConfig10bInit() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.game10bInit);
+
+        assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
+        assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
+        assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
+        assertEquals("3rd line of game10bInit config file", "4 5, 5 4", gameConfig[2]);
+        assertEquals("4th line of game10bInit config file", "4 4, 5 5", gameConfig[3]);
+    }
+
+    @Test
+    public void testReadGameConfigEmpty() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
+
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
+    }
+
+    @Test
+    public void testReadGameConfigNotExisting() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
+
+        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
+    }
+
+
+    @Test
+    public void testReadGameConfigFiveLines() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameFiveLines);
+
+        assertEquals("Lines number of gameFiveLines config file", 5, gameConfig.length);
+        assertEquals("1st line of gameFiveLines config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameFiveLines config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameFiveLines config file", "3 4, 4 3", gameConfig[2]);
+        assertEquals("4th line of gameFiveLines config file", "3 3, 4 4", gameConfig[3]);
+        assertEquals("5th line of gameFiveLines config file", "3 3, 4 4", gameConfig[4]);
+    }
+
+    @Test
+    public void testReadGameConfigAlpha() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameAlpha);
+
+        assertEquals("Lines number of gameAlpha config file", 4, gameConfig.length);
+        assertEquals("1st line of gameAlpha config file", "8", gameConfig[0]);
+        assertEquals("2nd line of gameAlpha config file", "B", gameConfig[1]);
+        assertEquals("3rd line of gameAlpha config file", "E 4, D 5", gameConfig[2]);
+        assertEquals("4th line of gameAlpha config file", "D 4, E 5", gameConfig[3]);
+    }
+
+    @Test
+    public void testReadGameConfigNoSize() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoSize);
+
+        assertEquals(3, gameConfig.length);
+        assertEquals("B", gameConfig[0]);
+        assertEquals("3 4, 4 3", gameConfig[1]);
+        assertEquals("3 3, 4 4", gameConfig[2]);
+    }
+
+    @Test
+    public void testReadGameConfigNoOnTurn() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoOnTurn);
+
+        assertEquals(3, gameConfig.length);
+        assertEquals("8", gameConfig[0]);
+        assertEquals("3 4, 4 3", gameConfig[1]);
+        assertEquals("3 3, 4 4", gameConfig[2]);
+    }
+
+    @Test
+    public void testReadGameConfigNoPieces() {
+        Reversi game = rev;
+        String[] gameConfig = game.readGameConfig(GameConfig.gameNoPieces);
+
+        assertEquals(2, gameConfig.length);
+        assertEquals("8", gameConfig[0]);
+        assertEquals("B", gameConfig[1]);
+    }
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'InitGameTest.java', 7, 'import org.junit.Assert;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+
+public class InitGameTest {
+
+    private Reversi rev = new Reversi();
+
+
+    // isPieceInputCorrect
+
+    @Test
+    public void testPieceInput00() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        assertTrue("piece input: 00", game.isPieceInputCorrect("0 0"));
+    }
+
+    @Test
+    public void testPieceInput00NoSpace() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        assertFalse("piece input: 00", game.isPieceInputCorrect("00"));
+    }
+
+    @Test
+    public void testPieceInputD3() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        assertFalse("piece input: D3", game.isPieceInputCorrect("D 3"));
+    }
+
+
+    // testGetCoordinates
+
+    @Test
+    public void testGetCoordinates34() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        int[] expected = new int[] {3, 4};
+        int[] result = game.getCoordinates("3 4");
+        assertArrayEquals(expected, result);
+    }
+    
+
+    // initPiecesCount
+
+    @Test
+    public void testInitPiecesCountInit() {
+        String[] gameConfig = new String[] {"8", "B", "3 4, 4 3", "3 3, 4 4"};
+        Reversi game = TestUtils.initReversi(gameConfig);
+        game.initPiecesCount();
+
+        assertEquals("init pieces count on initial game config", 2, game.getLeftB());
+        assertEquals("init pieces count on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void testInitPiecesCountEmpty() {
+        Reversi game = TestUtils.getRevWithPlayground();
+
+        assertEquals("init pieces count on empty game config", 0, game.getLeftB());
+        assertEquals("init pieces count on empty game config", 0, game.getLeftW());
+    }
+
+
+    // getLeftB
+
+    @Test
+    public void testGetLeftB() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+    }
+
+
+    // getLeftW
+
+    @Test
+    public void testGetLeftW() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+
+    // Reversi
+
+    @Test
+    public void test8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertEquals("on turn player on initial game config", Player.B, game.onTurn);
+        assertEquals("size on initial game config", 8, game.size);
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void test8wInit() {
+        Reversi game = new Reversi(GameConfig.game8wInit);
+
+        assertEquals("on turn player on initial game config", Player.W, game.onTurn);
+        assertEquals("size on initial game config", 8, game.size);
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void test10bInit() {
+        Reversi game = new Reversi(GameConfig.game10bInit);
+
+        assertEquals("on turn player on initial game config", Player.B, game.onTurn);
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 5));
+        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 5, 4));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 5, 5));
+        assertEquals("left Bs on initial game config", 2, game.getLeftB());
+        assertEquals("left Ws on initial game config", 2, game.getLeftW());
+    }
+
+    @Test
+    public void testEmpty() {
+        Reversi game = new Reversi(GameConfig.gameEmpty);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertTrue(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testNotExisting() {
+        Reversi game = new Reversi(GameConfig.gameNotExisting);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertTrue(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testFiveLines() {
+        Reversi game = new Reversi(GameConfig.gameFiveLines);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertTrue(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testAlpha() {
+        Reversi game = new Reversi(GameConfig.gameAlpha);
+
+        assertArrayEquals(TestUtils.getEmptyPlayground(), game.playground);
+        assertFalse(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testNoSize() {
+        Reversi game = new Reversi(GameConfig.gameNoSize);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertTrue(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testNoOnTurn() {
+        Reversi game = new Reversi(GameConfig.gameNoOnTurn);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertTrue(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+    @Test
+    public void testNoPieces() {
+        Reversi game = new Reversi(GameConfig.gameNoPieces);
+
+        assertArrayEquals(null, game.playground);
+        assertEquals(Player.NONE, game.onTurn);
+        assertTrue(game.ended);
+        assertEquals(Player.NONE, game.winner);
+    }
+
+
+    // createPlayground
+
+    @Test
+    public void testCreatePlayground() {
+        Reversi game = TestUtils.getRevWithPlayground();
+
+        assertArrayEquals("create empty playground", TestUtils.getEmptyPlayground(), game.playground);
+    }
+
+    // initGame
+
+    @Test
+    public void testInitGame8bInit() {
+        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertEquals("init playground on initial game config", 8, game.size);
+        Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+    }
+
+    @Test
+    public void testInitGame8wInit() {
+        String[] gameConfig = new String[]{"8", "W", "3 4, 4 3", "3 3, 4 4"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertEquals("init playground on initial game config", 8, game.size);
+        Assert.assertEquals("init playground on initial game config", Player.W, game.onTurn);
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+    }
+
+    @Test
+    public void testInitGame10bInit() {
+        String[] gameConfig = new String[]{"10", "B", "4 5, 5 4", "4 4, 5 5"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertEquals("init playground on initial game config", 10, game.size);
+        Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 5));
+        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 5, 4));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
+        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 5, 5));
+    }
+
+    @Test
+    public void testInitGameEmpty() {
+        String[] gameConfig = new String[]{};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertArrayEquals(null, game.playground);
+    }
+
+    @Test
+    public void testInitGameAlpha() {
+        String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
+        Reversi game = rev;
+        game.initGame(gameConfig);
+
+        Assert.assertArrayEquals(TestUtils.getEmptyPlayground(), game.playground);
+    }
+}');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'PlaygroundPrinterTest.java', 7, 'import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class PlaygroundPrinterTest {
+
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @After
+    public void restoreStreams() {
+        System.setOut(originalOut);
+    }
+
+    @Test
+    public void testPrintPlayground8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printPlayground(game.playground, game.size);
+        String expected =
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                        "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "2 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "3 _ _ _ W B _ _ _ " + System.lineSeparator() +
+                        "4 _ _ _ B W _ _ _ " + System.lineSeparator() +
+                        "5 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintPlayground8wInit() {
+        Reversi game = new Reversi(GameConfig.game8wInit);
+        PlaygroundPrinter.printPlayground(game.playground, game.size);
+        String expected =
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                        "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "2 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "3 _ _ _ W B _ _ _ " + System.lineSeparator() +
+                        "4 _ _ _ B W _ _ _ " + System.lineSeparator() +
+                        "5 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintPlayground10bInit() {
+        Reversi game = new Reversi(GameConfig.game10bInit);
+        PlaygroundPrinter.printPlayground(game.playground, game.size);
+        String expected =
+                "  0 1 2 3 4 5 6 7 8 9 " + System.lineSeparator() +
+                        "0 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "1 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "2 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "3 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "4 _ _ _ _ W B _ _ _ _ " + System.lineSeparator() +
+                        "5 _ _ _ _ B W _ _ _ _ " + System.lineSeparator() +
+                        "6 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "7 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "8 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                        "9 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintPlayground20bInit() {
+        Reversi game = new Reversi(GameConfig.game20bInit);
+        PlaygroundPrinter.printPlayground(game.playground, game.size);
+        String expected =
+                "   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 " + System.lineSeparator() +
+                " 0 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 1 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 2 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 3 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 4 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 5 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 6 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 7 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 8 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                " 9 _  _  _  _  _  _  _  _  _  W  B  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "10 _  _  _  _  _  _  _  _  _  B  W  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "11 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "12 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "13 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "14 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "15 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "16 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "17 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "18 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
+                "19 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintPlayground8bAlmostComplete() {
+        Reversi game = new Reversi(GameConfig.game8bAlmostComplete);
+        PlaygroundPrinter.printPlayground(game.playground, game.size);
+        String expected =
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                        "0 B W B B W W B B " + System.lineSeparator() +
+                        "1 W W B W B W W W " + System.lineSeparator() +
+                        "2 B W B W B B W B " + System.lineSeparator() +
+                        "3 W W B B _ W W B " + System.lineSeparator() +
+                        "4 B B B W B B B B " + System.lineSeparator() +
+                        "5 W W B W W W W W " + System.lineSeparator() +
+                        "6 B B B W B B W B " + System.lineSeparator() +
+                        "7 W B W W B W B W " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintPlayground8bComplete() {
+        Reversi game = new Reversi(GameConfig.game8bComplete);
+        PlaygroundPrinter.printPlayground(game.playground, game.size);
+        String expected =
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                        "0 B B B B B B B B " + System.lineSeparator() +
+                        "1 B W W W W W W B " + System.lineSeparator() +
+                        "2 B W W B W B W B " + System.lineSeparator() +
+                        "3 B B W W B W B B " + System.lineSeparator() +
+                        "4 B B B W B B W B " + System.lineSeparator() +
+                        "5 B B W W B W W B " + System.lineSeparator() +
+                        "6 B B B B B B W B " + System.lineSeparator() +
+                        "7 W W W W W W W W " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+
+    // hints
+
+    @Test
+    public void testPrintHints8bInit() {
+        Reversi reversi = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ _ o _ _ _ _ " + System.lineSeparator() +
+                "3 _ _ o W B _ _ _ " + System.lineSeparator() +
+                "4 _ _ _ B W o _ _ " + System.lineSeparator() +
+                "5 _ _ _ _ o _ _ _ " + System.lineSeparator() +
+                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHints8wInit() {
+        Reversi reversi = new Reversi(GameConfig.game8wInit);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ _ _ o _ _ _ " + System.lineSeparator() +
+                "3 _ _ _ W B o _ _ " + System.lineSeparator() +
+                "4 _ _ o B W _ _ _ " + System.lineSeparator() +
+                "5 _ _ _ o _ _ _ _ " + System.lineSeparator() +
+                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHints10bInit() {
+        Reversi reversi = new Reversi(GameConfig.game10bInit);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 8 9 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "3 _ _ _ _ o _ _ _ _ _ " + System.lineSeparator() +
+                "4 _ _ _ o W B _ _ _ _ " + System.lineSeparator() +
+                "5 _ _ _ _ B W o _ _ _ " + System.lineSeparator() +
+                "6 _ _ _ _ _ o _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "8 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "9 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHints8bAlmostComplete() {
+        Reversi reversi = new Reversi(GameConfig.game8bAlmostComplete);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 B W B B W W B B " + System.lineSeparator() +
+                "1 W W B W B W W W " + System.lineSeparator() +
+                "2 B W B W B B W B " + System.lineSeparator() +
+                "3 W W B B o W W B " + System.lineSeparator() +
+                "4 B B B W B B B B " + System.lineSeparator() +
+                "5 W W B W W W W W " + System.lineSeparator() +
+                "6 B B B W B B W B " + System.lineSeparator() +
+                "7 W B W W B W B W " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHints8bComplete() {
+        Reversi reversi = new Reversi(GameConfig.game8bComplete);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 B B B B B B B B " + System.lineSeparator() +
+                "1 B W W W W W W B " + System.lineSeparator() +
+                "2 B W W B W B W B " + System.lineSeparator() +
+                "3 B B W W B W B B " + System.lineSeparator() +
+                "4 B B B W B B W B " + System.lineSeparator() +
+                "5 B B W W B W W B " + System.lineSeparator() +
+                "6 B B B B B B W B " + System.lineSeparator() +
+                "7 W W W W W W W W " + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintHintsExecuteB54() {
+        Reversi reversi = new Reversi(GameConfig.game8bInit);
+        reversi.move(5, 4);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "3 _ _ _ W B o _ _ " + System.lineSeparator() +
+                "4 _ _ _ B B _ _ _ " + System.lineSeparator() +
+                "5 _ _ _ o B o _ _ " + System.lineSeparator() +
+                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertTrue(outContent.toString().contains(expected));
+    }
+
+    @Test
+    public void testPrintHintsExecuteB54W53() {
+        Reversi reversi = new Reversi(GameConfig.game8bInit);
+        reversi.move(5, 4);
+        reversi.move(5, 3);
+        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
+        String expected = "Possible moves:" + System.lineSeparator() +
+                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
+                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
+                "2 _ _ o _ _ _ _ _ " + System.lineSeparator() +
+                "3 _ _ o W B _ _ _ " + System.lineSeparator() +
+                "4 _ _ o W B _ _ _ " + System.lineSeparator() +
+                "5 _ _ o W B _ _ _ " + System.lineSeparator() +
+                "6 _ _ o _ _ _ _ _ " + System.lineSeparator() +
+                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
+        assertTrue(outContent.toString().contains(expected));
+    }
+
+
+    // printMoveOnTurn
+
+    @Test
+    public void testPrintMoveOnTurn8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
+        String expected = "Make a move. B is on turn" + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testPrintMoveOnTurn8wInit() {
+        Reversi game = new Reversi(GameConfig.game8wInit);
+        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
+        String expected = "Make a move. W is on turn" + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+
+    // printPiecesNumber
+
+    @Test
+    public void testPrintPiecesNumber8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        PlaygroundPrinter.printPiecesNumber(game.getLeftB(), game.getLeftW());
+        String expected = "Number of pieces: B: 2; W: 2" + System.lineSeparator() + System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'MoveTest.java', 7, 'import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+public class MoveTest {
+
+
+    // isWithinPlayground
+
+    @Test
+    public void testIsWithinPlayground00() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.size = 8;
+
+        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground77() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
+    }
+
+    @Test
+    public void testIsWithinPlaygroundNeg10() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground0Neg1() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
+    }
+
+    @Test
+    public void testIsWithinPlayground80() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
+    }
+
+    @Test
+    public void testIsWithinPlayground08() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
+    }
+
+    // getPossibleMoves
+
+    @Test
+    public void testGetPossibleMoves8bInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        List<String> pieces = game.getPossibleMoves();
+
+        assertEquals("valid length", 4, pieces.size());
+        assertEquals("valid moves", "2 3", pieces.get(0));
+        assertEquals("valid moves", "3 2", pieces.get(1));
+        assertEquals("valid moves", "4 5", pieces.get(2));
+        assertEquals("valid moves", "5 4", pieces.get(3));
+    }
+
+    @Test
+    public void testGetPossibleMovesEmpty() {
+        Reversi game = TestUtils.getRevWithPlayground();
+        List<String> pieces = game.getPossibleMoves();
+
+        assertEquals("valid length", 0, pieces.size());
+    }
+
+
+    // areValidMoves
+
+    @Test
+    public void testAreValidMovesInit() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+
+        assertTrue(game.areValidMoves());
+    }
+
+    @Test
+    public void testAreValidMovesOnEnd() {
+        Reversi game = new Reversi(GameConfig.game8bComplete);
+
+        assertFalse(game.areValidMoves());
+    }
+
+
+    // move
+
+    @Test
+    public void testMoveOnNotEmpty() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(4, 4);
+
+        Assert.assertArrayEquals("check if didn''t change", TestUtils.getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveOutOfBoundsBelow() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(8, 0);
+
+        Assert.assertArrayEquals("check if didn''t change", TestUtils.getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveOutOfBoundsAbove() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(-1, 0);
+
+        Assert.assertArrayEquals("check if didn''t change", TestUtils.getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveOnNotAdjacent() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(0, 0);
+
+        Assert.assertArrayEquals("check if didn''t change", TestUtils.getInitPlayground(), game.playground);
+    }
+
+    @Test
+    public void testMoveFlipRight() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(3, 2);
+
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 2));
+        Assert.assertEquals("on turn", Player.W, game.onTurn);
+        Assert.assertEquals("W left", 1, game.getLeftW());
+        Assert.assertEquals("B left", 4, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipUp() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(5, 4);
+
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 4, 4));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 5, 4));
+        Assert.assertEquals("on turn", Player.W, game.onTurn);
+        Assert.assertEquals("W left", 1, game.getLeftW());
+        Assert.assertEquals("B left", 4, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipLeft() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(4, 5);
+
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 4, 4));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 4, 5));
+        Assert.assertEquals("on turn", Player.W, game.onTurn);
+        Assert.assertEquals("W left", 1, game.getLeftW());
+        Assert.assertEquals("B left", 4, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipDown() {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        game.move(2, 3);
+
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 2, 3));
+        Assert.assertEquals("on turn", Player.W, game.onTurn);
+        Assert.assertEquals("W left", 1, game.getLeftW());
+        Assert.assertEquals("B left", 4, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipRightUp() {
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(Arrays.asList(5, 4));
+        moves.add(Arrays.asList(5, 3));
+        moves.add(Arrays.asList(6, 2));
+        Reversi game = TestUtils.setMoves(moves);
+
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 5, 3));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 6, 2));
+        Assert.assertEquals("on turn", Player.W, game.onTurn);
+        Assert.assertEquals("W left", 2, game.getLeftW());
+        Assert.assertEquals("B left", 5, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipLeftUp() {
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(Arrays.asList(5, 4));
+        moves.add(Arrays.asList(5, 5));
+        Reversi game = TestUtils.setMoves(moves);
+
+        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 4, 4));
+        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 5, 5));
+        Assert.assertEquals("on turn", Player.B, game.onTurn);
+        Assert.assertEquals("W left", 3, game.getLeftW());
+        Assert.assertEquals("B left", 3, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipLeftDown() {
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(Arrays.asList(2, 3));
+        moves.add(Arrays.asList(2, 4));
+        moves.add(Arrays.asList(1, 5));
+        Reversi game = TestUtils.setMoves(moves);
+
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 2, 4));
+        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 1, 5));
+        Assert.assertEquals("on turn", Player.W, game.onTurn);
+        Assert.assertEquals("W left", 2, game.getLeftW());
+        Assert.assertEquals("B left", 5, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFlipRightDown() {
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(Arrays.asList(2, 3));
+        moves.add(Arrays.asList(2, 2));
+        Reversi game = TestUtils.setMoves(moves);
+
+        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 3, 3));
+        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 2, 2));
+        Assert.assertEquals("on turn", Player.B, game.onTurn);
+        Assert.assertEquals("W left", 3, game.getLeftW());
+        Assert.assertEquals("B left", 3, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveDoubleFlip() {
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(Arrays.asList(2, 3));
+        moves.add(Arrays.asList(2, 2));
+        moves.add(Arrays.asList(3, 2));
+        moves.add(Arrays.asList(2, 4));
+        Reversi game = TestUtils.setMoves(moves);
+
+        Assert.assertEquals("check if flipped (D,3) correctly", Player.W, TestUtils.getPiece(game, 2, 3));
+        Assert.assertEquals("check if flipped (E,4) correctly", Player.W, TestUtils.getPiece(game, 3, 4));
+        Assert.assertEquals("W left", 5, game.getLeftW());
+        Assert.assertEquals("B left", 3, game.getLeftB());
+    }
+
+    @Test
+    public void testMoveFinishGame() {
+        Reversi game = new Reversi(GameConfig.game8bAlmostComplete);
+        game.move(3, 4);
+
+        Assert.assertFalse("if the are valid moves", game.areValidMoves());
+        Assert.assertEquals("W left", 39, game.getLeftW());
+        Assert.assertEquals("B left", 25, game.getLeftB());
+    }
+
+    @Test
+    public void testMovesCompleteGame() {
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(Arrays.asList(4, 5));
+        moves.add(Arrays.asList(5, 3));
+        moves.add(Arrays.asList(3, 2));
+        moves.add(Arrays.asList(2, 3));
+        moves.add(Arrays.asList(2, 2));
+        moves.add(Arrays.asList(3, 5));
+        moves.add(Arrays.asList(4, 2));
+        moves.add(Arrays.asList(2, 1));
+        moves.add(Arrays.asList(1, 2));
+        moves.add(Arrays.asList(5, 4));
+        moves.add(Arrays.asList(5, 2));
+        moves.add(Arrays.asList(3, 1));
+        moves.add(Arrays.asList(4, 1));
+        moves.add(Arrays.asList(1, 3));
+        moves.add(Arrays.asList(2, 4));
+        moves.add(Arrays.asList(5, 0));
+        moves.add(Arrays.asList(0, 2));
+        moves.add(Arrays.asList(5, 1));
+        moves.add(Arrays.asList(2, 5));
+        moves.add(Arrays.asList(5, 5));
+        moves.add(Arrays.asList(6, 5));
+        moves.add(Arrays.asList(0, 4));
+        moves.add(Arrays.asList(1, 4));
+        moves.add(Arrays.asList(0, 5));
+        moves.add(Arrays.asList(6, 4));
+        moves.add(Arrays.asList(2, 6));
+        moves.add(Arrays.asList(6, 2));
+        moves.add(Arrays.asList(3, 6));
+        moves.add(Arrays.asList(4, 6));
+        moves.add(Arrays.asList(7, 3));
+        moves.add(Arrays.asList(3, 7));
+        moves.add(Arrays.asList(6, 3));
+        moves.add(Arrays.asList(0, 3));
+        moves.add(Arrays.asList(0, 1));
+        moves.add(Arrays.asList(7, 1));
+        moves.add(Arrays.asList(7, 2));
+        moves.add(Arrays.asList(7, 4));
+        moves.add(Arrays.asList(1, 5));
+        moves.add(Arrays.asList(2, 7));
+        moves.add(Arrays.asList(5, 6));
+        moves.add(Arrays.asList(4, 7));
+        moves.add(Arrays.asList(1, 6));
+        moves.add(Arrays.asList(2, 0));
+        moves.add(Arrays.asList(7, 5));
+        moves.add(Arrays.asList(7, 6));
+        moves.add(Arrays.asList(3, 0));
+        moves.add(Arrays.asList(0, 7));
+        moves.add(Arrays.asList(1, 0));
+        moves.add(Arrays.asList(0, 6));
+        moves.add(Arrays.asList(5, 7));
+        moves.add(Arrays.asList(6, 1));
+        moves.add(Arrays.asList(7, 0));
+        moves.add(Arrays.asList(6, 0));
+        moves.add(Arrays.asList(7, 7));
+        moves.add(Arrays.asList(4, 0));
+        moves.add(Arrays.asList(1, 7));
+        moves.add(Arrays.asList(0, 0));
+        moves.add(Arrays.asList(1, 1));
+        moves.add(Arrays.asList(6, 7));
+        moves.add(Arrays.asList(6, 6));
+        Reversi game = TestUtils.setMoves(moves);
+
+        Assert.assertFalse("if the are valid moves", game.areValidMoves());
+        Assert.assertEquals("W left", 28, game.getLeftW());
+        Assert.assertEquals("B left", 36, game.getLeftB());
+    }
+}');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('private_test', 'TestUtils.java', 7, 'import java.util.List;
+
+
+class TestUtils {
+
+    static Player getPiece(Reversi game, int r0, int c0) {
+        return game.playground[r0][c0];
+    }
+
+
+    static Reversi setMoves(List<List<Integer>> moves) {
+        Reversi game = new Reversi(GameConfig.game8bInit);
+        for (List<Integer> move  : moves) {
+            Integer r = move.get(0);
+            Integer c = move.get(1);
+            game.move(r, c);
+        }
+        return game;
+    }
+
+    static Reversi initReversi(String[] gameConfig) {
+        Reversi rev = new Reversi();
+        rev.initGame(gameConfig);
+        return rev;
+    }
+
+    static Reversi getRevWithPlayground() {
+        Reversi rev = new Reversi();
+        rev.playground = getEmptyPlayground();
+        return rev;
+    }
+
+    static Player[][] getEmptyPlayground() {
+        Player[][] empty = new Player[8][8];
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                empty[r][c] = Player.NONE;
+            }
+        }
+        return empty;
+    }
+
+    static Player[][] getInitPlayground() {
+        Player[][] init = new Player[8][8];
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                init[r][c] = Player.NONE;
+            }
+        }
+        init[3][3] = Player.W;
+        init[4][4] = Player.W;
+        init[3][4] = Player.B;
+        init[4][3] = Player.B;
+        return init;
+    }
+}
+');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_test', 'ReversiTest.java', 7, 'import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import static org.junit.Assert.*;
+
+public class ReversiTest {
+
+    // A JUnit 4 rule is a component that intercepts test method calls and
+    // allows us to do something before a test method is run and after a
+    // test method has been run.
+    // The ExpectedException rule allows you to verify that your code throws
+    // a specific exception.
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+
+    @Test
+    public void testAssertEquals() {
+        // JUnit 4 asserts examples
+        int expected = 1;
+        int actual = 1;
+        assertEquals(expected, actual);
+
+        int[] expectedArray = new int[] {1, 2, 3};
+        int[] actualArray = new int[] {1, 2, 3};
+        assertArrayEquals(expectedArray, actualArray);
+
+        assertTrue(true);
+
+        assertFalse(false);
+    }
+
+    @Test
+    public void testInitialization() {
+        // Reversi game initialization.
+        // GameConfig stores paths to game configuration files
+        Reversi game1 = new Reversi();
+        Reversi game2 = new Reversi(GameConfig.game8bInit);
+    }
+
+    @Test
+    public void testExpectedException() {
+        expectedException.expect(ArithmeticException.class);
+        expectedException.expectMessage("/ by zero");
+        int result = 1 / 0;
+    }
+
+
+}');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_10_b_init.txt', '10
+B
+4 5, 5 4
+4 4, 5 5
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_10_b_init.txt', '10
+B
+4 5, 5 4
+4 4, 5 5
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_20_b_init.txt', '20
+B
+9 10, 10 9
+9 9, 10 10
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_20_b_init.txt', '20
+B
+9 10, 10 9
+9 9, 10 10
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_almost_complete.txt', '8
+W
+4 5, 3 2, 2 2, 4 2, 1 2, 5 2, 4 1, 2 4, 0 2, 2 5, 6 5, 1 4, 6 4, 6 2, 4 6, 3 7, 0 3, 7 1, 7 4, 2 7, 4 7, 2 0, 7 6, 0 7, 0 6, 6 1, 6 0, 4 0, 0 0, 6 7, 3 3, 4 4
+5 3, 2 3, 3 5, 2 1, 5 4, 3 1, 1 3, 5 0, 5 1, 5 5, 0 4, 0 5, 2 6, 3 6, 7 3, 6 3, 0 1, 7 2, 1 5, 5 6, 1 6, 7 5, 3 0, 1 0, 5 7, 7 0, 7 7, 1 7, 1 1, 6 6, 4 3
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_almost_complete.txt', '8
+W
+4 5, 3 2, 2 2, 4 2, 1 2, 5 2, 4 1, 2 4, 0 2, 2 5, 6 5, 1 4, 6 4, 6 2, 4 6, 3 7, 0 3, 7 1, 7 4, 2 7, 4 7, 2 0, 7 6, 0 7, 0 6, 6 1, 6 0, 4 0, 0 0, 6 7, 3 3, 4 4
+5 3, 2 3, 3 5, 2 1, 5 4, 3 1, 1 3, 5 0, 5 1, 5 5, 0 4, 0 5, 2 6, 3 6, 7 3, 6 3, 0 1, 7 2, 1 5, 5 6, 1 6, 7 5, 3 0, 1 0, 5 7, 7 0, 7 7, 1 7, 1 1, 6 6, 4 3
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_complete.txt', '8
+B
+0 0, 1 0, 2 0, 3 0, 4 0, 5 0, 6 0, 0 1, 3 1, 4 1, 5 1, 6 1, 0 2, 4 2, 6 2, 0 3, 2 3, 6 3, 0 4, 3 4, 4 4, 5 4, 6 4, 0 5, 2 5, 4 5, 6 5, 0 6, 3 6, 0 7, 1 7, 2 7, 3 7, 4 7, 5 7, 6 7
+7 0, 1 1, 2 1, 7 1, 1 2, 2 2, 3 2, 5 2, 7 2, 1 3, 3 3, 4 3, 5 3, 7 3, 1 4, 2 4, 7 4, 1 5, 3 5, 5 5, 7 5, 1 6, 2 6, 4 6, 5 6, 6 6, 7 6, 7 7
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_complete.txt', '8
+B
+0 0, 1 0, 2 0, 3 0, 4 0, 5 0, 6 0, 0 1, 3 1, 4 1, 5 1, 6 1, 0 2, 4 2, 6 2, 0 3, 2 3, 6 3, 0 4, 3 4, 4 4, 5 4, 6 4, 0 5, 2 5, 4 5, 6 5, 0 6, 3 6, 0 7, 1 7, 2 7, 3 7, 4 7, 5 7, 6 7
+7 0, 1 1, 2 1, 7 1, 1 2, 2 2, 3 2, 5 2, 7 2, 1 3, 3 3, 4 3, 5 3, 7 3, 1 4, 2 4, 7 4, 1 5, 3 5, 5 5, 7 5, 1 6, 2 6, 4 6, 5 6, 6 6, 7 6, 7 7
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_init.txt', '8
+B
+3 4, 4 3
+3 3, 4 4
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_b_init.txt', '8
+B
+3 4, 4 3
+3 3, 4 4
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_w_init.txt', '8
+W
+3 4, 4 3
+3 3, 4 4
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_8_w_init.txt', '8
+W
+3 4, 4 3
+3 3, 4 4
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_alpha.txt', '8
+B
+E 4, D 5
+D 4, E 5
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_alpha.txt', '8
+B
+E 4, D 5
+D 4, E 5
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_empty.txt', '', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_five_lines.txt', '8
+B
+3 4, 4 3
+3 3, 4 4
+3 3, 4 4
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_five_lines.txt', '8
+B
+3 4, 4 3
+3 3, 4 4
+3 3, 4 4
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', '8
+3 4, 4 3
+3 3, 4 4
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_on_turn.txt', '8
+3 4, 4 3
+3 3, 4 4
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_pieces.txt', '8
+B
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_pieces.txt', '8
+B
+', 7, 'public_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_size.txt', 'B
+3 4, 4 3
+3 3, 4 4
+', 7, 'private_file');
+
+INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
+VALUES ('game_no_size.txt', 'B
+3 4, 4 3
+3 3, 4 4
+', 7, 'public_file');
+
+INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
+VALUES ('public_source', 'Reversi.java', 8, 'import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Reversi {
+
+    int size;
+    Player[][] playground;
+    private int leftB = 0;
+    private int leftW = 0;
+    private Player[] players = new Player[] { Player.B, Player.W };
+    Player onTurn = Player.NONE;
+    Player winner = Player.NONE;
+    boolean ended = false;
+
+    Reversi() {
+    }
+
+    Reversi(Path gameFilePath) {
+        try {
+            String[] gameConfig = readGameConfig(gameFilePath);
+            int configFileLinesNumber = 4;
+            if (gameConfig.length != configFileLinesNumber) {
+                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
+            }
+            initGame(gameConfig);
+            initPiecesCount();
+        } catch (Exception e) {
+            ended = true;
+            System.out.println(e.getMessage());
+        }
+    }
+
+    String[] readGameConfig(Path gameFilePath) {
+        String[] gameConfig = new String[] {};
+        try {
+            gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
+        } catch (NoSuchFileException e) {
+            System.out.println("Game configuration file does not exist");
+        } catch (IOException e) {
+            System.out.println("Could not read game configuration file");
+        }
+        return gameConfig;
+    }
+
     void initGame(String[] gameConfig) {
         try {
             if (!gameConfig[0].matches("[0-9]+")) {
@@ -6878,7 +8596,7 @@ public class Reversi {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'PlaygroundPrinter.java', 7, 'import java.util.Collections;
+VALUES ('public_source', 'PlaygroundPrinter.java', 8, 'import java.util.Collections;
 import java.util.List;
 
 class PlaygroundPrinter {
@@ -6953,7 +8671,7 @@ class PlaygroundPrinter {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 7, 'public enum Player {
+VALUES ('public_source', 'Player.java', 8, 'public enum Player {
     B(1), W(0), NONE(-1);
 
     private final int value;
@@ -6970,7 +8688,7 @@ VALUES ('public_source', 'Player.java', 7, 'public enum Player {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'GameConfig.java', 7, 'import java.io.File;
+VALUES ('public_source', 'GameConfig.java', 8, 'import java.io.File;
 import java.nio.file.Path;
 
 class GameConfig {
@@ -6993,7 +8711,7 @@ class GameConfig {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'PlayerTest.java', 7, 'import org.junit.Test;
+VALUES ('private_test', 'PlayerTest.java', 8, 'import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7009,7 +8727,7 @@ public class PlayerTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReadGameConfigTest.java', 7, 'import org.junit.Rule;
+VALUES ('private_test', 'ReadGameConfigTest.java', 8, 'import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -7185,7 +8903,7 @@ public class ReadGameConfigTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 7, 'import org.junit.Assert;
+VALUES ('private_test', 'InitGameTest.java', 8, 'import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -7543,7 +9261,7 @@ public class InitGameTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'PlaygroundPrinterTest.java', 7, 'import org.junit.After;
+VALUES ('private_test', 'PlaygroundPrinterTest.java', 8, 'import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7844,7 +9562,7 @@ public class PlaygroundPrinterTest {
 ');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'MoveTest.java', 7, 'import org.junit.Assert;
+VALUES ('private_test', 'MoveTest.java', 8, 'import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -8230,7 +9948,7 @@ public class MoveTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ExecuteTest.java', 7, 'import org.junit.Assert;
+VALUES ('private_test', 'ExecuteTest.java', 8, 'import org.junit.Assert;
 import org.junit.Test;
 
 public class ExecuteTest {
@@ -8268,7 +9986,7 @@ public class ExecuteTest {
 }');
 
 INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'TestUtils.java', 7, 'import java.util.List;
+VALUES ('private_test', 'TestUtils.java', 8, 'import java.util.List;
 
 
 class TestUtils {
@@ -8280,1724 +9998,6 @@ class TestUtils {
     static Reversi setMoves(List<List<Integer>> moves) {
         Reversi game = new Reversi(GameConfig.game8bInit);
         for (List<Integer> move : moves) {
-            Integer r = move.get(0);
-            Integer c = move.get(1);
-            game.move(r, c);
-        }
-        return game;
-    }
-
-    static Reversi initReversi(String[] gameConfig) {
-        Reversi rev = new Reversi();
-        rev.initGame(gameConfig);
-        return rev;
-    }
-
-    static Reversi getRevWithPlayground() {
-        Reversi rev = new Reversi();
-        rev.playground = getEmptyPlayground();
-        return rev;
-    }
-
-    static Player[][] getEmptyPlayground() {
-        Player[][] empty = new Player[8][8];
-        for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++) {
-                empty[r][c] = Player.NONE;
-            }
-        }
-        return empty;
-    }
-
-    static Player[][] getInitPlayground() {
-        Player[][] init = new Player[8][8];
-        for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++) {
-                init[r][c] = Player.NONE;
-            }
-        }
-        init[3][3] = Player.W;
-        init[4][4] = Player.W;
-        init[3][4] = Player.B;
-        init[4][3] = Player.B;
-        return init;
-    }
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_test', 'ReversiTest.java', 7, 'import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.*;
-
-public class ReversiTest {
-
-    // A JUnit 4 rule is a component that intercepts test method calls and
-    // allows us to do something before a test method is run and after a
-    // test method has been run.
-    // The ExpectedException rule allows you to verify that your code throws
-    // a specific exception.
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
-
-    @Test
-    public void testAssertEquals() {
-        // JUnit 4 asserts examples
-        int expected = 1;
-        int actual = 1;
-        assertEquals(expected, actual);
-
-        int[] expectedArray = new int[] {1, 2, 3};
-        int[] actualArray = new int[] {1, 2, 3};
-        assertArrayEquals(expectedArray, actualArray);
-
-        assertTrue(true);
-
-        assertFalse(false);
-    }
-
-    @Test
-    public void testInitialization() {
-        // Reversi game initialization.
-        // GameConfig stores paths to game configuration files
-        Reversi game1 = new Reversi();
-        Reversi game2 = new Reversi(GameConfig.game8bInit);
-    }
-
-    @Test
-    public void testExpectedException() {
-        expectedException.expect(ArithmeticException.class);
-        expectedException.expectMessage("/ by zero");
-        int result = 1 / 0;
-    }
-
-
-}');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_10_b_init.txt', '10
-B
-4 5, 5 4
-4 4, 5 5
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_10_b_init.txt', '10
-B
-4 5, 5 4
-4 4, 5 5
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_20_b_init.txt', '20
-B
-9 10, 10 9
-9 9, 10 10
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_20_b_init.txt', '20
-B
-9 10, 10 9
-9 9, 10 10
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_8_b_almost_complete.txt', '8
-W
-4 5, 3 2, 2 2, 4 2, 1 2, 5 2, 4 1, 2 4, 0 2, 2 5, 6 5, 1 4, 6 4, 6 2, 4 6, 3 7, 0 3, 7 1, 7 4, 2 7, 4 7, 2 0, 7 6, 0 7, 0 6, 6 1, 6 0, 4 0, 0 0, 6 7, 3 3, 4 4
-5 3, 2 3, 3 5, 2 1, 5 4, 3 1, 1 3, 5 0, 5 1, 5 5, 0 4, 0 5, 2 6, 3 6, 7 3, 6 3, 0 1, 7 2, 1 5, 5 6, 1 6, 7 5, 3 0, 1 0, 5 7, 7 0, 7 7, 1 7, 1 1, 6 6, 4 3
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_8_b_almost_complete.txt', '8
-W
-4 5, 3 2, 2 2, 4 2, 1 2, 5 2, 4 1, 2 4, 0 2, 2 5, 6 5, 1 4, 6 4, 6 2, 4 6, 3 7, 0 3, 7 1, 7 4, 2 7, 4 7, 2 0, 7 6, 0 7, 0 6, 6 1, 6 0, 4 0, 0 0, 6 7, 3 3, 4 4
-5 3, 2 3, 3 5, 2 1, 5 4, 3 1, 1 3, 5 0, 5 1, 5 5, 0 4, 0 5, 2 6, 3 6, 7 3, 6 3, 0 1, 7 2, 1 5, 5 6, 1 6, 7 5, 3 0, 1 0, 5 7, 7 0, 7 7, 1 7, 1 1, 6 6, 4 3
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_8_b_complete.txt', '8
-B
-0 0, 1 0, 2 0, 3 0, 4 0, 5 0, 6 0, 0 1, 3 1, 4 1, 5 1, 6 1, 0 2, 4 2, 6 2, 0 3, 2 3, 6 3, 0 4, 3 4, 4 4, 5 4, 6 4, 0 5, 2 5, 4 5, 6 5, 0 6, 3 6, 0 7, 1 7, 2 7, 3 7, 4 7, 5 7, 6 7
-7 0, 1 1, 2 1, 7 1, 1 2, 2 2, 3 2, 5 2, 7 2, 1 3, 3 3, 4 3, 5 3, 7 3, 1 4, 2 4, 7 4, 1 5, 3 5, 5 5, 7 5, 1 6, 2 6, 4 6, 5 6, 6 6, 7 6, 7 7
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_8_b_complete.txt', '8
-B
-0 0, 1 0, 2 0, 3 0, 4 0, 5 0, 6 0, 0 1, 3 1, 4 1, 5 1, 6 1, 0 2, 4 2, 6 2, 0 3, 2 3, 6 3, 0 4, 3 4, 4 4, 5 4, 6 4, 0 5, 2 5, 4 5, 6 5, 0 6, 3 6, 0 7, 1 7, 2 7, 3 7, 4 7, 5 7, 6 7
-7 0, 1 1, 2 1, 7 1, 1 2, 2 2, 3 2, 5 2, 7 2, 1 3, 3 3, 4 3, 5 3, 7 3, 1 4, 2 4, 7 4, 1 5, 3 5, 5 5, 7 5, 1 6, 2 6, 4 6, 5 6, 6 6, 7 6, 7 7
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_8_b_init.txt', '8
-B
-3 4, 4 3
-3 3, 4 4
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_8_b_init.txt', '8
-B
-3 4, 4 3
-3 3, 4 4
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_8_w_init.txt', '8
-W
-3 4, 4 3
-3 3, 4 4
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_8_w_init.txt', '8
-W
-3 4, 4 3
-3 3, 4 4
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_alpha.txt', '8
-B
-E 4, D 5
-D 4, E 5
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_alpha.txt', '8
-B
-E 4, D 5
-D 4, E 5
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_empty.txt', '', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_five_lines.txt', '8
-B
-3 4, 4 3
-3 3, 4 4
-3 3, 4 4
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_five_lines.txt', '8
-B
-3 4, 4 3
-3 3, 4 4
-3 3, 4 4
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', '8
-3 4, 4 3
-3 3, 4 4
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_on_turn.txt', '8
-3 4, 4 3
-3 3, 4 4
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_pieces.txt', '8
-B
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_pieces.txt', '8
-B
-', 7, 'public_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_size.txt', 'B
-3 4, 4 3
-3 3, 4 4
-', 7, 'private_file');
-
-INSERT INTO exercise_content (filename, content, exercise_id, exercise_content_type)
-VALUES ('game_no_size.txt', 'B
-3 4, 4 3
-3 3, 4 4
-', 7, 'public_file');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Reversi.java', 8, 'import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class Reversi {
-
-    int size;
-    Player[][] playground;
-    private int leftB = 0;
-    private int leftW = 0;
-    private Player[] players = new Player[] { Player.B, Player.W };
-    Player onTurn = Player.NONE;
-    Player winner = Player.NONE;
-    boolean ended = false;
-
-    Reversi() {
-    }
-
-    Reversi(Path gameFilePath) {
-        try {
-            String[] gameConfig = readGameConfig(gameFilePath);
-            int configFileLinesNumber = 4;
-            if (gameConfig.length != configFileLinesNumber) {
-                throw new Exception("Game configuration must contain " + configFileLinesNumber + " lines");
-            }
-            initGame(gameConfig);
-            initPiecesCount();
-        } catch (Exception e) {
-            ended = true;
-            System.out.println(e.getMessage());
-        }
-    }
-
-    String[] readGameConfig(Path gameFilePath) {
-        String[] gameConfig = new String[] {};
-        try {
-            gameConfig = Files.readAllLines(gameFilePath).toArray(new String[0]);
-        } catch (NoSuchFileException e) {
-            System.out.println("Game configuration file does not exist");
-        } catch (IOException e) {
-            System.out.println("Could not read game configuration file");
-        }
-        return gameConfig;
-    }
-
-    void initGame(String[] gameConfig){
-        try {
-            if (!gameConfig[0].matches("[0-9]+")) {
-                System.out.println("Incorrect size input");
-                return;
-            }
-            size = Integer.parseInt(gameConfig[0]);
-            if (gameConfig[1] == null || !gameConfig[1].matches("[B|W]")) {
-                System.out.println("Incorrect player on turn input");
-                return;
-            }
-            if ("B".equals(gameConfig[1])) {
-                onTurn = Player.B;
-            } else if ("W".equals(gameConfig[1])) {
-                onTurn = Player.W;
-            }
-            playground = new Player[size][size];
-            for (int r = 0; r < size; r++) {
-                for (int c = 0; c < size; c++) {
-                    playground[r][c] = Player.NONE;
-                }
-            }
-            int[] piecesPositions = new int[] {2, 3};
-            for (int piecePosition : piecesPositions) {
-                String[] pieces = gameConfig[piecePosition].split(",");
-                for (String piece : pieces) {
-                    if (!piece.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
-                        System.out.println("Incorrect piece input");
-                        return;
-                    }
-                    String[] coordinates = piece.trim().split(" ");
-                    int r = Integer.parseInt(coordinates[0]);
-                    int c = Integer.parseInt(coordinates[1]);
-                    if (r >= size || c >= size) {
-                        return;
-                    }
-                    playground[r][c] = players[piecePosition - 2];
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("Game configuration is incorrect");
-        }
-    }
-
-    void initPiecesCount() {
-        try {
-            for (int r = 0; r < size; r++) {
-                for (int c = 0; c < size; c++) {
-                    if (playground[r][c] == Player.B) {
-                        leftB++;
-                    } else if (playground[r][c] == Player.W) {
-                        leftW++;
-                    }
-                }
-            }
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            System.out.println("Playground  is not valid" + e.getMessage());
-        }
-    }
-
-    private void run() {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            String line;
-            while (!ended) {
-                PlaygroundPrinter.printHints(playground, size, getPossibleMoves());
-                PlaygroundPrinter.printPlayground(playground, size);
-                PlaygroundPrinter.printMoveOnTurn(onTurn);
-                if (winner != Player.NONE) break;
-                if ((line = reader.readLine()) == null) break;
-                if (!line.matches("[ ]*[0-9]+[ ]+[0-9]+[ ]*")) {
-                    System.out.println("Incorrect piece input");
-                    return;
-                }
-                String[] coordinates = line.trim().split(" ");
-                int r = Integer.parseInt(coordinates[0]);
-                int c = Integer.parseInt(coordinates[1]);
-                move(r, c);
-                printPiecesLeftCount();
-                if (! areValidMoves()) {
-                    printPiecesLeftCount();
-                    ended = true;
-                    if (getLeftB() > getLeftW()) winner = Player.B;
-                    else if (getLeftW() > getLeftB()) winner = Player.W;
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            System.out.println("IO exception occurred on reading user input: " + e.getMessage());
-        }
-    }
-
-    private void printPiecesLeftCount() {
-        PlaygroundPrinter.printPiecesNumber(getLeftB(), getLeftW());
-    }
-
-    int getLeftB() {
-        return leftB;
-    }
-
-    int getLeftW() {
-        return leftW;
-    }
-
-    void move(int r, int c) {
-        if (!(r >= 0 && c >= 0 && r < size && c < size)) {
-            System.out.println("Move out of bounds is not permitted");
-            return;
-        }
-        if (playground[r][c] != Player.NONE) {
-            System.out.println("Move on not empty piece is not permitted");
-            return;
-        }
-        if (winner != Player.NONE) {
-            System.out.println("The game is over. No moves are permitted");
-            return;
-        }
-
-        List<List<Integer>> piecesToFlip = new ArrayList<>();
-        playground[r][c] = onTurn;
-        Player opposite = Player.NONE;
-        if (onTurn == Player.W) opposite = Player.B;
-        else if (onTurn == Player.B) opposite = Player.W;
-
-        int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
-        for (int[] direction : directions) {
-            int dirR = r;
-            int dirC = c;
-            dirR += direction[0];
-            dirC += direction[1];
-            if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
-            dirR += direction[0];
-            dirC += direction[1];
-            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
-            while (playground[dirR][dirC] == opposite) {
-                dirR += direction[0];
-                dirC += direction[1];
-                if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
-            }
-            if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
-            if (playground[dirR][dirC] != onTurn) continue;
-            while (true) {
-                dirR -= direction[0];
-                dirC -= direction[1];
-                if (dirR == r && dirC == c) break;
-                piecesToFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
-            }
-        }
-
-        playground[r][c] = Player.NONE;
-        if (!piecesToFlip.isEmpty()) {
-            piecesToFlip.add(new ArrayList<>(Arrays.asList(r, c)));
-        }
-
-        if (piecesToFlip.isEmpty()) {
-            System.out.println("Move is not permitted");
-            return;
-        }
-        for (List<Integer> piece : piecesToFlip) {
-            int pieceR = piece.get(0);
-            int pieceC = piece.get(1);
-            if (playground[pieceR][pieceC] == onTurn) break;
-            if (playground[pieceR][pieceC] == Player.NONE) {
-                playground[pieceR][pieceC] = onTurn;
-                if (onTurn == Player.B) leftB++;
-                else if (onTurn == Player.W) leftW++;
-            } else {
-                playground[pieceR][pieceC] = onTurn;
-                if (onTurn == Player.B) {
-                    leftB++;
-                    leftW--;
-                } else {
-                    leftW++;
-                    leftB--;
-                }
-            }
-        }
-
-        if (onTurn == Player.W) onTurn = Player.B;
-        else if (onTurn == Player.B) onTurn = Player.W;
-    }
-
-    boolean areValidMoves() {
-        return !getPossibleMoves().isEmpty();
-    }
-
-    List<String> getPossibleMoves() {
-        List<String> pieces = new ArrayList<>();
-        for (int r = 0; r < size; r++) {
-            for (int c = 0; c < size; c++) {
-                if (playground[r][c] != Player.NONE) continue;
-                List<List<Integer>> toFlip = new ArrayList<>();
-                playground[r][c] = onTurn;
-                Player opposite  = Player.NONE;
-                if (onTurn == Player.W) opposite = Player.B;
-                else if (onTurn == Player.B) opposite = Player.W;
-
-                int[][] directions = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
-                for (int[] direction : directions) {
-                    int dirR = r;
-                    int dirC = c;
-                    dirR += direction[0];
-                    dirC += direction[1];
-                    if (dirR >= 0 && dirC >= 0 && dirR < size && dirC < size && playground[dirR][dirC] != opposite) continue;
-                    dirR += direction[0];
-                    dirC += direction[1];
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
-                    while (playground[dirR][dirC] == opposite) {
-                        dirR += direction[0];
-                        dirC += direction[1];
-                        if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) break;
-                    }
-                    if (!(dirR >= 0 && dirC >= 0 && dirR < size && dirC < size)) continue;
-                    if (playground[dirR][dirC] != onTurn) continue;
-                    while (true) {
-                        dirR -= direction[0];
-                        dirC -= direction[1];
-                        if (dirR == r && dirC == c) break;
-                        toFlip.add(new ArrayList<>(Arrays.asList(dirR, dirC)));
-                    }
-                }
-
-                playground[r][c] = Player.NONE;
-                if (!toFlip.isEmpty()) {
-                    toFlip.add(new ArrayList<>(Arrays.asList(r, c)));
-                }
-                if (toFlip.isEmpty()) continue;
-                pieces.add(String.format("%s %s", r,  c));
-            }
-        }
-        return pieces;
-    }
-
-    public static void main(String[] args) {
-        Path gameFilePath = GameConfig.game8bInit;
-        Reversi rev = new Reversi(gameFilePath);
-        rev.run();
-
-    }
-
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'PlaygroundPrinter.java', 8, 'import java.util.Collections;
-import java.util.List;
-
-class PlaygroundPrinter {
-
-    static void printPlayground(Player[][] playground, int size) {
-        printUpperEnumeration(size);
-        for (int r = 0; r < size; r++) {
-            printLeftEnumeration(r, size);
-            for (int c = 0; c < size; c++) {
-                if (playground[r][c] == Player.NONE) {
-                    printPiece("_", size);
-                }
-                else if (playground[r][c] == Player.B) {
-                    printPiece("B", size);
-                }
-                else if (playground[r][c] == Player.W) {
-                    printPiece("W", size);
-                }
-            }
-            System.out.println();
-        }
-    }
-
-    private static void printUpperEnumeration(int size) {
-        int length = String.valueOf(size - 1).length() + 1;
-        System.out.print(String.join("", Collections.nCopies(length, " ")));
-        for (int i = 0; i < size; i++) {
-            System.out.print(String.format("%-" + (length) + "d", i));
-        }
-        System.out.print(System.lineSeparator());
-    }
-
-    private static void printLeftEnumeration(int r, int size) {
-        int length = String.valueOf(size - 1).length();
-        System.out.print(String.format("%" + length + "d ", r));
-    }
-
-    private static void printPiece(String piece, int size) {
-        System.out.print(piece + String.join("", Collections.nCopies(String.valueOf(size - 1).length(), " ")));
-    }
-
-    static void printHints(Player[][] playground, int size, List<String> possibleMoves) {
-        System.out.println("Possible moves:");
-        printUpperEnumeration(size);
-        for (int r = 0; r < size; r++) {
-            printLeftEnumeration(r, size);
-            for (int c = 0; c < size; c++) {
-                if (possibleMoves.contains(String.format("%d %d", r, c))) {
-                    System.out.print("o ");
-                } else if (playground[r][c] == Player.NONE) {
-                    printPiece("_", size);
-                }
-                else if (playground[r][c] == Player.B) {
-                    printPiece("B", size);
-                }
-                else if (playground[r][c] == Player.W) {
-                    printPiece("W", size);
-                }
-            }
-            System.out.println();
-        }
-    }
-
-    static void printMoveOnTurn(Player onTurn) {
-        System.out.format("Make a move. %s is on turn%n", onTurn);
-    }
-
-    static void printPiecesNumber(int leftB, int leftW) {
-        System.out.printf("Number of pieces: B: %s; W: %s%n%n", leftB, leftW);
-    }
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'Player.java', 8, 'public enum Player {
-    B(1), W(0), NONE(-1);
-
-    private final int value;
-
-    Player(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('public_source', 'GameConfig.java', 8, 'import java.io.File;
-import java.nio.file.Path;
-
-class GameConfig {
-
-    private static String gameConfigDir = "./files/";;
-    static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
-    static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
-    static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
-    static Path game20bInit = new File(gameConfigDir + "game_20_b_init.txt").toPath();
-    static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
-    static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
-    static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
-    static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
-    static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
-    static Path gameNoPieces = new File(gameConfigDir + "game_no_pieces.txt").toPath();
-    static Path game8bComplete = new File(gameConfigDir + "game_8_b_complete.txt").toPath();
-    static Path game8bAlmostComplete = new File(gameConfigDir + "game_8_b_almost_complete.txt").toPath();
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'PlayerTest.java', 8, 'import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
-public class PlayerTest {
-
-    @Test
-    public void testPlayerValueOf() {
-        assertEquals("Value of Player B", Player.B, Player.valueOf("B"));
-        assertEquals("Value of Player W", Player.W, Player.valueOf("W"));
-        assertEquals("Value of Player NONE", Player.NONE, Player.valueOf("NONE"));
-    }
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'ReadGameConfigTest.java', 8, 'import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
-public class ReadGameConfigTest {
-
-    private Reversi rev = new Reversi();
-
-    @Test
-    public void testReadGameConfig8bInit() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.game8bInit);
-
-        assertEquals("Lines number of game8bInit config file", 4, gameConfig.length);
-        assertEquals("1st line of game8bInit config file", "8", gameConfig[0]);
-        assertEquals("2nd line of game8bInit config file", "B", gameConfig[1]);
-        assertEquals("3rd line of game8bInit config file", "3 4, 4 3", gameConfig[2]);
-        assertEquals("4th line of game8bInit config file", "3 3, 4 4", gameConfig[3]);
-    }
-
-    @Test
-    public void testReadGameConfig8wInit() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.game8wInit);
-
-        assertEquals("Lines number of game8wInit config file", 4, gameConfig.length);
-        assertEquals("1st line of game8wInit config file", "8", gameConfig[0]);
-        assertEquals("2nd line of game8wInit config file", "W", gameConfig[1]);
-        assertEquals("3rd line of game8wInit config file", "3 4, 4 3", gameConfig[2]);
-        assertEquals("4th line of game8wInit config file", "3 3, 4 4", gameConfig[3]);
-    }
-
-    @Test
-    public void testReadGameConfig10bInit() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.game10bInit);
-
-        assertEquals("Lines number of game10bInit config file", 4, gameConfig.length);
-        assertEquals("1st line of game10bInit config file", "10", gameConfig[0]);
-        assertEquals("2nd line of game10bInit config file", "B", gameConfig[1]);
-        assertEquals("3rd line of game10bInit config file", "4 5, 5 4", gameConfig[2]);
-        assertEquals("4th line of game10bInit config file", "4 4, 5 5", gameConfig[3]);
-    }
-
-    @Test
-    public void testReadGameConfigEmpty() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameEmpty);
-
-        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
-    }
-
-    @Test
-    public void testReadGameConfigNotExisting() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameNotExisting);
-
-        assertEquals("Lines number of gameEmpty config file", 0, gameConfig.length);
-    }
-
-
-    @Test
-    public void testReadGameConfigFiveLines() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameFiveLines);
-
-        assertEquals("Lines number of gameFiveLines config file", 5, gameConfig.length);
-        assertEquals("1st line of gameFiveLines config file", "8", gameConfig[0]);
-        assertEquals("2nd line of gameFiveLines config file", "B", gameConfig[1]);
-        assertEquals("3rd line of gameFiveLines config file", "3 4, 4 3", gameConfig[2]);
-        assertEquals("4th line of gameFiveLines config file", "3 3, 4 4", gameConfig[3]);
-        assertEquals("5th line of gameFiveLines config file", "3 3, 4 4", gameConfig[4]);
-    }
-
-    @Test
-    public void testReadGameConfigAlpha() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameAlpha);
-
-        assertEquals("Lines number of gameAlpha config file", 4, gameConfig.length);
-        assertEquals("1st line of gameAlpha config file", "8", gameConfig[0]);
-        assertEquals("2nd line of gameAlpha config file", "B", gameConfig[1]);
-        assertEquals("3rd line of gameAlpha config file", "E 4, D 5", gameConfig[2]);
-        assertEquals("4th line of gameAlpha config file", "D 4, E 5", gameConfig[3]);
-    }
-
-    @Test
-    public void testReadGameConfigNoSize() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameNoSize);
-
-        assertEquals(3, gameConfig.length);
-        assertEquals("B", gameConfig[0]);
-        assertEquals("3 4, 4 3", gameConfig[1]);
-        assertEquals("3 3, 4 4", gameConfig[2]);
-    }
-
-    @Test
-    public void testReadGameConfigNoOnTurn() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameNoOnTurn);
-
-        assertEquals(3, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("3 4, 4 3", gameConfig[1]);
-        assertEquals("3 3, 4 4", gameConfig[2]);
-    }
-
-    @Test
-    public void testReadGameConfigNoPieces() {
-        Reversi game = rev;
-        String[] gameConfig = game.readGameConfig(GameConfig.gameNoPieces);
-
-        assertEquals(2, gameConfig.length);
-        assertEquals("8", gameConfig[0]);
-        assertEquals("B", gameConfig[1]);
-    }
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'InitGameTest.java', 8, 'import org.junit.Assert;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertFalse;
-
-public class InitGameTest {
-
-    private Reversi rev = new Reversi();
-
-
-    // isPieceInputCorrect
-
-    @Test
-    public void testPieceInput00() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        assertTrue("piece input: 00", game.isPieceInputCorrect("0 0"));
-    }
-
-    @Test
-    public void testPieceInput00NoSpace() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        assertFalse("piece input: 00", game.isPieceInputCorrect("00"));
-    }
-
-    @Test
-    public void testPieceInputD3() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        assertFalse("piece input: D3", game.isPieceInputCorrect("D 3"));
-    }
-
-
-    // testGetCoordinates
-
-    @Test
-    public void testGetCoordinates34() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        int[] expected = new int[] {3, 4};
-        int[] result = game.getCoordinates("3 4");
-        assertArrayEquals(expected, result);
-    }
-    
-
-    // initPiecesCount
-
-    @Test
-    public void testInitPiecesCountInit() {
-        String[] gameConfig = new String[] {"8", "B", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = TestUtils.initReversi(gameConfig);
-        game.initPiecesCount();
-
-        assertEquals("init pieces count on initial game config", 2, game.getLeftB());
-        assertEquals("init pieces count on initial game config", 2, game.getLeftW());
-    }
-
-    @Test
-    public void testInitPiecesCountEmpty() {
-        Reversi game = TestUtils.getRevWithPlayground();
-
-        assertEquals("init pieces count on empty game config", 0, game.getLeftB());
-        assertEquals("init pieces count on empty game config", 0, game.getLeftW());
-    }
-
-
-    // getLeftB
-
-    @Test
-    public void testGetLeftB() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertEquals("left Bs on initial game config", 2, game.getLeftB());
-    }
-
-
-    // getLeftW
-
-    @Test
-    public void testGetLeftW() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertEquals("left Ws on initial game config", 2, game.getLeftW());
-    }
-
-
-    // Reversi
-
-    @Test
-    public void test8bInit() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertEquals("on turn player on initial game config", Player.B, game.onTurn);
-        assertEquals("size on initial game config", 8, game.size);
-        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
-        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
-        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
-        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
-        assertEquals("left Bs on initial game config", 2, game.getLeftB());
-        assertEquals("left Ws on initial game config", 2, game.getLeftW());
-    }
-
-    @Test
-    public void test8wInit() {
-        Reversi game = new Reversi(GameConfig.game8wInit);
-
-        assertEquals("on turn player on initial game config", Player.W, game.onTurn);
-        assertEquals("size on initial game config", 8, game.size);
-        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
-        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
-        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
-        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
-        assertEquals("left Bs on initial game config", 2, game.getLeftB());
-        assertEquals("left Ws on initial game config", 2, game.getLeftW());
-    }
-
-    @Test
-    public void test10bInit() {
-        Reversi game = new Reversi(GameConfig.game10bInit);
-
-        assertEquals("on turn player on initial game config", Player.B, game.onTurn);
-        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 5));
-        assertEquals("playground on initial game config", Player.B, TestUtils.getPiece(game, 5, 4));
-        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
-        assertEquals("playground on initial game config", Player.W, TestUtils.getPiece(game, 5, 5));
-        assertEquals("left Bs on initial game config", 2, game.getLeftB());
-        assertEquals("left Ws on initial game config", 2, game.getLeftW());
-    }
-
-    @Test
-    public void testEmpty() {
-        Reversi game = new Reversi(GameConfig.gameEmpty);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertTrue(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testNotExisting() {
-        Reversi game = new Reversi(GameConfig.gameNotExisting);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertTrue(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testFiveLines() {
-        Reversi game = new Reversi(GameConfig.gameFiveLines);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertTrue(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testAlpha() {
-        Reversi game = new Reversi(GameConfig.gameAlpha);
-
-        assertArrayEquals(TestUtils.getEmptyPlayground(), game.playground);
-        assertFalse(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testNoSize() {
-        Reversi game = new Reversi(GameConfig.gameNoSize);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertTrue(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testNoOnTurn() {
-        Reversi game = new Reversi(GameConfig.gameNoOnTurn);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertTrue(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-    @Test
-    public void testNoPieces() {
-        Reversi game = new Reversi(GameConfig.gameNoPieces);
-
-        assertArrayEquals(null, game.playground);
-        assertEquals(Player.NONE, game.onTurn);
-        assertTrue(game.ended);
-        assertEquals(Player.NONE, game.winner);
-    }
-
-
-    // createPlayground
-
-    @Test
-    public void testCreatePlayground() {
-        Reversi game = TestUtils.getRevWithPlayground();
-
-        assertArrayEquals("create empty playground", TestUtils.getEmptyPlayground(), game.playground);
-    }
-
-    // initGame
-
-    @Test
-    public void testInitGame8bInit() {
-        String[] gameConfig = new String[]{"8", "B", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertEquals("init playground on initial game config", 8, game.size);
-        Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
-    }
-
-    @Test
-    public void testInitGame8wInit() {
-        String[] gameConfig = new String[]{"8", "W", "3 4, 4 3", "3 3, 4 4"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertEquals("init playground on initial game config", 8, game.size);
-        Assert.assertEquals("init playground on initial game config", Player.W, game.onTurn);
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 3, 4));
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 3, 3));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
-    }
-
-    @Test
-    public void testInitGame10bInit() {
-        String[] gameConfig = new String[]{"10", "B", "4 5, 5 4", "4 4, 5 5"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertEquals("init playground on initial game config", 10, game.size);
-        Assert.assertEquals("init playground on initial game config", Player.B, game.onTurn);
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 4, 5));
-        Assert.assertEquals("init playground on initial game config", Player.B, TestUtils.getPiece(game, 5, 4));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 4, 4));
-        Assert.assertEquals("init playground on initial game config", Player.W, TestUtils.getPiece(game, 5, 5));
-    }
-
-    @Test
-    public void testInitGameEmpty() {
-        String[] gameConfig = new String[]{};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(null, game.playground);
-    }
-
-    @Test
-    public void testInitGameAlpha() {
-        String[] gameConfig = new String[]{"8", "B", "E 4, D 5", "D 4, E 5"};
-        Reversi game = rev;
-        game.initGame(gameConfig);
-
-        Assert.assertArrayEquals(TestUtils.getEmptyPlayground(), game.playground);
-    }
-}');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'PlaygroundPrinterTest.java', 8, 'import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-public class PlaygroundPrinterTest {
-
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-
-    @Before
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
-    }
-
-    @After
-    public void restoreStreams() {
-        System.setOut(originalOut);
-    }
-
-    @Test
-    public void testPrintPlayground8bInit() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        PlaygroundPrinter.printPlayground(game.playground, game.size);
-        String expected =
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                        "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "2 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "3 _ _ _ W B _ _ _ " + System.lineSeparator() +
-                        "4 _ _ _ B W _ _ _ " + System.lineSeparator() +
-                        "5 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintPlayground8wInit() {
-        Reversi game = new Reversi(GameConfig.game8wInit);
-        PlaygroundPrinter.printPlayground(game.playground, game.size);
-        String expected =
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                        "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "2 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "3 _ _ _ W B _ _ _ " + System.lineSeparator() +
-                        "4 _ _ _ B W _ _ _ " + System.lineSeparator() +
-                        "5 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintPlayground10bInit() {
-        Reversi game = new Reversi(GameConfig.game10bInit);
-        PlaygroundPrinter.printPlayground(game.playground, game.size);
-        String expected =
-                "  0 1 2 3 4 5 6 7 8 9 " + System.lineSeparator() +
-                        "0 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "1 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "2 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "3 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "4 _ _ _ _ W B _ _ _ _ " + System.lineSeparator() +
-                        "5 _ _ _ _ B W _ _ _ _ " + System.lineSeparator() +
-                        "6 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "7 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "8 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                        "9 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintPlayground20bInit() {
-        Reversi game = new Reversi(GameConfig.game20bInit);
-        PlaygroundPrinter.printPlayground(game.playground, game.size);
-        String expected =
-                "   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 " + System.lineSeparator() +
-                " 0 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                " 1 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                " 2 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                " 3 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                " 4 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                " 5 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                " 6 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                " 7 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                " 8 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                " 9 _  _  _  _  _  _  _  _  _  W  B  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "10 _  _  _  _  _  _  _  _  _  B  W  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "11 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "12 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "13 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "14 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "15 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "16 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "17 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "18 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator() +
-                "19 _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  _  " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintPlayground8bAlmostComplete() {
-        Reversi game = new Reversi(GameConfig.game8bAlmostComplete);
-        PlaygroundPrinter.printPlayground(game.playground, game.size);
-        String expected =
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                        "0 B W B B W W B B " + System.lineSeparator() +
-                        "1 W W B W B W W W " + System.lineSeparator() +
-                        "2 B W B W B B W B " + System.lineSeparator() +
-                        "3 W W B B _ W W B " + System.lineSeparator() +
-                        "4 B B B W B B B B " + System.lineSeparator() +
-                        "5 W W B W W W W W " + System.lineSeparator() +
-                        "6 B B B W B B W B " + System.lineSeparator() +
-                        "7 W B W W B W B W " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintPlayground8bComplete() {
-        Reversi game = new Reversi(GameConfig.game8bComplete);
-        PlaygroundPrinter.printPlayground(game.playground, game.size);
-        String expected =
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                        "0 B B B B B B B B " + System.lineSeparator() +
-                        "1 B W W W W W W B " + System.lineSeparator() +
-                        "2 B W W B W B W B " + System.lineSeparator() +
-                        "3 B B W W B W B B " + System.lineSeparator() +
-                        "4 B B B W B B W B " + System.lineSeparator() +
-                        "5 B B W W B W W B " + System.lineSeparator() +
-                        "6 B B B B B B W B " + System.lineSeparator() +
-                        "7 W W W W W W W W " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-
-    // hints
-
-    @Test
-    public void testPrintHints8bInit() {
-        Reversi reversi = new Reversi(GameConfig.game8bInit);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ _ o _ _ _ _ " + System.lineSeparator() +
-                "3 _ _ o W B _ _ _ " + System.lineSeparator() +
-                "4 _ _ _ B W o _ _ " + System.lineSeparator() +
-                "5 _ _ _ _ o _ _ _ " + System.lineSeparator() +
-                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHints8wInit() {
-        Reversi reversi = new Reversi(GameConfig.game8wInit);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ _ _ o _ _ _ " + System.lineSeparator() +
-                "3 _ _ _ W B o _ _ " + System.lineSeparator() +
-                "4 _ _ o B W _ _ _ " + System.lineSeparator() +
-                "5 _ _ _ o _ _ _ _ " + System.lineSeparator() +
-                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHints10bInit() {
-        Reversi reversi = new Reversi(GameConfig.game10bInit);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 8 9 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "3 _ _ _ _ o _ _ _ _ _ " + System.lineSeparator() +
-                "4 _ _ _ o W B _ _ _ _ " + System.lineSeparator() +
-                "5 _ _ _ _ B W o _ _ _ " + System.lineSeparator() +
-                "6 _ _ _ _ _ o _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "8 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "9 _ _ _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHints8bAlmostComplete() {
-        Reversi reversi = new Reversi(GameConfig.game8bAlmostComplete);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 B W B B W W B B " + System.lineSeparator() +
-                "1 W W B W B W W W " + System.lineSeparator() +
-                "2 B W B W B B W B " + System.lineSeparator() +
-                "3 W W B B o W W B " + System.lineSeparator() +
-                "4 B B B W B B B B " + System.lineSeparator() +
-                "5 W W B W W W W W " + System.lineSeparator() +
-                "6 B B B W B B W B " + System.lineSeparator() +
-                "7 W B W W B W B W " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHints8bComplete() {
-        Reversi reversi = new Reversi(GameConfig.game8bComplete);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 B B B B B B B B " + System.lineSeparator() +
-                "1 B W W W W W W B " + System.lineSeparator() +
-                "2 B W W B W B W B " + System.lineSeparator() +
-                "3 B B W W B W B B " + System.lineSeparator() +
-                "4 B B B W B B W B " + System.lineSeparator() +
-                "5 B B W W B W W B " + System.lineSeparator() +
-                "6 B B B B B B W B " + System.lineSeparator() +
-                "7 W W W W W W W W " + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintHintsExecuteB54() {
-        Reversi reversi = new Reversi(GameConfig.game8bInit);
-        reversi.move(5, 4);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "3 _ _ _ W B o _ _ " + System.lineSeparator() +
-                "4 _ _ _ B B _ _ _ " + System.lineSeparator() +
-                "5 _ _ _ o B o _ _ " + System.lineSeparator() +
-                "6 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertTrue(outContent.toString().contains(expected));
-    }
-
-    @Test
-    public void testPrintHintsExecuteB54W53() {
-        Reversi reversi = new Reversi(GameConfig.game8bInit);
-        reversi.move(5, 4);
-        reversi.move(5, 3);
-        PlaygroundPrinter.printHints(reversi.playground, reversi.size, reversi.getPossibleMoves());
-        String expected = "Possible moves:" + System.lineSeparator() +
-                "  0 1 2 3 4 5 6 7 " + System.lineSeparator() +
-                "0 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "1 _ _ _ _ _ _ _ _ " + System.lineSeparator() +
-                "2 _ _ o _ _ _ _ _ " + System.lineSeparator() +
-                "3 _ _ o W B _ _ _ " + System.lineSeparator() +
-                "4 _ _ o W B _ _ _ " + System.lineSeparator() +
-                "5 _ _ o W B _ _ _ " + System.lineSeparator() +
-                "6 _ _ o _ _ _ _ _ " + System.lineSeparator() +
-                "7 _ _ _ _ _ _ _ _ " + System.lineSeparator();
-        assertTrue(outContent.toString().contains(expected));
-    }
-
-
-    // printMoveOnTurn
-
-    @Test
-    public void testPrintMoveOnTurn8bInit() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
-        String expected = "Make a move. B is on turn" + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-    @Test
-    public void testPrintMoveOnTurn8wInit() {
-        Reversi game = new Reversi(GameConfig.game8wInit);
-        PlaygroundPrinter.printMoveOnTurn(game.onTurn);
-        String expected = "Make a move. W is on turn" + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-
-
-    // printPiecesNumber
-
-    @Test
-    public void testPrintPiecesNumber8bInit() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        PlaygroundPrinter.printPiecesNumber(game.getLeftB(), game.getLeftW());
-        String expected = "Number of pieces: B: 2; W: 2" + System.lineSeparator() + System.lineSeparator();
-        assertEquals(expected, outContent.toString());
-    }
-}
-');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'MoveTest.java', 8, 'import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-
-public class MoveTest {
-
-
-    // isWithinPlayground
-
-    @Test
-    public void testIsWithinPlayground00() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.size = 8;
-
-        assertTrue("within playground (0, 0)", game.isWithinPlayground(0, 0));
-    }
-
-    @Test
-    public void testIsWithinPlayground77() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertTrue("within playground (7, 7)", game.isWithinPlayground(7, 7));
-    }
-
-    @Test
-    public void testIsWithinPlaygroundNeg10() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertFalse("within playground (-1, 0)", game.isWithinPlayground(-1, 0));
-    }
-
-    @Test
-    public void testIsWithinPlayground0Neg1() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertFalse("within playground (0, -1)", game.isWithinPlayground(0, -1));
-    }
-
-    @Test
-    public void testIsWithinPlayground80() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertFalse("within playground (8, 0)", game.isWithinPlayground(8, 0));
-    }
-
-    @Test
-    public void testIsWithinPlayground08() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertFalse("within playground (0, 8)", game.isWithinPlayground(0, 8));
-    }
-
-    // getPossibleMoves
-
-    @Test
-    public void testGetPossibleMoves8bInit() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        List<String> pieces = game.getPossibleMoves();
-
-        assertEquals("valid length", 4, pieces.size());
-        assertEquals("valid moves", "2 3", pieces.get(0));
-        assertEquals("valid moves", "3 2", pieces.get(1));
-        assertEquals("valid moves", "4 5", pieces.get(2));
-        assertEquals("valid moves", "5 4", pieces.get(3));
-    }
-
-    @Test
-    public void testGetPossibleMovesEmpty() {
-        Reversi game = TestUtils.getRevWithPlayground();
-        List<String> pieces = game.getPossibleMoves();
-
-        assertEquals("valid length", 0, pieces.size());
-    }
-
-
-    // areValidMoves
-
-    @Test
-    public void testAreValidMovesInit() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-
-        assertTrue(game.areValidMoves());
-    }
-
-    @Test
-    public void testAreValidMovesOnEnd() {
-        Reversi game = new Reversi(GameConfig.game8bComplete);
-
-        assertFalse(game.areValidMoves());
-    }
-
-
-    // move
-
-    @Test
-    public void testMoveOnNotEmpty() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.move(4, 4);
-
-        Assert.assertArrayEquals("check if didn''t change", TestUtils.getInitPlayground(), game.playground);
-    }
-
-    @Test
-    public void testMoveOutOfBoundsBelow() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.move(8, 0);
-
-        Assert.assertArrayEquals("check if didn''t change", TestUtils.getInitPlayground(), game.playground);
-    }
-
-    @Test
-    public void testMoveOutOfBoundsAbove() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.move(-1, 0);
-
-        Assert.assertArrayEquals("check if didn''t change", TestUtils.getInitPlayground(), game.playground);
-    }
-
-    @Test
-    public void testMoveOnNotAdjacent() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.move(0, 0);
-
-        Assert.assertArrayEquals("check if didn''t change", TestUtils.getInitPlayground(), game.playground);
-    }
-
-    @Test
-    public void testMoveFlipRight() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.move(3, 2);
-
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 3));
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 2));
-        Assert.assertEquals("on turn", Player.W, game.onTurn);
-        Assert.assertEquals("W left", 1, game.getLeftW());
-        Assert.assertEquals("B left", 4, game.getLeftB());
-    }
-
-    @Test
-    public void testMoveFlipUp() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.move(5, 4);
-
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 4, 4));
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 5, 4));
-        Assert.assertEquals("on turn", Player.W, game.onTurn);
-        Assert.assertEquals("W left", 1, game.getLeftW());
-        Assert.assertEquals("B left", 4, game.getLeftB());
-    }
-
-    @Test
-    public void testMoveFlipLeft() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.move(4, 5);
-
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 4, 4));
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 4, 5));
-        Assert.assertEquals("on turn", Player.W, game.onTurn);
-        Assert.assertEquals("W left", 1, game.getLeftW());
-        Assert.assertEquals("B left", 4, game.getLeftB());
-    }
-
-    @Test
-    public void testMoveFlipDown() {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        game.move(2, 3);
-
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 3, 3));
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 2, 3));
-        Assert.assertEquals("on turn", Player.W, game.onTurn);
-        Assert.assertEquals("W left", 1, game.getLeftW());
-        Assert.assertEquals("B left", 4, game.getLeftB());
-    }
-
-    @Test
-    public void testMoveFlipRightUp() {
-        List<List<Integer>> moves = new ArrayList<>();
-        moves.add(Arrays.asList(5, 4));
-        moves.add(Arrays.asList(5, 3));
-        moves.add(Arrays.asList(6, 2));
-        Reversi game = TestUtils.setMoves(moves);
-
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 5, 3));
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 6, 2));
-        Assert.assertEquals("on turn", Player.W, game.onTurn);
-        Assert.assertEquals("W left", 2, game.getLeftW());
-        Assert.assertEquals("B left", 5, game.getLeftB());
-    }
-
-    @Test
-    public void testMoveFlipLeftUp() {
-        List<List<Integer>> moves = new ArrayList<>();
-        moves.add(Arrays.asList(5, 4));
-        moves.add(Arrays.asList(5, 5));
-        Reversi game = TestUtils.setMoves(moves);
-
-        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 4, 4));
-        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 5, 5));
-        Assert.assertEquals("on turn", Player.B, game.onTurn);
-        Assert.assertEquals("W left", 3, game.getLeftW());
-        Assert.assertEquals("B left", 3, game.getLeftB());
-    }
-
-    @Test
-    public void testMoveFlipLeftDown() {
-        List<List<Integer>> moves = new ArrayList<>();
-        moves.add(Arrays.asList(2, 3));
-        moves.add(Arrays.asList(2, 4));
-        moves.add(Arrays.asList(1, 5));
-        Reversi game = TestUtils.setMoves(moves);
-
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 2, 4));
-        Assert.assertEquals("check if flipped", Player.B, TestUtils.getPiece(game, 1, 5));
-        Assert.assertEquals("on turn", Player.W, game.onTurn);
-        Assert.assertEquals("W left", 2, game.getLeftW());
-        Assert.assertEquals("B left", 5, game.getLeftB());
-    }
-
-    @Test
-    public void testMoveFlipRightDown() {
-        List<List<Integer>> moves = new ArrayList<>();
-        moves.add(Arrays.asList(2, 3));
-        moves.add(Arrays.asList(2, 2));
-        Reversi game = TestUtils.setMoves(moves);
-
-        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 3, 3));
-        Assert.assertEquals("check if flipped", Player.W, TestUtils.getPiece(game, 2, 2));
-        Assert.assertEquals("on turn", Player.B, game.onTurn);
-        Assert.assertEquals("W left", 3, game.getLeftW());
-        Assert.assertEquals("B left", 3, game.getLeftB());
-    }
-
-    @Test
-    public void testMoveDoubleFlip() {
-        List<List<Integer>> moves = new ArrayList<>();
-        moves.add(Arrays.asList(2, 3));
-        moves.add(Arrays.asList(2, 2));
-        moves.add(Arrays.asList(3, 2));
-        moves.add(Arrays.asList(2, 4));
-        Reversi game = TestUtils.setMoves(moves);
-
-        Assert.assertEquals("check if flipped (D,3) correctly", Player.W, TestUtils.getPiece(game, 2, 3));
-        Assert.assertEquals("check if flipped (E,4) correctly", Player.W, TestUtils.getPiece(game, 3, 4));
-        Assert.assertEquals("W left", 5, game.getLeftW());
-        Assert.assertEquals("B left", 3, game.getLeftB());
-    }
-
-    @Test
-    public void testMoveFinishGame() {
-        Reversi game = new Reversi(GameConfig.game8bAlmostComplete);
-        game.move(3, 4);
-
-        Assert.assertFalse("if the are valid moves", game.areValidMoves());
-        Assert.assertEquals("W left", 39, game.getLeftW());
-        Assert.assertEquals("B left", 25, game.getLeftB());
-    }
-
-    @Test
-    public void testMovesCompleteGame() {
-        List<List<Integer>> moves = new ArrayList<>();
-        moves.add(Arrays.asList(4, 5));
-        moves.add(Arrays.asList(5, 3));
-        moves.add(Arrays.asList(3, 2));
-        moves.add(Arrays.asList(2, 3));
-        moves.add(Arrays.asList(2, 2));
-        moves.add(Arrays.asList(3, 5));
-        moves.add(Arrays.asList(4, 2));
-        moves.add(Arrays.asList(2, 1));
-        moves.add(Arrays.asList(1, 2));
-        moves.add(Arrays.asList(5, 4));
-        moves.add(Arrays.asList(5, 2));
-        moves.add(Arrays.asList(3, 1));
-        moves.add(Arrays.asList(4, 1));
-        moves.add(Arrays.asList(1, 3));
-        moves.add(Arrays.asList(2, 4));
-        moves.add(Arrays.asList(5, 0));
-        moves.add(Arrays.asList(0, 2));
-        moves.add(Arrays.asList(5, 1));
-        moves.add(Arrays.asList(2, 5));
-        moves.add(Arrays.asList(5, 5));
-        moves.add(Arrays.asList(6, 5));
-        moves.add(Arrays.asList(0, 4));
-        moves.add(Arrays.asList(1, 4));
-        moves.add(Arrays.asList(0, 5));
-        moves.add(Arrays.asList(6, 4));
-        moves.add(Arrays.asList(2, 6));
-        moves.add(Arrays.asList(6, 2));
-        moves.add(Arrays.asList(3, 6));
-        moves.add(Arrays.asList(4, 6));
-        moves.add(Arrays.asList(7, 3));
-        moves.add(Arrays.asList(3, 7));
-        moves.add(Arrays.asList(6, 3));
-        moves.add(Arrays.asList(0, 3));
-        moves.add(Arrays.asList(0, 1));
-        moves.add(Arrays.asList(7, 1));
-        moves.add(Arrays.asList(7, 2));
-        moves.add(Arrays.asList(7, 4));
-        moves.add(Arrays.asList(1, 5));
-        moves.add(Arrays.asList(2, 7));
-        moves.add(Arrays.asList(5, 6));
-        moves.add(Arrays.asList(4, 7));
-        moves.add(Arrays.asList(1, 6));
-        moves.add(Arrays.asList(2, 0));
-        moves.add(Arrays.asList(7, 5));
-        moves.add(Arrays.asList(7, 6));
-        moves.add(Arrays.asList(3, 0));
-        moves.add(Arrays.asList(0, 7));
-        moves.add(Arrays.asList(1, 0));
-        moves.add(Arrays.asList(0, 6));
-        moves.add(Arrays.asList(5, 7));
-        moves.add(Arrays.asList(6, 1));
-        moves.add(Arrays.asList(7, 0));
-        moves.add(Arrays.asList(6, 0));
-        moves.add(Arrays.asList(7, 7));
-        moves.add(Arrays.asList(4, 0));
-        moves.add(Arrays.asList(1, 7));
-        moves.add(Arrays.asList(0, 0));
-        moves.add(Arrays.asList(1, 1));
-        moves.add(Arrays.asList(6, 7));
-        moves.add(Arrays.asList(6, 6));
-        Reversi game = TestUtils.setMoves(moves);
-
-        Assert.assertFalse("if the are valid moves", game.areValidMoves());
-        Assert.assertEquals("W left", 28, game.getLeftW());
-        Assert.assertEquals("B left", 36, game.getLeftB());
-    }
-}');
-
-INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, content)
-VALUES ('private_test', 'TestUtils.java', 8, 'import java.util.List;
-
-
-class TestUtils {
-
-    static Player getPiece(Reversi game, int r0, int c0) {
-        return game.playground[r0][c0];
-    }
-
-
-    static Reversi setMoves(List<List<Integer>> moves) {
-        Reversi game = new Reversi(GameConfig.game8bInit);
-        for (List<Integer> move  : moves) {
             Integer r = move.get(0);
             Integer c = move.get(1);
             game.move(r, c);
@@ -16396,7 +16396,7 @@ public class ReversiTest {
     }
 
     @Test
-    public void testInitialization() {
+    public void testInitialization() throws IncorrectGameConfigFileException {
         // Reversi game initialization.
         // GameConfig stores paths to game configuration files
         Reversi game1 = new Reversi();
@@ -18605,7 +18605,7 @@ public class ReversiTest {
     }
 
     @Test
-    public void testInitialization() {
+    public void testInitialization() throws IncorrectGameConfigFileException {
         // Reversi game initialization.
         // GameConfig stores paths to game configuration files
         Reversi game1 = new Reversi();

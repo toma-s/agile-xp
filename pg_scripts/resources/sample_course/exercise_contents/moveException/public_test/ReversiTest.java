@@ -32,7 +32,7 @@ public class ReversiTest {
     }
 
     @Test
-    public void testInitialization() {
+    public void testInitialization() throws IncorrectGameConfigFileException {
         // Reversi game initialization.
         // GameConfig stores paths to game configuration files
         Reversi game1 = new Reversi();
