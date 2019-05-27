@@ -200,10 +200,6 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void clear(String directoryName) {
-        System.out.println(directoryName);
-        boolean exists = this.load(directoryName).toFile().exists();
-        System.out.println("EXISTS: " + exists);
-        boolean cleared = FileSystemUtils.deleteRecursively(load(directoryName).toFile());
-        System.out.println("CLEARED: " + cleared);
+        FileSystemUtils.deleteRecursively(load(directoryName).toFile());
     }
 }

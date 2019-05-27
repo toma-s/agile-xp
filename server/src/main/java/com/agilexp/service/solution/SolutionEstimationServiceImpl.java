@@ -131,11 +131,24 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
     private SolutionItems setSolutionItems(long exerciseId, Solution solution) {
         SolutionItems newSolutionItems = new SolutionItems();
         SolutionEstimation solutionEstimation = solutionEstimationRepository.findFirstBySolutionId(solution.getId());
+        if (solutionEstimation == null) {
+            return notEstimatedItems(exerciseId, solution);
+        }
         newSolutionItems.setSolutionId(solution.getId());
         newSolutionItems.setExerciseId(exerciseId);
         newSolutionItems.setCreated(solutionEstimation.getCreated());
         newSolutionItems.setEstimation(solutionEstimation.getEstimation());
         newSolutionItems.setSolved(solutionEstimation.isSolved());
         return newSolutionItems;
+    }
+
+    private SolutionItems notEstimatedItems(long exerciseId, Solution solution) {
+        SolutionItems solutionItems = new SolutionItems();
+        solutionItems.setSolutionId(solution.getId());
+        solutionItems.setExerciseId(exerciseId);
+        solutionItems.setCreated(new Timestamp(new Date().getTime()));
+        solutionItems.setEstimation("Was not estimated");
+        solutionItems.setSolved(false);
+        return solutionItems;
     }
 }

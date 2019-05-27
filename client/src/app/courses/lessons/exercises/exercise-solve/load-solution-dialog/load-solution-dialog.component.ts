@@ -39,6 +39,7 @@ export class LoadSolutionDialogComponent implements OnInit {
   loadEstimations() {
     console.log(this.pageSize);
     console.log(this.currentIndex);
+    console.log(this.solutionType);
     return new Promise<Array<SolutionItems>>((resolve, reject) => {
       this.solutionEstimationService.getSolutionEstimationsByExerciseIdAndType(this.exerciseId, this.solutionType, this.currentIndex,
         this.pageSize).subscribe(
