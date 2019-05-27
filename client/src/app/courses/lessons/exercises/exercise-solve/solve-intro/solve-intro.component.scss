@@ -42,8 +42,11 @@ pre {
   font-family: serif;
 }
 
-.ql-indent-1 {
-  text-indent: 1em;
+@for $i from 1 through 10 {
+  $indent: $i;
+  .ql-indent-#{$i} {
+    text-indent: #{$indent}em;
+  }
 }
 
 .ql-align-right {
