@@ -40,7 +40,7 @@ public abstract class BlackBoxEstimatorSuper {
             return estimation;
         } catch (StorageException | DockerControllerException e) {
             Estimation estimation = new Estimation();
-            estimation.setErrorMessage(String.format("Public estimation failed:\n%s", e.getMessage()));
+            estimation.setErrorMessage(String.format("Public estimation failed:%n%s", e.getMessage()));
             return estimation;
         }
     }
@@ -54,8 +54,8 @@ public abstract class BlackBoxEstimatorSuper {
             Arrays.fill(booleans, "false");
             booleans[i] = "true";
             ExerciseFlags flags = new ExerciseFlags();
-            String content = String.join("\n", booleans);
-            content += '\n';
+            String content = String.join("%n", booleans);
+            content += "%n";
             flags.setContent(content);
             flags.setFilename("flags" + i + ".txt");
             exerciseFlags.add(flags);
@@ -67,8 +67,8 @@ public abstract class BlackBoxEstimatorSuper {
         String[] booleans = new String[bugsNum];
         Arrays.fill(booleans, "false");
         ExerciseFlags flags = new ExerciseFlags();
-        String content = String.join("\n", booleans);
-        content += '\n';
+        String content = String.join("%n", booleans);
+        content += "%n";
         flags.setContent(content);
         flags.setFilename("flags.txt");
         return flags;
@@ -126,15 +126,15 @@ public abstract class BlackBoxEstimatorSuper {
     }
 
     private String getEstimationContent(Estimation estimation) {
-        return String.format("Progress: %s%%\n\n" +
-                        "SolutionEstimation result:\n" +
-                        "\n" +
-                        "Compilation result:\n" +
-                        "Compiled successfully: %s\n" +
-                        "%s\n" +
-                        "Tests result:\n" +
-                        "Tested successfully: %s\n" +
-                        "%s\n",
+        return String.format("Progress: %s%%%n%n" +
+                        "SolutionEstimation result:%n" +
+                        "%n" +
+                        "Compilation result:%n" +
+                        "Compiled successfully: %s%n" +
+                        "%s%n%n" +
+                        "Tests result:%n" +
+                        "Tested successfully: %s%n" +
+                        "%s%n%n",
                 estimation.getValue(),
                 estimation.isCompiled(),
                 estimation.getCompilationResult(),

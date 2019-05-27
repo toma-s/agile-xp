@@ -19,14 +19,14 @@ public class CourseServiceImpl implements CourseService {
         Date date = new Date();
         Timestamp created = new Timestamp(date.getTime());
         Course newCourse = repository.save(new Course(course.getName(), created, course.getDescription()));
-        System.out.format("Created course %s\n", newCourse.getName());
+        System.out.format("Created course %s%n", newCourse.getName());
         return newCourse;
     }
 
     @Override
     public Course getById(long id) {
         Optional<Course> optional = repository.findById(id);
-        System.out.format("Got course with id %s\n", id);
+        System.out.format("Got course with id %s%n", id);
         return optional.orElse(null);
     }
 
@@ -42,7 +42,7 @@ public class CourseServiceImpl implements CourseService {
     public boolean update(long id, Course course) {
         Optional<Course> optional = repository.findById(id);
         if (!optional.isPresent()) {
-            System.out.format("Failed to update course with id %s\n", id);
+            System.out.format("Failed to update course with id %s%n", id);
             return false;
         }
         Course updatedCourse = optional.get();
@@ -50,14 +50,14 @@ public class CourseServiceImpl implements CourseService {
         updatedCourse.setCreated(course.getCreated());
         updatedCourse.setDescription(course.getDescription());
         repository.save(updatedCourse);
-        System.out.format("Updates course with id %s\n", id);
+        System.out.format("Updates course with id %s%n", id);
         return true;
     }
 
     @Override
     public void delete(long id) {
         repository.deleteById(id);
-        System.out.format("Deleted course with id %s\n", id);
+        System.out.format("Deleted course with id %s%n", id);
     }
 
 }

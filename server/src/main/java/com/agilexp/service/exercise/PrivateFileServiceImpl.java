@@ -25,14 +25,14 @@ public class PrivateFileServiceImpl implements ExerciseContentService {
                 exerciseContent.getFilename(),
                 exerciseContent.getContent()
         ));
-        System.out.format("Created %s %s\n", contentType, newExerciseContent);
+        System.out.format("Created %s %s%n", contentType, newExerciseContent);
         return newExerciseContent;
     }
 
     @Override
     public List<PrivateFile> getByExerciseId(long exerciseId) {
         List<PrivateFile> exerciseContents = new ArrayList<>(repository.findPrivateFilesByExerciseId(exerciseId));
-        System.out.format("Found %s from exercise %s: %s\n", contentType, exerciseId, exerciseContents);
+        System.out.format("Found %s from exercise %s: %s%n", contentType, exerciseId, exerciseContents);
         return exerciseContents;
     }
 
@@ -40,7 +40,7 @@ public class PrivateFileServiceImpl implements ExerciseContentService {
     public boolean update(long id, ExerciseContent exerciseContent) {
         Optional<PrivateFile> optional = repository.findById(id);
         if (!optional.isPresent()) {
-            System.out.format("Failed to %s with id %s\n", contentType, id);
+            System.out.format("Failed to %s with id %s%n", contentType, id);
             return false;
         }
         PrivateFile updatedExerciseContent = optional.get();
@@ -48,7 +48,7 @@ public class PrivateFileServiceImpl implements ExerciseContentService {
         updatedExerciseContent.setExerciseId(exerciseContent.getExerciseId());
         updatedExerciseContent.setContent(exerciseContent.getContent());
         repository.save(updatedExerciseContent);
-        System.out.format("Updated %s with id %s\n", contentType, id);
+        System.out.format("Updated %s with id %s%n", contentType, id);
         return true;
     }
 
@@ -56,6 +56,6 @@ public class PrivateFileServiceImpl implements ExerciseContentService {
     public void deleteByExerciseId(long exerciseId) {
         List<PrivateFile> privateFiles = repository.findPrivateFilesByExerciseId(exerciseId);
         privateFiles.forEach(privateFile -> repository.delete(privateFile));
-        System.out.format("Deleted %ss with exercise id %s\n", contentType, exerciseId);
+        System.out.format("Deleted %ss with exercise id %s%n", contentType, exerciseId);
     }
 }

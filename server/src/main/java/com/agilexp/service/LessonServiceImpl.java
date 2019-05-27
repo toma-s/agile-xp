@@ -26,21 +26,21 @@ public class LessonServiceImpl implements LessonService {
                 lesson.getCourseId(),
                 created,
                 lesson.getDescription()));
-        System.out.format("Created lesson %s from course %s\n", newLesson.getName(), newLesson.getCourseId());
+        System.out.format("Created lesson %s from course %s%n", newLesson.getName(), newLesson.getCourseId());
         return newLesson;
     }
 
     @Override
     public Lesson getById(long id) {
         Optional<Lesson> optional = repository.findById(id);
-        System.out.format("Got lesson with id %s\n", id);
+        System.out.format("Got lesson with id %s%n", id);
         return optional.orElse(null);
     }
 
     @Override
     public List<Lesson> getByCourseId(long courseId) {
         List<Lesson> lessons = repository.findByCourseId(courseId);
-        System.out.format("Got lessons with course id %s\n", courseId);
+        System.out.format("Got lessons with course id %s%n", courseId);
         return lessons;
     }
 
@@ -48,7 +48,7 @@ public class LessonServiceImpl implements LessonService {
     public boolean update(long id, Lesson lesson) {
         Optional<Lesson> lessonData = repository.findById(id);
         if (!lessonData.isPresent()) {
-            System.out.format("Failed to update lesson with id %s\n", id);
+            System.out.format("Failed to update lesson with id %s%n", id);
             return false;
         }
         Lesson updatedLesson = lessonData.get();
@@ -56,14 +56,14 @@ public class LessonServiceImpl implements LessonService {
         updatedLesson.setCreated(lesson.getCreated());
         updatedLesson.setDescription(lesson.getDescription());
         repository.save(updatedLesson);
-        System.out.format("Updates lesson with id %s\n", id);
+        System.out.format("Updates lesson with id %s%n", id);
         return true;
     }
 
     @Override
     public void delete(long id) {
         repository.deleteById(id);
-        System.out.format("Deleted lesson with id %s\n", id);
+        System.out.format("Deleted lesson with id %s%n", id);
     }
 
 }

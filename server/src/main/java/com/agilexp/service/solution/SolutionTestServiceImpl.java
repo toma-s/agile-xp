@@ -21,7 +21,7 @@ public class SolutionTestServiceImpl implements SolutionContentService {
                 solutionContent.getFilename(),
                 solutionContent.getContent()
         ));
-        System.out.format("Created %s %s\n", contentType, newSolutionContent);
+        System.out.format("Created %s %s%n", contentType, newSolutionContent);
         return newSolutionContent;
     }
 }

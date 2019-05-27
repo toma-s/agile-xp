@@ -41,7 +41,7 @@ public abstract class WhiteBoxEstimatorSuper {
             return gson.fromJson(output, Estimation.class);
         } catch (StorageException | DockerControllerException e) {
             Estimation estimation = new Estimation();
-            estimation.setErrorMessage(String.format("Public estimation failed:\n%s", e.getMessage()));
+            estimation.setErrorMessage(String.format("Public estimation failed:%n%s", e.getMessage()));
             return estimation;
         }
     }
@@ -78,7 +78,7 @@ public abstract class WhiteBoxEstimatorSuper {
             return gson.fromJson(output, Estimation.class);
         } catch (StorageException | DockerControllerException e) {
             Estimation estimation = new Estimation();
-            estimation.setErrorMessage(String.format("Private estimation failed:\n%s", e.getMessage()));
+            estimation.setErrorMessage(String.format("Private estimation failed:%n%s", e.getMessage()));
             return estimation;
         }
     }
@@ -113,7 +113,7 @@ public abstract class WhiteBoxEstimatorSuper {
     private String getEstimationContent(Estimation publicWBEstimation, Estimation privateWBEstimation) {
         String publicEstimationContent = getEstimationContent(publicWBEstimation, publicMode);
         String privateEstimationContent = getEstimationContent(privateWBEstimation, privateMode);
-        return String.format("Progress: %s%%\n\n" +
+        return String.format("Progress: %s%%%n%n" +
                         "%s%s",
                 privateWBEstimation.getValue(),
                 publicEstimationContent,
@@ -122,14 +122,14 @@ public abstract class WhiteBoxEstimatorSuper {
     }
 
     private String getEstimationContent(Estimation estimation, String mode) {
-        return String.format("%s estimation result:\n" +
-                        "\n" +
-                        "Compilation result:\n" +
-                        "Compiled successfully: %s\n" +
-                        "%s\n" +
-                        "Tests result:\n" +
-                        "Tested successfully: %s\n" +
-                        "%s\n",
+        return String.format("%s estimation result:%n" +
+                        "%n" +
+                        "Compilation result:%n" +
+                        "Compiled successfully: %s%n" +
+                        "%s%n%n" +
+                        "Tests result:%n" +
+                        "Tested successfully: %s%n" +
+                        "%s%n%n",
                 StringUtils.capitalize(mode),
                 estimation.isCompiled(),
                 estimation.getCompilationResult(),

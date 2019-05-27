@@ -18,14 +18,14 @@ public class ExerciseTypeServiceImpl implements ExerciseTypeService {
     @Override
     public ExerciseType getById(long id) {
         Optional<ExerciseType> optional = repository.findById(id);
-        System.out.format("Got exercise type with id %s\n", id);
+        System.out.format("Got exercise type with id %s%n", id);
         return optional.orElse(null);
     }
 
     @Override
     public ExerciseType getByValue(String value) {
         ExerciseType exerciseType = repository.findByValue(value);
-        System.out.format("Got exercise type with value %s\n", value);
+        System.out.format("Got exercise type with value %s%n", value);
         return exerciseType;
     }
 
