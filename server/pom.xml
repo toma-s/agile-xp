@@ -7,7 +7,7 @@
     <groupId>com.agilexp</groupId>
     <artifactId>agilexp-server</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -111,19 +111,6 @@
                     <executable>true</executable>
                     <source>10</source>
                     <target>10</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>com.agilexp.Application</mainClass>
-                        </manifest>
-                    </archive>
                 </configuration>
             </plugin>
         </plugins>
