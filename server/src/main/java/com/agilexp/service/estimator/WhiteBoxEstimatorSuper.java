@@ -27,6 +27,7 @@ public abstract class WhiteBoxEstimatorSuper {
     SolutionEstimation getWhiteBoxEstimation(SolutionItems solutionItems) {
         Estimation publicEstimation = getPublicEstimation(solutionItems);
         Estimation privateEstimation = getPrivateEstimation(solutionItems);
+        removeTempFiles(solutionItems);
         return getEstimation(solutionItems.getSolutionId(), publicEstimation, privateEstimation);
     }
 
@@ -36,9 +37,7 @@ public abstract class WhiteBoxEstimatorSuper {
             String directoryName = publicMode + solutionId;
             storePublicFiles(solutionItems, directoryName);
             String output = executeEstimation(directoryName);
-            System.out.println(output);
             Gson gson = new Gson();
-            removeTempFiles(solutionId);
             return gson.fromJson(output, Estimation.class);
         } catch (StorageException | DockerControllerException e) {
             Estimation estimation = new Estimation();
@@ -75,7 +74,6 @@ public abstract class WhiteBoxEstimatorSuper {
             String directoryName = privateMode + solutionId;
             storePrivateFiles(solutionItems, directoryName);
             String output = executeEstimation(directoryName);
-            System.out.println(output);
             Gson gson = new Gson();
             return gson.fromJson(output, Estimation.class);
         } catch (StorageException | DockerControllerException e) {
@@ -140,7 +138,8 @@ public abstract class WhiteBoxEstimatorSuper {
         );
     }
 
-    private void removeTempFiles(String solutionId) {
+    private void removeTempFiles(SolutionItems solutionItems) {
+        String solutionId = String.valueOf(solutionItems.getSolutionId());
         storageService.clear(publicMode + solutionId);
         storageService.clear(privateMode + solutionId);
     }

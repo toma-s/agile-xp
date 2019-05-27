@@ -28,11 +28,10 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void store(SolutionContent solutionContent, String directoryName, String parentDirectoryName) {
-        // TODO: 10-May-19 refactor (duplicity)
         String filename = solutionContent.getFilename();
         String code = solutionContent.getContent();
 
-        createFolder(parentDirectoryName, null);
+        createFolder(parentDirectoryName);
         Path directoryLocation = createFolder(directoryName, parentDirectoryName);
         storeSourceCode(filename, code, directoryLocation);
     }
@@ -42,41 +41,42 @@ public class FileSystemStorageService implements StorageService {
         String filename = exerciseContent.getFilename();
         String code = exerciseContent.getContent();
 
-        createFolder(parentDirectoryName, null);
+        createFolder(parentDirectoryName);
         Path directoryLocation = createFolder(directoryName, parentDirectoryName);
         storeSourceCode(filename, code, directoryLocation);
     }
 
     @Override
     public void store(int number, String fileName, String parentDirectoryName) {
-        createFolder(parentDirectoryName, null);
+        createFolder(parentDirectoryName);
         Path directoryLocation = createFolder(fileName, parentDirectoryName);
         storeNumber(fileName, number, directoryLocation);
     }
 
-    private Path createFolder(String directoryName, String created) {
-
-        // TODO: 10-May-19 refactor
-        Path directoryLocation;
+    private Path createFolder(String directoryName, String parentDirectoryName) {
         try {
-            if (created != null) {
-                if (Paths.get(this.rootLocation.resolve(created).toString(), directoryName).toFile().isDirectory()) {
-                    return this.rootLocation.resolve(created).resolve(directoryName);
-                }
-                Files.createDirectory(Paths.get(this.rootLocation.resolve(created).resolve(directoryName).toString()));
-                directoryLocation = this.rootLocation.resolve(created).resolve(directoryName);
-            } else {
-                if (Paths.get(this.rootLocation.toString(), directoryName).toFile().isDirectory()) {
-                    return this.rootLocation.resolve(directoryName);
-                }
-                Files.createDirectory(Paths.get(this.rootLocation.resolve(directoryName).toString()));
-                directoryLocation = this.rootLocation.resolve(directoryName);
+            Path directory = this.rootLocation.resolve(parentDirectoryName).resolve(directoryName);
+            if (directory.toFile().isDirectory()) {
+                return directory;
             }
-
+            Files.createDirectory(directory);
+            return directory;
         } catch (IOException e) {
             throw new StorageException("Failed to create folder for task");
         }
-        return directoryLocation;
+    }
+
+    private void createFolder(String directoryName) {
+        try {
+            Path directory = this.rootLocation.resolve(directoryName);
+            if (directory.toFile().isDirectory()) {
+                return;
+            }
+            Files.createDirectory(directory);
+            this.rootLocation.resolve(directoryName);
+        } catch (IOException e) {
+            throw new StorageException("Failed to create folder for task");
+        }
     }
 
     private void storeSourceCode(String filename, String code, Path directoryLocation) throws StorageException {
@@ -131,9 +131,7 @@ public class FileSystemStorageService implements StorageService {
                 return resource;
             }
             else {
-                throw new StorageFileNotFoundException(
-                        "Could not read file: " + filename);
-
+                throw new StorageFileNotFoundException("Could not read file: " + filename);
             }
         } catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
@@ -163,36 +161,45 @@ public class FileSystemStorageService implements StorageService {
     private void copyRecursively(File sourceDirectory, File destinationDirectory) {
         if (sourceDirectory.isDirectory()) {
             if (!destinationDirectory.exists()) {
-                boolean mkdir = destinationDirectory.mkdir();
-                if (!mkdir) {
-                    throw new StorageException("Failed to copy estimation files: " +
-                            "failed to create destination directory");
-                }
+                createDirectory(destinationDirectory);
             }
-            String[] files = sourceDirectory.list();
-            if (files == null) {
-                throw new StorageException("Failed to copy estimation files: " +
-                        "listing the source folder files returned null");
-            }
+            String[] files = listFiles(sourceDirectory);
             for (String file : files) {
                 File srcFile = new File(sourceDirectory, file);
                 File destFile = new File(destinationDirectory, file);
                 copyRecursively(srcFile, destFile);
             }
         } else {
-            try {
-                Files.copy(sourceDirectory.toPath(), destinationDirectory.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                throw new StorageException("Failed to copy estimation files: " + e.getMessage());
-            }
+            copy(sourceDirectory, destinationDirectory);
+        }
+    }
+
+    private void createDirectory(File directory) {
+        boolean mkdir = directory.mkdir();
+        if (!mkdir) {
+            throw new StorageException("Failed to copy estimation files: " + "failed to create destination directory");
+        }
+    }
+
+    private String[] listFiles(File directory) {
+        String[] files = directory.list();
+        if (files == null) {
+            throw new StorageException("Failed to copy estimation files: " +
+                    "listing the source folder files returned null");
+        }
+        return files;
+    }
+
+    private void copy(File sourceDirectory, File destinationDirectory) {
+        try {
+            Files.copy(sourceDirectory.toPath(), destinationDirectory.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new StorageException("Failed to copy estimation files: " + e.getMessage());
         }
     }
 
     @Override
     public void clear(String directoryName) {
-        System.out.println(directoryName);
-        System.out.println("EXISTS: " + load(directoryName).toFile().exists());
-        boolean deleted = FileSystemUtils.deleteRecursively(load(directoryName).toFile());
-        System.out.println("DELETED: " + deleted);
+        FileSystemUtils.deleteRecursively(load(directoryName).toFile());
     }
 }

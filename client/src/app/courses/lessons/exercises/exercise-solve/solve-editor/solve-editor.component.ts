@@ -108,7 +108,7 @@ export class SolveEditorComponent implements OnInit {
     const config = new MatDialogConfig();
     this.dialogRef = this.dialog.open(LoadSolutionDialogComponent, config);
     this.dialogRef.componentInstance.exerciseId = this.getDialogExerciseId(exercise);
-    this.dialogRef.componentInstance.solutionType = this.form.get('solutionType').value;
+    this.dialogRef.componentInstance.solutionType = this.form.get('solutionControl').get('solutionType').value;
     this.dialogRef.afterClosed().subscribe(result => {
       if (result === undefined) {
         return;

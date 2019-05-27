@@ -41,7 +41,7 @@ export class CoursesListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         console.log(this.dataSource.paginator);
       },
-      error => console.log('error: ' + error)
+      error => console.log(error)
     );
   }
 }

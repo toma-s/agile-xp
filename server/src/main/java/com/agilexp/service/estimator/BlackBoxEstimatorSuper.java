@@ -45,11 +45,6 @@ public abstract class BlackBoxEstimatorSuper {
         }
     }
 
-    private void removeTempFiles(SolutionItems solutionItems) {
-        String solutionId = String.valueOf(solutionItems.getSolutionId());
-        storageService.clear(solutionId);
-    }
-
     abstract void storeFiles(SolutionItems solutionItems, String directoryName);
 
     List<ExerciseFlags> getExerciseFlags(int bugsNum) {
@@ -146,5 +141,10 @@ public abstract class BlackBoxEstimatorSuper {
                 estimation.isTested(),
                 estimation.getTestsResult()
         );
+    }
+
+    private void removeTempFiles(SolutionItems solutionItems) {
+        String solutionId = String.valueOf(solutionItems.getSolutionId());
+        storageService.clear(solutionId);
     }
 }
