@@ -54,8 +54,8 @@ public abstract class BlackBoxEstimatorSuper {
             Arrays.fill(booleans, "false");
             booleans[i] = "true";
             ExerciseFlags flags = new ExerciseFlags();
-            String content = String.join("%n", booleans);
-            content += "%n";
+            String content = String.join("\n", booleans);
+            content += "\n";
             flags.setContent(content);
             flags.setFilename("flags" + i + ".txt");
             exerciseFlags.add(flags);
@@ -67,8 +67,8 @@ public abstract class BlackBoxEstimatorSuper {
         String[] booleans = new String[bugsNum];
         Arrays.fill(booleans, "false");
         ExerciseFlags flags = new ExerciseFlags();
-        String content = String.join("%n", booleans);
-        content += "%n";
+        String content = String.join("\n", booleans);
+        content += "\n";
         flags.setContent(content);
         flags.setFilename("flags.txt");
         return flags;
