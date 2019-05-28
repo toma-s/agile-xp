@@ -2284,24 +2284,16 @@ INSERT INTO exercise_content (exercise_content_type, filename, exercise_id, cont
 VALUES ('public_source', 'GameConfig.java', 4, 'import java.io.File;
 import java.nio.file.Path;
 
-final class GameConfig {
+class GameConfig {
 
-    private static final GameConfig INSTANCE = new GameConfig();
-
-    GameConfig() {}
-
-    public static GameConfig getInstance() {
-        return INSTANCE;
-    }
-
-    private static String gameConfigDir = "./files/";
+    private static String gameConfigDir = "./files/";;
     static Path game8bInit = new File(gameConfigDir + "game_8_b_init.txt").toPath();
     static Path game8wInit = new File(gameConfigDir + "game_8_w_init.txt").toPath();
     static Path game10bInit = new File(gameConfigDir + "game_10_b_init.txt").toPath();
     static Path game20bInit = new File(gameConfigDir + "game_20_b_init.txt").toPath();
     static Path gameEmpty = new File(gameConfigDir + "game_empty.txt").toPath();
     static Path gameNotExisting = new File(gameConfigDir + "game_not_existing.txt").toPath();
-    static Path gameFourLines = new File(gameConfigDir + "game_four_lines.txt").toPath();
+    static Path gameFiveLines = new File(gameConfigDir + "game_five_lines.txt").toPath();
     static Path gameAlpha = new File(gameConfigDir + "game_alpha.txt").toPath();
     static Path gameNoSize = new File(gameConfigDir + "game_no_size.txt").toPath();
     static Path gameNoOnTurn = new File(gameConfigDir + "game_no_on_turn.txt").toPath();
