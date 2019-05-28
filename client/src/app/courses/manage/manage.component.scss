@@ -73,11 +73,13 @@
   border-radius: 4px;
   overflow: hidden;
   margin: 20px;
+  padding: 0;
 }
 
 .list__box {
-  padding: 10px 5px;
+  padding: 14px 5px;
   color: rgba(0, 0, 0, 0.87);
+  border-bottom: solid 1px $grey-mid;
 
   .list__content {
     width: 100%;
@@ -88,7 +90,7 @@
 
     .list__button {
       float: right;
-      margin: 5px 10px;
+      margin: 8px 10px;
     }
   }
 }
