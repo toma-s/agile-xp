@@ -36,9 +36,10 @@ public class LessonController {
     }
 
     @PutMapping("/lessons/{id}")
-    public ResponseEntity updateLesson(@PathVariable("id") long id, @RequestBody Lesson lesson) {
+    public ResponseEntity<Lesson> updateLesson(@PathVariable("id") long id, @RequestBody Lesson lesson) {
         if (service.update(id, lesson)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            Lesson updatedLesson = service.getById(id);
+            return new ResponseEntity<>(updatedLesson, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

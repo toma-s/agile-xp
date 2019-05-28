@@ -69,7 +69,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         updatedExercise.setCreated(exercise.getCreated());
         updatedExercise.setDescription(exercise.getDescription());
         repository.save(updatedExercise);
-        System.out.format("Updates exercise with id %s%n", id);
+        System.out.format("Updated exercise with id %s%n", id);
         return true;
     }
 

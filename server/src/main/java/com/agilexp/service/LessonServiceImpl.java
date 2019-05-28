@@ -55,8 +55,10 @@ public class LessonServiceImpl implements LessonService {
         updatedLesson.setName(lesson.getName());
         updatedLesson.setCreated(lesson.getCreated());
         updatedLesson.setDescription(lesson.getDescription());
+        updatedLesson.setIndex(lesson.getIndex());
+        updatedLesson.setCourseId(lesson.getCourseId());
         repository.save(updatedLesson);
-        System.out.format("Updates lesson with id %s%n", id);
+        System.out.format("Updated lesson with id %s%n", id);
         return true;
     }
 
