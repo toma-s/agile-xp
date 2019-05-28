@@ -39,6 +39,7 @@ public class LessonController {
     public ResponseEntity<Lesson> updateLesson(@PathVariable("id") long id, @RequestBody Lesson lesson) {
         if (service.update(id, lesson)) {
             Lesson updatedLesson = service.getById(id);
+            System.out.println("updated lesson: " + updatedLesson);
             return new ResponseEntity<>(updatedLesson, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
