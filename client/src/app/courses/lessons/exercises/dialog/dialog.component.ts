@@ -6,6 +6,8 @@ import { MatDialogRef } from '@angular/material';
 })
 export class DialogComponent {
 
+  fileExtention: string;
+
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>
   ) { }

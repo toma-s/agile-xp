@@ -25,7 +25,7 @@ import { LoadSolutionDialogComponent } from './exercise-solve/load-solution-dial
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ExerciseCreateComponent } from './exercise-upsert/exercise-create/exercise-create.component';
 import { ExerciseEditComponent } from './exercise-upsert/exercise-edit/exercise-edit.component';
-import { DialogComponent } from './exercise-upsert/dialog/dialog.component';
+import { DialogComponent } from './dialog/dialog.component';
 import { CreateIntroComponent } from './exercise-upsert/create-intro/create-intro.component';
 import { UpsertEditorsComponent } from './exercise-upsert/upsert-editors/upsert-editors.component';
 import { CreateSubmitComponent } from './exercise-upsert/create-submit/create-submit.component';
