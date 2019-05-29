@@ -79,24 +79,24 @@ export class SolveEditorComponent implements OnInit {
 
   reset() {
     const exerciseId = this.solutionFormGroup.get('intro').get('exerciseId').value;
-    switch (this.form.get('solutionType').value) {
+    switch (this.form.get('solutionControl').get('solutionType').value) {
       case 'source': {
         this.publicSourceService.getPublicSourcesByExerciseId(exerciseId).subscribe(
-          data => this.form.get('solutionControl').setValue(data),
+          data => this.form.get('solutionControl').get('tabContent').setValue(data),
           error => console.log(error)
         );
         break;
       }
       case 'test': {
         this.publicTestService.getPublicTestsByExerciseId(exerciseId).subscribe(
-          data => this.form.get('solutionControl').setValue(data),
+          data => this.form.get('solutionControl').get('tabContent').setValue(data),
           error => console.log(error)
         );
         break;
       }
       case 'file': {
         this.publicFileService.getPublicFilesByExerciseId(exerciseId).subscribe(
-          data => this.form.get('solutionControl').setValue(data),
+          data => this.form.get('solutionControl').get('tabContent').setValue(data),
           error => console.log(error)
         );
         break;
@@ -126,11 +126,11 @@ export class SolveEditorComponent implements OnInit {
   }
 
   updateContent(newSolutionContent: SolutionContent) {
-    const currentContents: Array<SolutionContent> = this.form.get('solutionControl').value;
+    const currentContents: Array<SolutionContent> = this.form.get('solutionControl').get('tabContent').value;
     for (let i = 0; i < currentContents.length; i++) {
       const currentContent = currentContents[i];
       if (currentContent.filename === newSolutionContent.filename) {
-        const control = this.form.get('solutionControl') as FormArray;
+        const control = this.form.get('solutionControl').get('tabContent') as FormArray;
         const controlItem = control.at(i);
         controlItem.get('content').setValue(newSolutionContent.content);
       }

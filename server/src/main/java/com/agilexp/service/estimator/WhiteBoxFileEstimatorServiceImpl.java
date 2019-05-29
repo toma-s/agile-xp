@@ -37,7 +37,7 @@ public class WhiteBoxFileEstimatorServiceImpl extends WhiteBoxEstimatorSuper imp
     public SolutionEstimation getEstimation(SolutionItems solutionItems) {
         SolutionEstimation estimation = getWhiteBoxEstimation(solutionItems);
         SolutionEstimation _solutionEstimation = repository.save(estimation);
-        System.out.format("Created solution estimation %s\n", _solutionEstimation);
+        System.out.format("Created solution estimation %s%n", _solutionEstimation);
         return _solutionEstimation;
     }
 

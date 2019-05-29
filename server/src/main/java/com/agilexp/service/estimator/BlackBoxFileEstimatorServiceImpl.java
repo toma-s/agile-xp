@@ -44,7 +44,7 @@ public class BlackBoxFileEstimatorServiceImpl extends BlackBoxEstimatorSuper imp
         Estimation blackBoxEstimation = getBlackBoxEstimation(solutionItems);
         SolutionEstimation estimation = getEstimation(solutionItems.getSolutionId(), blackBoxEstimation);
         SolutionEstimation _solutionEstimation = repository.save(estimation);
-        System.out.format("Created solution estimation %s\n", _solutionEstimation);
+        System.out.format("Created solution estimation %s%n", _solutionEstimation);
         return _solutionEstimation;
     }
 

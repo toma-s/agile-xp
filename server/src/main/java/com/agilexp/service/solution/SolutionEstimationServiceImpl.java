@@ -45,7 +45,7 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
         estimation.setSolved(true);
         estimation.setCreated(new Timestamp(date.getTime()));
         estimation.setValue(100);
-        System.out.format("Marked solution %s as solved\n", solutionId);
+        System.out.format("Marked solution %s as solved%n", solutionId);
         return solutionEstimationRepository.save(estimation);
     }
 
@@ -58,7 +58,7 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
         estimation.setSolved(false);
         estimation.setCreated(new Timestamp(date.getTime()));
         estimation.setValue(0);
-        System.out.format("Marked solution %s as solved\n", solutionId);
+        System.out.format("Marked solution %s as solved%n", solutionId);
         return solutionEstimationRepository.save(estimation);
     }
 
@@ -73,7 +73,7 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
             solutionItems.add(newSolutionItems);
         }
 
-        System.out.format("Found solution items\n");
+        System.out.format("Found solution items%n");
         return solutionItems;
     }
 
@@ -88,7 +88,7 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
             solutionItems.add(newSolutionItems);
         }
 
-        System.out.format("Found solution items\n");
+        System.out.format("Found solution items%n");
         return solutionItems;
     }
 
@@ -103,7 +103,7 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
             solutionItems.add(newSolutionItems);
         }
 
-        System.out.format("Found solution items\n");
+        System.out.format("Found solution items%n");
         return solutionItems;
     }
 
@@ -117,7 +117,7 @@ public class SolutionEstimationServiceImpl implements SolutionEstimationService 
         if (estimation == null) {
             return new SolutionEstimation();
         }
-        System.out.format("Found last estimation of exercise %s\n", exerciseId);
+        System.out.format("Found last estimation of exercise %s%n", exerciseId);
         return estimation;
     }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, ControlContainer, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { DialogComponent } from '../exercise-upsert/dialog/dialog.component';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
 
 @Component({
   selector: 'editor',
@@ -11,6 +11,7 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 export class EditorComponent implements OnInit {
 
   @Input() editorOptions;
+  fileExtention = '';
   form: FormGroup;
   dialogRef: MatDialogRef<DialogComponent>;
 
@@ -22,6 +23,16 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     this.form = <FormGroup>this.controlContainer.control;
+    this.setFileExtention();
+  }
+
+  setFileExtention() {
+    console.log(this.editorOptions.language);
+    if (this.editorOptions.language.search('text') !== -1) {
+      this.fileExtention = 'txt';
+    } else if (this.editorOptions.language.search('java') !== -1) {
+      this.fileExtention = 'java';
+    }
   }
 
   remove(index: number) {
@@ -30,12 +41,14 @@ export class EditorComponent implements OnInit {
   }
 
   editFilename(formControl: FormControl) {
-    this.dialogRef = this.dialog.open(DialogComponent);
+    const config = new MatDialogConfig();
+    this.dialogRef = this.dialog.open(DialogComponent, config);
+    this.dialogRef.componentInstance.fileExtention = this.fileExtention;
     this.dialogRef.afterClosed().subscribe(result => {
       if (result === undefined) {
         return;
       }
-      formControl.setValue(`${result}.java`);
+      formControl.setValue(`${result}.${this.fileExtention}`);
     });
   }
 
@@ -46,7 +59,7 @@ export class EditorComponent implements OnInit {
 
   create(): FormGroup {
     return this.fb.group({
-      filename: ['filename.java'],
+      filename: [`filename.${this.fileExtention}`],
       content: ['']
     });
   }

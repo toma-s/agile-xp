@@ -10,6 +10,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
@@ -56,6 +58,7 @@ import { ManageExercisesComponent } from './manage/manage-exercises/manage-exerc
     MatPaginatorModule,
     LessonsModule,
     CoursesRoutingModule,
+    DragDropModule
   ]
 })
 

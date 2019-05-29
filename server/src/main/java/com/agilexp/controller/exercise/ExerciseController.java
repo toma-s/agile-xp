@@ -43,7 +43,7 @@ public class ExerciseController {
     }
 
     @PutMapping("/exercises/{id}")
-    public ResponseEntity updateExercise(@PathVariable("id") long id, @RequestBody Exercise exercise) {
+    public ResponseEntity<Exercise> updateExercise(@PathVariable("id") long id, @RequestBody Exercise exercise) {
         if (service.update(id, exercise)) {
             Exercise updatedExercise = service.getById(id);
             return new ResponseEntity<>(updatedExercise, HttpStatus.OK);

@@ -22,7 +22,7 @@ public class SolutionServiceImpl implements SolutionService {
                 solution.getExerciseId(),
                 created
         ));
-        System.out.format("Created solution %s of exercise %s\n", newSolution.getId(), newSolution.getExerciseId());
+        System.out.format("Created solution %s of exercise %s%n", newSolution.getId(), newSolution.getExerciseId());
         return newSolution;
     }
 }
