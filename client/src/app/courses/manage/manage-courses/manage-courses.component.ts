@@ -57,10 +57,7 @@ export class ManageCoursesComponent extends ManageComponent {
 
   delete(courseId) {
     this.courseService.deleteCourse(courseId).subscribe(
-      data => {
-        console.log(data);
-        this.load();
-      },
+      data => this.load(),
       error => console.log(error)
     );
   }

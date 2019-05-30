@@ -27,7 +27,6 @@ export class EditorComponent implements OnInit {
   }
 
   setFileExtention() {
-    console.log(this.editorOptions.language);
     if (this.editorOptions.language.search('text') !== -1) {
       this.fileExtention = 'txt';
     } else if (this.editorOptions.language.search('java') !== -1) {

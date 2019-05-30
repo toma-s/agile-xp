@@ -76,9 +76,7 @@ export class ManageExercisesComponent extends ManageComponent {
       );
     }
     forkJoin(observables).subscribe(
-      data => {
-        console.log(data);
-      },
+      data => console.log(data),
       error => {
         console.log(error);
         this.content = Object.assign([], newExercisesArray);
@@ -89,10 +87,7 @@ export class ManageExercisesComponent extends ManageComponent {
 
   delete(exerciseId) {
     this.exerciseService.deleteExercise(exerciseId).subscribe(
-      data => {
-        console.log(data);
-        this.load();
-      },
+      data => this.load(),
       error => console.log(error)
     );
   }

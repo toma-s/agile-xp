@@ -21,7 +21,6 @@ export class CourseService {
   }
 
   getCoursesList(): Observable<any> {
-    console.log(this.baseUrl);
     return this.http.get(`${this.baseUrl}`);
   }
 

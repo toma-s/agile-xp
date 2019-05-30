@@ -30,7 +30,6 @@ export class CreateSubmitComponent implements OnInit {
     } else if (mode === 'edit') {
       result = await this.exerciseUpdaterService.save(this.exerciseFormGroup);
     }
-    console.log(result);
     if (!result.success) {
       this.setErrorMessage(result.success);
     }
