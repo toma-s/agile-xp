@@ -15,3 +15,6 @@ It provides the user with practical tasks for test-driven development, exercises
 The application will include basic system administration tools: users administration, managing the exercises and their results, and source code version control. 
 
 The system will be implemented using technologies/tools: Java, Spring framework (Spring Boot, Spring Data JPA), Maven, PostgreSQL, JUnit4 testing library, Angular, TypeScript, SCSS, HTML5, virtual server.
+
+**Presentation**: [PowerPoint Online](https://1drv.ms/p/s!Ag9LB6D24uPCgacxa9Tw2Y26gPcebQ)
+([PDF version](https://github.com/s-thora/agile-xp/blob/master/thesis/presentations/BP-prezentacia.pdf))
