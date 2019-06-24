@@ -39,7 +39,6 @@ export class SolveEditorComponent implements OnInit {
 
   async ngOnInit() {
     this.form = <FormGroup>this.controlContainer.control;
-    console.log(this.form);
     this.setEditorOptions();
     this.getLessons();
   }
@@ -57,7 +56,6 @@ export class SolveEditorComponent implements OnInit {
     const courseId = Number(this.route.snapshot.params['courseId']);
     this.lessonService.getLessonsByCourseId(courseId).subscribe(
       data => {
-        console.log(data);
         this.lessons = data;
         this.getExercises();
       },
@@ -114,7 +112,6 @@ export class SolveEditorComponent implements OnInit {
         return;
       }
       this.updateContent(result);
-      console.log(result);
     });
   }
 

@@ -63,7 +63,6 @@ export class SolveRunComponent implements OnInit {
     this.setSolutionItems();
     this.solution = await this.saveSolution();
     this.estimation = await this.getEstimation();
-    console.log(this.estimation);
     this.showEstimation();
     this.saveSolutionItems();
     console.log('saved solution items');
@@ -153,7 +152,6 @@ export class SolveRunComponent implements OnInit {
   saveSolutionSource(solutionSource: SolutionSource): Observable<{}> {
     solutionSource.solutionId = this.solution.id;
     solutionSource.solutionEstimationId = this.estimation.id;
-    console.log(solutionSource);
     return this.solutionSourceService.createSolutionSource(solutionSource);
   }
 

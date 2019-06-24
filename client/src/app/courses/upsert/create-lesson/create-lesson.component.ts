@@ -51,10 +51,7 @@ export class CreateLessonComponent extends UpsertComponent {
 
   saveLesson() {
     this.lessonService.createLesson(this.content).subscribe(
-      data => {
-        console.log(data);
-        this.submitted = true;
-      },
+      data => this.submitted = true,
       error => console.log(error)
     );
   }

@@ -42,13 +42,11 @@ export abstract class ExerciseSaverService {
     const result = {success: true};
 
     this.form = form;
-    console.log(form);
 
     await this.saveExercise()
       .then(data => this.exercise = data)
       .catch(error => {
         result.success = false;
-        console.log(error);
       });
     if (!result.success) {
       return result;
@@ -57,7 +55,6 @@ export abstract class ExerciseSaverService {
     await this.saveExerciseItems()
       .catch(error => {
         result.success = false;
-        console.log(error);
       });
     return result;
   }
@@ -139,11 +136,9 @@ export abstract class ExerciseSaverService {
       const publicTestsType: string = this.form.get('testControl').get('publicType').get('chosen').value;
       if (publicTestsType === 'same') {
         const privateTests: Array<PublicTest> = this.form.get('testControl').get('privateControl').get('tabContent').value;
-        console.log(privateTests);
         await this.savePublicTests(privateTests).then().catch(error => reject(error));
       } else if (publicTestsType === 'custom') {
         const publicTests: Array<PublicTest> = this.form.get('testControl').get('publicControl').get('tabContent').value;
-        console.log(publicTests);
         await this.savePublicTests(publicTests).then().catch(error => reject(error));
       }
       resolve();

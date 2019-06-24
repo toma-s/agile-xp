@@ -27,7 +27,6 @@ export abstract class ExerciseUpsertComponent implements OnInit {
     this.types = await this.getExerciseTypes();
     this.initViewInput();
     await this.createForm();
-    console.log(this.exerciseFormGroup);
     this.listenToTypeChange();
     this.setupDefaultValidators();
     this.setupValidatorsOnInit();
@@ -102,7 +101,6 @@ export abstract class ExerciseUpsertComponent implements OnInit {
   }
 
   setupValidatorsByType(typeValue: string) {
-    console.log(typeValue);
     if (this.isType(typeValue, 'whitebox')) {
       this.setWhiteboxValidators();
     } else if (this.isType(typeValue, 'blackbox')) {

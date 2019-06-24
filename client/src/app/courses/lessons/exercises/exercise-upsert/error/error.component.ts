@@ -16,7 +16,6 @@ export class ErrorComponent implements OnInit {
 
   ngOnInit() {
     this.error = <FormGroup>this.controlContainer.control;
-    console.log(this.error);
   }
 
 }

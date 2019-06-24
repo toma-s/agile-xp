@@ -35,11 +35,9 @@ export class CoursesListComponent implements OnInit {
   getData() {
     this.courseService.getCoursesList().subscribe(
       data => {
-        console.log(data);
         this.data = Object.assign(data);
         this.dataSource = new MatTableDataSource<Element>(this.data);
         this.dataSource.paginator = this.paginator;
-        console.log(this.dataSource.paginator);
       },
       error => console.log(error)
     );

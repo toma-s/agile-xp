@@ -55,7 +55,6 @@ export class ExerciseSolveComponent implements OnInit {
     this.exercise = await this.getExercise();
     this.lesson = await this.getLesson();
     this.estimation = await this.getInitEstimation();
-    console.log(this.estimation);
     this.setTitle();
     this.exerciseType = await this.getExerciseType();
     await this.getSolutionItems();
@@ -91,10 +90,7 @@ export class ExerciseSolveComponent implements OnInit {
   getInitEstimation(): Promise<SolutionEstimation> {
     return new Promise<SolutionEstimation>((resolve, reject) => {
       this.solutionEstimationService.getSolutionEstimationByExerciseId(this.exercise.id).subscribe(
-        data => {
-          resolve(data);
-          console.log(data);
-        },
+        data => resolve(data),
         error => reject(error)
       );
     });

@@ -62,10 +62,7 @@ export class EditCourseComponent extends UpsertComponent {
 
   saveCourse() {
     this.courseService.updateCourse(this.courseId, this.content).subscribe(
-      data => {
-        console.log(data);
-        this.submitted = true;
-      },
+      data => this.submitted = true,
       error => console.log(error)
     );
   }
